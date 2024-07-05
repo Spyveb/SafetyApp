@@ -1,0 +1,43 @@
+/// Class to define paths to image assets used in the application.
+class AppImages {
+  AppImages._();
+
+  //images
+  static const String appLogo = "assets/images/app_logo.png";
+  static const String onBoardingOne = "assets/images/onboarding_one.png";
+  static const String onBoardingTwo = "assets/images/onboarding_two.png";
+  static const String onBoardingThree = "assets/images/onboarding_three.png";
+  static const String onBoardingFour = "assets/images/onboarding_four.png";
+  static const String onBoardingOneCorner = "assets/images/onboarding_one_corner.png";
+  static const String onBoardingTwoCorner = "assets/images/onboarding_two_corner.png";
+  static const String onBoardingThreeCorner = "assets/images/onboarding_three_corner.png";
+  static const String onBoardingFourCorner = "assets/images/onboarding_four_corner.png";
+  static const String registrationSuccess = "assets/images/registration_success.png";
+  static const String registrationFail = "assets/images/registration_fail.png";
+  static const String homeIcon = "assets/images/home_icon.png";
+  static const String trainingIcon = "assets/images/training_icon.png";
+  static const String chatIcon = "assets/images/chat_icon.png";
+  static const String settingIcon = "assets/images/setting_icon.png";
+  static const String tip = "assets/images/tip.png";
+  static const String time = "assets/images/time.png";
+  static const String violence = "assets/images/violence.png";
+  static const String locationPin = "assets/images/location_pin.png";
+  static const String policeReport = "assets/images/police_report.png";
+  static const String missingReport = "assets/images/missing_report.png";
+  static const String hotspot = "assets/images/hotspot.png";
+  static const String contact = "assets/images/contact.png";
+  static const String notes = "assets/images/notes.png";
+  static const String usLanguage = "assets/images/united-kingdom.png";
+  static const String germanyLanguage = "assets/images/germany.png";
+  static const String frenchLanguage = "assets/images/france.png";
+  static const String namibiaLanguage = "assets/images/namibia.png";
+  static const String messageSent = "assets/images/message_sent.png";
+
+  // svgs
+
+  static const String userProfile = "assets/svgs/user.svg";
+  static const String email = "assets/svgs/mail.svg";
+  static const String calendar = "assets/svgs/calendar.svg";
+  static const String editIcon = "assets/svgs/editIcon.svg";
+  static const String lockIcon = "assets/svgs/lock.svg";
+}
