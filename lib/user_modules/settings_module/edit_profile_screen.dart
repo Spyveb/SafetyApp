@@ -344,7 +344,9 @@ class EditProfileScreen extends GetView<SettingsController> {
                   ),
                   CommonButton(
                     text: AppLocalizations.of(context)!.save,
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.updateUserProfile();
+                    },
                   )
                 ],
               ),
