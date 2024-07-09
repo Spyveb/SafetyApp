@@ -8,6 +8,7 @@ import 'package:distress_app/infrastructure/api_controller.dart';
 import 'package:distress_app/infrastructure/models/user_model.dart';
 import 'package:distress_app/main.dart';
 import 'package:distress_app/packages/country_code_picker/src/country_code.dart';
+import 'package:distress_app/routes/app_pages.dart';
 import 'package:distress_app/utils/app_images.dart';
 import 'package:distress_app/utils/constants.dart';
 import 'package:distress_app/utils/loader.dart';
@@ -111,6 +112,7 @@ class SettingsController extends GetxController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   File? selectedImage;
+  String? profileImage;
 
   void getUserProfile() async {
     LoadingDialog.showLoader();
@@ -125,7 +127,7 @@ class SettingsController extends GetxController {
         if (response['data'] != null) {
           if (response['data']['user'] != null) {
             UserModel userModel = UserModel.fromJson(response['data']['user']);
-            await saveUserData(userModel);
+            await assignUserData(userModel);
             LoadingDialog.hideLoader();
           }
         }
@@ -144,7 +146,9 @@ class SettingsController extends GetxController {
     }
   }
 
-  Future<void> saveUserData(UserModel userModel) async {
+  Future<void> assignUserData(UserModel userModel) async {
+    profileImage = null;
+    selectedImage = null;
     firstNameController.text = userModel.firstName ?? '';
     lastNameController.text = userModel.lastName ?? '';
     emailController.text = userModel.email ?? '';
@@ -153,7 +157,11 @@ class SettingsController extends GetxController {
     selectedCountryCode = CountryCode(dialCode: userModel.mobileCode ?? '+93');
     birthDateController.text = Utils.displayDateFormat(userModel.dob ?? '');
     userNameController.text = userModel.username ?? '';
+    profileImage = userModel.profileImage;
     update();
+  }
+
+  Future<void> saveUserData(UserModel userModel) async {
     await StorageService().writeSecureData(Constants.userId, userModel.id.toString());
     await StorageService().writeSecureData(Constants.userName, userModel.username ?? "");
     await StorageService().writeSecureData(Constants.firstName, userModel.firstName ?? "");
@@ -171,10 +179,18 @@ class SettingsController extends GetxController {
       "email": emailController.text,
       "mobile_code": selectedCountryCode.dialCode,
       "mobile_number": phoneNumberController.text,
-      "dob": birthDateController.text,
+      "dob": Utils.sendDateFormat(birthDateController.text),
       "username": userNameController.text,
-      // "username": userNameController.text,
     });
+
+    if (selectedImage != null) {
+      formData.files.add(
+        MapEntry(
+          'profile_image',
+          await Dio.MultipartFile.fromFile(selectedImage!.path),
+        ),
+      );
+    }
     try {
       var response = await ApiProvider().postAPICall(
         Endpoints.updateProfile,
@@ -186,12 +202,40 @@ class SettingsController extends GetxController {
         if (response['data'] != null) {
           if (response['data']['user'] != null) {
             UserModel userModel = UserModel.fromJson(response['data']['user']);
-            // await saveUserData(userModel);
+            await saveUserData(userModel);
             LoadingDialog.hideLoader();
+            Utils.showToast(response['message'] ?? "User profile updated successfully.");
+            Get.back();
           }
         }
       }
       update();
+    } on Dio.DioException catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast(e.message ?? "Something went wrong");
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast("Something went wrong");
+      update();
+      debugPrint(e.toString());
+    }
+  }
+
+  void deleteAccount() async {
+    LoadingDialog.showLoader();
+    try {
+      var response = await ApiProvider().postAPICall(
+        Endpoints.deleteAccount,
+        null,
+        onSendProgress: (count, total) {},
+      );
+
+      if (response['success'] != null && response['success'] == true) {
+        Utils.showToast(response['message'] ?? "Account deleted successfully.");
+        Get.offAllNamed(Routes.SIGN_IN);
+      }
     } on Dio.DioException catch (e) {
       LoadingDialog.hideLoader();
       Utils.showToast(e.message ?? "Something went wrong");

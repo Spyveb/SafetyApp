@@ -1,7 +1,12 @@
+import 'dart:io';
+import 'dart:ui';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -17,82 +22,108 @@ class EditProfileScreen extends GetView<SettingsController> {
       backgroundColor: themeProvider.backgroundColor,
       body: SafeArea(
         child: GetBuilder<SettingsController>(
-          init: SettingsController(),
           builder: (controller) {
-            return Container(
-              padding: EdgeInsets.symmetric(
-                vertical: getProportionateScreenHeight(12),
-                horizontal: getProportionateScreenWidth(24),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(12),
+                      ),
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: Icon(
+                        Icons.arrow_back,
+                        size: 32,
+                        color: AppColors.blackColor,
+                      ),
+                    ),
+                    SizedBox(
+                      width: getProportionateScreenWidth(12),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.editProfile,
+                      style: TextStyle(
+                        fontSize: getProportionalFontSize(32),
+                        color: themeProvider.textThemeColor,
+                        fontFamily: AppFonts.sansFont600,
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.symmetric(
+                      vertical: getProportionateScreenHeight(12),
+                      horizontal: getProportionateScreenWidth(24),
+                    ),
+                    child: Form(
+                      key: controller.formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            AppLocalizations.of(context)!.editProfile,
-                            style: TextStyle(
-                              fontSize: getProportionalFontSize(32),
-                              color: themeProvider.textThemeColor,
-                              fontFamily: AppFonts.sansFont600,
-                            ),
-                          ),
                           SizedBox(
                             height: getProportionateScreenHeight(8),
                           ),
-                          // Align(
-                          //   alignment: Alignment.center,
-                          //   child: GestureDetector(
-                          //     onTap: () async {
-                          //       ImagePicker imagePicker = ImagePicker();
-                          //       XFile? xFile = await imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
-                          //       if (xFile != null) {
-                          //         controller.selectedImage = File(xFile.path);
-                          //         controller.update();
-                          //       }
-                          //     },
-                          //     // child: Container(
-                          //     //   padding: EdgeInsets.symmetric(
-                          //     //     vertical: getProportionateScreenHeight(16),
-                          //     //     horizontal: getProportionateScreenWidth(16),
-                          //     //   ),
-                          //     //   decoration: BoxDecoration(
-                          //     //     shape: BoxShape.circle,
-                          //     //     color: AppColors.greyColor,
-                          //     //     image: controller.profileImage != null
-                          //     //         ? DecorationImage(
-                          //     //       image: FileImage(controller.profileImage!),
-                          //     //       fit: BoxFit.cover,
-                          //     //     )
-                          //     //         : null,
-                          //     //   ),
-                          //     //   child: Container(
-                          //     //     height: getProportionateScreenHeight(60),
-                          //     //     width: getProportionateScreenWidth(60),
-                          //     //     padding: EdgeInsets.symmetric(
-                          //     //       vertical: getProportionateScreenHeight(28),
-                          //     //       horizontal: getProportionateScreenWidth(28),
-                          //     //     ),
-                          //     //     decoration: BoxDecoration(
-                          //     //       shape: BoxShape.circle,
-                          //     //       color: Colors.transparent,
-                          //     //       image: controller.profileImage == null
-                          //     //           ? DecorationImage(
-                          //     //         image: AssetImage(AppImages.userImage),
-                          //     //         fit: BoxFit.cover,
-                          //     //       )
-                          //     //           : null,
-                          //     //     ),
-                          //     //     // child: SvgPicture.asset(AppImages.editIcon),
-                          //     //   ),
-                          //     // ),
-                          //   ),
-                          // ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                              onTap: () async {
+                                ImagePicker imagePicker = ImagePicker();
+                                XFile? xFile =
+                                    await imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+                                if (xFile != null) {
+                                  controller.selectedImage = File(xFile.path);
+                                  controller.update();
+                                }
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: getProportionateScreenHeight(16),
+                                  horizontal: getProportionateScreenWidth(16),
+                                ),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.greyColor,
+                                  image: controller.selectedImage != null
+                                      ? DecorationImage(
+                                          image: FileImage(controller.selectedImage!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : controller.profileImage != null
+                                          ? DecorationImage(
+                                              image: CachedNetworkImageProvider(controller.profileImage!),
+                                              fit: BoxFit.cover,
+                                            )
+                                          : null,
+                                ),
+                                child: Container(
+                                  height: getProportionateScreenHeight(60),
+                                  width: getProportionateScreenWidth(60),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: getProportionateScreenHeight(28),
+                                    horizontal: getProportionateScreenWidth(28),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.transparent,
+                                    image: controller.profileImage == null
+                                        ? DecorationImage(
+                                            image: AssetImage(AppImages.userImage),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : null,
+                                  ),
+                                  // child: SvgPicture.asset(AppImages.editIcon),
+                                ),
+                              ),
+                            ),
+                          ),
                           SizedBox(
-                            height: getProportionateScreenHeight(18),
+                            height: getProportionateScreenHeight(26),
                           ),
                           IntrinsicHeight(
                             child: Row(
@@ -199,13 +230,14 @@ class EditProfileScreen extends GetView<SettingsController> {
                               hideMainText: true,
                               onChanged: (value) {
                                 controller.selectedCountryCode = value;
+                                controller.update();
                               },
                               // enabled: false,
-                              // initialSelection: widget.initialSelection,
+                              initialSelection: controller.selectedCountryCode.dialCode,
                               alignLeft: true,
                               barrierColor: Colors.transparent,
                               favorite: [
-                                // widget.initialSelection ?? '+965',
+                                controller.selectedCountryCode.dialCode ?? '+93',
                               ],
                               searchStyle:
                                   TextStyle(fontSize: getProportionalFontSize(12), fontFamily: AppFonts.sansFont500),
@@ -342,14 +374,158 @@ class EditProfileScreen extends GetView<SettingsController> {
                       ),
                     ),
                   ),
-                  CommonButton(
-                    text: AppLocalizations.of(context)!.save,
-                    onPressed: () {
-                      controller.updateUserProfile();
-                    },
-                  )
-                ],
-              ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    // vertical: getProportionateScreenHeight(12),
+                    horizontal: getProportionateScreenWidth(24),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CommonButton(
+                        text: AppLocalizations.of(context)!.save,
+                        onPressed:
+                            controller.formKey.currentState != null && controller.formKey.currentState!.validate()
+                                ? () {
+                                    controller.updateUserProfile();
+                                  }
+                                : null,
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(8),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Utils.showCustomDialog(
+                            context: context,
+                            child: Center(
+                              child: Material(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(
+                                  getProportionateScreenWidth(32),
+                                ),
+                                child: BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                    sigmaX: 1.5,
+                                    sigmaY: 1.5,
+                                  ),
+                                  child: GetBuilder<SettingsController>(
+                                    builder: (controller) {
+                                      return Container(
+                                        width: SizeConfig.deviceWidth! * .85,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: getProportionateScreenWidth(16),
+                                          vertical: getProportionateScreenHeight(16),
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            getProportionateScreenWidth(32),
+                                          ),
+                                          color: Colors.white,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!.confirmationMessage,
+                                              style: TextStyle(
+                                                  fontFamily: AppFonts.sansFont700,
+                                                  fontSize: getProportionalFontSize(22),
+                                                  color: AppColors.primaryColor),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            SizedBox(
+                                              height: getProportionateScreenHeight(10),
+                                            ),
+                                            Text(
+                                              "Are you sure you want to delete your account?",
+                                              style: TextStyle(
+                                                  fontFamily: AppFonts.sansFont500,
+                                                  fontSize: getProportionalFontSize(16),
+                                                  color: AppColors.blackColor),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            SizedBox(
+                                              height: getProportionateScreenHeight(24),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: CommonButton(
+                                                    padding: EdgeInsets.symmetric(
+                                                      horizontal: getProportionateScreenWidth(24),
+                                                      vertical: getProportionateScreenHeight(18),
+                                                    ),
+                                                    text: AppLocalizations.of(context)!.yes,
+                                                    onPressed: () {
+                                                      Get.back();
+                                                    },
+                                                    radius: 50,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: getProportionateScreenWidth(18),
+                                                ),
+                                                Expanded(
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      Get.back();
+                                                    },
+                                                    behavior: HitTestBehavior.opaque,
+                                                    child: Container(
+                                                      padding: EdgeInsets.symmetric(
+                                                        horizontal: getProportionateScreenWidth(24),
+                                                        vertical: getProportionateScreenHeight(17),
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(
+                                                          getProportionateScreenWidth(50),
+                                                        ),
+                                                        border: Border.all(color: AppColors.blackColor, width: 1),
+                                                      ),
+                                                      child: Text(
+                                                        AppLocalizations.of(context)!.no,
+                                                        textAlign: TextAlign.center,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                          fontSize: getProportionalFontSize(16),
+                                                          fontFamily: AppFonts.sansFont600,
+                                                          color: AppColors.primaryColor,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Delete Account",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: AppFonts.sansFont600,
+                            color: AppColors.redDefault,
+                            fontSize: getProportionalFontSize(16),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             );
           },
         ),
