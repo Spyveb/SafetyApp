@@ -1,4 +1,4 @@
-import 'package:distress_app/modules/report_module/report_controller.dart';
+import 'package:distress_app/imports.dart';
 import 'package:get/get.dart';
 
 class ReportBinding implements Bindings {

@@ -1,11 +1,5 @@
-import 'package:distress_app/modules/chat/chat_controller.dart';
-import 'package:distress_app/modules/home_module/home_controller.dart';
-import 'package:distress_app/modules/report_module/report_controller.dart';
-import 'package:distress_app/modules/settings_module/settings_controller.dart';
-import 'package:distress_app/modules/training_module/training_controller.dart';
+import 'package:distress_app/imports.dart';
 import 'package:get/get.dart';
-
-import 'dashboard_controller.dart';
 
 class DashBoardBinding implements Bindings {
   @override

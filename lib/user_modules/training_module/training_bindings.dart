@@ -1,4 +1,4 @@
-import 'package:distress_app/modules/training_module/training_controller.dart';
+import 'package:distress_app/imports.dart';
 import 'package:get/get.dart';
 
 class TrainingBinding implements Bindings {

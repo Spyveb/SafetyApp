@@ -1,4 +1,4 @@
-import 'package:distress_app/modules/chat/chat_controller.dart';
+import 'package:distress_app/imports.dart';
 import 'package:get/get.dart';
 
 class ChatBinding implements Bindings {

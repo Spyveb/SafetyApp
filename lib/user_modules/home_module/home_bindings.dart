@@ -1,4 +1,4 @@
-import 'package:distress_app/modules/home_module/home_controller.dart';
+import 'package:distress_app/imports.dart';
 import 'package:get/get.dart';
 
 class HomeBinding implements Bindings {

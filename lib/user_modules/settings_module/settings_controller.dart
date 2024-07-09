@@ -173,7 +173,7 @@ class SettingsController extends GetxController {
       "mobile_number": phoneNumberController.text,
       "dob": birthDateController.text,
       "username": userNameController.text,
-      "username": userNameController.text,
+      // "username": userNameController.text,
     });
     try {
       var response = await ApiProvider().postAPICall(

@@ -1,8 +1,4 @@
-import 'package:distress_app/config/size_config.dart';
-import 'package:distress_app/modules/onboarding/onboarding_controller.dart';
-import 'package:distress_app/routes/app_pages.dart';
-import 'package:distress_app/utils/app_colors.dart';
-import 'package:distress_app/utils/app_fonts.dart';
+import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

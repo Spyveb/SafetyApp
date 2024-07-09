@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:distress_app/helpers/validator.dart';
+import 'package:distress_app/imports.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../imports.dart';
+import 'package:intl/intl.dart';
 
 class SignUpScreen extends GetView<SignUpController> {
   const SignUpScreen({super.key});

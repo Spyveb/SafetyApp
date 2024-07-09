@@ -1,17 +1,6 @@
-import 'package:distress_app/config/size_config.dart';
-import 'package:distress_app/helpers/utils.dart';
-import 'package:distress_app/localization/app_localizations.dart';
-import 'package:distress_app/modules/chat/chat_screen.dart';
-import 'package:distress_app/modules/home_module/home_screen.dart';
-import 'package:distress_app/modules/report_module/report_screen.dart';
-import 'package:distress_app/modules/settings_module/settings_screen.dart';
-import 'package:distress_app/modules/training_module/training_screen.dart';
-import 'package:distress_app/utils/app_colors.dart';
-import 'package:distress_app/utils/app_images.dart';
+import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'dashboard_controller.dart';
 
 class DashBoardScreen extends GetView<DashBoardController> {
   const DashBoardScreen({super.key});

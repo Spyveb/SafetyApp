@@ -1,4 +1,4 @@
-import 'package:distress_app/modules/sign_up/signup_controller.dart';
+import 'package:distress_app/imports.dart';
 import 'package:get/get.dart';
 
 class SignUpBinding implements Bindings {

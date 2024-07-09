@@ -4,6 +4,8 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/foundation.dart';
 
