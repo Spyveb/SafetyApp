@@ -1,14 +1,11 @@
 class Endpoints {
   Endpoints._();
 
-  static const baseUrl = "http://51.112.65.231:3002/";
+  static const baseUrl = "https://royalblue-mandrill-559334.hostingersite.com/public/";
 
   // Authentication Endpoints
-  static const checkUserName =
-      "${baseUrl}auth/check-username"; // Endpoint to check availability of username during sign up
-  static const checkPhoneNumber = "${baseUrl}auth/verify-number"; // Endpoint for user sign in
-  static const signIn = "${baseUrl}auth/signin"; // Endpoint for user sign in
-  static const signUp = "${baseUrl}auth/signup"; // Endpoint for user sign up
+  static const signIn = "${baseUrl}api/login"; // Endpoint for user sign in
+  static const signUp = "${baseUrl}api/signup"; // Endpoint for user sign up
   static const forgotPassword = "${baseUrl}auth/forgot-password"; // Endpoint for forgot password functionality
   static const logout = "${baseUrl}user/logout"; // Endpoint for logout user
   static const deleteAccount = "${baseUrl}user/delete"; // Endpoint for delete user

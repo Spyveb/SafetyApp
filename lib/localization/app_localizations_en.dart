@@ -56,7 +56,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get alreadyHaveAccount => 'Already have an account?';
 
   @override
-  String get login => 'Login';
+  String get login => 'Log In';
 
   @override
   String get dashboard => 'Dashboard';
@@ -272,6 +272,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get registrationSuccessful => 'Registration\nSuccessful!';
 
   @override
+  String get registrationUnSuccessful => 'Registration\nUnsuccessful!';
+
+  @override
+  String get registrationFailed => 'Registration\nFailed!';
+
+  @override
   String get youWillBeRedirectedToTheLogInPage => 'You will be redirected\nto the Log In page';
 
   @override
@@ -294,4 +300,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emergencyContactsAdded => 'Emergency Contacts Added';
+
+  @override
+  String get noInternetConnection => 'No Internet connection';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong, try again later';
+
+  @override
+  String get errorOccurredWhileCommunicatingWithServer => 'Error occurred while Communication with Server with StatusCode';
+
+  @override
+  String get pleaseEnter => 'Please enter';
+
+  @override
+  String get pleaseEnterAValid => 'Please enter a valid';
+
+  @override
+  String get shouldNotBeGreaterThan => 'Should not be greater than 50';
+
+  @override
+  String get pleaseEnterYourUserName => 'Please enter your username';
+
+  @override
+  String get youEnteredAnInvalidUserName => 'You’ve entered an invalid username';
 }

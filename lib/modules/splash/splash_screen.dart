@@ -53,7 +53,6 @@ class SplashScreen extends GetView<SplashController> {
                       } else {
                         Get.offAllNamed(Routes.SIGN_IN);
                       }
-                      // Get.offAllNamed(Routes.DASHBOARD);
                     },
                     child: Text(
                       AppLocalizations.of(context)!.tapToContinue,

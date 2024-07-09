@@ -1,5 +1,10 @@
+import 'dart:ui';
+
+import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../imports.dart';
 
 class SignUpController extends GetxController {
   bool termValue = false;
@@ -7,11 +12,14 @@ class SignUpController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController birthDateController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
   bool isObscure = true;
   bool isObscureConfirm = true;
+  CountryCode selectedCountryCode = CountryCode(dialCode: '+93');
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -20,65 +28,369 @@ class SignUpController extends GetxController {
     update();
   }
 
-  // signUpMethod() async {
-  //   LoadingDialog.showLoader();
-  //   try {
-  //     Dio.FormData formData = Dio.FormData.fromMap({
-  //       "username": userNameController.text,
-  //       "email": emailController.text,
-  //       "password": confirmPasswordController.text,
-  //       "firstname": firstNameController.text,
-  //       "lastname": lastNameController.text,
-  //     });
-  //     var response = await ApiProvider().postAPICall(
-  //       Endpoints.register,
-  //       formData,
-  //       passToken: false,
-  //       onSendProgress: (count, total) {},
-  //     );
-  //     LoadingDialog.hideLoader();
-  //     if (response['status'] != null && response['status'] == true) {
-  //       if (response['data'] != null) {
-  //         if (response['data']['user'] != null) {
-  //           UserModel userModel = UserModel.fromJson(response['data']['user']);
-  //           await saveUserData(userModel);
-  //           Utils.showToast(response['message'] ?? "User registered successfully.");
-  //           if (response['data']['user']['otp'] != null) {
-  //             Get.lazyPut(() => OtpController());
-  //             OtpController otpController = Get.find<OtpController>();
-  //             otpController.otp = (response['data']['user']['otp']).toString();
-  //             otpController.email = (response['data']['user']['email'] ?? emailController.text).toString();
-  //             otpController.myDuration = Duration(seconds: 59);
-  //             otpController.startTimer();
-  //             update();
-  //             Get.toNamed(
-  //               Routes.SENDOTP,
-  //             );
-  //           }
-  //         }
-  //       }
-  //     } else {
-  //       Utils.showToast(response['message'] ?? "Signup Failed");
-  //     }
-  //   } on Dio.DioException catch (e) {
-  //     LoadingDialog.hideLoader();
-  //     Utils.showToast(e.message ?? "Something went wrong");
-  //     update();
-  //     debugPrint(e.toString());
-  //   } catch (e) {
-  //     LoadingDialog.hideLoader();
-  //     Utils.showToast("Something went wrong");
-  //     update();
-  //     debugPrint(e.toString());
-  //   }
-  // }
-  //
-  // Future<void> saveUserData(UserModel userModel) async {
-  //   await StorageService().writeSecureData(Constants.userId, userModel.customerId.toString());
-  //   await StorageService().writeSecureData(Constants.email, userModel.email.toString());
-  //   await StorageService().writeSecureData(Constants.firstName, userModel.firstname ?? "");
-  //   await StorageService().writeSecureData(Constants.lastName, userModel.lastname ?? "");
-  //   await StorageService().writeSecureData(Constants.isSkipped, 'NO');
-  //   Get.find<DashBoardController>().isSkipped = 'NO';
-  // }
+  signUpMethod() async {
+    LoadingDialog.showLoader();
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({
+        "first_name": firstNameController.text,
+        "last_name": lastNameController.text,
+        "email": emailController.text,
+        "mobile_code": selectedCountryCode,
+        "mobile_number": phoneNumberController.text,
+        "dob": Utils.sendDateFormat(birthDateController.text),
+        "username": userNameController.text,
+        "password": passwordController.text,
+      });
+      var response = await ApiProvider().postAPICall(
+        Endpoints.signUp,
+        formData,
+        passToken: false,
+        onSendProgress: (count, total) {},
+      );
+      // LoadingDialog.hideLoader();
+      if (response['success'] != null && response['success'] == true) {
+        if (response['data'] != null) {
+          if (response['data']['user'] != null) {
+            UserModel userModel = UserModel.fromJson(response['data']['user']);
+            await saveUserData(userModel);
+            LoadingDialog.hideLoader();
+            Utils.showCustomDialog(
+              context: navState.currentContext!,
+              barrierDismissible: false,
+              child: Center(
+                child: Material(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(
+                    getProportionateScreenWidth(32),
+                  ),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                      sigmaX: 1.5,
+                      sigmaY: 1.5,
+                    ),
+                    child: Container(
+                      width: SizeConfig.deviceWidth! * .85,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(16),
+                        vertical: getProportionateScreenHeight(60),
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          getProportionateScreenWidth(32),
+                        ),
+                        color: Colors.white,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            height: getProportionateScreenHeight(141),
+                            width: getProportionateScreenWidth(141),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(AppImages.registrationSuccess),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            AppLocalizations.of(navState.currentContext!)!.registrationSuccessful,
+                            style: TextStyle(
+                              fontFamily: AppFonts.sansFont600,
+                              fontSize: getProportionalFontSize(20),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(10),
+                          ),
+                          Text(
+                            AppLocalizations.of(navState.currentContext!)!.youWillBeRedirectedToTheLogInPage,
+                            style: TextStyle(
+                              fontFamily: AppFonts.sansFont400,
+                              fontSize: getProportionalFontSize(16),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(28),
+                          ),
+                          CommonButton(
+                            width: getProportionateScreenWidth(196),
+                            text: AppLocalizations.of(navState.currentContext!)!.done,
+                            onPressed: () {
+                              Get.back();
+                              Get.offAllNamed(Routes.SIGN_IN);
+                            },
+                            radius: 50,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+        }
+      } else {
+        LoadingDialog.hideLoader();
+        Utils.showCustomDialog(
+          context: navState.currentContext!,
+          child: Center(
+            child: Material(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(
+                getProportionateScreenWidth(32),
+              ),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 1.5,
+                  sigmaY: 1.5,
+                ),
+                child: Container(
+                  width: SizeConfig.deviceWidth! * .85,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(16),
+                    vertical: getProportionateScreenHeight(60),
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      getProportionateScreenWidth(32),
+                    ),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        height: getProportionateScreenHeight(141),
+                        width: getProportionateScreenWidth(141),
+                        margin: EdgeInsets.only(
+                          left: getProportionateScreenWidth(32),
+                        ),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(AppImages.registrationFail),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        AppLocalizations.of(navState.currentContext!)!.registrationUnSuccessful,
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(20),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(10),
+                      ),
+                      Text(
+                        response['message'] ?? AppLocalizations.of(navState.currentContext!)!.registrationFailed,
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont400,
+                          fontSize: getProportionalFontSize(16),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(28),
+                      ),
+                      CommonButton(
+                        width: getProportionateScreenWidth(196),
+                        text: AppLocalizations.of(navState.currentContext!)!.done,
+                        onPressed: () {
+                          Get.back();
+                        },
+                        radius: 50,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      }
+    } on Dio.DioException catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showCustomDialog(
+        context: navState.currentContext!,
+        child: Center(
+          child: Material(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(
+              getProportionateScreenWidth(32),
+            ),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: 1.5,
+                sigmaY: 1.5,
+              ),
+              child: Container(
+                width: SizeConfig.deviceWidth! * .85,
+                padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(16),
+                  vertical: getProportionateScreenHeight(60),
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    getProportionateScreenWidth(32),
+                  ),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      height: getProportionateScreenHeight(141),
+                      width: getProportionateScreenWidth(141),
+                      margin: EdgeInsets.only(
+                        left: getProportionateScreenWidth(32),
+                      ),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(AppImages.registrationFail),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      AppLocalizations.of(navState.currentContext!)!.registrationUnSuccessful,
+                      style: TextStyle(
+                        fontFamily: AppFonts.sansFont600,
+                        fontSize: getProportionalFontSize(20),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(10),
+                    ),
+                    Text(
+                      e.message ?? AppLocalizations.of(navState.currentContext!)!.registrationFailed,
+                      style: TextStyle(
+                        fontFamily: AppFonts.sansFont400,
+                        fontSize: getProportionalFontSize(16),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(28),
+                    ),
+                    CommonButton(
+                      width: getProportionateScreenWidth(196),
+                      text: AppLocalizations.of(navState.currentContext!)!.done,
+                      onPressed: () {
+                        Get.back();
+                      },
+                      radius: 50,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showCustomDialog(
+        context: navState.currentContext!,
+        child: Center(
+          child: Material(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(
+              getProportionateScreenWidth(32),
+            ),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: 1.5,
+                sigmaY: 1.5,
+              ),
+              child: Container(
+                width: SizeConfig.deviceWidth! * .85,
+                padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(16),
+                  vertical: getProportionateScreenHeight(60),
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    getProportionateScreenWidth(32),
+                  ),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      height: getProportionateScreenHeight(141),
+                      width: getProportionateScreenWidth(141),
+                      margin: EdgeInsets.only(
+                        left: getProportionateScreenWidth(32),
+                      ),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(AppImages.registrationFail),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      AppLocalizations.of(navState.currentContext!)!.registrationUnSuccessful,
+                      style: TextStyle(
+                        fontFamily: AppFonts.sansFont600,
+                        fontSize: getProportionalFontSize(20),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(10),
+                    ),
+                    Text(
+                      AppLocalizations.of(navState.currentContext!)!.registrationFailed,
+                      style: TextStyle(
+                        fontFamily: AppFonts.sansFont400,
+                        fontSize: getProportionalFontSize(16),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(28),
+                    ),
+                    CommonButton(
+                      width: getProportionateScreenWidth(196),
+                      text: AppLocalizations.of(navState.currentContext!)!.done,
+                      onPressed: () {
+                        Get.back();
+                      },
+                      radius: 50,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      update();
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> saveUserData(UserModel userModel) async {
+    await StorageService().writeSecureData(Constants.userId, userModel.id.toString());
+    await StorageService().writeSecureData(Constants.email, userModel.email ?? "");
+    await StorageService().writeSecureData(Constants.firstName, userModel.firstName ?? "");
+    await StorageService().writeSecureData(Constants.lastName, userModel.lastName ?? "");
+    await StorageService().writeSecureData(Constants.accessToken, userModel.token ?? "");
+    await StorageService().writeSecureData(Constants.userName, userModel.username ?? "");
+  }
 }

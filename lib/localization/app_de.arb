@@ -16,7 +16,7 @@
   "password": "Passwort",
   "confirmPassword": "Passwort bestätigen",
   "alreadyHaveAccount": "Bereits ein Konto?",
-  "login": "Anmelden",
+  "login": "Anmeldung",
   "tipOfTheDay": "Tipp des Tages",
   "next": "Weiter",
   "timeline": "Zeitachse",
@@ -89,6 +89,8 @@
   "enterYourUsername": "Enter your Username",
   "iAgreeTo": "I agree to",
   "registrationSuccessful": "Registration\nSuccessful!",
+  "registrationUnSuccessful": "Registration\nUnsuccessful!",
+  "registrationFailed": "Registration\nFailed!",
   "youWillBeRedirectedToTheLogInPage": "You will be redirected\nto the Log In page",
   "tapToContinue": "Tap to Continue",
   "empower": "Empower. Protect. Transform.",
@@ -96,5 +98,13 @@
   "education": "Education",
   "training": "Training",
   "allEmergencyContacts": "Please note: all emergency contacts will receive a copy of your reports.",
-  "emergencyContactsAdded": "Emergency Contacts Added"
+  "emergencyContactsAdded": "Emergency Contacts Added",
+  "noInternetConnection": "No Internet connection",
+  "somethingWentWrong": "Something went wrong, try again later",
+  "errorOccurredWhileCommunicatingWithServer": "Error occurred while Communication with Server with StatusCode",
+  "pleaseEnter": "Please enter",
+  "pleaseEnterAValid": "Please enter a valid",
+  "shouldNotBeGreaterThan": "Should not be greater than 50",
+  "pleaseEnterYourUserName": "Please enter your username",
+  "youEnteredAnInvalidUserName": "You’ve entered an invalid username"
 }

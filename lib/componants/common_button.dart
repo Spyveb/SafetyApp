@@ -22,23 +22,17 @@ class CommonButton extends StatelessWidget {
       width: width ?? SizeConfig.deviceWidth,
       child: ElevatedButton(
         onPressed: onPressed,
-        style: ButtonStyle(
-          overlayColor: MaterialStateProperty.all(Colors.white10),
-          backgroundColor: MaterialStateProperty.all(
-            AppColors.primaryColor,
-          ),
-          padding: MaterialStateProperty.all(
-            padding ??
-                EdgeInsets.symmetric(
-                  vertical: getProportionateScreenHeight(20),
-                  horizontal: getProportionateScreenWidth(16),
-                ),
-          ),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                getProportionateScreenWidth(radius ?? 10),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primaryColor,
+          disabledBackgroundColor: Colors.grey.shade400,
+          padding: padding ??
+              EdgeInsets.symmetric(
+                vertical: getProportionateScreenHeight(20),
+                horizontal: getProportionateScreenWidth(16),
               ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              getProportionateScreenWidth(radius ?? 10),
             ),
           ),
         ),

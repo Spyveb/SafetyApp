@@ -200,7 +200,7 @@ abstract class AppLocalizations {
   /// No description provided for @login.
   ///
   /// In en, this message translates to:
-  /// **'Login'**
+  /// **'Log In'**
   String get login;
 
   /// No description provided for @dashboard.
@@ -629,6 +629,18 @@ abstract class AppLocalizations {
   /// **'Registration\nSuccessful!'**
   String get registrationSuccessful;
 
+  /// No description provided for @registrationUnSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration\nUnsuccessful!'**
+  String get registrationUnSuccessful;
+
+  /// No description provided for @registrationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration\nFailed!'**
+  String get registrationFailed;
+
   /// No description provided for @youWillBeRedirectedToTheLogInPage.
   ///
   /// In en, this message translates to:
@@ -676,6 +688,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Emergency Contacts Added'**
   String get emergencyContactsAdded;
+
+  /// No description provided for @noInternetConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'No Internet connection'**
+  String get noInternetConnection;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong, try again later'**
+  String get somethingWentWrong;
+
+  /// No description provided for @errorOccurredWhileCommunicatingWithServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Error occurred while Communication with Server with StatusCode'**
+  String get errorOccurredWhileCommunicatingWithServer;
+
+  /// No description provided for @pleaseEnter.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter'**
+  String get pleaseEnter;
+
+  /// No description provided for @pleaseEnterAValid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid'**
+  String get pleaseEnterAValid;
+
+  /// No description provided for @shouldNotBeGreaterThan.
+  ///
+  /// In en, this message translates to:
+  /// **'Should not be greater than 50'**
+  String get shouldNotBeGreaterThan;
+
+  /// No description provided for @pleaseEnterYourUserName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your username'**
+  String get pleaseEnterYourUserName;
+
+  /// No description provided for @youEnteredAnInvalidUserName.
+  ///
+  /// In en, this message translates to:
+  /// **'You’ve entered an invalid username'**
+  String get youEnteredAnInvalidUserName;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -145,7 +145,7 @@ class Utils {
 
   // Date picker dialog.
   static Future<String?> datePicker(BuildContext context,
-      {DateTime? lastDate, firstDate, initialDate, String? forMate}) async {
+      {DateTime? lastDate, firstDate, initialDate, String? format}) async {
     String? dateTime;
     DateTime? pickedDate = await showDatePicker(
       builder: (context, child) {
@@ -168,10 +168,17 @@ class Utils {
     );
 
     if (pickedDate != null) {
-      final DateFormat serverFormatter = DateFormat(forMate ?? 'dd/MM/yyyy');
+      final DateFormat serverFormatter = DateFormat(format ?? 'dd/MM/yyyy');
       dateTime = serverFormatter.format(pickedDate);
     }
 
+    return dateTime;
+  }
+
+  static String sendDateFormat(String text) {
+    String dateTime = "";
+    DateTime date = DateFormat("dd/MM/yyyy").parse(text);
+    dateTime = DateFormat("yyyy-MM-dd").format(date);
     return dateTime;
   }
 }

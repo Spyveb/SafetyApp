@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../imports.dart';
 
 class SignInController extends GetxController {
   TextEditingController userNameController = TextEditingController();
@@ -14,59 +17,59 @@ class SignInController extends GetxController {
   void onInit() {
     if (kDebugMode) {
       userNameController.text = "test";
-      passwordController.text = "123456";
+      passwordController.text = "Test@123";
     }
     super.onInit();
   }
-  // loginMethod() async {
-  //   LoadingDialog.showLoader();
-  //   try {
-  //     Dio.FormData formData = Dio.FormData.fromMap({
-  //       "login_username": emailController.text,
-  //       "login_password": passwordController.text,
-  //     });
-  //     var response = await ApiProvider().postAPICall(
-  //       Endpoints.login,
-  //       formData,
-  //       passToken: false,
-  //       onSendProgress: (count, total) {},
-  //     );
-  //     LoadingDialog.hideLoader();
-  //     if (response['status'] != null && response['status'] == true) {
-  //       if (response['data'] != null) {
-  //         if (response['data']['user'] != null) {
-  //           UserModel userModel = UserModel.fromJson(response['data']['user']);
-  //           await saveUserData(userModel);
-  //           if (userModel.isVerify != null && userModel.isVerify == "1") {
-  //             Get.offAllNamed(Routes.DASHBOARD);
-  //           } else {
-  //             resendCode();
-  //           }
-  //         }
-  //       }
-  //     } else {
-  //       Utils.showToast(response['message'] ?? "Login Failed");
-  //     }
-  //   } on Dio.DioException catch (e) {
-  //     LoadingDialog.hideLoader();
-  //     Utils.showToast(e.message ?? "Something went wrong");
-  //     update();
-  //     debugPrint(e.toString());
-  //   } catch (e) {
-  //     LoadingDialog.hideLoader();
-  //     Utils.showToast("Something went wrong");
-  //     update();
-  //     debugPrint(e.toString());
-  //   }
-  // }
 
-  // Future<void> saveUserData(UserModel userModel) async {
-  //   await StorageService().writeSecureData(Constants.userId, userModel.customerId.toString());
-  //   await StorageService().writeSecureData(Constants.userName, userModel.username.toString());
-  //   await StorageService().writeSecureData(Constants.email, userModel.email.toString());
-  //   await StorageService().writeSecureData(Constants.isSkipped, 'NO');
-  //   Get.find<DashBoardController>().isSkipped = 'NO';
-  // }
+  loginMethod() async {
+    LoadingDialog.showLoader();
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({
+        "username": userNameController.text,
+        "password": passwordController.text,
+      });
+      var response = await ApiProvider().postAPICall(
+        Endpoints.signIn,
+        formData,
+        passToken: false,
+        onSendProgress: (count, total) {},
+      );
+
+      if (response['success'] != null && response['success'] == true) {
+        if (response['data'] != null) {
+          if (response['data']['user'] != null) {
+            UserModel userModel = UserModel.fromJson(response['data']['user']);
+            await saveUserData(userModel);
+            LoadingDialog.hideLoader();
+            Get.offAllNamed(Routes.DASHBOARD);
+          }
+        }
+      } else {
+        LoadingDialog.hideLoader();
+        Utils.showToast(response['message'] ?? "Login Failed");
+      }
+    } on Dio.DioException catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast(e.message ?? "Something went wrong");
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast("Something went wrong");
+      update();
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> saveUserData(UserModel userModel) async {
+    await StorageService().writeSecureData(Constants.userId, userModel.id.toString());
+    await StorageService().writeSecureData(Constants.userName, userModel.username.toString());
+    await StorageService().writeSecureData(Constants.firstName, userModel.firstName.toString());
+    await StorageService().writeSecureData(Constants.lastName, userModel.lastName.toString());
+    await StorageService().writeSecureData(Constants.email, userModel.email.toString());
+    await StorageService().writeSecureData(Constants.accessToken, userModel.token.toString());
+  }
 
   // d.Dio dio = d.Dio();
   // List<List<dynamic>> _data = [];
