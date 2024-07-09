@@ -46,13 +46,14 @@ class SplashScreen extends GetView<SplashController> {
                   Spacer(),
                   TextButton(
                     onPressed: () {
-                      if (controller.isAuthenticated) {
-                        Get.offAllNamed(Routes.DASHBOARD);
-                      } else if (controller.isFirstTime) {
-                        Get.offAllNamed(Routes.ONBOARDING);
-                      } else {
-                        Get.offAllNamed(Routes.SIGN_IN);
-                      }
+                      Get.offAllNamed(Routes.SIGN_IN);
+                      // if (controller.isAuthenticated) {
+                      //   Get.offAllNamed(Routes.DASHBOARD);
+                      // } else if (controller.isFirstTime) {
+                      //   Get.offAllNamed(Routes.ONBOARDING);
+                      // } else {
+                      //   Get.offAllNamed(Routes.SIGN_IN);
+                      // }
                     },
                     child: Text(
                       AppLocalizations.of(context)!.tapToContinue,

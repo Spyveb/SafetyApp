@@ -324,4 +324,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get youEnteredAnInvalidUserName => 'You’ve entered an invalid username';
+
+  @override
+  String get editProfile => 'Edit Profile';
 }

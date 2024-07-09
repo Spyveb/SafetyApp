@@ -17,6 +17,7 @@ abstract class Routes {
   static const TRAINING_TOPIC_DETAILS = _Paths.TRAINING_TOPIC_DETAILS;
   static const CHAT = _Paths.CHAT;
   static const ADD_EMERGENCY_CONTACTS = _Paths.ADD_EMERGENCY_CONTACTS;
+  static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
 }
 
 abstract class _Paths {
@@ -35,4 +36,5 @@ abstract class _Paths {
   static const SUBMIT_REPORT = '/submit_report'; // submit_report
   static const TRAINING_TOPIC_DETAILS = '/training_topic_details'; // training_topic_details
   static const CHAT = '/chat'; // chat
+  static const EDIT_PROFILE = '/edit_profile'; // edit_profile
 }

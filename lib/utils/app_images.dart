@@ -32,6 +32,7 @@ class AppImages {
   static const String frenchLanguage = "assets/images/france.png";
   static const String namibiaLanguage = "assets/images/namibia.png";
   static const String messageSent = "assets/images/message_sent.png";
+  static const String userImage = "assets/images/user.png";
 
   // svgs
 

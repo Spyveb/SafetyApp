@@ -10,6 +10,7 @@ import 'package:distress_app/modules/report_module/report_bindings.dart';
 import 'package:distress_app/modules/report_module/report_screen.dart';
 import 'package:distress_app/modules/report_module/submit_report_screen.dart';
 import 'package:distress_app/modules/settings_module/add_edit_emergency_contacts.dart';
+import 'package:distress_app/modules/settings_module/edit_profile_screen.dart';
 import 'package:distress_app/modules/settings_module/emergency_contacts.dart';
 import 'package:distress_app/modules/settings_module/settings_bindings.dart';
 import 'package:distress_app/modules/settings_module/settings_screen.dart';
@@ -74,6 +75,11 @@ abstract class AppPages {
     GetPage(
       name: Routes.ADD_EMERGENCY_CONTACTS,
       page: () => AddEditEmergencyContactsScreen(),
+      // binding: SettingsBinding,
+    ),
+    GetPage(
+      name: Routes.EDIT_PROFILE,
+      page: () => EditProfileScreen(),
       // binding: SettingsBinding,
     ),
     GetPage(

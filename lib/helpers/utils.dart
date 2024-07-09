@@ -181,4 +181,11 @@ class Utils {
     dateTime = DateFormat("yyyy-MM-dd").format(date);
     return dateTime;
   }
+
+  static String displayDateFormat(String text) {
+    String dateTime = "";
+    DateTime date = DateFormat("yyyy-MM-dd").parse(text);
+    dateTime = DateFormat("dd/MM/yyyy").format(date);
+    return dateTime;
+  }
 }

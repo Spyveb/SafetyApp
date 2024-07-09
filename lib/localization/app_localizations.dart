@@ -736,6 +736,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You’ve entered an invalid username'**
   String get youEnteredAnInvalidUserName;
+
+  /// No description provided for @editProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfile;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

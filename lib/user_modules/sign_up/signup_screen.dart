@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:distress_app/helpers/validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../imports.dart';
 
@@ -47,6 +50,57 @@ class SignUpScreen extends GetView<SignUpController> {
                     ),
                     SizedBox(
                       height: getProportionateScreenHeight(8),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: GestureDetector(
+                        onTap: () async {
+                          ImagePicker imagePicker = ImagePicker();
+                          XFile? xFile = await imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+                          if (xFile != null) {
+                            controller.profileImage = File(xFile.path);
+                            controller.update();
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: getProportionateScreenHeight(16),
+                            horizontal: getProportionateScreenWidth(16),
+                          ),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.greyColor,
+                            image: controller.profileImage != null
+                                ? DecorationImage(
+                                    image: FileImage(controller.profileImage!),
+                                    fit: BoxFit.cover,
+                                  )
+                                : null,
+                          ),
+                          child: Container(
+                            height: getProportionateScreenHeight(60),
+                            width: getProportionateScreenWidth(60),
+                            padding: EdgeInsets.symmetric(
+                              vertical: getProportionateScreenHeight(28),
+                              horizontal: getProportionateScreenWidth(28),
+                            ),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.transparent,
+                              image: controller.profileImage == null
+                                  ? DecorationImage(
+                                      image: AssetImage(AppImages.userImage),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : null,
+                            ),
+                            // child: SvgPicture.asset(AppImages.editIcon),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(18),
                     ),
                     IntrinsicHeight(
                       child: Row(

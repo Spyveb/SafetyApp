@@ -23,6 +23,9 @@ class Constants {
   // Key for accessing the mobile number in storage.
   static const mobile = 'mobile';
 
+  // Key for accessing the profile image in storage.
+  static const profileImage = 'profile_image';
+
   // Key for accessing the language preference in storage.
   static const language = 'language';
 

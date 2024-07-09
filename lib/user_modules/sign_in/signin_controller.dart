@@ -64,11 +64,12 @@ class SignInController extends GetxController {
 
   Future<void> saveUserData(UserModel userModel) async {
     await StorageService().writeSecureData(Constants.userId, userModel.id.toString());
-    await StorageService().writeSecureData(Constants.userName, userModel.username.toString());
-    await StorageService().writeSecureData(Constants.firstName, userModel.firstName.toString());
-    await StorageService().writeSecureData(Constants.lastName, userModel.lastName.toString());
-    await StorageService().writeSecureData(Constants.email, userModel.email.toString());
-    await StorageService().writeSecureData(Constants.accessToken, userModel.token.toString());
+    await StorageService().writeSecureData(Constants.userName, userModel.username ?? "");
+    await StorageService().writeSecureData(Constants.firstName, userModel.firstName ?? "");
+    await StorageService().writeSecureData(Constants.lastName, userModel.lastName ?? "");
+    await StorageService().writeSecureData(Constants.profileImage, userModel.profileImage ?? "");
+    await StorageService().writeSecureData(Constants.email, userModel.email ?? "");
+    await StorageService().writeSecureData(Constants.accessToken, userModel.token ?? "");
   }
 
   // d.Dio dio = d.Dio();

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:dio/dio.dart' as Dio;
@@ -23,6 +24,8 @@ class SignUpController extends GetxController {
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  File? profileImage;
+
   void termValueChange(value) {
     termValue = value;
     update();
@@ -41,6 +44,16 @@ class SignUpController extends GetxController {
         "username": userNameController.text,
         "password": passwordController.text,
       });
+
+      if (profileImage != null) {
+        formData.files.add(
+          MapEntry(
+            'profile_image',
+            await Dio.MultipartFile.fromFile(profileImage!.path),
+          ),
+        );
+      }
+
       var response = await ApiProvider().postAPICall(
         Endpoints.signUp,
         formData,
@@ -392,5 +405,6 @@ class SignUpController extends GetxController {
     await StorageService().writeSecureData(Constants.lastName, userModel.lastName ?? "");
     await StorageService().writeSecureData(Constants.accessToken, userModel.token ?? "");
     await StorageService().writeSecureData(Constants.userName, userModel.username ?? "");
+    await StorageService().writeSecureData(Constants.profileImage, userModel.profileImage ?? "");
   }
 }

@@ -204,6 +204,17 @@ class SettingsScreen extends GetView<SettingsController> {
                   ),
                   SettingsTile(
                     themeProvider: themeProvider,
+                    text: AppLocalizations.of(context)!.editProfile,
+                    onTap: () {
+                      Get.toNamed(Routes.EDIT_PROFILE);
+                      controller.getUserProfile();
+                    },
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(8),
+                  ),
+                  SettingsTile(
+                    themeProvider: themeProvider,
                     text: AppLocalizations.of(context)!.reportAnonymously,
                     onTap: () {},
                     suffix: CommonSwitch(
