@@ -7,6 +7,7 @@ abstract class AppPages {
   const AppPages._();
 
   static final routes = [
+    // User Modules
     GetPage(
       name: Routes.SPLASH,
       page: () => const SplashScreen(),
@@ -86,6 +87,14 @@ abstract class AppPages {
       name: Routes.CHAT,
       page: () => ChatScreen(),
       binding: ChatBinding(),
+    ),
+
+    // Police Modules
+
+    GetPage(
+      name: Routes.POLICE_DASHBOARD,
+      page: () => const PoliceDashBoardScreen(),
+      binding: PoliceDashBoardBinding(),
     ),
   ];
 }

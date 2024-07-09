@@ -2,7 +2,7 @@
 class AppImages {
   AppImages._();
 
-  //images
+  // User images
   static const String appLogo = "assets/images/app_logo.png";
   static const String onBoardingOne = "assets/images/onboarding_one.png";
   static const String onBoardingTwo = "assets/images/onboarding_two.png";
@@ -34,11 +34,21 @@ class AppImages {
   static const String messageSent = "assets/images/message_sent.png";
   static const String userImage = "assets/images/user.png";
 
-  // svgs
-
+  // User svgs
   static const String userProfile = "assets/svgs/user.svg";
   static const String email = "assets/svgs/mail.svg";
   static const String calendar = "assets/svgs/calendar.svg";
   static const String editIcon = "assets/svgs/editIcon.svg";
   static const String lockIcon = "assets/svgs/lock.svg";
+
+  // Police images
+  static const String policeUserIcon = "assets/images/user_icon.png";
+
+  // Police Svgs
+  static const String policeDashboard = "assets/svgs/police_dashboard.svg";
+  static const String policeSosEmergency = "assets/svgs/sos_emergency.svg";
+  static const String policeReportedEmergency = "assets/svgs/police_reported_emergency.svg";
+  static const String policeReportedNonEmergency = "assets/svgs/police_reported_non_emergency.svg";
+  static const String policeSetting = "assets/svgs/police_setting.svg";
+  static const String policeLogout = "assets/svgs/police_logout.svg";
 }

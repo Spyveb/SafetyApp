@@ -20,6 +20,9 @@ export './packages/country_code_picker/src/country_code.dart';
 export './packages/country_code_picker/src/country_codes.dart';
 export './packages/country_code_picker/src/country_localizations.dart';
 export './packages/country_code_picker/src/selection_dialog.dart';
+export './police_modules/police_dashboard/police_dashboard_bindings.dart';
+export './police_modules/police_dashboard/police_dashboard_controller.dart';
+export './police_modules/police_dashboard/police_dashboard_screen.dart';
 export './providers/theme_provider.dart';
 export './routes/app_pages.dart';
 export './user_modules/chat/chat_bindings.dart';
@@ -64,4 +67,3 @@ export './utils/app_images.dart';
 export './utils/constants.dart';
 export './utils/loader.dart';
 export 'main.dart';
-

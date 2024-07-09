@@ -2,6 +2,7 @@ part of 'app_pages.dart';
 // DO NOT EDIT. This is code generated via package:get_cli/get_cli.dart
 
 abstract class Routes {
+  // User Modules
   static const SPLASH = _Paths.SPLASH;
   static const ONBOARDING = _Paths.ONBOARDING;
   static const SIGN_IN = _Paths.SIGN_IN;
@@ -18,9 +19,13 @@ abstract class Routes {
   static const CHAT = _Paths.CHAT;
   static const ADD_EMERGENCY_CONTACTS = _Paths.ADD_EMERGENCY_CONTACTS;
   static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
+
+  // Police Modules
+  static const POLICE_DASHBOARD = _Paths.POLICE_DASHBOARD;
 }
 
 abstract class _Paths {
+  // User Modules
   static const SPLASH = '/splash'; // splash
   static const ONBOARDING = '/onBoarding'; // onBoarding
   static const SIGN_IN = '/signIn'; // signIn
@@ -37,4 +42,7 @@ abstract class _Paths {
   static const TRAINING_TOPIC_DETAILS = '/training_topic_details'; // training_topic_details
   static const CHAT = '/chat'; // chat
   static const EDIT_PROFILE = '/edit_profile'; // edit_profile
+
+  // Police Modules
+  static const POLICE_DASHBOARD = '/police_dashboard'; // police_dashboard
 }
