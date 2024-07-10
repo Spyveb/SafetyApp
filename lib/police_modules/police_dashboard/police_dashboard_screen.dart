@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:distress_app/componants/police_drawer_items.dart';
 import 'package:distress_app/imports.dart';
 import 'package:distress_app/packages/advanced_drawer/flutter_advanced_drawer.dart';
@@ -364,21 +366,36 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
               itemName: AppLocalizations.of(context)!.dashboard,
               imageName: AppImages.policeDashboard,
               bottom: getProportionateScreenHeight(22),
+              onTap: () {
+                controller.advancedDrawerController.hideDrawer();
+              },
             ),
             PoliceDrawerItems(
               itemName: AppLocalizations.of(context)!.sosEmergency,
               imageName: AppImages.policeSosEmergency,
               bottom: getProportionateScreenHeight(22),
+              onTap: () {
+                Get.toNamed(Routes.POLICE_SOSEMERGENCY);
+                controller.advancedDrawerController.hideDrawer();
+              },
             ),
             PoliceDrawerItems(
               itemName: AppLocalizations.of(context)!.reportedEmergency,
               imageName: AppImages.policeReportedEmergency,
               bottom: getProportionateScreenHeight(22),
+              onTap: () {
+                Get.toNamed(Routes.POLICE_REPORTEDEMGCASES);
+                controller.advancedDrawerController.hideDrawer();
+              },
             ),
             PoliceDrawerItems(
               itemName: AppLocalizations.of(context)!.reportedNonEmergency,
               imageName: AppImages.policeReportedNonEmergency,
               bottom: getProportionateScreenHeight(22),
+              onTap: () {
+                Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASES);
+                controller.advancedDrawerController.hideDrawer();
+              },
             ),
             PoliceDrawerItems(
               itemName: AppLocalizations.of(context)!.settings,
@@ -388,6 +405,124 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
             PoliceDrawerItems(
               itemName: AppLocalizations.of(context)!.logout,
               imageName: AppImages.policeLogout,
+              onTap: () {
+                Utils.showCustomDialog(
+                  context: context,
+                  child: Center(
+                    child: Material(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(
+                        getProportionateScreenWidth(32),
+                      ),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(
+                          sigmaX: 1.5,
+                          sigmaY: 1.5,
+                        ),
+                        child: GetBuilder<PoliceDashBoardController>(
+                          builder: (controller) {
+                            return Container(
+                              width: SizeConfig.deviceWidth! * .85,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(16),
+                                vertical: getProportionateScreenHeight(16),
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  getProportionateScreenWidth(32),
+                                ),
+                                color: Colors.white,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.confirmationMessage,
+                                    style: TextStyle(
+                                        fontFamily: AppFonts.sansFont700,
+                                        fontSize: getProportionalFontSize(22),
+                                        color: AppColors.primaryColor),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    height: getProportionateScreenHeight(10),
+                                  ),
+                                  Text(
+                                    "Are you sure you want to logout?",
+                                    style: TextStyle(
+                                        fontFamily: AppFonts.sansFont500,
+                                        fontSize: getProportionalFontSize(16),
+                                        color: AppColors.blackColor),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    height: getProportionateScreenHeight(24),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: CommonButton(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: getProportionateScreenWidth(24),
+                                            vertical: getProportionateScreenHeight(18),
+                                          ),
+                                          text: AppLocalizations.of(context)!.yes,
+                                          onPressed: () async {
+                                            Get.back();
+                                            await StorageService().deleteAllSecureData();
+                                            Get.offAllNamed(Routes.SIGN_IN);
+                                          },
+                                          radius: 50,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: getProportionateScreenWidth(18),
+                                      ),
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Get.back();
+                                          },
+                                          behavior: HitTestBehavior.opaque,
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: getProportionateScreenWidth(24),
+                                              vertical: getProportionateScreenHeight(17),
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(
+                                                getProportionateScreenWidth(50),
+                                              ),
+                                              border: Border.all(color: AppColors.blackColor, width: 1),
+                                            ),
+                                            child: Text(
+                                              AppLocalizations.of(context)!.no,
+                                              textAlign: TextAlign.center,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: getProportionalFontSize(16),
+                                                fontFamily: AppFonts.sansFont600,
+                                                color: AppColors.primaryColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),

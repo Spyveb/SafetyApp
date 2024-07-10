@@ -1,4 +1,5 @@
 //GENERATED BARREL FILE
+export './componants/Custom_cases_list.dart';
 export './componants/common_button.dart';
 export './componants/common_switch.dart';
 export './componants/common_textfield.dart';
@@ -23,6 +24,15 @@ export './packages/country_code_picker/src/selection_dialog.dart';
 export './police_modules/police_dashboard/police_dashboard_bindings.dart';
 export './police_modules/police_dashboard/police_dashboard_controller.dart';
 export './police_modules/police_dashboard/police_dashboard_screen.dart';
+export './police_modules/reported_emergency_cases/reported_emergency_cases_bindings.dart';
+export './police_modules/reported_emergency_cases/reported_emergency_cases_controller.dart';
+export './police_modules/reported_emergency_cases/reported_emergency_cases_screen.dart';
+export './police_modules/reported_non_emergency_cases/reported_non_emg_cases_bindings.dart';
+export './police_modules/reported_non_emergency_cases/reported_non_emg_cases_controller.dart';
+export './police_modules/reported_non_emergency_cases/reported_non_emg_cases_screen.dart';
+export './police_modules/sos_emergency/sos_emergency_bindings.dart';
+export './police_modules/sos_emergency/sos_emergency_controller.dart';
+export './police_modules/sos_emergency/sos_emergency_screen.dart';
 export './providers/theme_provider.dart';
 export './routes/app_pages.dart';
 export './user_modules/chat/chat_bindings.dart';

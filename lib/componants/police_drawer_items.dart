@@ -11,6 +11,7 @@ class PoliceDrawerItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
+      behavior: HitTestBehavior.opaque,
       child: Padding(
         padding: EdgeInsets.only(
           bottom: bottom ?? 0,

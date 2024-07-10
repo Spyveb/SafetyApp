@@ -234,6 +234,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
                           child: GestureDetector(
                             onTap: () {
                               Get.back();
+                              showRequestDeclineDialog(context);
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -419,6 +420,91 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
                   ),
                   Text(
                     AppLocalizations.of(context)!.aBackupSentYourDestination,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: AppFonts.sansFont500,
+                      fontSize: getProportionalFontSize(16),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(25),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.policeDarkBlueColor,
+                        borderRadius: BorderRadius.circular(
+                          getProportionateScreenWidth(30),
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(30),
+                        vertical: getProportionateScreenHeight(15),
+                      ),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.ok,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: getProportionalFontSize(18),
+                            fontFamily: AppFonts.sansFont600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  showRequestDeclineDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(10),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: AppColors.policeDarkBlueColor,
+              ),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            padding: EdgeInsets.symmetric(
+              vertical: getProportionateScreenHeight(10),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(14),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.sosRequest,
+                    style: TextStyle(
+                      fontFamily: AppFonts.sansFont600,
+                      fontSize: getProportionalFontSize(24),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(15),
+                  ),
+                  Text(
+                    "You have declined the SOS Request. The request will be sent to another officer",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: AppFonts.sansFont500,

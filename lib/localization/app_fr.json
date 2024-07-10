@@ -135,5 +135,8 @@
   "userName": "Username",
   "sureDeleteAccount": "Are you sure you want to delete your account?",
   "addNewContact": "Add new contact",
-  "role": "Role"
+  "role": "Role",
+  "caseNo": "Case no",
+  "date": "Date",
+  "city": "City"
 }

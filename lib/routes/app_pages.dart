@@ -90,11 +90,25 @@ abstract class AppPages {
     ),
 
     // Police Modules
-
     GetPage(
       name: Routes.POLICE_DASHBOARD,
       page: () => const PoliceDashBoardScreen(),
       binding: PoliceDashBoardBinding(),
+    ),
+    GetPage(
+      name: Routes.POLICE_SOSEMERGENCY,
+      page: () => const PoliceSOSEmergencyScreen(),
+      binding: PoliceSOSEmergencyBinding(),
+    ),
+    GetPage(
+      name: Routes.POLICE_REPORTEDEMGCASES,
+      page: () => const ReportedEmgCasesScreen(),
+      binding: ReportedEmgCasesBinding(),
+    ),
+    GetPage(
+      name: Routes.POLICE_REPORTEDNONEMGCASES,
+      page: () => const ReportedNonEmgCasesScreen(),
+      binding: ReportedNonEmgCasesBinding(),
     ),
   ];
 }

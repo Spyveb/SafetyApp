@@ -411,4 +411,13 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get role => 'Role';
+
+  @override
+  String get caseNo => 'Case no';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get city => 'City';
 }
