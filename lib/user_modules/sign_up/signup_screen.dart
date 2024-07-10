@@ -113,7 +113,10 @@ class SignUpScreen extends GetView<SignUpController> {
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
                               validation: (value) => Validation.emptyValidation(
-                                  controller.firstNameController.text, context, "First Name"),
+                                controller.firstNameController.text,
+                                context,
+                                AppLocalizations.of(context)!.firstName.capitalize,
+                              ),
                               onChanged: (value) {
                                 controller.firstNameController.text = value;
                                 controller.update();
@@ -140,8 +143,11 @@ class SignUpScreen extends GetView<SignUpController> {
                               hintText: AppLocalizations.of(context)!.lastName,
                               textEditingController: controller.lastNameController,
                               textInputAction: TextInputAction.next,
-                              validation: (value) =>
-                                  Validation.emptyValidation(controller.lastNameController.text, context, "Last Name"),
+                              validation: (value) => Validation.emptyValidation(
+                                controller.lastNameController.text,
+                                context,
+                                AppLocalizations.of(context)!.lastName.capitalize,
+                              ),
                               onChanged: (value) {
                                 controller.lastNameController.text = value;
                                 controller.update();
@@ -170,8 +176,8 @@ class SignUpScreen extends GetView<SignUpController> {
                       textEditingController: controller.emailController,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
-                      validation: (value) =>
-                          Validation.emailValidation(controller.emailController.text, "email", context),
+                      validation: (value) => Validation.emailValidation(
+                          controller.emailController.text, AppLocalizations.of(context)!.email.capitalize, context),
                       onChanged: (value) {
                         controller.emailController.text = value;
                         controller.update();
@@ -197,7 +203,10 @@ class SignUpScreen extends GetView<SignUpController> {
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.next,
                       validation: (value) => Validation.mobileValidationWithCode(
-                          controller.phoneNumberController.text, context, "Phone Number"),
+                        controller.phoneNumberController.text,
+                        context,
+                        AppLocalizations.of(context)!.phoneNumber.capitalize,
+                      ),
                       onChanged: (value) {
                         controller.phoneNumberController.text = value;
                         controller.update();
@@ -278,8 +287,11 @@ class SignUpScreen extends GetView<SignUpController> {
                       hintText: AppLocalizations.of(context)!.dateOfBirth,
                       textEditingController: controller.birthDateController,
                       readOnly: true,
-                      validation: (value) =>
-                          Validation.emptyValidation(controller.birthDateController.text, context, "Date of Birth"),
+                      validation: (value) => Validation.emptyValidation(
+                        controller.birthDateController.text,
+                        context,
+                        AppLocalizations.of(context)!.dateOfBirth.capitalize,
+                      ),
                       onTap: () async {
                         DateTime? initialDate;
                         if (controller.birthDateController.text.isNotEmpty) {
@@ -355,7 +367,7 @@ class SignUpScreen extends GetView<SignUpController> {
                             ),
                             borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
                           ),
-                          enabledBorder:  OutlineInputBorder(
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(
                               getProportionateScreenWidth(10),
                             ),
@@ -408,7 +420,11 @@ class SignUpScreen extends GetView<SignUpController> {
                           controller.role = value ?? controller.roleList.first;
                           controller.update();
                         },
-                        validator: (value) => Validation.emptyValidation(value, context, "role"),
+                        validator: (value) => Validation.emptyValidation(
+                          value,
+                          context,
+                          AppLocalizations.of(context)!.role.capitalize,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -419,8 +435,11 @@ class SignUpScreen extends GetView<SignUpController> {
                       textEditingController: controller.userNameController,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
-                      validation: (value) =>
-                          Validation.emptyValidation(controller.userNameController.text, context, "User Name"),
+                      validation: (value) => Validation.emptyValidation(
+                        controller.userNameController.text,
+                        context,
+                        AppLocalizations.of(context)!.userName.capitalize,
+                      ),
                       onChanged: (value) {
                         controller.userNameController.text = value;
                         controller.update();
@@ -446,8 +465,11 @@ class SignUpScreen extends GetView<SignUpController> {
                       obscure: controller.isObscure,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.visiblePassword,
-                      validation: (value) =>
-                          Validation.emptyValidation(controller.passwordController.text, context, "Password"),
+                      validation: (value) => Validation.emptyValidation(
+                        controller.passwordController.text,
+                        context,
+                        AppLocalizations.of(context)!.password.capitalize,
+                      ),
                       onChanged: (value) {
                         controller.passwordController.text = value;
                         controller.update();

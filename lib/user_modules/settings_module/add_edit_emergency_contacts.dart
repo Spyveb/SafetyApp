@@ -27,7 +27,7 @@ class AddEditEmergencyContactsScreen extends GetView<SettingsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Add contact",
+                    AppLocalizations.of(context)!.addContact,
                     style: TextStyle(
                       fontSize: getProportionalFontSize(28),
                       color: themeProvider.textThemeColor,
@@ -61,7 +61,7 @@ class AddEditEmergencyContactsScreen extends GetView<SettingsController> {
                       children: [
                         CommonTextField(
                           textEditingController: controller.contactNameController,
-                          hintText: "Enter contact name",
+                          hintText: AppLocalizations.of(context)!.enterContactName,
                           prefixIcon: Image.asset(
                             AppImages.contact,
                             height: getProportionateScreenHeight(18),
@@ -73,7 +73,7 @@ class AddEditEmergencyContactsScreen extends GetView<SettingsController> {
                         ),
                         CommonTextField(
                           textEditingController: controller.contactNumberController,
-                          hintText: "Enter contact number",
+                          hintText: AppLocalizations.of(context)!.enterContactNumber,
                           keyboardType: TextInputType.phone,
                           prefixIcon: Image.asset(
                             AppImages.contact,

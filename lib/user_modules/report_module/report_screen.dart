@@ -72,7 +72,7 @@ class ReportScreen extends GetView<ReportController> {
                             border: UnderlineInputBorder(),
 
                             ///TODO
-                            hintText: "Search location",
+                            hintText: AppLocalizations.of(context)!.searchLocation,
                             hintStyle: TextStyle(
                               fontFamily: AppFonts.sansFont400,
                               fontSize: getProportionalFontSize(14),
@@ -237,7 +237,7 @@ class ReportScreen extends GetView<ReportController> {
                             horizontal: getProportionateScreenWidth(8),
                             vertical: getProportionateScreenHeight(8),
                           ),
-                          text: "Submit",
+                          text: AppLocalizations.of(context)!.submit,
                           radius: 50,
                           onPressed: () {
                             Get.toNamed(Routes.SUBMIT_REPORT);

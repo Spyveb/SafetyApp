@@ -125,5 +125,15 @@
   "whatHappenedThisEvent": "What happened when you responded to this event?",
   "backupRequestSent": "Backup Request Sent",
   "aBackupSentYourDestination": "A backup will be sent to your destination shortly.",
-  "ok": "OK"
+  "ok": "OK",
+  "counsellor": "Counsellor",
+  "searchLocation": "Search location",
+  "search": "Search",
+  "addContact": "Add contact",
+  "enterContactNumber": "Enter contact number",
+  "enterContactName": "Enter contact name",
+  "userName": "Username",
+  "sureDeleteAccount": "Are you sure you want to delete your account?",
+  "addNewContact": "Add new contact",
+  "role": "Role"
 }

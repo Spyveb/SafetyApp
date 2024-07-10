@@ -29,19 +29,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get pleaseCompleteForm => 'Bitte füllen Sie das Formular aus.';
 
   @override
-  String get firstName => 'Vorname';
+  String get firstName => 'First Name';
 
   @override
-  String get lastName => 'Nachname';
+  String get lastName => 'Last Name';
 
   @override
   String get email => 'E-Mail';
 
   @override
-  String get phoneNumber => 'Telefonnummer';
+  String get phoneNumber => 'Phone Number';
 
   @override
-  String get dateOfBirth => 'Geburtsdatum';
+  String get dateOfBirth => 'Date of Birth';
 
   @override
   String get preferredUsername => 'Bevorzugter Benutzername';
@@ -381,4 +381,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get counsellor => 'Counsellor';
+
+  @override
+  String get searchLocation => 'Search location';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get addContact => 'Add contact';
+
+  @override
+  String get enterContactName => 'Enter contact name';
+
+  @override
+  String get enterContactNumber => 'Enter contact number';
+
+  @override
+  String get userName => 'Username';
+
+  @override
+  String get sureDeleteAccount => 'Are you sure you want to delete your account?';
+
+  @override
+  String get addNewContact => 'Add new contact';
+
+  @override
+  String get role => 'Role';
 }

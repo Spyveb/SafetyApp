@@ -381,4 +381,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get counsellor => 'Counsellor';
+
+  @override
+  String get searchLocation => 'Search location';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get addContact => 'Add contact';
+
+  @override
+  String get enterContactName => 'Enter contact name';
+
+  @override
+  String get enterContactNumber => 'Enter contact number';
+
+  @override
+  String get userName => 'Username';
+
+  @override
+  String get sureDeleteAccount => 'Are you sure you want to delete your account?';
+
+  @override
+  String get addNewContact => 'Add new contact';
+
+  @override
+  String get role => 'Role';
 }

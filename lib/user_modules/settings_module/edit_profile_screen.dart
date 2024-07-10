@@ -136,7 +136,9 @@ class EditProfileScreen extends GetView<SettingsController> {
                                     textInputAction: TextInputAction.next,
                                     keyboardType: TextInputType.name,
                                     validation: (value) => Validation.emptyValidation(
-                                        controller.firstNameController.text, context, "First Name"),
+                                        controller.firstNameController.text,
+                                        context,
+                                        AppLocalizations.of(context)!.firstName.capitalize),
                                     onChanged: (value) {
                                       controller.firstNameController.text = value;
                                       controller.update();
@@ -164,7 +166,10 @@ class EditProfileScreen extends GetView<SettingsController> {
                                     textEditingController: controller.lastNameController,
                                     textInputAction: TextInputAction.next,
                                     validation: (value) => Validation.emptyValidation(
-                                        controller.lastNameController.text, context, "Last Name"),
+                                      controller.lastNameController.text,
+                                      context,
+                                      AppLocalizations.of(context)!.lastName.capitalize,
+                                    ),
                                     onChanged: (value) {
                                       controller.lastNameController.text = value;
                                       controller.update();
@@ -194,8 +199,8 @@ class EditProfileScreen extends GetView<SettingsController> {
                             textInputAction: TextInputAction.next,
                             readOnly: true,
                             keyboardType: TextInputType.emailAddress,
-                            validation: (value) =>
-                                Validation.emailValidation(controller.emailController.text, "email", context),
+                            validation: (value) => Validation.emailValidation(controller.emailController.text,
+                                AppLocalizations.of(context)!.email.capitalize, context),
                             onChanged: (value) {
                               controller.emailController.text = value;
                               controller.update();
@@ -221,7 +226,10 @@ class EditProfileScreen extends GetView<SettingsController> {
                             keyboardType: TextInputType.number,
                             textInputAction: TextInputAction.next,
                             validation: (value) => Validation.mobileValidationWithCode(
-                                controller.phoneNumberController.text, context, "Phone Number"),
+                              controller.phoneNumberController.text,
+                              context,
+                              AppLocalizations.of(context)!.phoneNumber.capitalize,
+                            ),
                             onChanged: (value) {
                               controller.phoneNumberController.text = value;
                               controller.update();
@@ -305,7 +313,10 @@ class EditProfileScreen extends GetView<SettingsController> {
                             textEditingController: controller.birthDateController,
                             readOnly: true,
                             validation: (value) => Validation.emptyValidation(
-                                controller.birthDateController.text, context, "Date of Birth"),
+                              controller.birthDateController.text,
+                              context,
+                              AppLocalizations.of(context)!.dateOfBirth.capitalize,
+                            ),
                             onTap: () async {
                               DateTime? initialDate;
                               if (controller.birthDateController.text.isNotEmpty) {
@@ -349,8 +360,8 @@ class EditProfileScreen extends GetView<SettingsController> {
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.next,
                             readOnly: true,
-                            validation: (value) =>
-                                Validation.emptyValidation(controller.userNameController.text, context, "User Name"),
+                            validation: (value) => Validation.emptyValidation(controller.userNameController.text,
+                                context, AppLocalizations.of(context)!.userName.capitalize),
                             // onChanged: (value) {
                             //   controller.userNameController.text = value;
                             //   controller.update();
@@ -441,7 +452,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                               height: getProportionateScreenHeight(10),
                                             ),
                                             Text(
-                                              "Are you sure you want to delete your account?",
+                                              AppLocalizations.of(context)!.sureDeleteAccount,
                                               style: TextStyle(
                                                   fontFamily: AppFonts.sansFont500,
                                                   fontSize: getProportionalFontSize(16),

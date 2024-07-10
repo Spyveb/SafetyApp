@@ -169,7 +169,7 @@ class EmergencyContactsScreen extends GetView<SettingsController> {
                         ),
                       ),
                       child: Text(
-                        "Add new contact",
+                        AppLocalizations.of(context)!.addNewContact,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

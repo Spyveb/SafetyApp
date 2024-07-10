@@ -19,12 +19,15 @@ class _PlaceAutoCompleteScreenState extends State<PlaceAutoCompleteScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
-        leading:IconButton(onPressed: () {
-Get.back();
-        }, icon:  Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),),
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
         title: AppBarPlacesAutoCompleteTextField(
           onChanged: (value) {
             placeAutoComplete(value);
@@ -99,7 +102,7 @@ class _AppBarPlacesAutoCompleteTextFieldState extends State<AppBarPlacesAutoComp
           onChanged: widget.onChanged,
           autofocus: true,
           style: widget.textStyle ?? _defaultStyle(),
-          decoration: widget.textDecoration ?? _defaultDecoration("Search"),
+          decoration: widget.textDecoration ?? _defaultDecoration(AppLocalizations.of(context)!.search),
         ));
   }
 

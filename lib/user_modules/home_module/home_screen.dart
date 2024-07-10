@@ -204,7 +204,7 @@ class HomeScreen extends GetView<HomeController> {
                             border: UnderlineInputBorder(),
 
                             ///TODO text change
-                            hintText: "Search location",
+                            hintText: AppLocalizations.of(context)!.searchLocation,
                             hintStyle: TextStyle(
                               fontFamily: AppFonts.sansFont400,
                               fontSize: getProportionalFontSize(14),

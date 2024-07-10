@@ -850,6 +850,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'OK'**
   String get ok;
+
+  /// No description provided for @counsellor.
+  ///
+  /// In en, this message translates to:
+  /// **'Counsellor'**
+  String get counsellor;
+
+  /// No description provided for @searchLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Search location'**
+  String get searchLocation;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @addContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Add contact'**
+  String get addContact;
+
+  /// No description provided for @enterContactName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter contact name'**
+  String get enterContactName;
+
+  /// No description provided for @enterContactNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter contact number'**
+  String get enterContactNumber;
+
+  /// No description provided for @userName.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get userName;
+
+  /// No description provided for @sureDeleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account?'**
+  String get sureDeleteAccount;
+
+  /// No description provided for @addNewContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new contact'**
+  String get addNewContact;
+
+  /// No description provided for @role.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get role;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

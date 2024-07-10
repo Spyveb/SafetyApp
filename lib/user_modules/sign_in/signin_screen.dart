@@ -89,8 +89,11 @@ class SignInScreen extends GetView<SignInController> {
                       },
                       textEditingController: controller.passwordController,
                       hintText: AppLocalizations.of(context)!.enterYourPassword,
-                      validation: (value) =>
-                          Validation.emptyValidation(controller.passwordController.text, context, "password"),
+                      validation: (value) => Validation.emptyValidation(
+                        controller.passwordController.text,
+                        context,
+                        AppLocalizations.of(context)!.password.toLowerCase(),
+                      ),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.visiblePassword,
                     ),

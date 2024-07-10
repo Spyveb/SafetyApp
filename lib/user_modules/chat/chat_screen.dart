@@ -32,7 +32,7 @@ class ChatScreen extends GetView<ChatController> {
         toolbarHeight: getProportionateScreenHeight(56),
         centerTitle: false,
         title: Text(
-          "Counsellor",
+          AppLocalizations.of(context)!.counsellor,
           style: TextStyle(
             fontSize: getProportionalFontSize(32),
             color: themeProvider.textThemeColor,
