@@ -11,6 +11,7 @@ class SplashController extends GetxController {
 
   bool isFirstTime = false;
   bool isAuthenticated = false;
+  String role = "user";
 
   Future<void> getInitialData() async {
     bool isFirstTime = await StorageService().isFirstTime();
@@ -21,6 +22,7 @@ class SplashController extends GetxController {
       String? accessToken = await StorageService().readSecureData(Constants.accessToken);
       if (accessToken != null && accessToken.isNotEmpty) {
         isAuthenticated = true;
+        role = await StorageService().readSecureData(Constants.role) ?? "user";
         // Future.delayed(Duration(milliseconds: 1500)).then((value) {
         //   Get.offAllNamed(AppRoute.splashRoute);
         // });

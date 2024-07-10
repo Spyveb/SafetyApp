@@ -43,12 +43,16 @@ class AppImages {
 
   // Police images
   static const String policeUserIcon = "assets/images/user_icon.png";
+  static const String policeDashboard = "assets/images/police_dashboard.png";
+  static const String policeSosEmergency = "assets/images/police_sos_emergency.png";
+  static const String policeReportedEmergency = "assets/images/police_reported_emergency.png";
+  static const String policeReportedNonEmergency = "assets/images/police_reported_non_emergency.png";
+  static const String policeSetting = "assets/images/police_setting.png";
+  static const String policeLogout = "assets/images/police_logout.png";
+  static const String policeNotification = "assets/images/police_notification.png";
+  static const String policeNotificationBadge = "assets/images/police_notification_badge.png";
+  static const String policeDrawerIcon = "assets/images/police_drawer_icon.png";
+  static const String policeCloseDrawerIcon = "assets/images/police_close_drawer_icon.png";
 
   // Police Svgs
-  static const String policeDashboard = "assets/svgs/police_dashboard.svg";
-  static const String policeSosEmergency = "assets/svgs/sos_emergency.svg";
-  static const String policeReportedEmergency = "assets/svgs/police_reported_emergency.svg";
-  static const String policeReportedNonEmergency = "assets/svgs/police_reported_non_emergency.svg";
-  static const String policeSetting = "assets/svgs/police_setting.svg";
-  static const String policeLogout = "assets/svgs/police_logout.svg";
 }

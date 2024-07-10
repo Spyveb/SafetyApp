@@ -10,7 +10,12 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PoliceDashBoardController>(
-      initState: (state) => PoliceDashBoardController(),
+      // initState: (state) {
+      //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      //     controller.showSOSDialog(context);
+      //   });
+      // },
+      init: PoliceDashBoardController(),
       global: true,
       autoRemove: false,
       builder: (controller) {
@@ -29,18 +34,246 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
             );
           },
           child: AdvancedDrawer(
-            backdropColor: AppColors.greyColor,
+            backdropColor: Colors.white,
             controller: controller.advancedDrawerController,
             animationController: controller.animationController,
-            openRatio: .68,
+            openRatio: .60,
+            backdrop: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(color: Colors.white),
+            ),
             animationDuration: const Duration(milliseconds: 300),
-            openScale: 1,
-            drawer: drawerMenu(),
-            animateChildDecoration: false,
+            openScale: 0.7,
+            childDecoration: const BoxDecoration(
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Color(0xFFF2EAEA),
+                  blurRadius: 99,
+                  spreadRadius: 0,
+                  offset: Offset(-25.0, 19.0),
+                ),
+              ],
+              borderRadius: BorderRadius.all(
+                Radius.circular(28),
+              ),
+            ),
+            drawer: drawerMenu(context),
+            animateChildDecoration: true,
             child: Scaffold(
+              backgroundColor: Colors.white,
               body: SafeArea(
                 child: Column(
-                  children: [Text("data")],
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(14),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: getProportionateScreenHeight(15),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      controller.advancedDrawerController.showDrawer();
+                                    },
+                                    child: Image.asset(
+                                      AppImages.policeDrawerIcon,
+                                      height: getProportionateScreenHeight(24),
+                                      width: getProportionateScreenWidth(24),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: getProportionateScreenWidth(10),
+                                  ),
+                                  Text(
+                                    AppLocalizations.of(context)!.dashboard,
+                                    style: TextStyle(
+                                      fontSize: getProportionalFontSize(28),
+                                      fontFamily: AppFonts.sansFont600,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      controller.showSOSDialog(context);
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: getProportionateScreenWidth(10),
+                                        vertical: getProportionateScreenHeight(5),
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(32),
+                                        color: AppColors.policeDarkRedColor,
+                                      ),
+                                      child: Text(
+                                        AppLocalizations.of(context)!.logNewIncident,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: getProportionalFontSize(10),
+                                          fontFamily: AppFonts.sansFont600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: getProportionateScreenWidth(8),
+                                  ),
+                                  Image.asset(
+                                    AppImages.policeNotification,
+                                    height: getProportionateScreenHeight(24),
+                                    width: getProportionateScreenWidth(24),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(24),
+                          ),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            clipBehavior: Clip.none,
+                            child: Row(
+                              children: List.generate(
+                                4,
+                                (index) {
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: getProportionateScreenWidth(8),
+                                      vertical: getProportionateScreenHeight(8),
+                                    ),
+                                    margin: EdgeInsets.only(
+                                      right: getProportionateScreenWidth(14),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        getProportionateScreenWidth(16),
+                                      ),
+                                      border: Border.all(
+                                        color: AppColors.policeDarkBlueColor,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Total Incidents Assigned",
+                                          style: TextStyle(
+                                            fontSize: getProportionalFontSize(11),
+                                            fontFamily: AppFonts.sansFont600,
+                                          ),
+                                        ),
+                                        Text(
+                                          "80",
+                                          style: TextStyle(
+                                            fontSize: getProportionalFontSize(25),
+                                            fontFamily: AppFonts.sansFont600,
+                                            color: AppColors.policeDarkBlueColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "You are heading towards Anne Krane’s house",
+                                      style: TextStyle(
+                                        fontSize: getProportionalFontSize(14),
+                                        fontFamily: AppFonts.sansFont600,
+                                      ),
+                                    ),
+                                    Text(
+                                      "You can also use the siren if there is traffic",
+                                      style: TextStyle(
+                                        fontSize: getProportionalFontSize(12),
+                                        fontFamily: AppFonts.sansFont600,
+                                        color: AppColors.redDefault,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.redDefault,
+                                      borderRadius: BorderRadius.circular(
+                                        getProportionateScreenWidth(30),
+                                      ),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: getProportionateScreenWidth(15),
+                                      vertical: getProportionateScreenHeight(8),
+                                    ),
+                                    constraints: BoxConstraints(minWidth: getProportionateScreenWidth(130)),
+                                    child: Center(
+                                      child: Text(
+                                        "Request Backup",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: getProportionalFontSize(12),
+                                          fontFamily: AppFonts.sansFont600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: getProportionateScreenHeight(10),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.redDefault,
+                                      borderRadius: BorderRadius.circular(
+                                        getProportionateScreenWidth(30),
+                                      ),
+                                    ),
+                                    constraints: BoxConstraints(minWidth: getProportionateScreenWidth(130)),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: getProportionateScreenWidth(15),
+                                      vertical: getProportionateScreenHeight(8),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "End SOS",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: getProportionalFontSize(12),
+                                          fontFamily: AppFonts.sansFont600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -50,7 +283,7 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
     );
   }
 
-  drawerMenu() {
+  drawerMenu(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -93,7 +326,7 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: "Status: ",
+                    text: AppLocalizations.of(context)!.status,
                     style: TextStyle(
                       fontFamily: AppFonts.sansFont500,
                       fontSize: getProportionalFontSize(14),
@@ -115,37 +348,32 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
               height: getProportionateScreenHeight(60),
             ),
             PoliceDrawerItems(
-              itemName: "Dashboard",
+              itemName: AppLocalizations.of(context)!.dashboard,
               imageName: AppImages.policeDashboard,
               bottom: getProportionateScreenHeight(22),
             ),
             PoliceDrawerItems(
-              itemName: "SOS Emergency",
+              itemName: AppLocalizations.of(context)!.sosEmergency,
               imageName: AppImages.policeSosEmergency,
               bottom: getProportionateScreenHeight(22),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: getProportionateScreenWidth(3),
-              ),
-              child: PoliceDrawerItems(
-                itemName: "Reported Emergency",
-                imageName: AppImages.policeReportedEmergency,
-                bottom: getProportionateScreenHeight(22),
-              ),
+            PoliceDrawerItems(
+              itemName: AppLocalizations.of(context)!.reportedEmergency,
+              imageName: AppImages.policeReportedEmergency,
+              bottom: getProportionateScreenHeight(22),
             ),
             PoliceDrawerItems(
-              itemName: "Reported Non Emergency",
+              itemName: AppLocalizations.of(context)!.reportedNonEmergency,
               imageName: AppImages.policeReportedNonEmergency,
               bottom: getProportionateScreenHeight(22),
             ),
             PoliceDrawerItems(
-              itemName: "Settings",
+              itemName: AppLocalizations.of(context)!.settings,
               imageName: AppImages.policeSetting,
               bottom: getProportionateScreenHeight(22),
             ),
             PoliceDrawerItems(
-              itemName: "Logout",
+              itemName: AppLocalizations.of(context)!.logout,
               imageName: AppImages.policeLogout,
             ),
           ],

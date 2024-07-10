@@ -1,6 +1,5 @@
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class PoliceDrawerItems extends StatelessWidget {
   final String? itemName, imageName;
@@ -18,10 +17,10 @@ class PoliceDrawerItems extends StatelessWidget {
         ),
         child: Row(
           children: [
-            SvgPicture.asset(
+            Image.asset(
               imageName ?? AppImages.policeDashboard,
-              height: getProportionateScreenHeight(32),
-              width: getProportionateScreenWidth(32),
+              height: getProportionateScreenHeight(36),
+              width: getProportionateScreenWidth(36),
             ),
             SizedBox(
               width: getProportionateScreenWidth(10),

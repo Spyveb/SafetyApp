@@ -8,7 +8,7 @@ class DashBoardScreen extends GetView<DashBoardController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashBoardController>(
-      initState: (state) => DashBoardController(),
+      init: DashBoardController(),
       global: true,
       autoRemove: false,
       builder: (controller) {

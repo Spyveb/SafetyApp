@@ -42,7 +42,11 @@ class SignInController extends GetxController {
             UserModel userModel = UserModel.fromJson(response['data']['user']);
             await saveUserData(userModel);
             LoadingDialog.hideLoader();
-            Get.offAllNamed(Routes.DASHBOARD);
+            if (userModel.role == "police_officer") {
+              Get.offAllNamed(Routes.POLICE_DASHBOARD);
+            } else {
+              Get.offAllNamed(Routes.DASHBOARD);
+            }
           }
         }
       } else {
