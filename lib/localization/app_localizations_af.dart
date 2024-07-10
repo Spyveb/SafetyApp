@@ -327,4 +327,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get editProfile => 'Edit Profile';
+
+  @override
+  String get logout => 'Logout';
 }

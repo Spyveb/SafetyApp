@@ -36,6 +36,9 @@ class Constants {
 
   static const isDarkThemeSelected = 'isDarkThemeSelected';
 
+  // Key for accessing the google map.
+  static const kGoogleApiKey = 'AIzaSyBtl6-dBfYhRJzYH3ClyDuK5IIlOa8uY84';
+
   static const LoremIpsum =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis mauris sit amet massa vitae tortor condimentum.';
 }

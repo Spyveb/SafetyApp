@@ -107,5 +107,6 @@
   "shouldNotBeGreaterThan": "Should not be greater than 50",
   "pleaseEnterYourUserName": "Please enter your username",
   "youEnteredAnInvalidUserName": "You’ve entered an invalid username",
-  "editProfile": "Edit Profile"
+  "editProfile": "Edit Profile",
+  "logout": "Logout"
 }

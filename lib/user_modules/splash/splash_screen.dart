@@ -40,7 +40,7 @@ class SplashScreen extends GetView<SplashController> {
                   Spacer(),
                   TextButton(
                     onPressed: () {
-                      Get.offAllNamed(Routes.POLICE_DASHBOARD);
+                      Get.offAllNamed(Routes.SIGN_IN);
                       // if (controller.isAuthenticated) {
                       //   Get.offAllNamed(Routes.DASHBOARD);
                       // } else if (controller.isFirstTime) {

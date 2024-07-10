@@ -462,6 +462,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                                     text: AppLocalizations.of(context)!.yes,
                                                     onPressed: () {
                                                       Get.back();
+                                                      controller.deleteAccount();
                                                     },
                                                     radius: 50,
                                                   ),

@@ -9,6 +9,9 @@ class SignInScreen extends GetView<SignInController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<SignInController>(
+        init: SignInController(),
+        global: true,
+        autoRemove: false,
         builder: (SignInController signInController) {
           return SafeArea(
             child: SingleChildScrollView(
