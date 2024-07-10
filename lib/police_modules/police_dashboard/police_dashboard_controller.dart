@@ -8,6 +8,8 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
   DateTime? currentBackPressTime;
   AdvancedDrawerController advancedDrawerController = AdvancedDrawerController();
   late AnimationController animationController;
+  TextEditingController respondedEventController = TextEditingController();
+  bool sosRequestAccept = false;
 
   @override
   void onReady() {
@@ -53,7 +55,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "SOS Request",
+                    AppLocalizations.of(context)!.sosRequest,
                     style: TextStyle(
                       fontFamily: AppFonts.sansFont600,
                       fontSize: getProportionalFontSize(30),
@@ -67,7 +69,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Requester: ",
+                        AppLocalizations.of(context)!.requester,
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont600,
                           fontSize: getProportionalFontSize(16),
@@ -92,7 +94,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Location: ",
+                        AppLocalizations.of(context)!.location,
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont600,
                           fontSize: getProportionalFontSize(16),
@@ -117,7 +119,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Mobile number: ",
+                        AppLocalizations.of(context)!.mobileNumber,
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont600,
                           fontSize: getProportionalFontSize(16),
@@ -142,7 +144,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Emergency event: ",
+                        AppLocalizations.of(context)!.emergencyEvent,
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont600,
                           fontSize: getProportionalFontSize(16),
@@ -168,7 +170,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Estimated time of arrival: ",
+                        AppLocalizations.of(context)!.estimatedTimeOfArrival,
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont600,
                           fontSize: getProportionalFontSize(16),
@@ -195,24 +197,31 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
                     child: Row(
                       children: [
                         Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.policeDarkBlueColor,
-                              borderRadius: BorderRadius.circular(
-                                getProportionateScreenWidth(30),
+                          child: GestureDetector(
+                            onTap: () {
+                              sosRequestAccept = true;
+                              update();
+                              Get.back();
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.policeDarkBlueColor,
+                                borderRadius: BorderRadius.circular(
+                                  getProportionateScreenWidth(30),
+                                ),
                               ),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: getProportionateScreenWidth(30),
-                              vertical: getProportionateScreenHeight(15),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "Accept",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: getProportionalFontSize(18),
-                                  fontFamily: AppFonts.sansFont600,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(30),
+                                vertical: getProportionateScreenHeight(15),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  AppLocalizations.of(context)!.accept,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: getProportionalFontSize(18),
+                                    fontFamily: AppFonts.sansFont600,
+                                  ),
                                 ),
                               ),
                             ),
@@ -222,30 +231,228 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
                           width: getProportionateScreenWidth(30),
                         ),
                         Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.redDefault,
-                              borderRadius: BorderRadius.circular(
-                                getProportionateScreenWidth(30),
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.redDefault,
+                                borderRadius: BorderRadius.circular(
+                                  getProportionateScreenWidth(30),
+                                ),
                               ),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: getProportionateScreenWidth(30),
-                              vertical: getProportionateScreenHeight(15),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "Decline",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: getProportionalFontSize(18),
-                                  fontFamily: AppFonts.sansFont600,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(30),
+                                vertical: getProportionateScreenHeight(15),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  AppLocalizations.of(context)!.decline,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: getProportionalFontSize(18),
+                                    fontFamily: AppFonts.sansFont600,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  showEndSosDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(10),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: AppColors.policeDarkBlueColor,
+              ),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            padding: EdgeInsets.symmetric(
+              vertical: getProportionateScreenHeight(10),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(14),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.whatHappenedThisEvent,
+                    style: TextStyle(
+                      fontFamily: AppFonts.sansFont600,
+                      fontSize: getProportionalFontSize(16),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(20),
+                  ),
+                  TextFormField(
+                    maxLines: null,
+                    maxLength: 300,
+                    onTapOutside: (event) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    onChanged: (value) {},
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(8),
+                        vertical: getProportionateScreenHeight(8),
+                      ),
+                      constraints: BoxConstraints(
+                        maxHeight: getProportionateScreenHeight(100),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(25),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      sosRequestAccept = false;
+                      update();
+                      Get.back();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.redDefault,
+                        borderRadius: BorderRadius.circular(
+                          getProportionateScreenWidth(30),
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(30),
+                        vertical: getProportionateScreenHeight(15),
+                      ),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.submit,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: getProportionalFontSize(18),
+                            fontFamily: AppFonts.sansFont600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  showBackupRequestDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(10),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: AppColors.policeDarkBlueColor,
+              ),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            padding: EdgeInsets.symmetric(
+              vertical: getProportionateScreenHeight(10),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(14),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.backupRequestSent,
+                    style: TextStyle(
+                      fontFamily: AppFonts.sansFont600,
+                      fontSize: getProportionalFontSize(24),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(15),
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.aBackupSentYourDestination,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: AppFonts.sansFont500,
+                      fontSize: getProportionalFontSize(16),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(25),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.policeDarkBlueColor,
+                        borderRadius: BorderRadius.circular(
+                          getProportionateScreenWidth(30),
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(30),
+                        vertical: getProportionateScreenHeight(15),
+                      ),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.ok,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: getProportionalFontSize(18),
+                            fontFamily: AppFonts.sansFont600,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],

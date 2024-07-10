@@ -363,4 +363,22 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get estimatedTimeOfArrival => 'Estimated time of arrival: ';
+
+  @override
+  String get requestBackup => 'Request Backup';
+
+  @override
+  String get endSos => 'End SOS';
+
+  @override
+  String get whatHappenedThisEvent => 'What happened when you responded to this event?';
+
+  @override
+  String get backupRequestSent => 'Backup Request Sent';
+
+  @override
+  String get aBackupSentYourDestination => 'A backup will be sent to your destination shortly.';
+
+  @override
+  String get ok => 'OK';
 }

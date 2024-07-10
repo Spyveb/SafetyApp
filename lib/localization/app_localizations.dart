@@ -814,6 +814,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Estimated time of arrival: '**
   String get estimatedTimeOfArrival;
+
+  /// No description provided for @requestBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Backup'**
+  String get requestBackup;
+
+  /// No description provided for @endSos.
+  ///
+  /// In en, this message translates to:
+  /// **'End SOS'**
+  String get endSos;
+
+  /// No description provided for @whatHappenedThisEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened when you responded to this event?'**
+  String get whatHappenedThisEvent;
+
+  /// No description provided for @backupRequestSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup Request Sent'**
+  String get backupRequestSent;
+
+  /// No description provided for @aBackupSentYourDestination.
+  ///
+  /// In en, this message translates to:
+  /// **'A backup will be sent to your destination shortly.'**
+  String get aBackupSentYourDestination;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

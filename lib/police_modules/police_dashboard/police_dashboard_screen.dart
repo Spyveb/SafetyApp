@@ -143,133 +143,146 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
                           SizedBox(
                             height: getProportionateScreenHeight(24),
                           ),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            clipBehavior: Clip.none,
-                            child: Row(
-                              children: List.generate(
-                                4,
-                                (index) {
-                                  return Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: getProportionateScreenWidth(8),
-                                      vertical: getProportionateScreenHeight(8),
+                          controller.sosRequestAccept == false
+                              ? SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  clipBehavior: Clip.none,
+                                  child: Row(
+                                    children: List.generate(
+                                      4,
+                                      (index) {
+                                        return Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: getProportionateScreenWidth(8),
+                                            vertical: getProportionateScreenHeight(8),
+                                          ),
+                                          margin: EdgeInsets.only(
+                                            right: getProportionateScreenWidth(14),
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              getProportionateScreenWidth(16),
+                                            ),
+                                            border: Border.all(
+                                              color: AppColors.policeDarkBlueColor,
+                                            ),
+                                          ),
+                                          constraints: BoxConstraints(minHeight: getProportionateScreenHeight(70)),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Total Incidents Assigned",
+                                                style: TextStyle(
+                                                  fontSize: getProportionalFontSize(11),
+                                                  fontFamily: AppFonts.sansFont600,
+                                                ),
+                                              ),
+                                              Text(
+                                                "80",
+                                                style: TextStyle(
+                                                  fontSize: getProportionalFontSize(25),
+                                                  fontFamily: AppFonts.sansFont600,
+                                                  color: AppColors.policeDarkBlueColor,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
                                     ),
-                                    margin: EdgeInsets.only(
-                                      right: getProportionateScreenWidth(14),
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                        getProportionateScreenWidth(16),
+                                  ),
+                                )
+                              : Row(
+                                  children: [
+                                    Flexible(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "You are heading towards Anne Krane’s house",
+                                            style: TextStyle(
+                                              fontSize: getProportionalFontSize(14),
+                                              fontFamily: AppFonts.sansFont600,
+                                            ),
+                                          ),
+                                          Text(
+                                            "You can also use the siren if there is traffic",
+                                            style: TextStyle(
+                                              fontSize: getProportionalFontSize(11),
+                                              fontFamily: AppFonts.sansFont600,
+                                              color: AppColors.redDefault,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      border: Border.all(
-                                        color: AppColors.policeDarkBlueColor,
-                                      ),
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                    Column(
                                       children: [
-                                        Text(
-                                          "Total Incidents Assigned",
-                                          style: TextStyle(
-                                            fontSize: getProportionalFontSize(11),
-                                            fontFamily: AppFonts.sansFont600,
+                                        GestureDetector(
+                                          onTap: () {
+                                            controller.showBackupRequestDialog(context);
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: AppColors.redDefault,
+                                              borderRadius: BorderRadius.circular(
+                                                getProportionateScreenWidth(30),
+                                              ),
+                                            ),
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: getProportionateScreenWidth(15),
+                                              vertical: getProportionateScreenHeight(8),
+                                            ),
+                                            constraints: BoxConstraints(minWidth: getProportionateScreenWidth(130)),
+                                            child: Center(
+                                              child: Text(
+                                                AppLocalizations.of(context)!.requestBackup,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: getProportionalFontSize(12),
+                                                  fontFamily: AppFonts.sansFont600,
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                        Text(
-                                          "80",
-                                          style: TextStyle(
-                                            fontSize: getProportionalFontSize(25),
-                                            fontFamily: AppFonts.sansFont600,
-                                            color: AppColors.policeDarkBlueColor,
+                                        SizedBox(
+                                          height: getProportionateScreenHeight(10),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Get.back();
+                                            controller.showEndSosDialog(context);
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: AppColors.redDefault,
+                                              borderRadius: BorderRadius.circular(
+                                                getProportionateScreenWidth(30),
+                                              ),
+                                            ),
+                                            constraints: BoxConstraints(minWidth: getProportionateScreenWidth(130)),
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: getProportionateScreenWidth(15),
+                                              vertical: getProportionateScreenHeight(8),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                AppLocalizations.of(context)!.endSos,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: getProportionalFontSize(12),
+                                                  fontFamily: AppFonts.sansFont600,
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "You are heading towards Anne Krane’s house",
-                                      style: TextStyle(
-                                        fontSize: getProportionalFontSize(14),
-                                        fontFamily: AppFonts.sansFont600,
-                                      ),
-                                    ),
-                                    Text(
-                                      "You can also use the siren if there is traffic",
-                                      style: TextStyle(
-                                        fontSize: getProportionalFontSize(12),
-                                        fontFamily: AppFonts.sansFont600,
-                                        color: AppColors.redDefault,
-                                      ),
-                                    ),
+                                    )
                                   ],
                                 ),
-                              ),
-                              Column(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: AppColors.redDefault,
-                                      borderRadius: BorderRadius.circular(
-                                        getProportionateScreenWidth(30),
-                                      ),
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: getProportionateScreenWidth(15),
-                                      vertical: getProportionateScreenHeight(8),
-                                    ),
-                                    constraints: BoxConstraints(minWidth: getProportionateScreenWidth(130)),
-                                    child: Center(
-                                      child: Text(
-                                        "Request Backup",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: getProportionalFontSize(12),
-                                          fontFamily: AppFonts.sansFont600,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: getProportionateScreenHeight(10),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: AppColors.redDefault,
-                                      borderRadius: BorderRadius.circular(
-                                        getProportionateScreenWidth(30),
-                                      ),
-                                    ),
-                                    constraints: BoxConstraints(minWidth: getProportionateScreenWidth(130)),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: getProportionateScreenWidth(15),
-                                      vertical: getProportionateScreenHeight(8),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "End SOS",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: getProportionalFontSize(12),
-                                          fontFamily: AppFonts.sansFont600,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          )
                         ],
                       ),
                     ),

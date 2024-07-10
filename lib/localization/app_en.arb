@@ -120,6 +120,12 @@
   "location": "Location: ",
   "mobileNumber": "Mobile number: ",
   "emergencyEvent": "Emergency event: ",
-  "estimatedTimeOfArrival": "Estimated time of arrival: "
+  "estimatedTimeOfArrival": "Estimated time of arrival: ",
+  "requestBackup": "Request Backup",
+  "endSos": "End SOS",
+  "whatHappenedThisEvent": "What happened when you responded to this event?",
+  "backupRequestSent": "Backup Request Sent",
+  "aBackupSentYourDestination": "A backup will be sent to your destination shortly.",
+  "ok": "OK"
 
 }
