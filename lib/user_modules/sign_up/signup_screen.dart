@@ -308,10 +308,107 @@ class SignUpScreen extends GetView<SignUpController> {
                           width: getProportionateScreenWidth(24),
                         ),
                       ),
-                      suffix: Icon(
-                        Icons.arrow_drop_down,
-                        size: 24,
-                        color: AppColors.textFieldGreyColor,
+                      // suffix: Icon(
+                      //   Icons.arrow_drop_down,
+                      //   size: 24,
+                      //   color: AppColors.textFieldGreyColor,
+                      // ),
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(14),
+                    ),
+                    ButtonTheme(
+                      alignedDropdown: true,
+                      child: DropdownButtonFormField<String>(
+                        value: controller.role,
+                        iconSize: 24,
+                        iconEnabledColor: AppColors.blackColor,
+                        isDense: true,
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          // suffixIcon: IconButton(
+                          //   onPressed: () {},
+                          //   icon: Icon(
+                          //     Icons.arrow_drop_down_outlined,
+                          //     size: 36,
+                          //     color: AppColors.blackColor,
+                          //   ),
+                          // ),
+                          errorMaxLines: 2,
+                          isDense: true,
+
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              getProportionateScreenWidth(10),
+                            ),
+                            borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              getProportionateScreenWidth(10),
+                            ),
+                            borderSide: BorderSide(color: Colors.black87, width: 1.5),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              getProportionateScreenWidth(10),
+                            ),
+                            borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
+                          ),
+                          enabledBorder:  OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              getProportionateScreenWidth(10),
+                            ),
+                            borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
+                          ),
+                          // labelText: widget.lableText,
+                          hintText: "",
+                          hintStyle: TextStyle(
+                            fontFamily: AppFonts.sansFont400,
+                            fontSize: getProportionalFontSize(14),
+                            color: AppColors.textFieldGreyColor,
+                          ),
+                          errorStyle: TextStyle(
+                            fontSize: getProportionalFontSize(12),
+                            fontFamily: AppFonts.sansFont400,
+                            color: AppColors.redDefault,
+                          ),
+
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(16),
+                            vertical: getProportionateScreenHeight(20),
+                          ),
+                          prefixIcon: Container(
+                            padding: EdgeInsets.only(
+                              left: getProportionateScreenWidth(8),
+                              top: getProportionateScreenHeight(8),
+                              bottom: getProportionateScreenHeight(8),
+                            ),
+                            child: SvgPicture.asset(
+                              AppImages.userProfile,
+                              height: getProportionateScreenHeight(24),
+                              width: getProportionateScreenWidth(24),
+                            ),
+                          ),
+                        ),
+                        items: controller.roleList.map<DropdownMenuItem<String>>((value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(
+                                fontFamily: AppFonts.sansFont400,
+                                fontSize: getProportionalFontSize(14),
+                                color: AppColors.lightTextColor,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          controller.role = value ?? controller.roleList.first;
+                          controller.update();
+                        },
+                        validator: (value) => Validation.emptyValidation(value, context, "role"),
                       ),
                     ),
                     SizedBox(

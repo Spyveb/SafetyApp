@@ -26,6 +26,13 @@ class SignUpController extends GetxController {
 
   File? profileImage;
 
+  List<String> roleList = [
+    'User',
+    'Police',
+  ];
+
+  String role = 'User';
+
   void termValueChange(value) {
     termValue = value;
     update();
@@ -43,6 +50,7 @@ class SignUpController extends GetxController {
         "dob": Utils.sendDateFormat(birthDateController.text),
         "username": userNameController.text,
         "password": passwordController.text,
+        "role": role == 'User' ? 'user' : 'police_officer',
       });
 
       if (profileImage != null) {
@@ -406,5 +414,6 @@ class SignUpController extends GetxController {
     await StorageService().writeSecureData(Constants.accessToken, userModel.token ?? "");
     await StorageService().writeSecureData(Constants.userName, userModel.username ?? "");
     await StorageService().writeSecureData(Constants.profileImage, userModel.profileImage ?? "");
+    await StorageService().writeSecureData(Constants.role, userModel.role ?? "user");
   }
 }

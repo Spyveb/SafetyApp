@@ -10,6 +10,10 @@ class HomeController extends GetxController {
   bool dialogIsOpen = false;
 
   TextEditingController searchLocationController = TextEditingController();
+  double? latitude;
+  double? longitude;
+  String? city;
+
   @override
   void onReady() {
     super.onReady();
@@ -19,10 +23,10 @@ class HomeController extends GetxController {
     LoadingDialog.showLoader();
     try {
       Dio.FormData formData = Dio.FormData.fromMap({
-        "city": "NYC",
-        "location": "Abc, NYC",
-        "latitude": 40.7128,
-        "longitude": 74.0060,
+        "city": city,
+        "location": searchLocationController.text,
+        "latitude": latitude,
+        "longitude": longitude,
       });
       var response = await ApiProvider().postAPICall(
         Endpoints.sendSOSEmergency,

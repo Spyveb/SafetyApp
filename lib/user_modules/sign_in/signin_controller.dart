@@ -70,6 +70,7 @@ class SignInController extends GetxController {
     await StorageService().writeSecureData(Constants.profileImage, userModel.profileImage ?? "");
     await StorageService().writeSecureData(Constants.email, userModel.email ?? "");
     await StorageService().writeSecureData(Constants.accessToken, userModel.token ?? "");
+    await StorageService().writeSecureData(Constants.role, userModel.role ?? "user");
   }
 
   // d.Dio dio = d.Dio();
