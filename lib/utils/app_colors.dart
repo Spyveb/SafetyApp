@@ -18,6 +18,10 @@ class AppColors {
   static Color settingsTileBorderColor = const Color(0xFF195193);
   static Color reportColor = const Color(0xFFF20808);
 
+  // Police Color
+  static Color policeDarkRedColor = const Color(0xFFC0162A);
+  static Color policeDarkBlueColor = const Color(0xFF1F26C1);
+
   // static const Color redDefault = Color(0xFFFF3B30);
   // static const Color greenDefault = Color(0xFF34C759);
   // static const Color giftReceived = Color(0xFF06D6A0);

@@ -108,5 +108,16 @@
   "pleaseEnterYourUserName": "Please enter your username",
   "youEnteredAnInvalidUserName": "You’ve entered an invalid username",
    "editProfile": "Edit Profile",
-  "logout": "Logout"
+  "logout": "Logout",
+  "status": "Status: ",
+  "sosEmergency": "SOS Emergency",
+  "reportedEmergency": "Reported Emergency",
+  "reportedNonEmergency": "Reported Non Emergency",
+  "logNewIncident": "Log New Incident",
+  "sosRequest": "SOS Request",
+  "requester": "Requester: ",
+  "location": "Location: ",
+  "mobileNumber": "Mobile number: ",
+  "emergencyEvent": "Emergency event: ",
+  "estimatedTimeOfArrival": "Estimated time of arrival: "
 }

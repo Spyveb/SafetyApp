@@ -330,4 +330,37 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get logout => 'Logout';
+
+  @override
+  String get status => 'Status: ';
+
+  @override
+  String get sosEmergency => 'SOS Emergency';
+
+  @override
+  String get reportedEmergency => 'Reported Emergency';
+
+  @override
+  String get reportedNonEmergency => 'Reported Non Emergency';
+
+  @override
+  String get logNewIncident => 'Log New Incident';
+
+  @override
+  String get sosRequest => 'SOS Request';
+
+  @override
+  String get requester => 'Requester: ';
+
+  @override
+  String get location => 'Location: ';
+
+  @override
+  String get mobileNumber => 'Mobile number: ';
+
+  @override
+  String get emergencyEvent => 'Emergency event: ';
+
+  @override
+  String get estimatedTimeOfArrival => 'Estimated time of arrival: ';
 }

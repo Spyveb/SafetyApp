@@ -748,6 +748,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Logout'**
   String get logout;
+
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: '**
+  String get status;
+
+  /// No description provided for @sosEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'SOS Emergency'**
+  String get sosEmergency;
+
+  /// No description provided for @reportedEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported Emergency'**
+  String get reportedEmergency;
+
+  /// No description provided for @reportedNonEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported Non Emergency'**
+  String get reportedNonEmergency;
+
+  /// No description provided for @logNewIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'Log New Incident'**
+  String get logNewIncident;
+
+  /// No description provided for @sosRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'SOS Request'**
+  String get sosRequest;
+
+  /// No description provided for @requester.
+  ///
+  /// In en, this message translates to:
+  /// **'Requester: '**
+  String get requester;
+
+  /// No description provided for @location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location: '**
+  String get location;
+
+  /// No description provided for @mobileNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile number: '**
+  String get mobileNumber;
+
+  /// No description provided for @emergencyEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency event: '**
+  String get emergencyEvent;
+
+  /// No description provided for @estimatedTimeOfArrival.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated time of arrival: '**
+  String get estimatedTimeOfArrival;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
