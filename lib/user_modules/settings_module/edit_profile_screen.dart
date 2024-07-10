@@ -93,7 +93,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                           image: FileImage(controller.selectedImage!),
                                           fit: BoxFit.cover,
                                         )
-                                      : controller.profileImage != null
+                                      : controller.profileImage != null && controller.profileImage!.isNotEmpty
                                           ? DecorationImage(
                                               image: CachedNetworkImageProvider(controller.profileImage!),
                                               fit: BoxFit.cover,
@@ -110,7 +110,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Colors.transparent,
-                                    image: controller.profileImage == null
+                                    image: controller.profileImage == null || controller.profileImage!.isEmpty
                                         ? DecorationImage(
                                             image: AssetImage(AppImages.userImage),
                                             fit: BoxFit.cover,
