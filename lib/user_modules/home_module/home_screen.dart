@@ -239,7 +239,29 @@ class HomeScreen extends GetView<HomeController> {
                           controller.city != null) {
                         controller.sosEmergencySuccess(context);
                       } else {
-                        Utils.showToast("Please select location to send SOS.");
+                        // Utils.showToast("Please select location to send SOS.");
+
+                        Utils.showAlertDialog(
+                          context: navState.currentContext!,
+                          title: "Location required",
+                          description: "To send SOS, we require the location. Select location options.",
+                          buttons: [
+                            TextButton(
+                              onPressed: () {
+                                controller.addLocationManually(context);
+                              },
+                              child: Text('Add manually'),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                await controller.getCurrentLocation();
+
+                                Get.back();
+                              },
+                              child: Text('My Location'),
+                            ),
+                          ],
+                        );
                       }
                     },
                     child: Container(

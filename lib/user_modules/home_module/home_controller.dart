@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
 import 'package:distress_app/packages/location_geocoder/location_geocoder.dart';
+import 'package:distress_app/user_modules/home_module/place_auto_complete.dart';
+import 'package:distress_app/user_modules/home_module/place_auto_complete_response.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -205,5 +207,30 @@ class HomeController extends GetxController {
     return await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.best,
     );
+  }
+
+  Future<void> addLocationManually(BuildContext context) async {
+    var result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const PlaceAutoCompleteScreen(),
+        ));
+
+    if (result is GoogleMapPlaceModel) {
+      searchLocationController.text = result.description ?? '';
+
+      if (searchLocationController.text.isNotEmpty) {
+        var address = await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromQuery(
+          searchLocationController.text,
+        );
+        // var initialLatLong = LatLng(
+        //     address.first.coordinates.latitude ?? 0, address.first.coordinates.longitude ?? 0);
+        city = address.first.locality;
+        latitude = address.first.coordinates.latitude;
+        longitude = address.first.coordinates.longitude;
+      }
+      Get.back();
+      update();
+    }
   }
 }

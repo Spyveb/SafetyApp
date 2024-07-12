@@ -40,7 +40,10 @@ class _PlaceAutoCompleteScreenState extends State<PlaceAutoCompleteScreen> {
             horizontal: getProportionateScreenWidth(26),
           ),
           onTap: () async {
+            LoadingDialog.showLoader();
             await Get.find<HomeController>().getCurrentLocation();
+            LoadingDialog.hideLoader();
+
             Get.back();
           },
           title: Text(
