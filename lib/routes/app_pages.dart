@@ -59,6 +59,11 @@ abstract class AppPages {
       // binding: SettingsBinding,
     ),
     GetPage(
+      name: Routes.HTML_SCREEN,
+      page: () => HTMLDataScreen(),
+      // binding: SettingsBinding,
+    ),
+    GetPage(
       name: Routes.TRAINING,
       page: () => TrainingScreen(),
       binding: TrainingBinding(),

@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:distress_app/imports.dart';
+import 'package:distress_app/infrastructure/models/article_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -14,14 +16,14 @@ class TrainingTopicScreen extends GetView<TrainingController> {
     return Scaffold(
       backgroundColor: themeProvider.backgroundColor,
       appBar: AppBar(
-        leadingWidth: getProportionateScreenWidth(56),
+        // leadingWidth: getProportionateScreenWidth(56),
         leading: IconButton(
           onPressed: () {
             Get.back();
           },
           icon: Icon(
             Icons.arrow_back,
-            size: 32,
+            size: 24,
             color: AppColors.blackColor,
           ),
         ),
@@ -33,8 +35,15 @@ class TrainingTopicScreen extends GetView<TrainingController> {
               width: getProportionateScreenWidth(40),
               height: getProportionateScreenHeight(40),
               decoration: BoxDecoration(
+                color: AppColors.greyColor,
+                shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage(AppImages.violence),
+                  // image: AssetImage(AppImages.violence),
+                  image: CachedNetworkImageProvider(
+                    controller.categoryModel != null && controller.categoryModel!.image != null
+                        ? controller.categoryModel!.image!
+                        : '',
+                  ),
                 ),
               ),
             ),
@@ -42,9 +51,9 @@ class TrainingTopicScreen extends GetView<TrainingController> {
               width: getProportionateScreenWidth(8),
             ),
             Text(
-              "Violence",
+              "${controller.categoryModel != null && controller.categoryModel!.name != null ? controller.categoryModel!.name : ''}",
               style: TextStyle(
-                fontSize: getProportionalFontSize(32),
+                fontSize: getProportionalFontSize(24),
                 color: themeProvider.textThemeColor,
                 fontFamily: AppFonts.sansFont600,
               ),
@@ -64,6 +73,12 @@ class TrainingTopicScreen extends GetView<TrainingController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormField(
+                    onChanged: (value) {
+                      if (controller.categoryModel?.id != null) {
+                        controller.getCategoryDetails(
+                            categoryId: controller.categoryModel!.id!, search: value, showLoader: false);
+                      }
+                    },
                     style: TextStyle(
                       color: themeProvider.textThemeColor,
                       fontFamily: AppFonts.interFont700,
@@ -116,69 +131,83 @@ class TrainingTopicScreen extends GetView<TrainingController> {
                   SizedBox(
                     height: getProportionateScreenHeight(18),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.TRAINING_TOPIC_DETAILS);
-                    },
-                    child: Column(
-                      children: [
-                        Divider(
-                          height: 1,
-                          color: AppColors.blackColor,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: getProportionateScreenWidth(36),
-                              height: getProportionateScreenHeight(36),
-                              margin: EdgeInsets.only(
-                                right: getProportionateScreenWidth(4),
-                                left: getProportionateScreenWidth(10),
-                                top: getProportionateScreenHeight(10),
-                                bottom: getProportionateScreenHeight(10),
-                              ),
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(AppImages.notes),
+                  controller.articleList.isNotEmpty
+                      ? Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: controller.articleList.length,
+                            itemBuilder: (context, index) {
+                              ArticleModel article = controller.articleList[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(Routes.TRAINING_TOPIC_DETAILS);
+                                },
+                                child: Column(
+                                  children: [
+                                    Divider(
+                                      height: index == 0 ? 1 : .4,
+                                      color: AppColors.blackColor,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: getProportionateScreenWidth(36),
+                                          height: getProportionateScreenHeight(36),
+                                          margin: EdgeInsets.only(
+                                            right: getProportionateScreenWidth(4),
+                                            left: getProportionateScreenWidth(10),
+                                            top: getProportionateScreenHeight(10),
+                                            bottom: getProportionateScreenHeight(10),
+                                          ),
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              // image: AssetImage(AppImages.violence),
+                                              image: CachedNetworkImageProvider(
+                                                article.image ?? '',
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                article.title ?? '',
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontSize: getProportionalFontSize(11),
+                                                  color: themeProvider.textThemeColor,
+                                                  fontFamily: AppFonts.sansFont700,
+                                                ),
+                                              ),
+                                              Text(
+                                                article.subTitle ?? '',
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontSize: getProportionalFontSize(11),
+                                                  color: themeProvider.textThemeColor,
+                                                  fontFamily: AppFonts.sansFont400,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Divider(
+                                      height: index == controller.articleList.length ? 1 : .4,
+                                      color: AppColors.blackColor,
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Learn about Gender Based Violence",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: getProportionalFontSize(11),
-                                      color: themeProvider.textThemeColor,
-                                      fontFamily: AppFonts.sansFont700,
-                                    ),
-                                  ),
-                                  Text(
-                                    "This article describes gender based violence and the tips to prevent it. ",
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: getProportionalFontSize(11),
-                                      color: themeProvider.textThemeColor,
-                                      fontFamily: AppFonts.sansFont400,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Divider(
-                          height: 1,
-                          color: AppColors.blackColor,
-                        ),
-                      ],
-                    ),
-                  ),
+                              );
+                            },
+                          ),
+                        )
+                      : SizedBox(),
                 ],
               ),
             );

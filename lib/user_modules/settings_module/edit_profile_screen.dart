@@ -26,30 +26,58 @@ class EditProfileScreen extends GetView<SettingsController> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Row(
+                //   children: [
+                //     IconButton(
+                //       padding: EdgeInsets.symmetric(
+                //         horizontal: getProportionateScreenWidth(12),
+                //       ),
+                //       onPressed: () {
+                //         Get.back();
+                //       },
+                //       icon: Icon(
+                //         Icons.arrow_back,
+                //         size: 24,
+                //         color: AppColors.blackColor,
+                //       ),
+                //     ),
+                //     SizedBox(
+                //       width: getProportionateScreenWidth(12),
+                //     ),
+                //     Text(
+                //       AppLocalizations.of(context)!.editProfile,
+                //       style: TextStyle(
+                //         fontSize: getProportionalFontSize(24),
+                //         color: themeProvider.textThemeColor,
+                //         fontFamily: AppFonts.sansFont600,
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 Row(
                   children: [
                     IconButton(
                       padding: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(12),
+                        horizontal: getProportionateScreenWidth(4),
                       ),
                       onPressed: () {
                         Get.back();
                       },
                       icon: Icon(
                         Icons.arrow_back,
-                        size: 32,
+                        size: 24,
                         color: AppColors.blackColor,
                       ),
                     ),
-                    SizedBox(
-                      width: getProportionateScreenWidth(12),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.editProfile,
-                      style: TextStyle(
-                        fontSize: getProportionalFontSize(32),
-                        color: themeProvider.textThemeColor,
-                        fontFamily: AppFonts.sansFont600,
+                    SizedBox(width: getProportionateScreenWidth(8),),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context)!.editProfile,
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(24),
+                          color: themeProvider.textThemeColor,
+                          fontFamily: AppFonts.sansFont600,
+                        ),
                       ),
                     ),
                   ],

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,9 @@ class TrainingScreen extends GetView<TrainingController> {
       body: SafeArea(
         child: GetBuilder<TrainingController>(
           init: TrainingController(),
+          initState: (state) {
+            controller.getCategoryList();
+          },
           builder: (controller) {
             return Container(
               padding: EdgeInsets.symmetric(
@@ -175,66 +179,143 @@ class TrainingScreen extends GetView<TrainingController> {
                       backgroundColor: AppColors.primaryColor,
                     ),
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.educationList.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          Get.toNamed(Routes.TRAINING_TOPIC);
-                        },
-                        child: Column(
-                          children: [
-                            Divider(
-                              height: index == 0 ? 1 : .5,
-                              color: AppColors.blackColor,
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  width: getProportionateScreenWidth(40),
-                                  height: getProportionateScreenHeight(40),
-                                  margin: EdgeInsets.only(
-                                    right: getProportionateScreenWidth(8),
-                                    left: getProportionateScreenWidth(4),
-                                    top: getProportionateScreenHeight(4),
-                                    bottom: getProportionateScreenHeight(8),
-                                  ),
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(AppImages.violence),
+                  // ListView.builder(
+                  //   shrinkWrap: true,
+                  //   itemCount: controller.educationList.length,
+                  //   itemBuilder: (context, index) {
+                  //     return GestureDetector(
+                  //       behavior: HitTestBehavior.opaque,
+                  //       onTap: () {
+                  //         Get.toNamed(Routes.TRAINING_TOPIC);
+                  //       },
+                  //       child: Column(
+                  //         children: [
+                  //           Divider(
+                  //             height: index == 0 ? 1 : .5,
+                  //             color: AppColors.blackColor,
+                  //           ),
+                  //           Row(
+                  //             children: [
+                  //               Container(
+                  //                 width: getProportionateScreenWidth(40),
+                  //                 height: getProportionateScreenHeight(40),
+                  //                 margin: EdgeInsets.only(
+                  //                   right: getProportionateScreenWidth(8),
+                  //                   left: getProportionateScreenWidth(4),
+                  //                   top: getProportionateScreenHeight(4),
+                  //                   bottom: getProportionateScreenHeight(8),
+                  //                 ),
+                  //                 decoration: BoxDecoration(
+                  //                   image: DecorationImage(
+                  //                     image: AssetImage(AppImages.violence),
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //               Text(
+                  //                 "${controller.educationList[index]}",
+                  //                 style: TextStyle(
+                  //                   fontSize: getProportionalFontSize(16),
+                  //                   color: themeProvider.textThemeColor,
+                  //                   fontFamily: AppFonts.sansFont700,
+                  //                 ),
+                  //               ),
+                  //               Spacer(),
+                  //               IconButton(
+                  //                 onPressed: () {},
+                  //                 icon: Icon(
+                  //                   Icons.arrow_forward_ios,
+                  //                   size: 24,
+                  //                   color: AppColors.blackColor,
+                  //                 ),
+                  //               )
+                  //             ],
+                  //           ),
+                  //           Divider(
+                  //             height: index == 4 ? 1 : .5,
+                  //             color: AppColors.blackColor,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     );
+                  //   },
+                  // )
+
+                  controller.categoryList.isNotEmpty
+                      ? Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: controller.categoryList.length,
+                            itemBuilder: (context, index) {
+                              CategoryModel category = controller.categoryList[index];
+                              return GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () {
+                                  controller.goToArticleList(category, context);
+                                },
+                                child: Column(
+                                  children: [
+                                    Divider(
+                                      height: index == 0 ? 1 : .4,
+                                      color: AppColors.blackColor,
                                     ),
-                                  ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: getProportionateScreenWidth(40),
+                                          height: getProportionateScreenHeight(40),
+                                          margin: EdgeInsets.only(
+                                            right: getProportionateScreenWidth(8),
+                                            left: getProportionateScreenWidth(4),
+                                            top: getProportionateScreenHeight(4),
+                                            bottom: getProportionateScreenHeight(8),
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.greyColor,
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              // image: AssetImage(AppImages.violence),
+                                              image: CachedNetworkImageProvider(
+                                                category.image ?? '',
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: getProportionateScreenWidth(4),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "${category.name}",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: getProportionalFontSize(16),
+                                              color: themeProvider.textThemeColor,
+                                              fontFamily: AppFonts.sansFont700,
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.arrow_forward_ios,
+                                            size: 24,
+                                            color: AppColors.blackColor,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Divider(
+                                      height: index == controller.categoryList.length ? 1 : .4,
+                                      color: AppColors.blackColor,
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  "${controller.educationList[index]}",
-                                  style: TextStyle(
-                                    fontSize: getProportionalFontSize(16),
-                                    color: themeProvider.textThemeColor,
-                                    fontFamily: AppFonts.sansFont700,
-                                  ),
-                                ),
-                                Spacer(),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 24,
-                                    color: AppColors.blackColor,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Divider(
-                              height: index == 4 ? 1 : .5,
-                              color: AppColors.blackColor,
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  )
+                              );
+                            },
+                          ),
+                        )
+                      : SizedBox()
                 ],
               ),
             );

@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:distress_app/imports.dart';
 import 'package:distress_app/packages/advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PoliceDashBoardController extends GetxController with GetSingleTickerProviderStateMixin {
   bool canPop = false;
@@ -10,6 +13,8 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
   late AnimationController animationController;
   TextEditingController respondedEventController = TextEditingController();
   bool sosRequestAccept = false;
+
+  Completer<GoogleMapController> googleMapControllerCompleter = Completer();
 
   @override
   void onReady() {

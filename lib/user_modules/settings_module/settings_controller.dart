@@ -1,18 +1,9 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:dio/dio.dart' as Dio;
-import 'package:distress_app/config/api_endpoints.dart';
-import 'package:distress_app/helpers/secure_storage.dart';
-import 'package:distress_app/helpers/utils.dart';
-import 'package:distress_app/infrastructure/api_controller.dart';
-import 'package:distress_app/infrastructure/models/user_model.dart';
-import 'package:distress_app/main.dart';
-import 'package:distress_app/packages/country_code_picker/src/country_code.dart';
-import 'package:distress_app/routes/app_pages.dart';
-import 'package:distress_app/utils/app_images.dart';
-import 'package:distress_app/utils/constants.dart';
-import 'package:distress_app/utils/loader.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:distress_app/imports.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
 
@@ -88,7 +79,8 @@ class SettingsController extends GetxController {
       Contact? contact = await FlutterContacts.openExternalPick();
       if (contact != null) {
         contactNameController.text = contact.displayName;
-        contactNumberController.text = contact.phones.map((e) => e.number).toString();
+        // contactNumberController.text = contact.phones.map((e) => e.number).toString();
+        contactNumberController.text = contact.phones.first.number.toString();
         update();
       }
     }
@@ -244,6 +236,310 @@ class SettingsController extends GetxController {
     } catch (e) {
       LoadingDialog.hideLoader();
       Utils.showToast("Something went wrong");
+      update();
+      debugPrint(e.toString());
+    }
+  }
+
+  // Emergency Contacts
+
+  List<EmergencyContactModel> emergencyContactList = [];
+
+  EmergencyContactModel? editContactModel;
+
+  void getEmergencyContactList({bool? showLoader = true}) async {
+    if (showLoader == true) {
+      LoadingDialog.showLoader();
+    }
+    try {
+      var response = await ApiProvider().postAPICall(
+        Endpoints.emergencyContactList,
+        null,
+        onSendProgress: (count, total) {},
+      );
+
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      if (response['success'] != null && response['success'] == true) {
+        emergencyContactList.clear();
+        if (response['data'] != null) {
+          List list = response['data'];
+          if (list.isNotEmpty) {
+            for (var contact in list) {
+              emergencyContactList.add(
+                EmergencyContactModel.fromJson(contact),
+              );
+            }
+          }
+        }
+      }
+      update();
+    } on Dio.DioException catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast(e.message ?? "Something went wrong");
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast("Something went wrong");
+      update();
+      debugPrint(e.toString());
+    }
+  }
+
+  void addEmergencyContact(BuildContext context) async {
+    LoadingDialog.showLoader();
+
+    Dio.FormData formData = Dio.FormData.fromMap({
+      "name": contactNameController.text,
+      "mobile_number": contactNumberController.text,
+    });
+
+    try {
+      var response = await ApiProvider().postAPICall(
+        Endpoints.emergencyContactCreate,
+        formData,
+        onSendProgress: (count, total) {},
+      );
+      LoadingDialog.hideLoader();
+      if (response['success'] != null && response['success'] == true) {
+        // Utils.showToast(response['message'] ?? "Emergency contact created successfully.");
+        getEmergencyContactList(showLoader: false);
+
+        Utils.showCustomDialog(
+          context: context,
+          barrierDismissible: false,
+          child: Center(
+            child: Material(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(
+                getProportionateScreenWidth(32),
+              ),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 1.5,
+                  sigmaY: 1.5,
+                ),
+                child: Container(
+                  width: SizeConfig.deviceWidth! * .85,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(16),
+                    vertical: getProportionateScreenHeight(60),
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      getProportionateScreenWidth(32),
+                    ),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        height: getProportionateScreenHeight(141),
+                        width: getProportionateScreenWidth(141),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(AppImages.registrationSuccess),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.emergencyContactsAdded,
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(20),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(10),
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.allEmergencyContacts,
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont400,
+                          fontSize: getProportionalFontSize(16),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(28),
+                      ),
+                      CommonButton(
+                        width: getProportionateScreenWidth(196),
+                        text: AppLocalizations.of(context)!.done,
+                        onPressed: () {
+                          Get.back();
+                          Get.back();
+                        },
+                        radius: 50,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      }
+      clearData();
+      update();
+    } on Dio.DioException catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast(e.message ?? "Something went wrong");
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast("Something went wrong");
+      update();
+      debugPrint(e.toString());
+    }
+  }
+
+  void updateEmergencyContact({required int editId}) async {
+    LoadingDialog.showLoader();
+
+    Dio.FormData formData = Dio.FormData.fromMap({
+      "id": editId,
+      "name": contactNameController.text,
+      "mobile_number": contactNumberController.text,
+    });
+
+    try {
+      var response = await ApiProvider().postAPICall(
+        Endpoints.emergencyContactUpdate,
+        formData,
+        onSendProgress: (count, total) {},
+      );
+      LoadingDialog.hideLoader();
+      if (response['success'] != null && response['success'] == true) {
+        Utils.showToast(response['message'] ?? "Emergency contact updated successfully.");
+        getEmergencyContactList(showLoader: false);
+        Get.back();
+      }
+      clearData();
+      update();
+    } on Dio.DioException catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast(e.message ?? "Something went wrong");
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast("Something went wrong");
+      update();
+      debugPrint(e.toString());
+    }
+  }
+
+  void deleteEmergencyContact({required int deleteId}) async {
+    LoadingDialog.showLoader();
+
+    Dio.FormData formData = Dio.FormData.fromMap({
+      "id": deleteId,
+    });
+
+    try {
+      var response = await ApiProvider().postAPICall(
+        Endpoints.emergencyContactDelete,
+        formData,
+        onSendProgress: (count, total) {},
+      );
+      LoadingDialog.hideLoader();
+      if (response['success'] != null && response['success'] == true) {
+        Utils.showToast(response['message'] ?? "Emergency contact deleted successfully.");
+        getEmergencyContactList(showLoader: false);
+      }
+      update();
+    } on Dio.DioException catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast(e.message ?? "Something went wrong");
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast("Something went wrong");
+      update();
+      debugPrint(e.toString());
+    }
+  }
+
+  void clearData() {
+    contactNameController.clear();
+    contactNumberController.clear();
+  }
+
+  // html screen
+
+  String? title;
+  String? data;
+
+  void getTermsAndCondition() async {
+    title = null;
+    data = null;
+    LoadingDialog.showLoader();
+
+    try {
+      var response = await ApiProvider().getAPICall(Endpoints.termAndCondition, passToken: true);
+      LoadingDialog.hideLoader();
+      if (response['success'] != null && response['success'] == true) {
+        if (response['data'] != null) {
+          title = response['data']['title'];
+          data = response['data']['description'];
+        }
+      }
+      update();
+    } on Dio.DioException catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast(e.message ?? "Something went wrong");
+      Get.back();
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast("Something went wrong");
+      Get.back();
+
+      update();
+      debugPrint(e.toString());
+    }
+  }
+
+  void getPrivacyPolicy() async {
+    title = null;
+    data = null;
+    LoadingDialog.showLoader();
+
+    try {
+      var response = await ApiProvider().getAPICall(Endpoints.privacyPolicy, passToken: true);
+      LoadingDialog.hideLoader();
+      if (response['success'] != null && response['success'] == true) {
+        if (response['data'] != null) {
+          title = response['data']['title'];
+          data = response['data']['description'];
+        }
+      }
+      update();
+    } on Dio.DioException catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast(e.message ?? "Something went wrong");
+      Get.back();
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast("Something went wrong");
+      Get.back();
+
       update();
       debugPrint(e.toString());
     }

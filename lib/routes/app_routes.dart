@@ -19,6 +19,7 @@ abstract class Routes {
   static const CHAT = _Paths.CHAT;
   static const ADD_EMERGENCY_CONTACTS = _Paths.ADD_EMERGENCY_CONTACTS;
   static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
+  static const HTML_SCREEN = _Paths.HTML_SCREEN;
 
   // Police Modules
   static const POLICE_DASHBOARD = _Paths.POLICE_DASHBOARD;
@@ -45,6 +46,7 @@ abstract class _Paths {
   static const TRAINING_TOPIC_DETAILS = '/training_topic_details'; // training_topic_details
   static const CHAT = '/chat'; // chat
   static const EDIT_PROFILE = '/edit_profile'; // edit_profile
+  static const HTML_SCREEN = '/HTML_SCREEN'; // html_screen
 
   // Police Modules
   static const POLICE_DASHBOARD = '/police_dashboard'; // police_dashboard

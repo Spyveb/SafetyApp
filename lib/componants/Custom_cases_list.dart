@@ -32,185 +32,206 @@ class CustomCasesList extends StatelessWidget {
           //   ),
           // ],
           ),
-      child: Column(
+      child: Row(
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                constraints: BoxConstraints(
-                  minWidth: getProportionateScreenWidth(100),
+          Expanded(
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(
+                        minWidth: getProportionateScreenWidth(100),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.caseNo,
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont600,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: Text(
+                        caseNo ?? "",
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont400,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                child: Text(
-                  AppLocalizations.of(context)!.caseNo,
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(14),
-                    fontFamily: AppFonts.sansFont600,
-                  ),
+                Row(
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(
+                        minWidth: getProportionateScreenWidth(100),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.date,
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont600,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      date ?? "",
+                      style: TextStyle(
+                        fontSize: getProportionalFontSize(14),
+                        fontFamily: AppFonts.sansFont400,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Flexible(
-                child: Text(
-                  caseNo ?? "",
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(14),
-                    fontFamily: AppFonts.sansFont400,
-                  ),
+                Row(
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(
+                        minWidth: getProportionateScreenWidth(100),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.status,
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont600,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      status ?? "",
+                      style: TextStyle(
+                        fontSize: getProportionalFontSize(14),
+                        fontFamily: AppFonts.sansFont600,
+                        color: Colors.green,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(
+                        minWidth: getProportionateScreenWidth(100),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.firstName,
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont600,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: Text(
+                        firstName ?? "",
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(
+                        minWidth: getProportionateScreenWidth(100),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.lastName,
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont600,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: Text(
+                        lastName ?? "",
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(
+                        minWidth: getProportionateScreenWidth(100),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.location,
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont600,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: Text(
+                        location ?? "",
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(
+                        minWidth: getProportionateScreenWidth(100),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.city,
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont600,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: Text(
+                        city ?? "",
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Container(
-                constraints: BoxConstraints(
-                  minWidth: getProportionateScreenWidth(100),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!.date,
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(14),
-                    fontFamily: AppFonts.sansFont600,
-                  ),
-                ),
-              ),
-              Text(
-                date ?? "",
-                style: TextStyle(
-                  fontSize: getProportionalFontSize(14),
-                  fontFamily: AppFonts.sansFont400,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Container(
-                constraints: BoxConstraints(
-                  minWidth: getProportionateScreenWidth(100),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!.status,
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(14),
-                    fontFamily: AppFonts.sansFont600,
-                  ),
-                ),
-              ),
-              Text(
-                status ?? "",
-                style: TextStyle(
-                  fontSize: getProportionalFontSize(14),
-                  fontFamily: AppFonts.sansFont600,
-                  color: Colors.green,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                constraints: BoxConstraints(
-                  minWidth: getProportionateScreenWidth(100),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!.firstName,
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(14),
-                    fontFamily: AppFonts.sansFont600,
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  firstName ?? "",
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(14),
-                    fontFamily: AppFonts.sansFont400,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                constraints: BoxConstraints(
-                  minWidth: getProportionateScreenWidth(100),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!.lastName,
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(14),
-                    fontFamily: AppFonts.sansFont600,
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  lastName ?? "",
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(14),
-                    fontFamily: AppFonts.sansFont400,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                constraints: BoxConstraints(
-                  minWidth: getProportionateScreenWidth(100),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!.location,
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(14),
-                    fontFamily: AppFonts.sansFont600,
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  location ?? "",
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(14),
-                    fontFamily: AppFonts.sansFont400,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                constraints: BoxConstraints(
-                  minWidth: getProportionateScreenWidth(100),
-                ),
-                child: Text(
-                  AppLocalizations.of(context)!.city,
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(14),
-                    fontFamily: AppFonts.sansFont600,
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  city ?? "",
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(14),
-                    fontFamily: AppFonts.sansFont400,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          CommonButton(
+            width: getProportionateScreenWidth(100),
+            padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(4),
+              vertical: getProportionateScreenHeight(4),
+            ),
+            radius: 50,
+            textStyle: TextStyle(
+              color: Colors.white,
+              fontSize: getProportionalFontSize(13),
+              fontFamily: AppFonts.sansFont600,
+            ),
+            onPressed: () {},
+            text: "View case",
+          )
         ],
       ),
     );

@@ -580,7 +580,7 @@ class SignUpScreen extends GetView<SignUpController> {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: AppLocalizations.of(context)!.iAgreeTo,
+                                  text: "${AppLocalizations.of(context)!.iAgreeTo} ",
                                   style: TextStyle(
                                     fontSize: getProportionalFontSize(12),
                                     fontFamily: AppFonts.sansFont400,
@@ -588,8 +588,13 @@ class SignUpScreen extends GetView<SignUpController> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: AppLocalizations.of(context)!.termsAndConditions,
-                                  recognizer: TapGestureRecognizer()..onTap = () {},
+                                  text: "${AppLocalizations.of(context)!.termsAndConditions}",
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Get.toNamed(Routes.HTML_SCREEN);
+                                      Get.lazyPut(() => SettingsController());
+                                      Get.find<SettingsController>().getTermsAndCondition();
+                                    },
                                   style: TextStyle(
                                     decoration: TextDecoration.underline,
                                     fontSize: getProportionalFontSize(12),
