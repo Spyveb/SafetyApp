@@ -27,6 +27,7 @@ class TrainingController extends GetxController {
   List<CategoryModel> categoryList = [];
   List<ArticleModel> articleList = [];
   CategoryModel? categoryModel;
+  ArticleModel articleDetails = ArticleModel();
 
   void getCategoryList() async {
     // LoadingDialog.showLoader();
@@ -123,6 +124,19 @@ class TrainingController extends GetxController {
       Utils.showToast("Something went wrong");
       update();
       debugPrint(e.toString());
+    }
+  }
+
+  void goToArticleDetails(
+    ArticleModel articleModel,
+  ) {
+    if (articleModel.id != null) {
+      Get.toNamed(Routes.TRAINING_TOPIC_DETAILS);
+
+      articleDetails = articleModel;
+      update();
+    } else {
+      Utils.showToast("Details not found");
     }
   }
 }

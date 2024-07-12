@@ -3,7 +3,9 @@ import 'dart:ui';
 
 import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
+import 'package:distress_app/packages/location_geocoder/location_geocoder.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -35,7 +37,8 @@ class HomeController extends GetxController {
       );
       LoadingDialog.hideLoader();
       if (response['success'] != null && response['success'] == true) {
-        sosEmergencySuccess(context);
+        // sosEmergencySuccess(context);
+        Utils.showToast(response['message'] ?? 'SOS emergency case created successfully.');
       }
       update();
     } on Dio.DioException catch (e) {
@@ -56,10 +59,11 @@ class HomeController extends GetxController {
     update();
     Timer timer = Timer(Duration(seconds: 5), () {
       if (dialogIsOpen) {
-        ///TODO UNDO REQUEST
         Get.back();
+        sendSOSEmergency(context);
       }
     });
+
     Utils.showCustomDialog(
         context: context,
         child: Center(
@@ -145,5 +149,61 @@ class HomeController extends GetxController {
           update();
         },
         barrierDismissible: false);
+  }
+
+  Future<void> getCurrentLocation() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    Position currentPosition = await determineCurrentPosition();
+
+    print("${currentPosition.latitude} ${currentPosition.longitude}");
+    var address = await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromCoordinates(
+      Coordinates(currentPosition.latitude, currentPosition.longitude),
+    );
+
+    searchLocationController.text = address.first.addressLine ?? '';
+    latitude = address.first.coordinates.latitude;
+    longitude = address.first.coordinates.longitude;
+    city = address.first.locality;
+    update();
+  }
+
+  Future<Position> determineCurrentPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      Utils.showAlertDialog(
+        context: navState.currentContext!,
+        title: "Permission required",
+        description:
+            "To send SOS of your current location, we require the location permission. Go to Application settings > Permissions, and turn Location on.",
+        buttons: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: Text('Ok'),
+          ),
+        ],
+      );
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    return await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.best,
+    );
   }
 }

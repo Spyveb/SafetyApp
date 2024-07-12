@@ -140,7 +140,9 @@ class TrainingTopicScreen extends GetView<TrainingController> {
                               ArticleModel article = controller.articleList[index];
                               return GestureDetector(
                                 onTap: () {
-                                  Get.toNamed(Routes.TRAINING_TOPIC_DETAILS);
+                                  controller.goToArticleDetails(
+                                    article,
+                                  );
                                 },
                                 child: Column(
                                   children: [

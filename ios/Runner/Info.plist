@@ -59,5 +59,7 @@
     <key>NSContactsUsageDescription</key>
     <string>Permission required to access the contact list for adding emergency contacts</string>
 
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open.</string>
 </dict>
 </plist>

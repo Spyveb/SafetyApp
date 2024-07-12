@@ -34,18 +34,53 @@ class _PlaceAutoCompleteScreenState extends State<PlaceAutoCompleteScreen> {
           },
         ),
       ),
-      body: Column(children: [
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        ListTile(
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(26),
+          ),
+          onTap: () async {
+            await Get.find<HomeController>().getCurrentLocation();
+            Get.back();
+          },
+          title: Text(
+            "Use current location",
+            style: TextStyle(
+              fontFamily: AppFonts.sansFont400,
+              fontSize: getProportionalFontSize(16),
+              color: AppColors.blackColor,
+            ),
+          ),
+          leading: Icon(
+            Icons.my_location,
+            size: 24,
+          ),
+        ),
+        SizedBox(
+          height: getProportionateScreenHeight(8),
+        ),
         Expanded(
           child: ListView.builder(
             itemCount: result.length,
+            shrinkWrap: true,
             itemBuilder: (context, index) {
               GoogleMapPlaceModel prediction = result[index];
               return ListTile(
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: getProportionateScreenWidth(26),
                 ),
-                leading: Icon(Icons.location_on),
-                title: Text(prediction.description!),
+                leading: Icon(
+                  Icons.location_on,
+                  size: 24,
+                ),
+                title: Text(
+                  prediction.description!,
+                  style: TextStyle(
+                    fontFamily: AppFonts.sansFont400,
+                    fontSize: getProportionalFontSize(16),
+                    color: AppColors.blackColor,
+                  ),
+                ),
                 onTap: () {
                   Navigator.pop(context, prediction);
                 },
