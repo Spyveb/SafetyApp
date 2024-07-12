@@ -1,4 +1,5 @@
 import 'package:distress_app/imports.dart';
+import 'package:distress_app/user_modules/training_module/video_screen.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';
@@ -68,6 +69,12 @@ abstract class AppPages {
       page: () => TrainingScreen(),
       binding: TrainingBinding(),
     ),
+    GetPage(
+      name: Routes.VIDEO_SCREEN,
+      page: () => const VideoScreen(),
+      binding: TrainingBinding(),
+    ),
+
     GetPage(
       name: Routes.TRAINING_TOPIC,
       page: () => TrainingTopicScreen(),

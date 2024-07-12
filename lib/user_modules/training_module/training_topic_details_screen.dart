@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -18,6 +19,7 @@ class TrainingTopicDetailScreen extends GetView<TrainingController> {
           backgroundColor: themeProvider.backgroundColor,
           appBar: AppBar(
             leadingWidth: getProportionateScreenWidth(34),
+            backgroundColor: themeProvider.backgroundColor,
             leading: IconButton(
               onPressed: () {
                 Get.back();
@@ -48,7 +50,9 @@ class TrainingTopicDetailScreen extends GetView<TrainingController> {
                       ),
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(AppImages.notes),
+                          image: CachedNetworkImageProvider(
+                            controller.articleDetails.image != null ? controller.articleDetails.image! : '',
+                          ),
                         ),
                       ),
                     ),
@@ -81,10 +85,6 @@ class TrainingTopicDetailScreen extends GetView<TrainingController> {
                     ),
                   ],
                 ),
-                Divider(
-                  height: 1,
-                  color: AppColors.blackColor,
-                ),
               ],
             ),
           ),
@@ -97,7 +97,35 @@ class TrainingTopicDetailScreen extends GetView<TrainingController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Html(data: controller.articleDetails.description),
+                  Expanded(
+                    child: Html(
+                      data: controller.articleDetails.description,
+                    ),
+                  ),
+                  controller.articleDetails.videoUrl != null
+                      ? Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: CommonButton(
+                                text: "Next",
+                                radius: 20,
+                                onPressed: () {
+                                  Get.toNamed(Routes.VIDEO_SCREEN,
+                                      arguments: {"videoUrl": controller.articleDetails.videoUrl});
+                                },
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: getProportionateScreenWidth(29),
+                                  vertical: getProportionateScreenHeight(7),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(10),
+                            ),
+                          ],
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),

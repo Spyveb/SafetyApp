@@ -420,4 +420,19 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get city => 'City';
+
+  @override
+  String get reportedEmergencyCases => 'Reported Emergency Cases';
+
+  @override
+  String get searchCases => 'Search case';
+
+  @override
+  String get reportedNonEmergencyCases => 'Reported Non Emergency Cases';
+
+  @override
+  String get sosEmergencyCases => 'SOS Emergency Cases';
+
+  @override
+  String get areYouSureYouWantToLogout => 'Are you sure you want to logout?';
 }

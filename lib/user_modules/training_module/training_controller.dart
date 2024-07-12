@@ -3,9 +3,11 @@ import 'package:distress_app/imports.dart';
 import 'package:distress_app/infrastructure/models/article_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:pod_player/pod_player.dart';
 
 class TrainingController extends GetxController {
   int tabIndex = 1;
+  late PodPlayerController videoController;
 
   void changeTabIndex(int index) {
     tabIndex = index;

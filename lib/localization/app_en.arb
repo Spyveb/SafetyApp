@@ -143,6 +143,11 @@
   "role": "Role",
   "caseNo": "Case no",
   "date": "Date",
-  "city": "City"
+  "city": "City",
+  "reportedEmergencyCases": "Reported Emergency Cases",
+  "searchCases": "Search case",
+  "reportedNonEmergencyCases": "Reported Non Emergency Cases",
+  "sosEmergencyCases": "SOS Emergency Cases",
+  "areYouSureYouWantToLogout": "Are you sure you want to logout?"
 
 }

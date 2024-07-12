@@ -31,27 +31,25 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              top: getProportionateScreenHeight(5),
-                            ),
-                            child: GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                Get.back();
-                              },
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              height: getProportionateScreenHeight(40),
+                              width: getProportionateScreenWidth(40),
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
                               child: Icon(
                                 Icons.arrow_back,
                                 size: 22,
                               ),
                             ),
                           ),
-                          SizedBox(
-                            width: getProportionateScreenWidth(10),
-                          ),
                           Flexible(
                             child: Text(
-                              "Reported Non Emergency Cases",
+                              AppLocalizations.of(context)!.reportedNonEmergencyCases,
                               style: TextStyle(
                                 fontSize: getProportionalFontSize(22),
                                 fontFamily: AppFonts.sansFont600,
@@ -79,7 +77,7 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
                           suffixIcon: const Icon(
                             Icons.search,
                           ),
-                          hintText: "Search case",
+                          hintText: AppLocalizations.of(context)!.searchCases,
                         ),
                       ),
                       SizedBox(

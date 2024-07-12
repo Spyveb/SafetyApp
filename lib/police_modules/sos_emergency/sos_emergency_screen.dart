@@ -31,27 +31,25 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              top: getProportionateScreenHeight(5),
-                            ),
-                            child: GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                Get.back();
-                              },
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              height: getProportionateScreenHeight(40),
+                              width: getProportionateScreenWidth(40),
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
                               child: Icon(
                                 Icons.arrow_back,
                                 size: 22,
                               ),
                             ),
                           ),
-                          SizedBox(
-                            width: getProportionateScreenWidth(10),
-                          ),
                           Flexible(
                             child: Text(
-                              "SOS Emergency Cases",
+                              AppLocalizations.of(context)!.sosEmergencyCases,
                               style: TextStyle(
                                 fontSize: getProportionalFontSize(22),
                                 fontFamily: AppFonts.sansFont600,
@@ -79,7 +77,7 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                           suffixIcon: const Icon(
                             Icons.search,
                           ),
-                          hintText: "Search case",
+                          hintText: AppLocalizations.of(context)!.searchCases,
                         ),
                       ),
                       SizedBox(
@@ -92,7 +90,7 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                       shrinkWrap: true,
                       itemCount: 9,
                       itemBuilder: (context, index) {
-                        return CustomCasesList(
+                        return const CustomCasesList(
                           caseNo: "18765",
                           status: "Open",
                           firstName: "Anne",
