@@ -24,6 +24,7 @@ class UserModel {
   String? role;
   String? profileImage;
   int? reportAnnonymously;
+  int? availability;
   dynamic jobId;
   dynamic organisationId;
   dynamic emailVerifiedAt;
@@ -47,6 +48,7 @@ class UserModel {
     this.role,
     this.profileImage,
     this.reportAnnonymously,
+    this.availability,
     this.jobId,
     this.organisationId,
     this.emailVerifiedAt,
@@ -71,6 +73,7 @@ class UserModel {
         role: json["role"],
         profileImage: json["profile_image"],
         reportAnnonymously: json["report_annonymously"],
+        availability: json["availability"],
         jobId: json["job_id"],
         organisationId: json["organisation_id"],
         emailVerifiedAt: json["email_verified_at"],
@@ -95,6 +98,7 @@ class UserModel {
         "role": role,
         "profile_image": profileImage,
         "report_annonymously": reportAnnonymously,
+        "availability": availability,
         "job_id": jobId,
         "organisation_id": organisationId,
         "email_verified_at": emailVerifiedAt,

@@ -192,9 +192,9 @@ class PoliceSettingScreen extends GetView<PoliceSettingController> {
                     text: AppLocalizations.of(context)!.availability,
                     onTap: () {},
                     suffix: CommonSwitch(
-                      value: controller.policeStatus,
+                      value: controller.availability,
                       onChanged: (value) {
-                        controller.policeStatusSwitch(value);
+                        controller.availabilitySwitch(value);
                       },
                     ),
                   ),

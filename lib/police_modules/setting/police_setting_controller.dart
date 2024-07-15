@@ -15,10 +15,10 @@ class PoliceSettingController extends GetxController {
 
   Locale? locale;
 
-  bool policeStatus = false;
+  bool availability = false;
 
-  void policeStatusSwitch(bool value) {
-    policeStatus = value;
+  void availabilitySwitch(bool value) {
+    availability = value;
     update();
 
     saveSettings();
@@ -28,7 +28,9 @@ class PoliceSettingController extends GetxController {
     // LoadingDialog.showLoader();
 
     try {
-      Dio.FormData formData = Dio.FormData.fromMap({"report_annonymously": policeStatus ? 1 : 0});
+      Dio.FormData formData = Dio.FormData.fromMap(
+        {"availability": availability ? 1 : 0},
+      );
       var response = await ApiProvider().postAPICall(
         Endpoints.saveSetting,
         formData,
@@ -36,20 +38,20 @@ class PoliceSettingController extends GetxController {
       // LoadingDialog.hideLoader();
       if (response['success'] != null && response['success'] == true) {
       } else {
-        policeStatus = !policeStatus;
+        availability = !availability;
       }
       update();
     } on Dio.DioException catch (e) {
       // LoadingDialog.hideLoader();
       Utils.showToast(e.message ?? "Something went wrong");
-      policeStatus = !policeStatus;
+      availability = !availability;
 
       update();
       debugPrint(e.toString());
     } catch (e) {
       // LoadingDialog.hideLoader();
       Utils.showToast("Something went wrong");
-      policeStatus = !policeStatus;
+      availability = !availability;
 
       update();
       debugPrint(e.toString());
