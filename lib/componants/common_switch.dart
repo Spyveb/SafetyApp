@@ -20,6 +20,7 @@ class CommonSwitch extends StatelessWidget {
       ),
       inactiveTrackColor: Colors.transparent,
       inactiveThumbColor: AppColors.blackColor,
+      thumbIcon: MaterialStateProperty.all(const Icon(null)),
       activeTrackColor: Colors.transparent,
       trackOutlineWidth: MaterialStateProperty.all(
         getProportionateScreenWidth(3),

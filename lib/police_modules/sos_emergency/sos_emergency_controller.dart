@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PoliceSOSEmergencyController extends GetxController {
+  Completer<GoogleMapController> googleMapControllerCompleter = Completer();
   List<ReportCaseModel> sosReportsList = [];
   void getSOSEmergencyList({bool? showLoader = true, required String search}) async {
     if (showLoader == true) {

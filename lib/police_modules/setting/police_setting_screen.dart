@@ -30,13 +30,36 @@ class PoliceSettingScreen extends GetView<PoliceSettingController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    AppLocalizations.of(context)!.settings,
-                    style: TextStyle(
-                      fontSize: getProportionalFontSize(32),
-                      color: themeProvider.textThemeColor,
-                      fontFamily: AppFonts.sansFont600,
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          height: getProportionateScreenHeight(40),
+                          width: getProportionateScreenWidth(40),
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
+                          child: const Icon(
+                            Icons.arrow_back,
+                            size: 22,
+                          ),
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          AppLocalizations.of(context)!.settings,
+                          style: TextStyle(
+                            fontSize: getProportionalFontSize(22),
+                            fontFamily: AppFonts.sansFont600,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   Text(
                     AppLocalizations.of(context)!.customizeApp,
@@ -160,6 +183,20 @@ class PoliceSettingScreen extends GetView<PoliceSettingController> {
                     onTap: () {
                       Get.toNamed(Routes.POLICE_EDIT_PROFILE);
                     },
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(8),
+                  ),
+                  SettingsTile(
+                    themeProvider: themeProvider,
+                    text: AppLocalizations.of(context)!.availability,
+                    onTap: () {},
+                    suffix: CommonSwitch(
+                      value: controller.policeStatus,
+                      onChanged: (value) {
+                        controller.policeStatusSwitch(value);
+                      },
+                    ),
                   ),
                   SizedBox(
                     height: getProportionateScreenHeight(8),

@@ -13,6 +13,11 @@ class ReportCaseModel {
   int? userId;
   String? city;
   String? location;
+  String? type;
+  String? information;
+  int? alertFriends;
+  int? reportAnonymously;
+  int? speakToProfessional;
   String? latitude;
   String? longitude;
   int? status;
@@ -26,6 +31,11 @@ class ReportCaseModel {
     this.userId,
     this.city,
     this.location,
+    this.type,
+    this.information,
+    this.alertFriends,
+    this.reportAnonymously,
+    this.speakToProfessional,
     this.latitude,
     this.longitude,
     this.status,
@@ -40,6 +50,11 @@ class ReportCaseModel {
         userId: json["user_id"],
         city: json["city"],
         location: json["location"],
+        type: json["type"],
+        information: json["information"],
+        alertFriends: json["alert_friends"],
+        reportAnonymously: json["report_annonymously"],
+        speakToProfessional: json["speak_to_professional"],
         latitude: json["latitude"],
         longitude: json["longitude"],
         status: json["status"],
@@ -54,6 +69,11 @@ class ReportCaseModel {
         "user_id": userId,
         "city": city,
         "location": location,
+        "type": type,
+        "information": information,
+        "alert_friends": alertFriends,
+        "report_annonymously": reportAnonymously,
+        "speak_to_professional": speakToProfessional,
         "latitude": latitude,
         "longitude": longitude,
         "status": status,

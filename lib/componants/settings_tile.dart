@@ -22,6 +22,7 @@ class SettingsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
+      behavior: HitTestBehavior.opaque,
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: getProportionateScreenHeight(6),
@@ -52,7 +53,7 @@ class SettingsTile extends StatelessWidget {
             ),
             suffix ??
                 IconButton(
-                  onPressed: () {},
+                  onPressed: null,
                   icon: Icon(
                     Icons.arrow_forward_ios,
                     color: themeProvider.textThemeColor,

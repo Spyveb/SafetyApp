@@ -15,6 +15,47 @@ class PoliceSettingController extends GetxController {
 
   Locale? locale;
 
+  bool policeStatus = false;
+
+  void policeStatusSwitch(bool value) {
+    policeStatus = value;
+    update();
+
+    saveSettings();
+  }
+
+  void saveSettings() async {
+    // LoadingDialog.showLoader();
+
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({"report_annonymously": policeStatus ? 1 : 0});
+      var response = await ApiProvider().postAPICall(
+        Endpoints.saveSetting,
+        formData,
+      );
+      // LoadingDialog.hideLoader();
+      if (response['success'] != null && response['success'] == true) {
+      } else {
+        policeStatus = !policeStatus;
+      }
+      update();
+    } on Dio.DioException catch (e) {
+      // LoadingDialog.hideLoader();
+      Utils.showToast(e.message ?? "Something went wrong");
+      policeStatus = !policeStatus;
+
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      // LoadingDialog.hideLoader();
+      Utils.showToast("Something went wrong");
+      policeStatus = !policeStatus;
+
+      update();
+      debugPrint(e.toString());
+    }
+  }
+
   void getCurrentLanguage() async {
     String? lang = await StorageService().readSecureData(Constants.language);
 

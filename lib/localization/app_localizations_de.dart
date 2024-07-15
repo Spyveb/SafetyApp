@@ -435,4 +435,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get areYouSureYouWantToLogout => 'Are you sure you want to logout?';
+
+  @override
+  String get availability => 'Availability';
 }
