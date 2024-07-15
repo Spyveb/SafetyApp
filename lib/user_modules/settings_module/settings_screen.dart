@@ -18,6 +18,9 @@ class SettingsScreen extends GetView<SettingsController> {
       body: SafeArea(
         child: GetBuilder<SettingsController>(
           init: SettingsController(),
+          initState: (state) {
+            controller.getUserProfile(showLoader: false);
+          },
           builder: (controller) {
             return Container(
               padding: EdgeInsets.symmetric(
@@ -201,7 +204,6 @@ class SettingsScreen extends GetView<SettingsController> {
                     text: AppLocalizations.of(context)!.editProfile,
                     onTap: () {
                       Get.toNamed(Routes.EDIT_PROFILE);
-                      controller.getUserProfile();
                     },
                   ),
                   SizedBox(

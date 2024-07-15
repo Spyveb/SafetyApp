@@ -9,6 +9,7 @@ class Endpoints {
   static const getProfile = "${baseUrl}api/get_profile"; // Endpoint for get profile
   static const updateProfile = "${baseUrl}api/update_profile"; // Endpoint for get profile
   static const deleteAccount = "${baseUrl}api/delete_account"; // Endpoint for delete account
+  static const saveSetting = "${baseUrl}api/save_setting"; // Endpoint for save setting
   static const sendSOSEmergency = "${baseUrl}api/create_sos_emergency_case"; // Endpoint for delete account
   static const sendNonEmergency = "${baseUrl}api/create_non_emergency_case"; // Endpoint for delete account
   static const categoryList = "${baseUrl}api/categories_list"; // Endpoint for categories list

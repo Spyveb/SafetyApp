@@ -142,8 +142,10 @@ class ReportController extends GetxController {
       );
       LoadingDialog.hideLoader();
       if (response['success'] != null && response['success'] == true) {
-        // sosEmergencySuccess(context);
+        sosEmergencyRequestSuccess(context);
         Utils.showToast(response['message'] ?? 'SOS emergency case created successfully.');
+      } else {
+        Utils.showToast(response['message'] ?? "You can't create new report. Your one emergency report case is open.");
       }
       update();
     } on Dio.DioException catch (e) {
@@ -254,6 +256,93 @@ class ReportController extends GetxController {
           update();
         },
         barrierDismissible: false);
+  }
+
+  sosEmergencyRequestSuccess(BuildContext context) {
+    Utils.showCustomDialog(
+      context: context,
+      child: Center(
+        child: Material(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(
+            getProportionateScreenWidth(32),
+          ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 1.5,
+              sigmaY: 1.5,
+            ),
+            child: GetBuilder<HomeController>(
+              builder: (controller) {
+                return Container(
+                  width: SizeConfig.deviceWidth! * .9,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(8),
+                    vertical: getProportionateScreenHeight(18),
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      getProportionateScreenWidth(32),
+                    ),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        height: getProportionateScreenHeight(172),
+                        width: getProportionateScreenWidth(220),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(AppImages.hotspot),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(10),
+                      ),
+                      Text(
+                        "EMERGENCY REQUEST SENT",
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(20),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(10),
+                      ),
+                      Text(
+                        "Your SOS message has been sent. Help is on the way. Stay safe and keep your phone nearby.",
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont400,
+                          fontSize: getProportionalFontSize(16),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(28),
+                      ),
+                      CommonButton(
+                        width: getProportionateScreenWidth(196),
+                        text: AppLocalizations.of(context)!.done,
+                        onPressed: () {
+                          Get.back();
+                        },
+                        radius: 50,
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+      barrierDismissible: false,
+    );
   }
 
   Future<void> getCurrentLocation() async {

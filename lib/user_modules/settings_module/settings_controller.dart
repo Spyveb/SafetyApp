@@ -13,6 +13,8 @@ class SettingsController extends GetxController {
   void switchReportAnonymously(bool value) {
     reportAnonymously = value;
     update();
+
+    saveSettings();
   }
 
   TextEditingController textEditingController = TextEditingController();
@@ -106,32 +108,39 @@ class SettingsController extends GetxController {
   File? selectedImage;
   String? profileImage;
 
-  void getUserProfile() async {
-    LoadingDialog.showLoader();
+  void getUserProfile({bool? showLoader = true}) async {
+    if (showLoader == true) {
+      LoadingDialog.showLoader();
+    }
     try {
       var response = await ApiProvider().postAPICall(
         Endpoints.getProfile,
         null,
         onSendProgress: (count, total) {},
       );
-
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
       if (response['success'] != null && response['success'] == true) {
         if (response['data'] != null) {
           if (response['data']['user'] != null) {
             UserModel userModel = UserModel.fromJson(response['data']['user']);
             await assignUserData(userModel);
-            LoadingDialog.hideLoader();
           }
         }
       }
       update();
     } on Dio.DioException catch (e) {
-      LoadingDialog.hideLoader();
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
       Utils.showToast(e.message ?? "Something went wrong");
       update();
       debugPrint(e.toString());
     } catch (e) {
-      LoadingDialog.hideLoader();
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
       Utils.showToast("Something went wrong");
       update();
       debugPrint(e.toString());
@@ -150,6 +159,7 @@ class SettingsController extends GetxController {
     birthDateController.text = Utils.displayDateFormat(userModel.dob ?? '');
     userNameController.text = userModel.username ?? '';
     profileImage = userModel.profileImage;
+    reportAnonymously = userModel.reportAnnonymously == 1;
     update();
   }
 
@@ -198,6 +208,7 @@ class SettingsController extends GetxController {
             LoadingDialog.hideLoader();
             Utils.showToast(response['message'] ?? "User profile updated successfully.");
             Get.back();
+            getUserProfile(showLoader: false);
           }
         }
       }
@@ -539,6 +550,38 @@ class SettingsController extends GetxController {
       LoadingDialog.hideLoader();
       Utils.showToast("Something went wrong");
       Get.back();
+
+      update();
+      debugPrint(e.toString());
+    }
+  }
+
+  void saveSettings() async {
+    // LoadingDialog.showLoader();
+
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({"report_annonymously": reportAnonymously ? 1 : 0});
+      var response = await ApiProvider().postAPICall(
+        Endpoints.saveSetting,
+        formData,
+      );
+      // LoadingDialog.hideLoader();
+      if (response['success'] != null && response['success'] == true) {
+      } else {
+        reportAnonymously = !reportAnonymously;
+      }
+      update();
+    } on Dio.DioException catch (e) {
+      // LoadingDialog.hideLoader();
+      Utils.showToast(e.message ?? "Something went wrong");
+      reportAnonymously = !reportAnonymously;
+
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      // LoadingDialog.hideLoader();
+      Utils.showToast("Something went wrong");
+      reportAnonymously = !reportAnonymously;
 
       update();
       debugPrint(e.toString());

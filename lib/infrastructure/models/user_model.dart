@@ -17,14 +17,19 @@ class UserModel {
   String? mobileCode;
   String? mobileNumber;
   String? dob;
+  dynamic latitude;
+  dynamic longitude;
+  dynamic city;
+  dynamic location;
   String? role;
+  String? profileImage;
+  int? reportAnnonymously;
   dynamic jobId;
   dynamic organisationId;
   dynamic emailVerifiedAt;
   String? createdAt;
   String? updatedAt;
   String? token;
-  String? profileImage;
 
   UserModel({
     this.id,
@@ -35,14 +40,19 @@ class UserModel {
     this.mobileCode,
     this.mobileNumber,
     this.dob,
+    this.latitude,
+    this.longitude,
+    this.city,
+    this.location,
     this.role,
+    this.profileImage,
+    this.reportAnnonymously,
     this.jobId,
     this.organisationId,
     this.emailVerifiedAt,
     this.createdAt,
     this.updatedAt,
     this.token,
-    this.profileImage,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -54,14 +64,19 @@ class UserModel {
         mobileCode: json["mobile_code"],
         mobileNumber: json["mobile_number"],
         dob: json["dob"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
+        city: json["city"],
+        location: json["location"],
         role: json["role"],
+        profileImage: json["profile_image"],
+        reportAnnonymously: json["report_annonymously"],
         jobId: json["job_id"],
         organisationId: json["organisation_id"],
         emailVerifiedAt: json["email_verified_at"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
         token: json["token"],
-        profileImage: json["profile_image"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -73,13 +88,18 @@ class UserModel {
         "mobile_code": mobileCode,
         "mobile_number": mobileNumber,
         "dob": dob,
+        "latitude": latitude,
+        "longitude": longitude,
+        "city": city,
+        "location": location,
         "role": role,
+        "profile_image": profileImage,
+        "report_annonymously": reportAnnonymously,
         "job_id": jobId,
         "organisation_id": organisationId,
         "email_verified_at": emailVerifiedAt,
         "created_at": createdAt,
         "updated_at": updatedAt,
         "token": token,
-        "profile_image": profileImage,
       };
 }

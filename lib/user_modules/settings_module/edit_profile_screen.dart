@@ -22,6 +22,11 @@ class EditProfileScreen extends GetView<SettingsController> {
       backgroundColor: themeProvider.backgroundColor,
       body: SafeArea(
         child: GetBuilder<SettingsController>(
+          initState: (state) {
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              // controller.update();
+            });
+          },
           builder: (controller) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,6 +67,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                       ),
                       onPressed: () {
                         Get.back();
+                        controller.getUserProfile(showLoader: false);
                       },
                       icon: Icon(
                         Icons.arrow_back,
