@@ -11,7 +11,9 @@ class Endpoints {
   static const deleteAccount = "${baseUrl}api/delete_account"; // Endpoint for delete account
   static const saveSetting = "${baseUrl}api/save_setting"; // Endpoint for save setting
   static const sendSOSEmergency = "${baseUrl}api/create_sos_emergency_case"; // Endpoint for delete account
+  static const sosEmergencyList = "${baseUrl}api/sos_emergency_case_list"; // Endpoint for delete account
   static const sendNonEmergency = "${baseUrl}api/create_non_emergency_case"; // Endpoint for delete account
+  static const nonEmergencyList = "${baseUrl}api/non_emergency_case_list"; // Endpoint for delete account
   static const categoryList = "${baseUrl}api/categories_list"; // Endpoint for categories list
   static const categoryDetail = "${baseUrl}api/category_detail"; // Endpoint for category_detail
   static const emergencyContactList = "${baseUrl}api/emergency_contact_list"; // Endpoint for emergencyContactList

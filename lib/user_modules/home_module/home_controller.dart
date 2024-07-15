@@ -322,4 +322,10 @@ class HomeController extends GetxController {
       update();
     }
   }
+
+  String firstName = '';
+  Future<void> getUserName() async {
+    firstName = await StorageService().readSecureData(Constants.firstName) ?? '';
+    update();
+  }
 }

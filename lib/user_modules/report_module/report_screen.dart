@@ -164,151 +164,148 @@ class ReportScreen extends GetView<ReportController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Utils.showCustomDialog(
-                        context: context,
-                        child: Center(
-                          child: Material(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(
-                              getProportionateScreenWidth(32),
-                            ),
-                            child: BackdropFilter(
-                              filter: ImageFilter.blur(
-                                sigmaX: 1.5,
-                                sigmaY: 1.5,
+                      if (controller.searchLocationController.text.isNotEmpty &&
+                          controller.latitude != null &&
+                          controller.longitude != null &&
+                          controller.city != null) {
+                        Utils.showCustomDialog(
+                          context: context,
+                          child: Center(
+                            child: Material(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(32),
                               ),
-                              child: GetBuilder<ReportController>(
-                                builder: (controller) {
-                                  return Container(
-                                    width: SizeConfig.deviceWidth! * .85,
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: getProportionateScreenWidth(16),
-                                      vertical: getProportionateScreenHeight(16),
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                        getProportionateScreenWidth(32),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                  sigmaX: 1.5,
+                                  sigmaY: 1.5,
+                                ),
+                                child: GetBuilder<ReportController>(
+                                  builder: (controller) {
+                                    return Container(
+                                      width: SizeConfig.deviceWidth! * .85,
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: getProportionateScreenWidth(16),
+                                        vertical: getProportionateScreenHeight(16),
                                       ),
-                                      color: Colors.white,
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          AppLocalizations.of(context)!.confirmationMessage,
-                                          style: TextStyle(
-                                              fontFamily: AppFonts.sansFont700,
-                                              fontSize: getProportionalFontSize(22),
-                                              color: AppColors.primaryColor),
-                                          textAlign: TextAlign.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          getProportionateScreenWidth(32),
                                         ),
-                                        SizedBox(
-                                          height: getProportionateScreenHeight(10),
-                                        ),
-                                        Text(
-                                          "You are about to send an SOS. Are you sure you want to proceed?",
-                                          style: TextStyle(
-                                              fontFamily: AppFonts.sansFont500,
-                                              fontSize: getProportionalFontSize(16),
-                                              color: AppColors.blackColor),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        SizedBox(
-                                          height: getProportionateScreenHeight(24),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: CommonButton(
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: getProportionateScreenWidth(24),
-                                                  vertical: getProportionateScreenHeight(18),
-                                                ),
-                                                text: AppLocalizations.of(context)!.yes,
-                                                onPressed: () async {
-                                                  Get.back();
-                                                  if (controller.searchLocationController.text.isNotEmpty &&
-                                                      controller.latitude != null &&
-                                                      controller.longitude != null &&
-                                                      controller.city != null) {
-                                                    controller.sosEmergencySuccess(context);
-                                                  } else {
-                                                    // Utils.showToast("Please select location to send SOS.");
-
-                                                    Utils.showAlertDialog(
-                                                      context: navState.currentContext!,
-                                                      title: "Location required",
-                                                      description:
-                                                          "To send SOS, we require the location. Select location options.",
-                                                      buttons: [
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            controller.addLocationManually(context);
-                                                          },
-                                                          child: Text('Add manually'),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () async {
-                                                            await controller.getCurrentLocation();
-
-                                                            Get.back();
-                                                          },
-                                                          child: Text('My Location'),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  }
-                                                },
-                                                radius: 50,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: getProportionateScreenWidth(18),
-                                            ),
-                                            Expanded(
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  Get.back();
-                                                },
-                                                behavior: HitTestBehavior.opaque,
-                                                child: Container(
+                                        color: Colors.white,
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)!.confirmationMessage,
+                                            style: TextStyle(
+                                                fontFamily: AppFonts.sansFont700,
+                                                fontSize: getProportionalFontSize(22),
+                                                color: AppColors.primaryColor),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          SizedBox(
+                                            height: getProportionateScreenHeight(10),
+                                          ),
+                                          Text(
+                                            "You are about to send an SOS. Are you sure you want to proceed?",
+                                            style: TextStyle(
+                                                fontFamily: AppFonts.sansFont500,
+                                                fontSize: getProportionalFontSize(16),
+                                                color: AppColors.blackColor),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          SizedBox(
+                                            height: getProportionateScreenHeight(24),
+                                          ),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: CommonButton(
                                                   padding: EdgeInsets.symmetric(
                                                     horizontal: getProportionateScreenWidth(24),
-                                                    vertical: getProportionateScreenHeight(17),
+                                                    vertical: getProportionateScreenHeight(18),
                                                   ),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(
-                                                      getProportionateScreenWidth(50),
+                                                  text: AppLocalizations.of(context)!.yes,
+                                                  onPressed: () async {
+                                                    Get.back();
+                                                    controller.sosEmergencySuccess(context);
+                                                  },
+                                                  radius: 50,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: getProportionateScreenWidth(18),
+                                              ),
+                                              Expanded(
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    Get.back();
+                                                  },
+                                                  behavior: HitTestBehavior.opaque,
+                                                  child: Container(
+                                                    padding: EdgeInsets.symmetric(
+                                                      horizontal: getProportionateScreenWidth(24),
+                                                      vertical: getProportionateScreenHeight(17),
                                                     ),
-                                                    border: Border.all(color: AppColors.blackColor, width: 1),
-                                                  ),
-                                                  child: Text(
-                                                    AppLocalizations.of(context)!.no,
-                                                    textAlign: TextAlign.center,
-                                                    maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                      fontSize: getProportionalFontSize(16),
-                                                      fontFamily: AppFonts.sansFont600,
-                                                      color: AppColors.primaryColor,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(
+                                                        getProportionateScreenWidth(50),
+                                                      ),
+                                                      border: Border.all(color: AppColors.blackColor, width: 1),
+                                                    ),
+                                                    child: Text(
+                                                      AppLocalizations.of(context)!.no,
+                                                      textAlign: TextAlign.center,
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                        fontSize: getProportionalFontSize(16),
+                                                        fontFamily: AppFonts.sansFont600,
+                                                        color: AppColors.primaryColor,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        Utils.showAlertDialog(
+                          context: navState.currentContext!,
+                          title: "Location required",
+                          description: "To send SOS, we require the location. Select location options.",
+                          buttons: [
+                            TextButton(
+                              onPressed: () {
+                                controller.addLocationManually(context);
+                              },
+                              child: Text('Add manually'),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                await controller.getCurrentLocation();
+
+                                Get.back();
+                              },
+                              child: Text('My Location'),
+                            ),
+                          ],
+                        );
+                      }
                     },
                     child: Container(
                       width: SizeConfig.deviceWidth,
