@@ -1,4 +1,5 @@
 import 'package:distress_app/imports.dart';
+import 'package:distress_app/police_modules/setting/police_edit_profile_screen.dart';
 import 'package:distress_app/user_modules/training_module/video_screen.dart';
 import 'package:get/get.dart';
 
@@ -125,6 +126,11 @@ abstract class AppPages {
     GetPage(
       name: Routes.POLICE_SETTING,
       page: () => const PoliceSettingScreen(),
+      binding: PoliceSettingBinding(),
+    ),
+    GetPage(
+      name: Routes.POLICE_EDIT_PROFILE,
+      page: () => const PoliceEditProfileScreen(),
       binding: PoliceSettingBinding(),
     ),
   ];

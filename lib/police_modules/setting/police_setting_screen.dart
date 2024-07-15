@@ -16,10 +16,10 @@ class PoliceSettingScreen extends GetView<PoliceSettingController> {
     return Scaffold(
       backgroundColor: themeProvider.backgroundColor,
       body: SafeArea(
-        child: GetBuilder<SettingsController>(
-          init: SettingsController(),
+        child: GetBuilder<PoliceSettingController>(
+          init: PoliceSettingController(),
           initState: (state) {
-            // controller.getUserProfile(showLoader: false);
+            controller.getUserProfile(showLoader: false);
           },
           builder: (controller) {
             return Container(
@@ -158,7 +158,7 @@ class PoliceSettingScreen extends GetView<PoliceSettingController> {
                     themeProvider: themeProvider,
                     text: AppLocalizations.of(context)!.editProfile,
                     onTap: () {
-                      Get.toNamed(Routes.EDIT_PROFILE);
+                      Get.toNamed(Routes.POLICE_EDIT_PROFILE);
                     },
                   ),
                   SizedBox(
