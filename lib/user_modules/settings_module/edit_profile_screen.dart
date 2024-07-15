@@ -176,7 +176,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                         context,
                                         AppLocalizations.of(context)!.firstName.capitalize),
                                     onChanged: (value) {
-                                      controller.firstNameController.text = value;
+                                      // controller.firstNameController.text = value;
                                       controller.update();
                                     },
                                     prefixIcon: Container(
@@ -207,7 +207,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                       AppLocalizations.of(context)!.lastName.capitalize,
                                     ),
                                     onChanged: (value) {
-                                      controller.lastNameController.text = value;
+                                      // controller.lastNameController.text = value;
                                       controller.update();
                                     },
                                     prefixIcon: Container(
@@ -237,10 +237,10 @@ class EditProfileScreen extends GetView<SettingsController> {
                             keyboardType: TextInputType.emailAddress,
                             validation: (value) => Validation.emailValidation(controller.emailController.text,
                                 AppLocalizations.of(context)!.email.capitalize, context),
-                            onChanged: (value) {
-                              controller.emailController.text = value;
-                              controller.update();
-                            },
+                            // onChanged: (value) {
+                            // controller.emailController.text = value;
+                            // controller.update();
+                            // },
                             prefixIcon: Container(
                               padding: EdgeInsets.symmetric(
                                 horizontal: getProportionateScreenWidth(12),
@@ -267,7 +267,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                               AppLocalizations.of(context)!.phoneNumber.capitalize,
                             ),
                             onChanged: (value) {
-                              controller.phoneNumberController.text = value;
+                              // controller.phoneNumberController.text = value;
                               controller.update();
                             },
                             prefixIcon: CountryCodePicker(
@@ -399,8 +399,8 @@ class EditProfileScreen extends GetView<SettingsController> {
                             validation: (value) => Validation.emptyValidation(controller.userNameController.text,
                                 context, AppLocalizations.of(context)!.userName.capitalize),
                             // onChanged: (value) {
-                            //   controller.userNameController.text = value;
-                            //   controller.update();
+                            // controller.userNameController.text = value;
+                            // controller.update();
                             // },
                             prefixIcon: Container(
                               padding: EdgeInsets.symmetric(

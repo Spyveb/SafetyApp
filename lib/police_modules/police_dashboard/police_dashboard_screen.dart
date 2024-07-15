@@ -14,11 +14,12 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PoliceDashBoardController>(
-      // initState: (state) {
-      //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      //     controller.showSOSDialog(context);
-      //   });
-      // },
+      initState: (state) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          // controller.showSOSDialog(context);
+          controller.getUserName();
+        });
+      },
       init: PoliceDashBoardController(),
       global: true,
       autoRemove: false,
@@ -358,7 +359,7 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
               height: getProportionateScreenHeight(12),
             ),
             Text(
-              "Joe, Police Officer",
+              "${controller.firstName}, Police Officer",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: AppFonts.sansFont600,

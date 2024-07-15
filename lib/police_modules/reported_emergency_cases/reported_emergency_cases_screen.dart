@@ -12,6 +12,11 @@ class ReportedEmgCasesScreen extends GetView<ReportedEmgCasesController> {
       body: SafeArea(
         child: GetBuilder<ReportedEmgCasesController>(
           init: ReportedEmgCasesController(),
+          initState: (state) {
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              controller.getSOSEmergencyList(search: '');
+            });
+          },
           global: true,
           autoRemove: false,
           builder: (controller) {
@@ -63,6 +68,9 @@ class ReportedEmgCasesScreen extends GetView<ReportedEmgCasesController> {
                         height: getProportionateScreenHeight(15),
                       ),
                       TextFormField(
+                        onChanged: (value) {
+                          controller.getSOSEmergencyList(search: value, showLoader: false);
+                        },
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(getProportionateScreenWidth(30)),
@@ -86,21 +94,26 @@ class ReportedEmgCasesScreen extends GetView<ReportedEmgCasesController> {
                     ],
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 9,
-                      itemBuilder: (context, index) {
-                        return CustomCasesList(
-                          caseNo: "18765",
-                          status: "Open",
-                          firstName: "Anne",
-                          lastName: "Krane",
-                          date: "01/01/2024",
-                          location: "1 Wanaheda Street",
-                          city: "Windhoek",
-                        );
-                      },
-                    ),
+                    child: controller.sosReportsList.isNotEmpty
+                        ? ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: controller.sosReportsList.length,
+                            itemBuilder: (context, index) {
+                              ReportCaseModel report = controller.sosReportsList[index];
+                              return CustomCasesList(
+                                caseNo: "${report.id}",
+                                status: "${report.status == 0 ? 'Open' : 'Closed'}",
+                                firstName: "${report.firstName ?? '-'}",
+                                lastName: "${report.lastName ?? '-'}",
+                                date: "${Utils.displayDateFormat(
+                                  report.updatedAt ?? DateTime.now().toString(),
+                                )}",
+                                location: "${report.location ?? '-'}",
+                                city: "${report.city ?? '-'}",
+                              );
+                            },
+                          )
+                        : SizedBox(),
                   ),
                 ],
               ),

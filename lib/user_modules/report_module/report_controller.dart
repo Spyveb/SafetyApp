@@ -125,6 +125,10 @@ class ReportController extends GetxController {
     reportAnonymouslyValue = false;
     speakToProfessional = false;
     reportTypeValue = reportType.first;
+    submitLatitude = null;
+    submitLongitude = null;
+    submitSearchLocationController.clear();
+    submitCity = null;
   }
 
   bool dialogIsOpen = false;
@@ -133,6 +137,11 @@ class ReportController extends GetxController {
   double? latitude;
   double? longitude;
   String? city;
+
+  TextEditingController submitSearchLocationController = TextEditingController();
+  double? submitLatitude;
+  double? submitLongitude;
+  String? submitCity;
 
   void sendSOSEmergency(context) async {
     LoadingDialog.showLoader();

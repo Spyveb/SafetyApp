@@ -2,10 +2,14 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:distress_app/imports.dart';
+import 'package:distress_app/user_modules/home_module/place_auto_complete.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
+import '../../packages/location_geocoder/location_geocoder.dart';
+import '../home_module/place_auto_complete_response.dart';
 
 class SubmitReportScreen extends GetView<ReportController> {
   const SubmitReportScreen({super.key});
@@ -287,6 +291,110 @@ class SubmitReportScreen extends GetView<ReportController> {
                               ),
                             ],
                           ),
+                        ),
+                        TextFormField(
+                          controller: controller.submitSearchLocationController,
+                          readOnly: true,
+                          onTap: () async {
+                            var result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const PlaceAutoCompleteScreen(),
+                                ));
+
+                            if (result is GoogleMapPlaceModel) {
+                              controller.submitSearchLocationController.text = result.description ?? '';
+
+                              if (controller.submitSearchLocationController.text.isNotEmpty) {
+                                var address =
+                                    await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromQuery(
+                                  controller.submitSearchLocationController.text,
+                                );
+                                // var initialLatLong = LatLng(
+                                //     address.first.coordinates.latitude ?? 0, address.first.coordinates.longitude ?? 0);
+                                controller.submitCity = address.first.locality;
+                                controller.submitLatitude = address.first.coordinates.latitude;
+                                controller.submitLongitude = address.first.coordinates.longitude;
+                              }
+                            } else if (result is Address) {
+                              var address = result as Address;
+                              controller.submitSearchLocationController.text = address.addressLine ?? '';
+                              controller.submitCity = address.locality;
+                              controller.submitLatitude = address.coordinates.latitude;
+                              controller.submitLongitude = address.coordinates.longitude;
+                            }
+                            controller.update();
+                          },
+                          style: TextStyle(
+                            fontFamily: AppFonts.sansFont400,
+                            fontSize: getProportionalFontSize(14),
+                            color: AppColors.blackColor,
+                          ),
+                          decoration: InputDecoration(
+                            errorMaxLines: 2,
+                            isDense: true,
+                            suffixIcon: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(4),
+                                vertical: getProportionateScreenHeight(4),
+                              ),
+                              margin: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(10),
+                                vertical: getProportionateScreenHeight(4),
+                              ),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFD9D9D9).withOpacity(.6),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.location_on_rounded,
+                                size: 24,
+                                color: AppColors.blackColor,
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(10),
+                              ),
+                              borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(10),
+                              ),
+                              borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(10),
+                              ),
+                              borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(10),
+                              ),
+                              borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
+                            ),
+                            hintText: AppLocalizations.of(context)!.searchLocation,
+                            hintStyle: TextStyle(
+                              fontFamily: AppFonts.sansFont400,
+                              fontSize: getProportionalFontSize(14),
+                              color: AppColors.lightTextColor,
+                            ),
+                            errorStyle: TextStyle(
+                              fontSize: getProportionalFontSize(12),
+                              fontFamily: AppFonts.sansFont400,
+                              color: AppColors.redDefault,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: getProportionateScreenWidth(16),
+                              vertical: getProportionateScreenHeight(8),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: getProportionateScreenHeight(8),
                         ),
                         Container(
                           padding: EdgeInsets.only(
@@ -582,6 +690,8 @@ class SubmitReportScreen extends GetView<ReportController> {
                             Utils.showToast('Please enter information');
                           } else if (controller.reportTypeValue.isEmpty) {
                             Utils.showToast('Please select report type');
+                          } else if (controller.submitLatitude == null || controller.submitLongitude == null) {
+                            Utils.showToast('Please select location');
                           } else {
                             Utils.showCustomDialog(
                               context: context,

@@ -2,7 +2,11 @@ import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
 import 'package:distress_app/user_modules/home_module/place_auto_complete_response.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../../packages/location_geocoder/location_geocoder.dart';
 
 class PlaceAutoCompleteScreen extends StatefulWidget {
   const PlaceAutoCompleteScreen({super.key});
@@ -41,10 +45,16 @@ class _PlaceAutoCompleteScreenState extends State<PlaceAutoCompleteScreen> {
           ),
           onTap: () async {
             LoadingDialog.showLoader();
-            await Get.find<HomeController>().getCurrentLocation();
+            FocusManager.instance.primaryFocus?.unfocus();
+            Position currentPosition = await determineCurrentPosition();
+
+            print("${currentPosition.latitude} ${currentPosition.longitude}");
+            var address = await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromCoordinates(
+              Coordinates(currentPosition.latitude, currentPosition.longitude),
+            );
             LoadingDialog.hideLoader();
 
-            Get.back();
+            Navigator.pop(context, address.first);
           },
           title: Text(
             "Use current location",
@@ -115,6 +125,47 @@ class _PlaceAutoCompleteScreenState extends State<PlaceAutoCompleteScreen> {
       }
     }
     setState(() {});
+  }
+
+  Future<Position> determineCurrentPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      Utils.showAlertDialog(
+        context: navState.currentContext!,
+        bar: true,
+        title: "Permission required",
+        description: "To send SOS of your current location, we require the location permission.",
+        buttons: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+              openAppSettings();
+            },
+            child: Text('Open setting'),
+          ),
+        ],
+      );
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    return await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.best,
+    );
   }
 }
 

@@ -566,6 +566,12 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
     );
   }
 
+  String firstName = '';
+  Future<void> getUserName() async {
+    firstName = await StorageService().readSecureData(Constants.firstName) ?? '';
+    update();
+  }
+
   showRequestDeclineDialog(BuildContext context) {
     showDialog(
       context: context,

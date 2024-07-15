@@ -105,7 +105,7 @@ class CustomCasesList extends StatelessWidget {
                       style: TextStyle(
                         fontSize: getProportionalFontSize(14),
                         fontFamily: AppFonts.sansFont600,
-                        color: Colors.green,
+                        color: status == 'Open' ? Colors.green : AppColors.redDefault,
                       ),
                     ),
                   ],

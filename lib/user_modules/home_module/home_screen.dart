@@ -198,9 +198,14 @@ class HomeScreen extends GetView<HomeController> {
                                 controller.latitude = address.first.coordinates.latitude;
                                 controller.longitude = address.first.coordinates.longitude;
                               }
-
-                              controller.update();
+                            } else if (result is Address) {
+                              var address = result as Address;
+                              controller.searchLocationController.text = address.addressLine ?? '';
+                              controller.city = address.locality;
+                              controller.latitude = address.coordinates.latitude;
+                              controller.longitude = address.coordinates.longitude;
                             }
+                            controller.update();
                           },
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
