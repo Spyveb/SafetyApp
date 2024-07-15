@@ -512,6 +512,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                         ),
                         Expanded(
                           child: TextFormField(
+                            readOnly: controller.isRecording,
                             controller: controller.informationController,
                             style: TextStyle(
                               fontFamily: AppFonts.sansFont400,
