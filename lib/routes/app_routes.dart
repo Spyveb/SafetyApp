@@ -27,6 +27,7 @@ abstract class Routes {
   static const POLICE_SOSEMERGENCY = _Paths.POLICE_SOSEMERGENCY;
   static const POLICE_REPORTEDEMGCASES = _Paths.POLICE_REPORTEDEMGCASES;
   static const POLICE_REPORTEDNONEMGCASES = _Paths.POLICE_REPORTEDNONEMGCASES;
+  static const POLICE_SETTING = _Paths.POLICE_SETTING;
 }
 
 abstract class _Paths {
@@ -55,4 +56,5 @@ abstract class _Paths {
   static const POLICE_SOSEMERGENCY = '/police_sos_emergency'; // police_sos_emergency
   static const POLICE_REPORTEDEMGCASES = '/police_reported_cases'; // police_reported_cases
   static const POLICE_REPORTEDNONEMGCASES = '/police_reported_non_cases'; // police_reported_non_cases
+  static const POLICE_SETTING = '/police_setting'; // police_setting
 }

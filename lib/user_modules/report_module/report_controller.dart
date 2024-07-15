@@ -10,6 +10,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:record/record.dart';
 
 import '../home_module/place_auto_complete.dart';
 
@@ -26,10 +29,15 @@ class ReportController extends GetxController {
   bool reportAnonymouslyValue = false;
 
   bool speakToProfessional = false;
+  final record = AudioRecorder();
+  bool isRecording = false;
+  Timer? timer;
+  int recordTime = 0;
 
   List<File> pickedFiles = [];
 
   TextEditingController informationController = TextEditingController();
+
   @override
   void onReady() {
     super.onReady();
@@ -424,5 +432,83 @@ class ReportController extends GetxController {
       Get.back();
       update();
     }
+  }
+
+  startRecording() async {
+    Map<Permission, PermissionStatus> permissions = await [
+      Permission.storage,
+      Permission.microphone,
+    ].request();
+
+    bool permissionsGranted =
+        permissions[Permission.storage]!.isGranted && permissions[Permission.microphone]!.isGranted;
+
+    if (permissionsGranted) {
+      Directory directory = await getTemporaryDirectory();
+
+      String imagePath = '';
+      if ((await directory.exists())) {
+        imagePath = File("${directory.path}/Rec_${(DateTime.now().millisecondsSinceEpoch / 1000).round()}.mp3").path;
+      } else {
+        await directory.create(recursive: true);
+        imagePath = File("${directory.path}/Rec_${(DateTime.now().millisecondsSinceEpoch / 1000).round()}.mp3").path;
+      }
+
+      print(imagePath);
+
+      const config = RecordConfig();
+
+      await record.start(config, path: imagePath);
+      isRecording = true;
+      startTimer();
+      update();
+    } else {
+      print('Permissions not granted');
+    }
+    // var status = await Permission.microphone.status;
+    //
+    // if (status.isDenied) {
+    //   await Permission.microphone.request();
+    // } else {
+    //   if (status.isGranted) {
+    //     if (await record.isRecording()) {
+    //       record.stop();
+    //     } else {
+    //       await record.start(const RecordConfig(), path: (await getApplicationDocumentsDirectory()).path);
+    //     }
+    //   }
+    // }
+  }
+
+  void stopRecording() async {
+    String? path = await record.stop();
+    isRecording = false;
+    stopTimer();
+    if (path != null && path.isNotEmpty) {
+      pickedFiles.add(File(path));
+    }
+    update();
+    print('Output path $path');
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      recordTime++;
+      update();
+    });
+  }
+
+  void stopTimer() {
+    timer?.cancel();
+    recordTime = 0;
+    update();
+  }
+
+  String getFormattedTime(int seconds) {
+    int minutes = seconds ~/ 60;
+    int remainingSeconds = seconds % 60;
+    String minutesStr = minutes.toString().padLeft(2, '0');
+    String secondsStr = remainingSeconds.toString().padLeft(2, '0');
+    return '$minutesStr:$secondsStr';
   }
 }

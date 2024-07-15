@@ -17,8 +17,6 @@ class SettingsController extends GetxController {
     saveSettings();
   }
 
-  TextEditingController textEditingController = TextEditingController();
-
   List<LanguageModel> languages = [
     LanguageModel(languageName: "English", languageCode: "en", imageUrl: AppImages.usLanguage),
     LanguageModel(languageName: "Dutch", languageCode: "de", imageUrl: AppImages.germanyLanguage),

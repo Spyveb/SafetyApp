@@ -61,10 +61,13 @@
 
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>This app needs access to location when open.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Permission required to send voice message</string>
     <key>NSAppTransportSecurity</key>
     <dict>
     <key>NSAllowsArbitraryLoads</key>
     <true/>
     </dict>
+
 </dict>
 </plist>

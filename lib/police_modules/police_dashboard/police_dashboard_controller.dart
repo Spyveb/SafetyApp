@@ -1,10 +1,14 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
 import 'package:distress_app/packages/advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../../packages/location_geocoder/location_geocoder.dart';
 
 class PoliceDashBoardController extends GetxController with GetSingleTickerProviderStateMixin {
   bool canPop = false;
@@ -29,7 +33,97 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
         milliseconds: 1000,
       ),
     );
+    getCurrentLocation();
     super.onInit();
+  }
+
+  Future<Position> determineCurrentPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      Utils.showAlertDialog(
+        context: navState.currentContext!,
+        title: "Permission required",
+        description:
+            "To access your current location, we require the location permission. Go to Application settings > Permissions, and turn Location on.",
+        buttons: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: Text('Ok'),
+          ),
+        ],
+      );
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    return await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.best,
+    );
+  }
+
+  Future<void> getCurrentLocation() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    Position currentPosition = await determineCurrentPosition();
+
+    print("${currentPosition.latitude} ${currentPosition.longitude}");
+    var address = await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromCoordinates(
+      Coordinates(currentPosition.latitude, currentPosition.longitude),
+    );
+
+    var location = address.first.addressLine ?? '';
+    var latitude = address.first.coordinates.latitude;
+    var longitude = address.first.coordinates.longitude;
+    var city = address.first.locality ?? "";
+    if (latitude != null && longitude != null) {
+      updateAddress(city, location, latitude, longitude);
+    }
+
+    update();
+  }
+
+  void updateAddress(String city, String location, double latitude, double longitude) async {
+    // LoadingDialog.showLoader();
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({
+        "city": city,
+        "location": location,
+        "latitude": latitude,
+        "longitude": longitude,
+      });
+      var response = await ApiProvider().postAPICall(
+        Endpoints.saveAddress,
+        formData,
+        onSendProgress: (count, total) {},
+      );
+      // LoadingDialog.hideLoader();
+      if (response['success'] != null && response['success'] == true) {}
+    } on Dio.DioException catch (e) {
+      // LoadingDialog.hideLoader();
+      // Utils.showToast(e.message ?? "Something went wrong");
+      // update();
+      debugPrint(e.toString());
+    } catch (e) {
+      // LoadingDialog.hideLoader();
+      // Utils.showToast("Something went wrong");
+      // update();
+      debugPrint(e.toString());
+    }
   }
 
   showSOSDialog(BuildContext context) {

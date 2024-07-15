@@ -32,6 +32,9 @@ export './police_modules/reported_emergency_cases/reported_emergency_cases_scree
 export './police_modules/reported_non_emergency_cases/reported_non_emg_cases_bindings.dart';
 export './police_modules/reported_non_emergency_cases/reported_non_emg_cases_controller.dart';
 export './police_modules/reported_non_emergency_cases/reported_non_emg_cases_screen.dart';
+export './police_modules/setting/police_setting_bindings.dart';
+export './police_modules/setting/police_setting_controller.dart';
+export './police_modules/setting/police_setting_screen.dart';
 export './police_modules/sos_emergency/sos_emergency_bindings.dart';
 export './police_modules/sos_emergency/sos_emergency_controller.dart';
 export './police_modules/sos_emergency/sos_emergency_screen.dart';

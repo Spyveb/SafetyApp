@@ -20,6 +20,11 @@ class SubmitReportScreen extends GetView<ReportController> {
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: GetBuilder<ReportController>(
+          dispose: (state) {
+            controller.timer?.cancel();
+
+            controller.record.cancel();
+          },
           builder: (controller) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -411,84 +416,107 @@ class SubmitReportScreen extends GetView<ReportController> {
                             decoration: InputDecoration(
                               errorMaxLines: 2,
                               isDense: true,
-                              prefixIcon: GestureDetector(
-                                behavior: HitTestBehavior.opaque,
-                                onTap: () async {
-                                  controller.pickFiles();
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: getProportionateScreenWidth(4),
-                                    vertical: getProportionateScreenHeight(4),
-                                  ),
-                                  margin: EdgeInsets.symmetric(
-                                    horizontal: getProportionateScreenWidth(10),
-                                    vertical: getProportionateScreenHeight(4),
-                                  ),
-                                  child: Icon(
-                                    Icons.add,
-                                    size: 24,
-                                    color: AppColors.blackColor,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFD9D9D9).withOpacity(.6),
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                              ),
-                              suffixIcon: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {},
-                                    child: Icon(
+                              prefixIcon: controller.isRecording == true
+                                  ? Icon(
                                       Icons.mic_none_outlined,
                                       size: 24,
                                       color: AppColors.blackColor,
+                                    )
+                                  : GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () async {
+                                        controller.pickFiles();
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: getProportionateScreenWidth(4),
+                                          vertical: getProportionateScreenHeight(4),
+                                        ),
+                                        margin: EdgeInsets.symmetric(
+                                          horizontal: getProportionateScreenWidth(10),
+                                          vertical: getProportionateScreenHeight(4),
+                                        ),
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 24,
+                                          color: AppColors.blackColor,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFD9D9D9).withOpacity(.6),
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: getProportionateScreenWidth(6),
-                                  ),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () async {
-                                      ImagePicker imagePicker = ImagePicker();
-                                      XFile? xFile =
-                                          await imagePicker.pickImage(source: ImageSource.camera, imageQuality: 50);
-                                      if (xFile != null) {
-                                        controller.pickedFiles.add(File(xFile.path));
-                                        controller.update();
-                                      }
-                                    },
-                                    child: Icon(
-                                      Icons.camera_alt_outlined,
-                                      size: 24,
-                                      color: AppColors.blackColor,
+                              suffixIcon: controller.isRecording == true
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        controller.stopRecording();
+                                      },
+                                      child: Icon(
+                                        Icons.stop_circle_outlined,
+                                        size: 24,
+                                        color: AppColors.blackColor,
+                                      ),
+                                    )
+                                  : Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        GestureDetector(
+                                          behavior: HitTestBehavior.opaque,
+                                          onTap: () {
+                                            if (controller.isRecording == false) {
+                                              controller.startRecording();
+                                            } else {
+                                              controller.stopRecording();
+                                            }
+                                          },
+                                          child: Icon(
+                                            Icons.mic_none_outlined,
+                                            size: 24,
+                                            color: AppColors.blackColor,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: getProportionateScreenWidth(6),
+                                        ),
+                                        GestureDetector(
+                                          behavior: HitTestBehavior.opaque,
+                                          onTap: () async {
+                                            ImagePicker imagePicker = ImagePicker();
+                                            XFile? xFile = await imagePicker.pickImage(
+                                                source: ImageSource.camera, imageQuality: 50);
+                                            if (xFile != null) {
+                                              controller.pickedFiles.add(File(xFile.path));
+                                              controller.update();
+                                            }
+                                          },
+                                          child: Icon(
+                                            Icons.camera_alt_outlined,
+                                            size: 24,
+                                            color: AppColors.blackColor,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: getProportionateScreenWidth(16),
+                                        ),
+                                        GestureDetector(
+                                          behavior: HitTestBehavior.opaque,
+                                          onTap: () {
+                                            controller.informationText = controller.informationController.text;
+                                            controller.update();
+                                            controller.informationController.clear();
+                                          },
+                                          child: Icon(
+                                            Icons.send,
+                                            size: 24,
+                                            color: AppColors.blackColor,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: getProportionateScreenWidth(8),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: getProportionateScreenWidth(16),
-                                  ),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      controller.informationText = controller.informationController.text;
-                                      controller.update();
-                                      controller.informationController.clear();
-                                    },
-                                    child: Icon(
-                                      Icons.send,
-                                      size: 24,
-                                      color: AppColors.blackColor,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: getProportionateScreenWidth(8),
-                                  ),
-                                ],
-                              ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(
                                   getProportionateScreenWidth(10),
@@ -513,7 +541,9 @@ class SubmitReportScreen extends GetView<ReportController> {
                                 ),
                                 borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
                               ),
-                              hintText: AppLocalizations.of(context)!.enterText,
+                              hintText: controller.isRecording == true
+                                  ? controller.getFormattedTime(controller.recordTime)
+                                  : AppLocalizations.of(context)!.enterText,
                               hintStyle: TextStyle(
                                 fontFamily: AppFonts.sansFont400,
                                 fontSize: getProportionalFontSize(16),
@@ -708,5 +738,78 @@ class SubmitReportScreen extends GetView<ReportController> {
 
   String _fileName(String path) {
     return path.split('/').last;
+  }
+}
+
+class AudioVisualizer extends StatelessWidget {
+  AudioVisualizer({required this.amplitude}) {
+    ///limit amplitude to [decibleLimit]
+    double db = amplitude ?? -30;
+    if (db == double.infinity || db < -30) {
+      db = -30;
+    }
+    if (db > 0) {
+      db = 0;
+    }
+
+    ///this expression converts [db] to [0 to 1] double
+    range = 1 - (db * (1 / -30));
+    print(range);
+  }
+  final double? amplitude;
+  final double maxHeight = 200;
+
+  late final double range;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        buildBar(0.15),
+        buildBar(0.5),
+        buildBar(0.25),
+        buildBar(0.75),
+        buildBar(0.5),
+        buildBar(1),
+        buildBar(0.75),
+        buildBar(0.5),
+        buildBar(0.25),
+        buildBar(0.5),
+        buildBar(0.15),
+      ],
+    );
+  }
+
+  buildBar(double intensity) {
+    double barHeight = range * maxHeight * intensity;
+    if (barHeight < 5) {
+      barHeight = 5;
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: AnimatedContainer(
+        duration: Duration(
+          milliseconds: 100,
+        ),
+        height: 150,
+        width: 5,
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.policeDarkBlueColor,
+              spreadRadius: 1,
+              offset: Offset(1, 1),
+            ),
+            BoxShadow(
+              color: AppColors.redDefault,
+              spreadRadius: 1,
+              offset: Offset(-1, -1),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

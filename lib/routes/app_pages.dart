@@ -122,5 +122,10 @@ abstract class AppPages {
       page: () => const ReportedNonEmgCasesScreen(),
       binding: ReportedNonEmgCasesBinding(),
     ),
+    GetPage(
+      name: Routes.POLICE_SETTING,
+      page: () => const PoliceSettingScreen(),
+      binding: PoliceSettingBinding(),
+    ),
   ];
 }
