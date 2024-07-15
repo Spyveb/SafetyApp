@@ -394,7 +394,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                           ),
                         ),
                         SizedBox(
-                          height: getProportionateScreenHeight(8),
+                          height: getProportionateScreenHeight(14),
                         ),
                         Container(
                           padding: EdgeInsets.only(

@@ -433,11 +433,11 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
                     ),
                   ),
                   TextSpan(
-                    text: "Available",
+                    text: controller.status,
                     style: TextStyle(
                       fontFamily: AppFonts.sansFont700,
                       fontSize: getProportionalFontSize(14),
-                      color: Colors.green,
+                      color: controller.status == 'Available' ? Colors.green : AppColors.redDefault,
                     ),
                   ),
                 ],

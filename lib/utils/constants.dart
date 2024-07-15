@@ -28,6 +28,7 @@ class Constants {
 
   // Key for accessing the role in storage.
   static const role = 'role';
+  static const availability = 'availibility';
 
   // Key for accessing the language preference in storage.
   static const language = 'language';

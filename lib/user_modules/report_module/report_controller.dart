@@ -59,7 +59,7 @@ class ReportController extends GetxController {
   }
 
   Future<void> pickFiles() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
 
     if (result != null) {
       List<File> files = result.paths.map((path) => File(path!)).toList();

@@ -37,9 +37,13 @@ class PoliceSettingController extends GetxController {
       );
       // LoadingDialog.hideLoader();
       if (response['success'] != null && response['success'] == true) {
+        await StorageService()
+            .writeSecureData(Constants.availability, availability == true ? 'Available' : 'Unavailable');
       } else {
         availability = !availability;
       }
+      await Get.find<PoliceDashBoardController>().getUserName();
+      // Get.find<PoliceDashBoardController>().update();
       update();
     } on Dio.DioException catch (e) {
       // LoadingDialog.hideLoader();
@@ -173,6 +177,7 @@ class PoliceSettingController extends GetxController {
     birthDateController.text = Utils.displayDateFormat(userModel.dob ?? '');
     userNameController.text = userModel.username ?? '';
     profileImage = userModel.profileImage;
+    availability = userModel.availability == 1;
     update();
   }
 
@@ -183,6 +188,8 @@ class PoliceSettingController extends GetxController {
     await StorageService().writeSecureData(Constants.lastName, userModel.lastName ?? "");
     await StorageService().writeSecureData(Constants.profileImage, userModel.profileImage ?? "");
     await StorageService().writeSecureData(Constants.email, userModel.email ?? "");
+    await StorageService()
+        .writeSecureData(Constants.availability, userModel.availability == 1 ? "Available" : "Unavailable");
   }
 
   void updateUserProfile() async {
