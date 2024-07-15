@@ -389,15 +389,16 @@ class ReportController extends GetxController {
     if (permission == LocationPermission.deniedForever) {
       Utils.showAlertDialog(
         context: navState.currentContext!,
+        bar: true,
         title: "Permission required",
-        description:
-            "To send SOS of your current location, we require the location permission. Go to Application settings > Permissions, and turn Location on.",
+        description: "To send SOS of your current location, we require the location permission.",
         buttons: [
           TextButton(
             onPressed: () {
               Get.back();
+              openAppSettings();
             },
-            child: Text('Ok'),
+            child: Text('Open setting'),
           ),
         ],
       );
@@ -436,12 +437,10 @@ class ReportController extends GetxController {
 
   startRecording() async {
     Map<Permission, PermissionStatus> permissions = await [
-      Permission.storage,
       Permission.microphone,
     ].request();
 
-    bool permissionsGranted =
-        permissions[Permission.storage]!.isGranted && permissions[Permission.microphone]!.isGranted;
+    bool permissionsGranted = permissions[Permission.microphone]!.isGranted;
 
     if (permissionsGranted) {
       Directory directory = await getTemporaryDirectory();
@@ -463,21 +462,22 @@ class ReportController extends GetxController {
       startTimer();
       update();
     } else {
-      print('Permissions not granted');
+      Utils.showAlertDialog(
+        context: navState.currentContext!,
+        bar: true,
+        title: "Permission required",
+        description: "To record audio, we require the microphone permission.",
+        buttons: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+              openAppSettings();
+            },
+            child: Text('Open Setting'),
+          ),
+        ],
+      );
     }
-    // var status = await Permission.microphone.status;
-    //
-    // if (status.isDenied) {
-    //   await Permission.microphone.request();
-    // } else {
-    //   if (status.isGranted) {
-    //     if (await record.isRecording()) {
-    //       record.stop();
-    //     } else {
-    //       await record.start(const RecordConfig(), path: (await getApplicationDocumentsDirectory()).path);
-    //     }
-    //   }
-    // }
   }
 
   void stopRecording() async {

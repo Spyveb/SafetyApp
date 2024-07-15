@@ -143,7 +143,7 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                                         context,
                                         AppLocalizations.of(context)!.firstName.capitalize),
                                     onChanged: (value) {
-                                      controller.firstNameController.text = value;
+                                      // controller.firstNameController.text = value;
                                       controller.update();
                                     },
                                     prefixIcon: Container(
@@ -174,7 +174,7 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                                       AppLocalizations.of(context)!.lastName.capitalize,
                                     ),
                                     onChanged: (value) {
-                                      controller.lastNameController.text = value;
+                                      // controller.lastNameController.text = value;
                                       controller.update();
                                     },
                                     prefixIcon: Container(
@@ -205,7 +205,7 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                             validation: (value) => Validation.emailValidation(controller.emailController.text,
                                 AppLocalizations.of(context)!.email.capitalize, context),
                             onChanged: (value) {
-                              controller.emailController.text = value;
+                              // controller.emailController.text = value;
                               controller.update();
                             },
                             prefixIcon: Container(
@@ -234,7 +234,7 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                               AppLocalizations.of(context)!.phoneNumber.capitalize,
                             ),
                             onChanged: (value) {
-                              controller.phoneNumberController.text = value;
+                              // controller.phoneNumberController.text = value;
                               controller.update();
                             },
                             prefixIcon: CountryCodePicker(

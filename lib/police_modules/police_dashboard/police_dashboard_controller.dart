@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../packages/location_geocoder/location_geocoder.dart';
 
@@ -57,15 +58,16 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
     if (permission == LocationPermission.deniedForever) {
       Utils.showAlertDialog(
         context: navState.currentContext!,
+        bar: true,
         title: "Permission required",
-        description:
-            "To access your current location, we require the location permission. Go to Application settings > Permissions, and turn Location on.",
+        description: "To access your current location, we require the location permission.",
         buttons: [
           TextButton(
             onPressed: () {
               Get.back();
+              openAppSettings();
             },
-            child: Text('Ok'),
+            child: Text('Open setting'),
           ),
         ],
       );

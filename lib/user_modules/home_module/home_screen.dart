@@ -358,6 +358,7 @@ class HomeScreen extends GetView<HomeController> {
                       } else {
                         Utils.showAlertDialog(
                           context: navState.currentContext!,
+                          bar: true,
                           title: "Location required",
                           description: "To send SOS, we require the location. Select location options.",
                           buttons: [
@@ -369,6 +370,7 @@ class HomeScreen extends GetView<HomeController> {
                             ),
                             TextButton(
                               onPressed: () async {
+                                Get.back();
                                 await controller.getCurrentLocation();
 
                                 Get.back();

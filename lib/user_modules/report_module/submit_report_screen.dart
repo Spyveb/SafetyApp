@@ -417,9 +417,9 @@ class SubmitReportScreen extends GetView<ReportController> {
                               errorMaxLines: 2,
                               isDense: true,
                               prefixIcon: controller.isRecording == true
-                                  ? Icon(
+                                  ? const Icon(
                                       Icons.mic_none_outlined,
-                                      size: 24,
+                                      size: 23,
                                       color: AppColors.blackColor,
                                     )
                                   : GestureDetector(
@@ -436,14 +436,14 @@ class SubmitReportScreen extends GetView<ReportController> {
                                           horizontal: getProportionateScreenWidth(10),
                                           vertical: getProportionateScreenHeight(4),
                                         ),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFD9D9D9).withOpacity(.6),
+                                          shape: BoxShape.circle,
+                                        ),
                                         child: Icon(
                                           Icons.add,
                                           size: 24,
                                           color: AppColors.blackColor,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFD9D9D9).withOpacity(.6),
-                                          shape: BoxShape.circle,
                                         ),
                                       ),
                                     ),
@@ -452,7 +452,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                                       onTap: () {
                                         controller.stopRecording();
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.stop_circle_outlined,
                                         size: 24,
                                         color: AppColors.blackColor,
@@ -506,7 +506,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                                             controller.update();
                                             controller.informationController.clear();
                                           },
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.send,
                                             size: 24,
                                             color: AppColors.blackColor,

@@ -9,6 +9,7 @@ import 'package:distress_app/user_modules/home_module/place_auto_complete_respon
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomeController extends GetxController {
   bool dialogIsOpen = false;
@@ -278,15 +279,16 @@ class HomeController extends GetxController {
     if (permission == LocationPermission.deniedForever) {
       Utils.showAlertDialog(
         context: navState.currentContext!,
+        bar: true,
         title: "Permission required",
-        description:
-            "To send SOS of your current location, we require the location permission. Go to Application settings > Permissions, and turn Location on.",
+        description: "To send SOS of your current location, we require the location permission.",
         buttons: [
           TextButton(
             onPressed: () {
               Get.back();
+              openAppSettings();
             },
-            child: Text('Ok'),
+            child: Text('Open setting'),
           ),
         ],
       );

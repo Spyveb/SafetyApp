@@ -286,6 +286,7 @@ class ReportScreen extends GetView<ReportController> {
                       } else {
                         Utils.showAlertDialog(
                           context: navState.currentContext!,
+                          bar: true,
                           title: "Location required",
                           description: "To send SOS, we require the location. Select location options.",
                           buttons: [
@@ -297,6 +298,7 @@ class ReportScreen extends GetView<ReportController> {
                             ),
                             TextButton(
                               onPressed: () async {
+                                Get.back();
                                 await controller.getCurrentLocation();
 
                                 Get.back();
