@@ -405,7 +405,7 @@ class ReportScreen extends GetView<ReportController> {
                     ),
                   ),
                   SizedBox(
-                    height: getProportionateScreenHeight(22),
+                    height: getProportionateScreenHeight(12),
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(
