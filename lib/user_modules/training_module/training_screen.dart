@@ -54,7 +54,7 @@ class TrainingScreen extends GetView<TrainingController> {
                             ),
                           ),
                           Text(
-                            "${AppLocalizations.of(context)!.welcome}, Edward",
+                            "${AppLocalizations.of(context)!.welcome}, ${Get.find<HomeController>().firstName}",
                             style: TextStyle(
                               fontSize: getProportionalFontSize(16),
                               color: themeProvider.lightTextThemeColor,
