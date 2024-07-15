@@ -405,6 +405,9 @@ class SubmitReportScreen extends GetView<ReportController> {
                               fontSize: getProportionalFontSize(16),
                               color: AppColors.blackColor,
                             ),
+                            maxLines: 4,
+                            // expands: true,
+                            minLines: 1,
                             decoration: InputDecoration(
                               errorMaxLines: 2,
                               isDense: true,
@@ -545,143 +548,150 @@ class SubmitReportScreen extends GetView<ReportController> {
                           vertical: getProportionateScreenHeight(18),
                         ),
                         onPressed: () {
-                          Utils.showCustomDialog(
-                            context: context,
-                            child: Center(
-                              child: Material(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(
-                                  getProportionateScreenWidth(32),
-                                ),
-                                child: BackdropFilter(
-                                  filter: ImageFilter.blur(
-                                    sigmaX: 1.5,
-                                    sigmaY: 1.5,
+                          if (controller.informationText.trim().isEmpty) {
+                            Utils.showToast('Please enter information');
+                          } else if (controller.reportTypeValue.isEmpty) {
+                            Utils.showToast('Please select report type');
+                          } else {
+                            Utils.showCustomDialog(
+                              context: context,
+                              child: Center(
+                                child: Material(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(
+                                    getProportionateScreenWidth(32),
                                   ),
-                                  child: GetBuilder<ReportController>(
-                                    builder: (controller) {
-                                      return Container(
-                                        width: SizeConfig.deviceWidth! * .85,
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: getProportionateScreenWidth(16),
-                                          vertical: getProportionateScreenHeight(60),
-                                        ),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            getProportionateScreenWidth(32),
+                                  child: BackdropFilter(
+                                    filter: ImageFilter.blur(
+                                      sigmaX: 1.5,
+                                      sigmaY: 1.5,
+                                    ),
+                                    child: GetBuilder<ReportController>(
+                                      builder: (controller) {
+                                        return Container(
+                                          width: SizeConfig.deviceWidth! * .85,
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: getProportionateScreenWidth(16),
+                                            vertical: getProportionateScreenHeight(60),
                                           ),
-                                          color: Colors.white,
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              AppLocalizations.of(context)!.confirmationMessage,
-                                              style: TextStyle(
-                                                  fontFamily: AppFonts.sansFont700,
-                                                  fontSize: getProportionalFontSize(22),
-                                                  color: AppColors.primaryColor),
-                                              textAlign: TextAlign.center,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              getProportionateScreenWidth(32),
                                             ),
-                                            SizedBox(
-                                              height: getProportionateScreenHeight(10),
-                                            ),
-                                            Text(
-                                              AppLocalizations.of(context)!.sendReportAlert,
-                                              style: TextStyle(
-                                                  fontFamily: AppFonts.sansFont500,
-                                                  fontSize: getProportionalFontSize(16),
-                                                  color: AppColors.blackColor),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            SizedBox(
-                                              height: getProportionateScreenHeight(24),
-                                            ),
-                                            CheckboxListTile(
-                                              controlAffinity: ListTileControlAffinity.leading,
-                                              contentPadding: EdgeInsets.zero,
-                                              dense: true,
-                                              title: Text(
-                                                AppLocalizations.of(context)!.wouldYouLikeToSpeakAProfessional,
+                                            color: Colors.white,
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                AppLocalizations.of(context)!.confirmationMessage,
                                                 style: TextStyle(
-                                                    fontFamily: AppFonts.sansFont400,
-                                                    fontSize: getProportionalFontSize(12),
-                                                    color: AppColors.lightTextColor),
+                                                    fontFamily: AppFonts.sansFont700,
+                                                    fontSize: getProportionalFontSize(22),
+                                                    color: AppColors.primaryColor),
+                                                textAlign: TextAlign.center,
                                               ),
-                                              value: controller.speakToProfessional,
-                                              onChanged: (value) {
-                                                controller.checkSpeakToProfessional(value ?? false);
-                                              },
-                                            ),
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: CommonButton(
-                                                    padding: EdgeInsets.symmetric(
-                                                      horizontal: getProportionateScreenWidth(24),
-                                                      vertical: getProportionateScreenHeight(18),
-                                                    ),
-                                                    text: AppLocalizations.of(context)!.yes,
-                                                    onPressed: () {
-                                                      Get.back();
-                                                      if (controller.informationText.trim().isEmpty) {
-                                                        Utils.showToast('Please enter information');
-                                                      } else if (controller.reportTypeValue.isEmpty) {
-                                                        Utils.showToast('Please select report type');
-                                                      } else {
-                                                        // controller.submitReport();
-                                                      }
-                                                    },
-                                                    radius: 50,
-                                                  ),
+                                              SizedBox(
+                                                height: getProportionateScreenHeight(10),
+                                              ),
+                                              Text(
+                                                AppLocalizations.of(context)!.sendReportAlert,
+                                                style: TextStyle(
+                                                    fontFamily: AppFonts.sansFont500,
+                                                    fontSize: getProportionalFontSize(16),
+                                                    color: AppColors.blackColor),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              SizedBox(
+                                                height: getProportionateScreenHeight(24),
+                                              ),
+                                              CheckboxListTile(
+                                                controlAffinity: ListTileControlAffinity.leading,
+                                                contentPadding: EdgeInsets.zero,
+                                                dense: true,
+                                                title: Text(
+                                                  AppLocalizations.of(context)!.wouldYouLikeToSpeakAProfessional,
+                                                  style: TextStyle(
+                                                      fontFamily: AppFonts.sansFont400,
+                                                      fontSize: getProportionalFontSize(12),
+                                                      color: AppColors.lightTextColor),
                                                 ),
-                                                SizedBox(
-                                                  width: getProportionateScreenWidth(18),
-                                                ),
-                                                Expanded(
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      Get.back();
-                                                    },
-                                                    behavior: HitTestBehavior.opaque,
-                                                    child: Container(
+                                                value: controller.speakToProfessional,
+                                                onChanged: (value) {
+                                                  controller.checkSpeakToProfessional(value ?? false);
+                                                },
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: CommonButton(
                                                       padding: EdgeInsets.symmetric(
                                                         horizontal: getProportionateScreenWidth(24),
-                                                        vertical: getProportionateScreenHeight(17),
+                                                        vertical: getProportionateScreenHeight(18),
                                                       ),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(
-                                                          getProportionateScreenWidth(50),
+                                                      text: AppLocalizations.of(context)!.yes,
+                                                      onPressed: () {
+                                                        Get.back();
+                                                        // if (controller.informationText.trim().isEmpty) {
+                                                        //   Utils.showToast('Please enter information');
+                                                        // } else if (controller.reportTypeValue.isEmpty) {
+                                                        //   Utils.showToast('Please select report type');
+                                                        // } else {
+                                                        //   controller.submitReport();
+                                                        // }
+                                                        controller.submitReport();
+                                                      },
+                                                      radius: 50,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: getProportionateScreenWidth(18),
+                                                  ),
+                                                  Expanded(
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        Get.back();
+                                                      },
+                                                      behavior: HitTestBehavior.opaque,
+                                                      child: Container(
+                                                        padding: EdgeInsets.symmetric(
+                                                          horizontal: getProportionateScreenWidth(24),
+                                                          vertical: getProportionateScreenHeight(17),
                                                         ),
-                                                        border: Border.all(color: AppColors.blackColor, width: 1),
-                                                      ),
-                                                      child: Text(
-                                                        AppLocalizations.of(context)!.no,
-                                                        textAlign: TextAlign.center,
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(
-                                                          fontSize: getProportionalFontSize(16),
-                                                          fontFamily: AppFonts.sansFont600,
-                                                          color: AppColors.primaryColor,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(
+                                                            getProportionateScreenWidth(50),
+                                                          ),
+                                                          border: Border.all(color: AppColors.blackColor, width: 1),
+                                                        ),
+                                                        child: Text(
+                                                          AppLocalizations.of(context)!.no,
+                                                          textAlign: TextAlign.center,
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(
+                                                            fontSize: getProportionalFontSize(16),
+                                                            fontFamily: AppFonts.sansFont600,
+                                                            color: AppColors.primaryColor,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
+                            );
+                          }
                         },
                         text: AppLocalizations.of(context)!.submit,
                       ),

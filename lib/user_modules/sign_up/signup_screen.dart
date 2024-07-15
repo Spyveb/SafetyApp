@@ -613,6 +613,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     ),
                     CommonButton(
                       text: AppLocalizations.of(context)!.register,
+                      width: SizeConfig.deviceWidth,
                       radius: getProportionateScreenWidth(10),
                       padding: EdgeInsets.symmetric(
                         vertical: getProportionateScreenHeight(22),

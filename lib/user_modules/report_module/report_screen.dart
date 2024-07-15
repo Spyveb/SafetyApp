@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import '../../packages/location_geocoder/location_geocoder.dart';
+import '../home_module/place_auto_complete.dart';
+import '../home_module/place_auto_complete_response.dart';
+
 class ReportScreen extends GetView<ReportController> {
   const ReportScreen({super.key});
 
@@ -16,6 +20,9 @@ class ReportScreen extends GetView<ReportController> {
       body: SafeArea(
         child: GetBuilder<ReportController>(
           init: ReportController(),
+          initState: (state) {
+            controller.getCurrentLocation();
+          },
           builder: (controller) {
             return SingleChildScrollView(
               padding: EdgeInsets.symmetric(
@@ -60,18 +67,46 @@ class ReportScreen extends GetView<ReportController> {
                         height: getProportionateScreenHeight(62),
                         width: getProportionateScreenWidth(62),
                       ),
+
                       Expanded(
                         child: TextFormField(
+                          controller: controller.searchLocationController,
                           style: TextStyle(
                             fontFamily: AppFonts.sansFont500,
                             fontSize: getProportionalFontSize(16),
                             color: AppColors.blackColor,
                           ),
+                          readOnly: true,
+                          onTap: () async {
+                            var result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const PlaceAutoCompleteScreen(),
+                                ));
+
+                            if (result is GoogleMapPlaceModel) {
+                              controller.searchLocationController.text = result.description ?? '';
+
+                              if (controller.searchLocationController.text.isNotEmpty) {
+                                var address =
+                                    await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromQuery(
+                                  controller.searchLocationController.text,
+                                );
+                                // var initialLatLong = LatLng(
+                                //     address.first.coordinates.latitude ?? 0, address.first.coordinates.longitude ?? 0);
+                                controller.city = address.first.locality;
+                                controller.latitude = address.first.coordinates.latitude;
+                                controller.longitude = address.first.coordinates.longitude;
+                              }
+
+                              controller.update();
+                            }
+                          },
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
                             border: UnderlineInputBorder(),
 
-                            ///TODO
+                            ///TODO text change
                             hintText: AppLocalizations.of(context)!.searchLocation,
                             hintStyle: TextStyle(
                               fontFamily: AppFonts.sansFont400,
@@ -85,7 +120,33 @@ class ReportScreen extends GetView<ReportController> {
                             ),
                           ),
                         ),
-                      )
+                      ),
+                      // Expanded(
+                      //   child: TextFormField(
+                      //     style: TextStyle(
+                      //       fontFamily: AppFonts.sansFont500,
+                      //       fontSize: getProportionalFontSize(16),
+                      //       color: AppColors.blackColor,
+                      //     ),
+                      //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                      //     decoration: InputDecoration(
+                      //       border: UnderlineInputBorder(),
+                      //
+                      //       ///TODO
+                      //       hintText: AppLocalizations.of(context)!.searchLocation,
+                      //       hintStyle: TextStyle(
+                      //         fontFamily: AppFonts.sansFont400,
+                      //         fontSize: getProportionalFontSize(14),
+                      //         color: AppColors.textFieldGreyColor,
+                      //       ),
+                      //       errorStyle: TextStyle(
+                      //         fontSize: getProportionalFontSize(12),
+                      //         fontFamily: AppFonts.sansFont400,
+                      //         color: AppColors.redDefault,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // )
                     ],
                   ),
                   Align(
@@ -101,7 +162,36 @@ class ReportScreen extends GetView<ReportController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed(Routes.SUBMIT_REPORT);
+                      if (controller.searchLocationController.text.isNotEmpty &&
+                          controller.latitude != null &&
+                          controller.longitude != null &&
+                          controller.city != null) {
+                        controller.sosEmergencySuccess(context);
+                      } else {
+                        // Utils.showToast("Please select location to send SOS.");
+
+                        Utils.showAlertDialog(
+                          context: navState.currentContext!,
+                          title: "Location required",
+                          description: "To send SOS, we require the location. Select location options.",
+                          buttons: [
+                            TextButton(
+                              onPressed: () {
+                                controller.addLocationManually(context);
+                              },
+                              child: Text('Add manually'),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                await controller.getCurrentLocation();
+
+                                Get.back();
+                              },
+                              child: Text('My Location'),
+                            ),
+                          ],
+                        );
+                      }
                     },
                     child: Container(
                       width: SizeConfig.deviceWidth,
@@ -180,6 +270,7 @@ class ReportScreen extends GetView<ReportController> {
                           ),
                           radius: 50,
                           onPressed: () {
+                            controller.reportTypeValue = controller.reportType.first;
                             Get.toNamed(Routes.SUBMIT_REPORT);
                           },
                           text: AppLocalizations.of(context)!.submit,
@@ -240,6 +331,7 @@ class ReportScreen extends GetView<ReportController> {
                           text: AppLocalizations.of(context)!.submit,
                           radius: 50,
                           onPressed: () {
+                            controller.reportTypeValue = controller.reportType.last;
                             Get.toNamed(Routes.SUBMIT_REPORT);
                           },
                           textStyle: TextStyle(

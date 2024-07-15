@@ -410,7 +410,7 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
               bottom: getProportionateScreenHeight(22),
               onTap: () {
                 Get.toNamed(Routes.POLICE_SOSEMERGENCY);
-                controller.advancedDrawerController.hideDrawer();
+                // controller.advancedDrawerController.hideDrawer();
               },
             ),
             PoliceDrawerItems(
@@ -419,7 +419,7 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
               bottom: getProportionateScreenHeight(22),
               onTap: () {
                 Get.toNamed(Routes.POLICE_REPORTEDEMGCASES);
-                controller.advancedDrawerController.hideDrawer();
+                // controller.advancedDrawerController.hideDrawer();
               },
             ),
             PoliceDrawerItems(
@@ -428,7 +428,7 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
               bottom: getProportionateScreenHeight(22),
               onTap: () {
                 Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASES);
-                controller.advancedDrawerController.hideDrawer();
+                // controller.advancedDrawerController.hideDrawer();
               },
             ),
             PoliceDrawerItems(

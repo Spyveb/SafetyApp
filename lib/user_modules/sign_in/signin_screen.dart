@@ -120,6 +120,7 @@ class SignInScreen extends GetView<SignInController> {
                     ),
                     CommonButton(
                       text: AppLocalizations.of(context)!.login,
+                      width: SizeConfig.deviceWidth,
                       radius: getProportionateScreenWidth(10),
                       padding: EdgeInsets.symmetric(
                         vertical: getProportionateScreenHeight(22),

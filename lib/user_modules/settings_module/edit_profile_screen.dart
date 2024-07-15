@@ -69,7 +69,9 @@ class EditProfileScreen extends GetView<SettingsController> {
                         color: AppColors.blackColor,
                       ),
                     ),
-                    SizedBox(width: getProportionateScreenWidth(8),),
+                    SizedBox(
+                      width: getProportionateScreenWidth(8),
+                    ),
                     Expanded(
                       child: Text(
                         AppLocalizations.of(context)!.editProfile,
@@ -424,6 +426,11 @@ class EditProfileScreen extends GetView<SettingsController> {
                     children: [
                       CommonButton(
                         text: AppLocalizations.of(context)!.save,
+                        padding: EdgeInsets.symmetric(
+                          vertical: getProportionateScreenHeight(18),
+                          horizontal: getProportionateScreenWidth(12),
+                        ),
+                        width: SizeConfig.deviceWidth,
                         onPressed:
                             controller.formKey.currentState != null && controller.formKey.currentState!.validate()
                                 ? () {

@@ -109,6 +109,11 @@ class TrainingTopicDetailScreen extends GetView<TrainingController> {
                               alignment: Alignment.centerRight,
                               child: CommonButton(
                                 text: "Next",
+                                textStyle: TextStyle(
+                                  fontSize: getProportionalFontSize(12),
+                                  fontFamily: AppFonts.sansFont700,
+                                  color: AppColors.whiteColor,
+                                ),
                                 radius: 20,
                                 onPressed: () {
                                   Get.toNamed(Routes.VIDEO_SCREEN,
