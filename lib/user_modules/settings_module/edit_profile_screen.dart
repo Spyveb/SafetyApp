@@ -566,7 +566,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                           );
                         },
                         child: Text(
-                          "Delete Account",
+                          AppLocalizations.of(context)!.deleteAccount,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: AppFonts.sansFont600,

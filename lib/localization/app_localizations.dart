@@ -964,6 +964,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Availability'**
   String get availability;
+
+  /// No description provided for @emergencyRequestSent.
+  ///
+  /// In en, this message translates to:
+  /// **'EMERGENCY REQUEST SENT'**
+  String get emergencyRequestSent;
+
+  /// No description provided for @permissionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission required'**
+  String get permissionRequired;
+
+  /// No description provided for @locationPermissionRequiredSOS.
+  ///
+  /// In en, this message translates to:
+  /// **'To send SOS of your current location, we require the location permission.'**
+  String get locationPermissionRequiredSOS;
+
+  /// No description provided for @yourSOSHasBeenSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Your SOS message has been sent. Help is on the way. Stay safe and keep your phone nearby.'**
+  String get yourSOSHasBeenSent;
+
+  /// No description provided for @openSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Open setting'**
+  String get openSetting;
+
+  /// No description provided for @sendSOSAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'You are about to send an SOS. Are you sure you want to proceed?'**
+  String get sendSOSAlert;
+
+  /// No description provided for @locationRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Location required'**
+  String get locationRequired;
+
+  /// No description provided for @locationRequiredDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'To send SOS, we require the location. Select location options.'**
+  String get locationRequiredDescription;
+
+  /// No description provided for @addManually.
+  ///
+  /// In en, this message translates to:
+  /// **'Add manually'**
+  String get addManually;
+
+  /// No description provided for @myLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'My Location'**
+  String get myLocation;
+
+  /// No description provided for @useCurrentLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Use current location'**
+  String get useCurrentLocation;
+
+  /// No description provided for @micPermissionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'To record audio, This app require the microphone permission.'**
+  String get micPermissionRequired;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// No description provided for @pleaseEnterPasswordAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter password again'**
+  String get pleaseEnterPasswordAgain;
+
+  /// No description provided for @confirmPasswordDoesNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Password and confirm password does not match'**
+  String get confirmPasswordDoesNotMatch;
+
+  /// No description provided for @searchSomething.
+  ///
+  /// In en, this message translates to:
+  /// **'Search something'**
+  String get searchSomething;
+
+  /// No description provided for @hello.
+  ///
+  /// In en, this message translates to:
+  /// **'hello'**
+  String get hello;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

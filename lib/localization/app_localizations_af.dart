@@ -438,4 +438,55 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get availability => 'Availability';
+
+  @override
+  String get emergencyRequestSent => 'EMERGENCY REQUEST SENT';
+
+  @override
+  String get permissionRequired => 'Permission required';
+
+  @override
+  String get locationPermissionRequiredSOS => 'To send SOS of your current location, we require the location permission.';
+
+  @override
+  String get yourSOSHasBeenSent => 'Your SOS message has been sent. Help is on the way. Stay safe and keep your phone nearby.';
+
+  @override
+  String get openSetting => 'Open setting';
+
+  @override
+  String get sendSOSAlert => 'You are about to send an SOS. Are you sure you want to proceed?';
+
+  @override
+  String get locationRequired => 'Location required';
+
+  @override
+  String get locationRequiredDescription => 'To send SOS, we require the location. Select location options.';
+
+  @override
+  String get addManually => 'Add manually';
+
+  @override
+  String get myLocation => 'My Location';
+
+  @override
+  String get useCurrentLocation => 'Use current location';
+
+  @override
+  String get micPermissionRequired => 'To record audio, This app require the microphone permission.';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get pleaseEnterPasswordAgain => 'Please enter password again';
+
+  @override
+  String get confirmPasswordDoesNotMatch => 'Password and confirm password does not match';
+
+  @override
+  String get searchSomething => 'Search something';
+
+  @override
+  String get hello => 'hello';
 }

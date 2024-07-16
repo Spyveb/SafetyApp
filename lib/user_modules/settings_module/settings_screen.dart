@@ -271,7 +271,7 @@ class SettingsScreen extends GetView<SettingsController> {
                                           height: getProportionateScreenHeight(10),
                                         ),
                                         Text(
-                                          "Are you sure you want to logout?",
+                                          AppLocalizations.of(context)!.areYouSureYouWantToLogout,
                                           style: TextStyle(
                                               fontFamily: AppFonts.sansFont500,
                                               fontSize: getProportionalFontSize(16),

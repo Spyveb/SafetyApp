@@ -18,6 +18,7 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
           // controller.showSOSDialog(context);
           controller.getUserName();
+          // controller.saveFCMToken();
         });
       },
       init: PoliceDashBoardController(),

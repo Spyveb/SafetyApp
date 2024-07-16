@@ -149,6 +149,24 @@
   "reportedNonEmergencyCases": "Reported Non Emergency Cases",
   "sosEmergencyCases": "SOS Emergency Cases",
   "areYouSureYouWantToLogout": "Are you sure you want to logout?",
-  "availability": "Availability"
+  "availability": "Availability",
+  "emergencyRequestSent": "EMERGENCY REQUEST SENT",
+  "permissionRequired": "Permission required",
+  "locationPermissionRequiredSOS": "To send SOS of your current location, we require the location permission.",
+  "yourSOSHasBeenSent": "Your SOS message has been sent. Help is on the way. Stay safe and keep your phone nearby.",
+  "openSetting": "Open setting",
+  "sendSOSAlert": "You are about to send an SOS. Are you sure you want to proceed?",
+  "locationRequired": "Location required",
+  "locationRequiredDescription": "To send SOS, we require the location. Select location options.",
+  "addManually": "Add manually",
+  "myLocation": "My Location",
+  "useCurrentLocation": "Use current location",
+  "micPermissionRequired": "To record audio, This app require the microphone permission.",
+  "deleteAccount": "Delete Account",
+  "pleaseEnterPasswordAgain": "Please enter password again",
+  "confirmPasswordDoesNotMatch": "Password and confirm password does not match",
+  "searchSomething": "Search something",
+  "hello": "hello",
+  "hello": "hello"
 
 }

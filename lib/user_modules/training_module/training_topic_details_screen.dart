@@ -108,7 +108,7 @@ class TrainingTopicDetailScreen extends GetView<TrainingController> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: CommonButton(
-                                text: "Next",
+                                text: AppLocalizations.of(context)!.next,
                                 textStyle: TextStyle(
                                   fontSize: getProportionalFontSize(12),
                                   fontFamily: AppFonts.sansFont700,

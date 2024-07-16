@@ -24,6 +24,27 @@ class HomeController extends GetxController {
     super.onReady();
   }
 
+  void saveFCMToken() async {
+    // LoadingDialog.showLoader();
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({
+        "fcm_token": '',
+      });
+      var response = await ApiProvider().postAPICall(
+        Endpoints.saveFCMToken,
+        formData,
+        onSendProgress: (count, total) {},
+      );
+      // LoadingDialog.hideLoader();
+    } on Dio.DioException catch (e) {
+      debugPrint(e.toString());
+      // LoadingDialog.hideLoader();
+    } catch (e) {
+      debugPrint(e.toString());
+      // LoadingDialog.hideLoader();
+    }
+  }
+
   void sendSOSEmergency(context) async {
     LoadingDialog.showLoader();
     try {
@@ -202,7 +223,7 @@ class HomeController extends GetxController {
                         height: getProportionateScreenHeight(10),
                       ),
                       Text(
-                        "EMERGENCY REQUEST SENT",
+                        AppLocalizations.of(context)!.emergencyRequestSent,
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont600,
                           fontSize: getProportionalFontSize(20),
@@ -213,7 +234,7 @@ class HomeController extends GetxController {
                         height: getProportionateScreenHeight(10),
                       ),
                       Text(
-                        "Your SOS message has been sent. Help is on the way. Stay safe and keep your phone nearby.",
+                        AppLocalizations.of(context)!.yourSOSHasBeenSent,
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont400,
                           fontSize: getProportionalFontSize(16),
@@ -280,15 +301,17 @@ class HomeController extends GetxController {
       Utils.showAlertDialog(
         context: navState.currentContext!,
         bar: true,
-        title: "Permission required",
-        description: "To send SOS of your current location, we require the location permission.",
+        title: AppLocalizations.of(Get.context!)!.permissionRequired,
+        description: AppLocalizations.of(Get.context!)!.locationPermissionRequiredSOS,
         buttons: [
           TextButton(
             onPressed: () {
               Get.back();
               openAppSettings();
             },
-            child: Text('Open setting'),
+            child: Text(
+              AppLocalizations.of(Get.context!)!.openSetting,
+            ),
           ),
         ],
       );

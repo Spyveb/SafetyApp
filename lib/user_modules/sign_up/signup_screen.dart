@@ -514,9 +514,9 @@ class SignUpScreen extends GetView<SignUpController> {
                       keyboardType: TextInputType.visiblePassword,
                       validation: (value) {
                         if (value!.isEmpty) {
-                          return 'Please enter password again';
+                          return AppLocalizations.of(context)!.pleaseEnterPasswordAgain;
                         } else if (value != controller.passwordController.text) {
-                          return "Password and confirm password does not match";
+                          return AppLocalizations.of(context)!.confirmPasswordDoesNotMatch;
                         }
                         return null;
                       },

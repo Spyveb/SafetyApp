@@ -112,8 +112,6 @@ class ReportScreen extends GetView<ReportController> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
                             border: UnderlineInputBorder(),
-
-                            ///TODO text change
                             hintText: AppLocalizations.of(context)!.searchLocation,
                             hintStyle: TextStyle(
                               fontFamily: AppFonts.sansFont400,
@@ -217,7 +215,7 @@ class ReportScreen extends GetView<ReportController> {
                                             height: getProportionateScreenHeight(10),
                                           ),
                                           Text(
-                                            "You are about to send an SOS. Are you sure you want to proceed?",
+                                            AppLocalizations.of(context)!.sendSOSAlert,
                                             style: TextStyle(
                                                 fontFamily: AppFonts.sansFont500,
                                                 fontSize: getProportionalFontSize(16),
@@ -292,14 +290,16 @@ class ReportScreen extends GetView<ReportController> {
                         Utils.showAlertDialog(
                           context: navState.currentContext!,
                           bar: true,
-                          title: "Location required",
-                          description: "To send SOS, we require the location. Select location options.",
+                          title: AppLocalizations.of(context)!.locationRequired,
+                          description: AppLocalizations.of(context)!.locationRequiredDescription,
                           buttons: [
                             TextButton(
                               onPressed: () {
                                 controller.addLocationManually(context);
                               },
-                              child: Text('Add manually'),
+                              child: Text(
+                                AppLocalizations.of(context)!.addManually,
+                              ),
                             ),
                             TextButton(
                               onPressed: () async {
@@ -308,7 +308,9 @@ class ReportScreen extends GetView<ReportController> {
 
                                 Get.back();
                               },
-                              child: Text('My Location'),
+                              child: Text(
+                                AppLocalizations.of(context)!.myLocation,
+                              ),
                             ),
                           ],
                         );

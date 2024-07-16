@@ -115,7 +115,7 @@ class TrainingTopicScreen extends GetView<TrainingController> {
                         horizontal: getProportionateScreenWidth(24),
                         vertical: getProportionateScreenHeight(8),
                       ),
-                      hintText: "Search something.....",
+                      hintText: "${AppLocalizations.of(context)!.searchSomething}.....",
                       hintStyle: TextStyle(
                         color: themeProvider.textThemeColor,
                         fontFamily: AppFonts.interFont700,

@@ -82,6 +82,10 @@ class ReportController extends GetxController {
         "report_annonymously": reportAnonymouslyValue == true ? 1 : 0,
         "speak_to_professional": speakToProfessional == true ? 1 : 0,
         "information": informationText,
+        "city": submitCity,
+        "location": submitSearchLocationController.text,
+        "latitude": submitLatitude,
+        "longitude": submitLongitude,
       });
 
       if (pickedFiles.isNotEmpty) {
@@ -321,7 +325,7 @@ class ReportController extends GetxController {
                         height: getProportionateScreenHeight(10),
                       ),
                       Text(
-                        "EMERGENCY REQUEST SENT",
+                        AppLocalizations.of(context)!.emergencyRequestSent,
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont600,
                           fontSize: getProportionalFontSize(20),
@@ -332,7 +336,7 @@ class ReportController extends GetxController {
                         height: getProportionateScreenHeight(10),
                       ),
                       Text(
-                        "Your SOS message has been sent. Help is on the way. Stay safe and keep your phone nearby.",
+                        AppLocalizations.of(context)!.yourSOSHasBeenSent,
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont400,
                           fontSize: getProportionalFontSize(16),
@@ -399,15 +403,17 @@ class ReportController extends GetxController {
       Utils.showAlertDialog(
         context: navState.currentContext!,
         bar: true,
-        title: "Permission required",
-        description: "To send SOS of your current location, we require the location permission.",
+        title: AppLocalizations.of(Get.context!)!.permissionRequired,
+        description: AppLocalizations.of(Get.context!)!.locationPermissionRequiredSOS,
         buttons: [
           TextButton(
             onPressed: () {
               Get.back();
               openAppSettings();
             },
-            child: Text('Open setting'),
+            child: Text(
+              AppLocalizations.of(Get.context!)!.openSetting,
+            ),
           ),
         ],
       );
@@ -478,15 +484,17 @@ class ReportController extends GetxController {
       Utils.showAlertDialog(
         context: navState.currentContext!,
         bar: true,
-        title: "Permission required",
-        description: "To record audio, we require the microphone permission.",
+        title: AppLocalizations.of(Get.context!)!.permissionRequired,
+        description: AppLocalizations.of(Get.context!)!.micPermissionRequired,
         buttons: [
           TextButton(
             onPressed: () {
               Get.back();
               openAppSettings();
             },
-            child: Text('Open Setting'),
+            child: Text(
+              AppLocalizations.of(Get.context!)!.openSetting,
+            ),
           ),
         ],
       );

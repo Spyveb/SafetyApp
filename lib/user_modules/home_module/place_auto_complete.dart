@@ -57,7 +57,7 @@ class _PlaceAutoCompleteScreenState extends State<PlaceAutoCompleteScreen> {
             Navigator.pop(context, address.first);
           },
           title: Text(
-            "Use current location",
+            AppLocalizations.of(context)!.useCurrentLocation,
             style: TextStyle(
               fontFamily: AppFonts.sansFont400,
               fontSize: getProportionalFontSize(16),
@@ -148,15 +148,17 @@ class _PlaceAutoCompleteScreenState extends State<PlaceAutoCompleteScreen> {
       Utils.showAlertDialog(
         context: navState.currentContext!,
         bar: true,
-        title: "Permission required",
-        description: "To send SOS of your current location, we require the location permission.",
+        title: AppLocalizations.of(context)!.permissionRequired,
+        description: AppLocalizations.of(context)!.locationPermissionRequiredSOS,
         buttons: [
           TextButton(
             onPressed: () {
               Get.back();
               openAppSettings();
             },
-            child: Text('Open setting'),
+            child: Text(
+              AppLocalizations.of(context)!.openSetting,
+            ),
           ),
         ],
       );

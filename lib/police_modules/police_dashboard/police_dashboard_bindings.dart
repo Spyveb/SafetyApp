@@ -8,5 +8,6 @@ class PoliceDashBoardBinding implements Bindings {
     Get.lazyPut(() => PoliceSOSEmergencyController());
     Get.lazyPut(() => ReportedEmgCasesController());
     Get.lazyPut(() => ReportedNonEmgCasesController());
+    Get.lazyPut(() => PoliceSettingController());
   }
 }
