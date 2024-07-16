@@ -410,7 +410,7 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
               height: getProportionateScreenHeight(12),
             ),
             Text(
-              "${controller.firstName}, Police Officer",
+              "${controller.firstName}, ${AppLocalizations.of(context)!.policeOfficer}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: AppFonts.sansFont600,

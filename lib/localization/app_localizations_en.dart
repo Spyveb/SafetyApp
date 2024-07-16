@@ -14,7 +14,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterYourPassword => 'Enter Your Password';
 
   @override
-  String get forgotPassword => 'Forgot Password?';
+  String get forgotPassword => 'Forgot Password';
 
   @override
   String get dontHaveAnAccount => 'Don\'t have an account?';
@@ -488,5 +488,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchSomething => 'Search something';
 
   @override
-  String get hello => 'hello';
+  String get enterYourEmailToReceiveCode => 'Enter your email address to receive a code to reset your password.';
+
+  @override
+  String get verificationCode => 'Verification code';
+
+  @override
+  String get pleaseEnterTheCodeSentTo => 'Please enter the code sent to';
+
+  @override
+  String get policeOfficer => 'Police Officer';
+
+  @override
+  String get youHaveDeclinedSosRequest => 'You have declined the SOS Request. The request will be sent to another officer';
+
+  @override
+  String get enterYourNewPassword => 'Enter your new password';
+
+  @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get enterNewPassword => 'Enter new password';
+
+  @override
+  String get enterNewPasswordAgain => 'Enter new password again';
 }

@@ -2,7 +2,7 @@
   "pleaseLoginToProceed": "Veuillez vous connecter pour continuer.",
   "enterYourEmail": "Entrez votre adresse e-mail",
   "enterYourPassword": "Entrez votre mot de passe",
-  "forgotPassword": "Mot de passe oublié ?",
+  "forgotPassword": "Mot de passe oublié",
   "dontHaveAnAccount": "Vous n'avez pas de compte ?",
   "signUp": "S'inscrire",
   "register": "S'inscrire",
@@ -161,5 +161,15 @@
   "pleaseEnterPasswordAgain": "Please enter password again",
   "confirmPasswordDoesNotMatch": "Password and confirm password does not match",
   "searchSomething": "Search something",
-  "hello": "hello"
+  "hello": "hello",
+  "enterYourEmailToReceiveCode": "Enter your email address to receive a code to reset your password.",
+  "verificationCode": "Verification code",
+  "pleaseEnterTheCodeSentTo": "Please enter the code sent to",
+  "policeOfficer": "Police Officer",
+  "youHaveDeclinedSosRequest": "You have declined the SOS Request. The request will be sent to another officer",
+  "enterYourNewPassword": "Enter your new password",
+  "resetPassword": "Reset Password",
+  "enterNewPassword": "Enter new password",
+  "enterNewPasswordAgain": "Enter new password again",
+  "home": "Home"
 }

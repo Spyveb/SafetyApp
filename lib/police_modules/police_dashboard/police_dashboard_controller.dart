@@ -615,7 +615,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
                     height: getProportionateScreenHeight(15),
                   ),
                   Text(
-                    "You have declined the SOS Request. The request will be sent to another officer",
+                    AppLocalizations.of(context)!.youHaveDeclinedSosRequest,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: AppFonts.sansFont500,

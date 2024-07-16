@@ -64,6 +64,8 @@ export './user_modules/settings_module/html_screen.dart';
 export './user_modules/settings_module/settings_bindings.dart';
 export './user_modules/settings_module/settings_controller.dart';
 export './user_modules/settings_module/settings_screen.dart';
+export './user_modules/sign_in/otp_screen.dart';
+export './user_modules/sign_in/reset_password_screen.dart';
 export './user_modules/sign_in/signin_bindings.dart';
 export './user_modules/sign_in/signin_controller.dart';
 export './user_modules/sign_in/signin_screen.dart';

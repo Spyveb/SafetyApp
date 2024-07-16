@@ -1,5 +1,6 @@
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class SignInScreen extends GetView<SignInController> {
@@ -103,9 +104,11 @@ class SignInScreen extends GetView<SignInController> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          forgotPasswordBottomSheet(context);
+                        },
                         child: Text(
-                          AppLocalizations.of(context)!.forgotPassword,
+                          "${AppLocalizations.of(context)!.forgotPassword}?",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: AppFonts.sansFont600,
@@ -210,6 +213,83 @@ class SignInScreen extends GetView<SignInController> {
           );
         },
       ),
+    );
+  }
+
+  forgotPasswordBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            width: SizeConfig.deviceWidth,
+            padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(14),
+              vertical: getProportionateScreenHeight(15),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: getProportionateScreenHeight(15),
+                ),
+                Text(
+                  AppLocalizations.of(context)!.forgotPassword,
+                  style: TextStyle(
+                    fontSize: getProportionalFontSize(25),
+                    fontFamily: AppFonts.sansFont700,
+                  ),
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(8),
+                ),
+                Text(
+                  AppLocalizations.of(context)!.enterYourEmailToReceiveCode,
+                  style: TextStyle(
+                    fontSize: getProportionalFontSize(16),
+                    fontFamily: AppFonts.sansFont500,
+                  ),
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(35),
+                ),
+                CommonTextField(
+                  hintText: AppLocalizations.of(context)!.enterYourEmail,
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.done,
+                  prefixIcon: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(12),
+                      vertical: getProportionateScreenHeight(12),
+                    ),
+                    child: SvgPicture.asset(
+                      AppImages.email,
+                      height: getProportionateScreenHeight(24),
+                      width: getProportionateScreenWidth(24),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(35),
+                ),
+                CommonButton(
+                  width: SizeConfig.deviceWidth,
+                  onPressed: () {
+                    Get.toNamed(Routes.OTP_SCREEN);
+                  },
+                  text: AppLocalizations.of(context)!.submit,
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(35),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

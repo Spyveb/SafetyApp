@@ -116,7 +116,7 @@ abstract class AppLocalizations {
   /// No description provided for @forgotPassword.
   ///
   /// In en, this message translates to:
-  /// **'Forgot Password?'**
+  /// **'Forgot Password'**
   String get forgotPassword;
 
   /// No description provided for @dontHaveAnAccount.
@@ -1061,11 +1061,59 @@ abstract class AppLocalizations {
   /// **'Search something'**
   String get searchSomething;
 
-  /// No description provided for @hello.
+  /// No description provided for @enterYourEmailToReceiveCode.
   ///
   /// In en, this message translates to:
-  /// **'hello'**
-  String get hello;
+  /// **'Enter your email address to receive a code to reset your password.'**
+  String get enterYourEmailToReceiveCode;
+
+  /// No description provided for @verificationCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code'**
+  String get verificationCode;
+
+  /// No description provided for @pleaseEnterTheCodeSentTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the code sent to'**
+  String get pleaseEnterTheCodeSentTo;
+
+  /// No description provided for @policeOfficer.
+  ///
+  /// In en, this message translates to:
+  /// **'Police Officer'**
+  String get policeOfficer;
+
+  /// No description provided for @youHaveDeclinedSosRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'You have declined the SOS Request. The request will be sent to another officer'**
+  String get youHaveDeclinedSosRequest;
+
+  /// No description provided for @enterYourNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your new password'**
+  String get enterYourNewPassword;
+
+  /// No description provided for @resetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPassword;
+
+  /// No description provided for @enterNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new password'**
+  String get enterNewPassword;
+
+  /// No description provided for @enterNewPasswordAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new password again'**
+  String get enterNewPasswordAgain;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

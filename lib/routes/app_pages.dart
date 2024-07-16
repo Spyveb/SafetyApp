@@ -26,6 +26,16 @@ abstract class AppPages {
       binding: SignInBinding(),
     ),
     GetPage(
+      name: Routes.OTP_SCREEN,
+      page: () => OtpScreen(),
+      binding: SignInBinding(),
+    ),
+    GetPage(
+      name: Routes.RESET_PASSWORD_SCREEN,
+      page: () => ResetPasswordScreen(),
+      binding: SignInBinding(),
+    ),
+    GetPage(
       name: Routes.SIGN_UP,
       page: () => SignUpScreen(),
       binding: SignUpBinding(),
