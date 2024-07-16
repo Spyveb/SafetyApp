@@ -494,7 +494,7 @@ class AppLocalizationsAf extends AppLocalizations {
   String get verificationCode => 'Verification code';
 
   @override
-  String get pleaseEnterTheCodeSentTo => 'Please enter the code sent to';
+  String get pleaseEnterTheCodeSentTo => 'Enter the Verification code that was sent to ';
 
   @override
   String get policeOfficer => 'Police Officer';
@@ -513,4 +513,7 @@ class AppLocalizationsAf extends AppLocalizations {
 
   @override
   String get enterNewPasswordAgain => 'Enter new password again';
+
+  @override
+  String get home => 'Home';
 }

@@ -66,7 +66,7 @@ class SignInScreen extends GetView<SignInController> {
                         color: AppColors.textFieldGreyColor,
                       ),
                       onChanged: (value) {
-                        controller.userNameController.text = value;
+                        // controller.userNameController.text = value;
                         controller.update();
                       },
                       textEditingController: controller.userNameController,
@@ -85,7 +85,7 @@ class SignInScreen extends GetView<SignInController> {
                         color: AppColors.textFieldGreyColor,
                       ),
                       onChanged: (value) {
-                        controller.passwordController.text = value;
+                        // controller.passwordController.text = value;
                         controller.update();
                       },
                       textEditingController: controller.passwordController,
@@ -105,6 +105,7 @@ class SignInScreen extends GetView<SignInController> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () {
+                          controller.forgotPasswordController.clear();
                           forgotPasswordBottomSheet(context);
                         },
                         child: Text(
@@ -221,73 +222,86 @@ class SignInScreen extends GetView<SignInController> {
       context: context,
       isScrollControlled: true,
       builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Container(
-            width: SizeConfig.deviceWidth,
-            padding: EdgeInsets.symmetric(
-              horizontal: getProportionateScreenWidth(14),
-              vertical: getProportionateScreenHeight(15),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: getProportionateScreenHeight(15),
+        return GetBuilder<SignInController>(
+          builder: (SignInController signInController) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Container(
+                width: SizeConfig.deviceWidth,
+                padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(24),
+                  vertical: getProportionateScreenHeight(15),
                 ),
-                Text(
-                  AppLocalizations.of(context)!.forgotPassword,
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(25),
-                    fontFamily: AppFonts.sansFont700,
-                  ),
-                ),
-                SizedBox(
-                  height: getProportionateScreenHeight(8),
-                ),
-                Text(
-                  AppLocalizations.of(context)!.enterYourEmailToReceiveCode,
-                  style: TextStyle(
-                    fontSize: getProportionalFontSize(16),
-                    fontFamily: AppFonts.sansFont500,
-                  ),
-                ),
-                SizedBox(
-                  height: getProportionateScreenHeight(35),
-                ),
-                CommonTextField(
-                  hintText: AppLocalizations.of(context)!.enterYourEmail,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.done,
-                  prefixIcon: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(12),
-                      vertical: getProportionateScreenHeight(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: getProportionateScreenHeight(15),
                     ),
-                    child: SvgPicture.asset(
-                      AppImages.email,
-                      height: getProportionateScreenHeight(24),
-                      width: getProportionateScreenWidth(24),
+                    Text(
+                      AppLocalizations.of(context)!.forgotPassword,
+                      style: TextStyle(
+                        fontSize: getProportionalFontSize(25),
+                        fontFamily: AppFonts.sansFont700,
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(8),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.enterYourEmailToReceiveCode,
+                      style: TextStyle(
+                        fontSize: getProportionalFontSize(16),
+                        fontFamily: AppFonts.sansFont500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(35),
+                    ),
+                    CommonTextField(
+                      hintText: AppLocalizations.of(context)!.enterYourEmail,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.done,
+                      textEditingController: signInController.forgotPasswordController,
+                      validation: (value) => Validation.emailValidation(signInController.forgotPasswordController.text,
+                          AppLocalizations.of(context)!.email.capitalize, context),
+                      onChanged: (value) {
+                        controller.update();
+                      },
+                      prefixIcon: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(12),
+                          vertical: getProportionateScreenHeight(12),
+                        ),
+                        child: SvgPicture.asset(
+                          AppImages.email,
+                          height: getProportionateScreenHeight(24),
+                          width: getProportionateScreenWidth(24),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(35),
+                    ),
+                    CommonButton(
+                      width: SizeConfig.deviceWidth,
+                      onPressed: signInController.forgotPasswordController.text.trim().isNotEmpty
+                          ? () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              signInController.forgotPassword();
+                            }
+                          : null,
+                      text: AppLocalizations.of(context)!.submit,
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(35),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: getProportionateScreenHeight(35),
-                ),
-                CommonButton(
-                  width: SizeConfig.deviceWidth,
-                  onPressed: () {
-                    Get.toNamed(Routes.OTP_SCREEN);
-                  },
-                  text: AppLocalizations.of(context)!.submit,
-                ),
-                SizedBox(
-                  height: getProportionateScreenHeight(35),
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         );
       },
     );

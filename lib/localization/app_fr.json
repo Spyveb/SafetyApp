@@ -164,7 +164,7 @@
   "hello": "hello",
   "enterYourEmailToReceiveCode": "Enter your email address to receive a code to reset your password.",
   "verificationCode": "Verification code",
-  "pleaseEnterTheCodeSentTo": "Please enter the code sent to",
+  "pleaseEnterTheCodeSentTo": "Enter the Verification code that was sent to ",
   "policeOfficer": "Police Officer",
   "youHaveDeclinedSosRequest": "You have declined the SOS Request. The request will be sent to another officer",
   "enterYourNewPassword": "Enter your new password",

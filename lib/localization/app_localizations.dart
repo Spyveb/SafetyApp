@@ -1076,7 +1076,7 @@ abstract class AppLocalizations {
   /// No description provided for @pleaseEnterTheCodeSentTo.
   ///
   /// In en, this message translates to:
-  /// **'Please enter the code sent to'**
+  /// **'Enter the Verification code that was sent to '**
   String get pleaseEnterTheCodeSentTo;
 
   /// No description provided for @policeOfficer.
@@ -1114,6 +1114,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter new password again'**
   String get enterNewPasswordAgain;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
