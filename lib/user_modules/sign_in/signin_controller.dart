@@ -131,15 +131,15 @@ class SignInController extends GetxController {
     }
   }
 
-  submitOtp() {
+  submitOtp(BuildContext context) {
     if (otpController.text == otp) {
-      Utils.showToast("OTP verification successful");
+      Utils.showToast(AppLocalizations.of(context)!.otpVerificationSuccessful);
       otpController.clear();
       otp = "";
       update();
       Get.offNamed(Routes.RESET_PASSWORD_SCREEN);
     } else {
-      Utils.showToast("Invalid OTP");
+      Utils.showToast(AppLocalizations.of(context)!.invalidOtp);
     }
   }
 

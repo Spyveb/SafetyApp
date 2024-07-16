@@ -516,4 +516,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get home => 'Home';
+
+  @override
+  String get otpVerificationSuccessful => 'OTP verification successful';
+
+  @override
+  String get invalidOtp => 'Invalid OTP';
 }

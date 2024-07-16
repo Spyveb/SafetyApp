@@ -32,6 +32,7 @@ abstract class Routes {
   static const POLICE_SETTING = _Paths.POLICE_SETTING;
   static const POLICE_EDIT_PROFILE = _Paths.POLICE_EDIT_PROFILE;
   static const POLICE_REPORTEDNONEMGCASE_DETAILS = _Paths.POLICE_REPORTEDNONEMGCASE_DETAILS;
+  static const CONTENTS_DETAIL_VIEW = _Paths.CONTENTS_DETAIL_VIEW;
 }
 
 abstract class _Paths {
@@ -64,6 +65,7 @@ abstract class _Paths {
   static const POLICE_REPORTEDNONEMGCASES = '/police_reported_non_cases'; // police_reported_non_cases
   static const POLICE_SETTING = '/police_setting'; // police_setting
   static const POLICE_EDIT_PROFILE = '/police_edit_profile'; // police_edit_profile
+  static const CONTENTS_DETAIL_VIEW = '/contents_detail_view'; // contents_detail_view
   static const POLICE_REPORTEDNONEMGCASE_DETAILS =
       '/police_non_emergency_case_details'; // police_non_emergency_case_details
 }

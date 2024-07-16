@@ -174,5 +174,7 @@
   "resetPassword": "Reset Password",
   "enterNewPassword": "Enter new password",
   "enterNewPasswordAgain": "Enter new password again",
-  "home": "Home"
+  "home": "Home",
+  "otpVerificationSuccessful": "OTP verification successful",
+  "invalidOtp": "Invalid OTP"
 }

@@ -1120,6 +1120,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home'**
   String get home;
+
+  /// No description provided for @otpVerificationSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'OTP verification successful'**
+  String get otpVerificationSuccessful;
+
+  /// No description provided for @invalidOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid OTP'**
+  String get invalidOtp;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

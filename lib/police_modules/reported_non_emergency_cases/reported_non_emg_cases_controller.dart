@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pod_player/pod_player.dart';
 
 import '../../imports.dart';
 
 class ReportedNonEmgCasesController extends GetxController {
+  PageController pageController = PageController();
+  late PodPlayerController videoController;
   List<ReportCaseModel> nonEmergencyReportsList = [];
   void getNonEmergencyReportsList({bool? showLoader = true, required String search}) async {
     if (showLoader == true) {

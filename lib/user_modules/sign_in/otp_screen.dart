@@ -75,7 +75,7 @@ class OtpScreen extends GetView<SignInController> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: "test@gmail.com",
+                                  text: controller.forgotEmail,
                                   style: TextStyle(
                                     fontSize: getProportionalFontSize(18),
                                     fontFamily: AppFonts.sansFont600,
@@ -144,7 +144,7 @@ class OtpScreen extends GetView<SignInController> {
                       onPressed:
                           controller.otpFormKey.currentState != null && controller.otpFormKey.currentState!.validate()
                               ? () {
-                                  controller.submitOtp();
+                                  controller.submitOtp(context);
                                 }
                               : null,
                       width: SizeConfig.deviceWidth,

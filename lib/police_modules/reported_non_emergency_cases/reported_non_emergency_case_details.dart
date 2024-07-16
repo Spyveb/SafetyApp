@@ -82,6 +82,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                   height: getProportionateScreenHeight(15),
                                 ),
                                 Text(
+                                  ///TODo : Text change
                                   "Evidence",
                                   style: TextStyle(
                                     fontSize: getProportionalFontSize(16),
@@ -108,7 +109,10 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                               controller.reportCaseModel!.nonEmergencyCaseContents![index];
                                           return GestureDetector(
                                             behavior: HitTestBehavior.opaque,
-                                            onTap: () {},
+                                            onTap: () {
+                                              Get.toNamed(Routes.CONTENTS_DETAIL_VIEW,
+                                                  arguments: {"initialContentIndex": index, "model": report});
+                                            },
                                             child: Stack(
                                               alignment: Alignment.center,
                                               children: [
@@ -142,7 +146,21 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                             ),
                                           );
                                         })
-                                    : SizedBox(),
+                                    : Center(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            top: getProportionateScreenHeight(100),
+                                          ),
+                                          child: Text(
+                                            "No Evidence",
+                                            style: TextStyle(
+                                              fontSize: getProportionalFontSize(16),
+                                              fontFamily: AppFonts.sansFont600,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                               ],
                             ),
                           ),

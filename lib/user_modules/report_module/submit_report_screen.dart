@@ -574,6 +574,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                                           behavior: HitTestBehavior.opaque,
                                           onTap: () {
                                             if (controller.isRecording == false) {
+                                              controller.informationController.clear();
                                               controller.startRecording();
                                             } else {
                                               controller.stopRecording();

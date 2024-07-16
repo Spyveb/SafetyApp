@@ -175,8 +175,8 @@
   "enterNewPassword": "Enter new password",
   "enterNewPasswordAgain": "Enter new password again",
   "home": "Home",
-  "hello": "hello",
-  "hello": "hello",
+  "otpVerificationSuccessful": "OTP verification successful",
+  "invalidOtp": "Invalid OTP",
   "hello": "hello",
   "hello": "hello"
 }
