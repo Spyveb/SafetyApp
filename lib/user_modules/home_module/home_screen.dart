@@ -52,6 +52,7 @@ class HomeScreen extends GetView<HomeController> {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.profile,
+                            // AppLocalizations.of(context)!.home,
                             style: TextStyle(
                               fontSize: getProportionalFontSize(32),
                               color: themeProvider.textThemeColor,

@@ -100,16 +100,24 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
                             itemCount: controller.nonEmergencyReportsList.length,
                             itemBuilder: (context, index) {
                               ReportCaseModel report = controller.nonEmergencyReportsList[index];
-                              return CustomCasesList(
-                                caseNo: "${report.id}",
-                                status: "${report.status == 0 ? 'Open' : 'Closed'}",
-                                firstName: "${report.firstName ?? '-'}",
-                                lastName: "${report.lastName ?? '-'}",
-                                date: "${Utils.displayDateFormat(
-                                  report.updatedAt ?? DateTime.now().toString(),
-                                )}",
-                                location: "${report.location ?? '-'}",
-                                city: "${report.city ?? '-'}",
+                              return GestureDetector(
+                                onTap: () async {
+                                  controller.goToDetails(report);
+                                  await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
+                                  controller.reportCaseModel=null;
+                                },
+                                behavior: HitTestBehavior.opaque,
+                                child: CustomCasesList(
+                                  caseNo: "${report.id}",
+                                  status: "${report.status == 0 ? 'Open' : 'Closed'}",
+                                  firstName: "${report.firstName ?? '-'}",
+                                  lastName: "${report.lastName ?? '-'}",
+                                  date: "${Utils.displayDateFormat(
+                                    report.updatedAt ?? DateTime.now().toString(),
+                                  )}",
+                                  location: "${report.location ?? '-'}",
+                                  city: "${report.city ?? '-'}",
+                                ),
                               );
                             },
                           )

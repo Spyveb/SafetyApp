@@ -1,4 +1,5 @@
 import 'package:distress_app/imports.dart';
+import 'package:distress_app/police_modules/reported_non_emergency_cases/reported_non_emergency_case_details.dart';
 import 'package:distress_app/police_modules/setting/police_edit_profile_screen.dart';
 import 'package:distress_app/user_modules/training_module/video_screen.dart';
 import 'package:get/get.dart';
@@ -132,6 +133,11 @@ abstract class AppPages {
       name: Routes.POLICE_REPORTEDNONEMGCASES,
       page: () => const ReportedNonEmgCasesScreen(),
       binding: ReportedNonEmgCasesBinding(),
+    ),
+    GetPage(
+      name: Routes.POLICE_REPORTEDNONEMGCASE_DETAILS,
+      page: () => const ReportedNonEmgCaseDetailsScreen(),
+      // binding: ReportedNonEmgCasesBinding(),
     ),
     GetPage(
       name: Routes.POLICE_SETTING,

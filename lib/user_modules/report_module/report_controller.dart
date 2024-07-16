@@ -59,7 +59,33 @@ class ReportController extends GetxController {
   }
 
   Future<void> pickFiles() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
+    // ImagePicker imagePicker = ImagePicker();
+    // imagePicker.pickMultipleMedia();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: FileType.custom,
+      allowedExtensions: [
+        //image
+        'jpeg',
+        'jpg',
+        'png',
+        'heic',
+
+        //video
+        'avi',
+        'mkv',
+        'mov',
+        'mp4',
+        'mpeg',
+        'webm',
+        'wmv',
+
+        //audio
+        'mp3',
+        'm4a',
+        'aac',
+      ],
+    );
 
     if (result != null) {
       List<File> files = result.paths.map((path) => File(path!)).toList();
