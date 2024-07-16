@@ -217,21 +217,21 @@ class CustomCasesList extends StatelessWidget {
               ],
             ),
           ),
-          CommonButton(
-            width: getProportionateScreenWidth(100),
-            padding: EdgeInsets.symmetric(
-              horizontal: getProportionateScreenWidth(4),
-              vertical: getProportionateScreenHeight(4),
-            ),
-            radius: 50,
-            textStyle: TextStyle(
-              color: Colors.white,
-              fontSize: getProportionalFontSize(13),
-              fontFamily: AppFonts.sansFont600,
-            ),
-            onPressed: () {},
-            text: "View case",
-          )
+          // CommonButton(
+          //   width: getProportionateScreenWidth(100),
+          //   padding: EdgeInsets.symmetric(
+          //     horizontal: getProportionateScreenWidth(4),
+          //     vertical: getProportionateScreenHeight(4),
+          //   ),
+          //   radius: 50,
+          //   textStyle: TextStyle(
+          //     color: Colors.white,
+          //     fontSize: getProportionalFontSize(13),
+          //     fontFamily: AppFonts.sansFont600,
+          //   ),
+          //   onPressed: () {},
+          //   text: "View case",
+          // )
         ],
       ),
     );

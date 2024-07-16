@@ -48,4 +48,10 @@ class ReportedNonEmgCasesController extends GetxController {
       debugPrint(e.toString());
     }
   }
+
+  ReportCaseModel? reportCaseModel;
+  void goToDetails(ReportCaseModel model) {
+    reportCaseModel = model;
+    update();
+  }
 }

@@ -25,6 +25,7 @@ class ReportCaseModel {
   String? updatedAt;
   String? firstName;
   String? lastName;
+  List<ReportCaseContent>? nonEmergencyCaseContents;
 
   ReportCaseModel({
     this.id,
@@ -43,6 +44,7 @@ class ReportCaseModel {
     this.updatedAt,
     this.firstName,
     this.lastName,
+    this.nonEmergencyCaseContents,
   });
 
   factory ReportCaseModel.fromJson(Map<String, dynamic> json) => ReportCaseModel(
@@ -62,6 +64,10 @@ class ReportCaseModel {
         updatedAt: json["updated_at"],
         firstName: json["first_name"],
         lastName: json["last_name"],
+        nonEmergencyCaseContents: json["non_emergency_case_contents"] == null
+            ? []
+            : List<ReportCaseContent>.from(
+                json["non_emergency_case_contents"]!.map((x) => ReportCaseContent.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,5 +87,44 @@ class ReportCaseModel {
         "updated_at": updatedAt,
         "first_name": firstName,
         "last_name": lastName,
+        "non_emergency_case_contents": nonEmergencyCaseContents == null
+            ? []
+            : List<dynamic>.from(nonEmergencyCaseContents!.map((x) => x.toJson())),
+      };
+}
+
+class ReportCaseContent {
+  int? id;
+  int? nonEmergencyCaseId;
+  String? docType;
+  String? value;
+  String? createdAt;
+  String? updatedAt;
+
+  ReportCaseContent({
+    this.id,
+    this.nonEmergencyCaseId,
+    this.docType,
+    this.value,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory ReportCaseContent.fromJson(Map<String, dynamic> json) => ReportCaseContent(
+        id: json["id"],
+        nonEmergencyCaseId: json["non_emergency_case_id"],
+        docType: json["doc_type"],
+        value: json["value"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "non_emergency_case_id": nonEmergencyCaseId,
+        "doc_type": docType,
+        "value": value,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
       };
 }

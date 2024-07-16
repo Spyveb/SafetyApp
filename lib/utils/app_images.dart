@@ -53,6 +53,7 @@ class AppImages {
   static const String policeNotificationBadge = "assets/images/police_notification_badge.png";
   static const String policeDrawerIcon = "assets/images/police_drawer_icon.png";
   static const String policeCloseDrawerIcon = "assets/images/police_close_drawer_icon.png";
+  static const String audioIcon = "assets/images/audio_icon.png";
 
   // Police Svgs
 }
