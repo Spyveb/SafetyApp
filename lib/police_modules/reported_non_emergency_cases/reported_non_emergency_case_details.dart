@@ -135,8 +135,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                                 DeviceOrientation.landscapeLeft,
                                                 DeviceOrientation.landscapeRight
                                               ]);
-                                              report.value =
-                                                  "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny3.mp4";
+
                                               controller.update();
 
                                               controller.videoController = PodPlayerController(

@@ -7,6 +7,8 @@ import 'package:pod_player/pod_player.dart';
 import '../../imports.dart';
 
 class ReportedNonEmgCasesController extends GetxController {
+  bool showOverlay = false;
+
   PageController pageController = PageController();
   PodPlayerController? videoController;
   AudioPlayer audioPlayer = AudioPlayer();
