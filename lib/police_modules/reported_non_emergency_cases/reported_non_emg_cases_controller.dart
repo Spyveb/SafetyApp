@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
@@ -12,7 +14,17 @@ class ReportedNonEmgCasesController extends GetxController {
   PageController pageController = PageController();
   PodPlayerController? videoController;
   AudioPlayer audioPlayer = AudioPlayer();
+  Duration? totalDuration;
+  Duration? position;
+  StreamSubscription? durationSubscription;
+  StreamSubscription? positionSubscription;
+  StreamSubscription? playerCompleteSubscription;
+  StreamSubscription? playerStateChangeSubscription;
+  String audioState = "Stopped";
+  PlayerState? playerState;
+
   List<ReportCaseModel> nonEmergencyReportsList = [];
+
   void getNonEmergencyReportsList({bool? showLoader = true, required String search}) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
@@ -57,8 +69,97 @@ class ReportedNonEmgCasesController extends GetxController {
   }
 
   ReportCaseModel? reportCaseModel;
+
   void goToDetails(ReportCaseModel model) {
     reportCaseModel = model;
     update();
+  }
+
+  initAudio() async {
+    playerState = audioPlayer.state;
+
+    await audioPlayer.getDuration().then((value) {
+      totalDuration = value;
+      update();
+    });
+
+    audioPlayer.getCurrentPosition().then((value) {
+      position = value;
+      update();
+    });
+
+    // initAudioStreams();
+    audioPlayer.onDurationChanged.listen((updatedDuration) {
+      totalDuration = updatedDuration;
+      update();
+      print("totalDuration---->  $totalDuration ");
+    });
+
+    audioPlayer.onPositionChanged.listen((updatedPosition) {
+      position = updatedPosition;
+      update();
+      print("position---> $position");
+    });
+
+    audioPlayer.onPlayerStateChanged.listen((state) {
+      playerState = state;
+      update();
+      print("audioState----> $audioState");
+    });
+  }
+
+  // void initAudioStreams() {
+  //   durationSubscription = audioPlayer.onDurationChanged.listen((duration) {
+  //     totalDuration = duration;
+  //     update();
+  //     print("totalDuration ---->  $totalDuration");
+  //   });
+  //
+  //   positionSubscription = audioPlayer.onPositionChanged.listen((p) {
+  //     position = p;
+  //     update();
+  //     print("position ---->  $p");
+  //   });
+  //
+  //   playerCompleteSubscription = audioPlayer.onPlayerComplete.listen((event) {
+  //     playerState = PlayerState.stopped;
+  //     position = Duration.zero;
+  //     update();
+  //     print("completePosition ---->  $position");
+  //     print("completeState ---->  $playerState");
+  //   });
+  //
+  //   playerStateChangeSubscription = audioPlayer.onPlayerStateChanged.listen((state) {
+  //     playerState = state;
+  //     update();
+  //     print("playerState ---->  $playerState");
+  //   });
+  // }
+
+  playAudio(String url) async {
+    audioPlayer.play(UrlSource(url));
+    playerState = PlayerState.playing;
+    update();
+  }
+
+  pauseAudio() async {
+    audioPlayer.pause();
+    playerState = PlayerState.paused;
+    update();
+  }
+
+  stopAudio() async {
+    audioPlayer.stop();
+    playerState = PlayerState.stopped;
+    // position = Duration.zero;
+    update();
+  }
+
+  setSourceUrl(String url) {
+    audioPlayer.setSourceUrl(url);
+  }
+
+  seekAudio(Duration durationToSeek) {
+    audioPlayer.seek(durationToSeek);
   }
 }

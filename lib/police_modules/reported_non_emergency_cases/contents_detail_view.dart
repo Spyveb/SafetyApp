@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +19,39 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
           controller.update();
         },
         child: GetBuilder<ReportedNonEmgCasesController>(
-          initState: (state) {
+          initState: (state) async {
             controller.pageController = PageController(initialPage: Get.arguments['initialContentIndex']);
+
+            if (controller.reportCaseModel!.nonEmergencyCaseContents![Get.arguments['initialContentIndex']].docType ==
+                'audio') {
+              if (controller.reportCaseModel!.nonEmergencyCaseContents![Get.arguments['initialContentIndex']].value !=
+                  null) {
+                controller.setSourceUrl(
+                    controller.reportCaseModel!.nonEmergencyCaseContents![Get.arguments['initialContentIndex']].value!);
+                controller.initAudio();
+              }
+            }
+            // if (Get.arguments['model'] != null && Get.arguments['model'] is ReportCaseContent) {
+            //   ReportCaseContent report = Get.arguments['model'];
+            //   var videoUrl = report.value;
+            //   // var videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4";
+            //   controller.videoController = PodPlayerController(
+            //     playVideoFrom: PlayVideoFrom.network(videoUrl ?? ""),
+            //   )..initialise().then((_) {
+            //       controller.videoController.play();
+            //       controller.update();
+            //     });
+            // }
           },
           dispose: (state) {
+            // controller.durationSubscription?.cancel();
+            // controller.positionSubscription?.cancel();
+            // controller.playerCompleteSubscription?.cancel();
+            // controller.playerStateChangeSubscription?.cancel();
             SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+
+            // controller.videoController.dispose();
+            // controller.videoController.removeListener(() {});
           },
           builder: (controller) {
             return controller.reportCaseModel!.nonEmergencyCaseContents != null &&
@@ -34,7 +61,7 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                       PageView.builder(
                         controller: controller.pageController,
                         itemCount: controller.reportCaseModel!.nonEmergencyCaseContents!.length,
-                        onPageChanged: (value) {
+                        onPageChanged: (value) async {
                           if (controller.reportCaseModel!.nonEmergencyCaseContents![value].docType == 'video') {
                             if (controller.videoController != null) {
                               if (controller.videoController!.isInitialised == true) {
@@ -70,8 +97,10 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                             }
                           } else if (controller.reportCaseModel!.nonEmergencyCaseContents![value].docType == 'audio') {
                             if (controller.reportCaseModel!.nonEmergencyCaseContents![value].value != null) {
-                              controller.audioPlayer
+                              await controller
                                   .setSourceUrl(controller.reportCaseModel!.nonEmergencyCaseContents![value].value!);
+
+                              controller.initAudio();
                             }
                           }
                         },
@@ -96,12 +125,59 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                                   : SizedBox()
                               : report.docType == 'audio'
                                   ? Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: getProportionateScreenHeight(5),
+                                            horizontal: getProportionateScreenWidth(5),
+                                          ),
+                                          child: Image.asset(
+                                            AppImages.musicLogo,
+                                            height: getProportionateScreenHeight(150),
+                                            width: getProportionateScreenHeight(150),
+                                          ),
+                                        ),
+                                        Text(
+                                          controller.totalDuration.toString(),
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        Text(
+                                          controller.position.toString(),
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        Text(
+                                          controller.audioState,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        Slider(
+                                          value: 0.2,
+                                          allowedInteraction: SliderInteraction.slideThumb,
+                                          onChanged: (value) {},
+                                        ),
+                                        FloatingActionButton(
+                                          shape: CircleBorder(),
+                                          onPressed: () {},
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: getProportionateScreenWidth(10),
+                                              vertical: getProportionateScreenHeight(10),
+                                            ),
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color: Colors.red,
+                                                width: 3,
+                                              ),
+                                            ),
+                                            child: Icon(
+                                              Icons.play_arrow,
+                                            ),
+                                          ),
+                                        ),
                                         ElevatedButton(
                                           onPressed: () {
-                                            controller.audioPlayer.play(
-                                              UrlSource(report.value!, mimeType: "audio/mpeg"),
-                                            );
+                                            controller.playAudio(report.value!);
                                           },
                                           child: Text(
                                             "Play",
@@ -109,7 +185,15 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                                         ),
                                         ElevatedButton(
                                           onPressed: () {
-                                            controller.audioPlayer.stop();
+                                            controller.pauseAudio();
+                                          },
+                                          child: Text(
+                                            "pause",
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            controller.stopAudio();
                                           },
                                           child: Text(
                                             "Stop",
@@ -123,7 +207,6 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                                       ),
                                       minScale: PhotoViewComputedScale.contained,
                                       maxScale: PhotoViewComputedScale.contained * 3,
-                                      customSize: Size(SizeConfig.deviceWidth!, SizeConfig.deviceHeight!),
                                       filterQuality: FilterQuality.high,
                                       errorBuilder: (context, error, stackTrace) {
                                         return Image.asset(
@@ -167,7 +250,7 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                           : SizedBox(),
                     ],
                   )
-                : Container();
+                : SizedBox();
           },
         ),
       ),
@@ -195,5 +278,7 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
           Utils.showToast((onError ?? 'Failed to load video').toString());
         }
       });
+    // SystemChrome.setPreferredOrientations(
+    //     [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   }
 }
