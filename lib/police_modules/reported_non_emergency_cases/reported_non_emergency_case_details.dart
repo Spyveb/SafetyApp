@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:pod_player/pod_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesController> {
@@ -12,62 +14,71 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: SafeArea(
         child: GetBuilder<ReportedNonEmgCasesController>(
           initState: (state) {},
           builder: (controller) {
-            return Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(14),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: getProportionateScreenHeight(15),
+            return Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(14),
                   ),
-                  Row(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Container(
-                          height: getProportionateScreenHeight(40),
-                          width: getProportionateScreenWidth(40),
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
-                          child: Icon(
-                            Icons.arrow_back,
-                            size: 22,
-                          ),
-                        ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(15),
                       ),
-                      Flexible(
-                        child: Text(
-                          "${AppLocalizations.of(context)!.caseNo} ${controller.reportCaseModel?.id}",
-                          style: TextStyle(
-                            fontSize: getProportionalFontSize(22),
-                            fontFamily: AppFonts.sansFont600,
-                            color: Colors.black,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              height: getProportionateScreenHeight(40),
+                              width: getProportionateScreenWidth(40),
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
+                              child: Icon(
+                                Icons.arrow_back,
+                                size: 22,
+                              ),
+                            ),
                           ),
-                        ),
+                          Flexible(
+                            child: Text(
+                              "${AppLocalizations.of(context)!.caseNo} ${controller.reportCaseModel?.id}",
+                              style: TextStyle(
+                                fontSize: getProportionalFontSize(22),
+                                fontFamily: AppFonts.sansFont600,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(15),
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(15),
-                  ),
-                  controller.reportCaseModel != null
-                      ? Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomCasesList(
+                ),
+                controller.reportCaseModel != null
+                    ? Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: getProportionateScreenWidth(14),
+                                ),
+                                child: CustomCasesList(
                                   caseNo: "${controller.reportCaseModel!.id}",
                                   status: "${controller.reportCaseModel!.status == 0 ? 'Open' : 'Closed'}",
                                   firstName: "${controller.reportCaseModel!.firstName ?? '-'}",
@@ -78,41 +89,85 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                   location: "${controller.reportCaseModel!.location ?? '-'}",
                                   city: "${controller.reportCaseModel!.city ?? '-'}",
                                 ),
-                                SizedBox(
-                                  height: getProportionateScreenHeight(15),
+                              ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(15),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: getProportionateScreenWidth(8),
                                 ),
-                                Text(
+                                child: Text(
                                   ///TODo : Text change
                                   "Evidence",
                                   style: TextStyle(
-                                    fontSize: getProportionalFontSize(16),
+                                    fontSize: getProportionalFontSize(18),
                                     fontFamily: AppFonts.sansFont700,
                                     color: Colors.black,
                                   ),
                                 ),
-                                controller.reportCaseModel!.nonEmergencyCaseContents != null &&
-                                        controller.reportCaseModel!.nonEmergencyCaseContents!.isNotEmpty
-                                    ? GridView.builder(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: getProportionateScreenHeight(12),
-                                        ),
-                                        physics: NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemCount: controller.reportCaseModel!.nonEmergencyCaseContents!.length,
-                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3,
-                                          mainAxisSpacing: getProportionateScreenHeight(6),
-                                          crossAxisSpacing: getProportionateScreenWidth(6),
-                                        ),
-                                        itemBuilder: (BuildContext context, int index) {
-                                          ReportCaseContent report =
-                                              controller.reportCaseModel!.nonEmergencyCaseContents![index];
-                                          return GestureDetector(
-                                            behavior: HitTestBehavior.opaque,
-                                            onTap: () {
+                              ),
+                              controller.reportCaseModel!.nonEmergencyCaseContents != null &&
+                                      controller.reportCaseModel!.nonEmergencyCaseContents!.isNotEmpty
+                                  ? GridView.builder(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: getProportionateScreenHeight(12),
+                                        horizontal: getProportionateScreenWidth(8),
+                                      ),
+                                      physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: controller.reportCaseModel!.nonEmergencyCaseContents!.length,
+                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        mainAxisSpacing: getProportionateScreenHeight(3),
+                                        crossAxisSpacing: getProportionateScreenWidth(3),
+                                      ),
+                                      itemBuilder: (BuildContext context, int index) {
+                                        ReportCaseContent report =
+                                            controller.reportCaseModel!.nonEmergencyCaseContents![index];
+                                        return GestureDetector(
+                                          behavior: HitTestBehavior.opaque,
+                                          onTap: () async {
+                                            if (report.docType == 'video') {
+                                              report.value =
+                                                  "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny3.mp4";
+
+                                              controller.videoController = PodPlayerController(
+                                                playVideoFrom: PlayVideoFrom.network(
+                                                  report.value ?? "",
+                                                ),
+                                                podPlayerConfig: PodPlayerConfig(
+                                                  wakelockEnabled: true,
+                                                  forcedVideoFocus: true,
+                                                ),
+                                              );
+                                              try {
+                                                await controller.videoController!.initialise();
+                                                controller.update();
+                                                SystemChrome.setPreferredOrientations([
+                                                  DeviceOrientation.portraitDown,
+                                                  DeviceOrientation.portraitUp,
+                                                  DeviceOrientation.landscapeLeft,
+                                                  DeviceOrientation.landscapeRight
+                                                ]);
+                                                await Get.toNamed(Routes.CONTENTS_DETAIL_VIEW,
+                                                    arguments: {"initialContentIndex": index, "model": report});
+                                                SystemChrome.setPreferredOrientations(
+                                                    [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+                                              } catch (e) {
+                                                print(e);
+                                                Utils.showToast("Invalid video url");
+                                                controller.update();
+                                              }
+                                            } else {
                                               Get.toNamed(Routes.CONTENTS_DETAIL_VIEW,
                                                   arguments: {"initialContentIndex": index, "model": report});
-                                            },
+                                            }
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: AppColors.blackColor, width: .2),
+                                            ),
                                             child: Stack(
                                               alignment: Alignment.center,
                                               children: [
@@ -144,30 +199,30 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                                     : SizedBox()
                                               ],
                                             ),
-                                          );
-                                        })
-                                    : Center(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            top: getProportionateScreenHeight(100),
                                           ),
-                                          child: Text(
-                                            "No Evidence",
-                                            style: TextStyle(
-                                              fontSize: getProportionalFontSize(16),
-                                              fontFamily: AppFonts.sansFont600,
-                                              color: Colors.black,
-                                            ),
+                                        );
+                                      })
+                                  : Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          top: getProportionateScreenHeight(100),
+                                        ),
+                                        child: Text(
+                                          "No Evidence",
+                                          style: TextStyle(
+                                            fontSize: getProportionalFontSize(16),
+                                            fontFamily: AppFonts.sansFont600,
+                                            color: Colors.black,
                                           ),
                                         ),
                                       ),
-                              ],
-                            ),
+                                    ),
+                            ],
                           ),
-                        )
-                      : SizedBox(),
-                ],
-              ),
+                        ),
+                      )
+                    : SizedBox(),
+              ],
             );
           },
         ),

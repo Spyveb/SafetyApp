@@ -51,8 +51,7 @@ class HomeScreen extends GetView<HomeController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            AppLocalizations.of(context)!.profile,
-                            // AppLocalizations.of(context)!.home,
+                            AppLocalizations.of(context)!.home,
                             style: TextStyle(
                               fontSize: getProportionalFontSize(32),
                               color: themeProvider.textThemeColor,

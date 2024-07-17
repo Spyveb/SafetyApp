@@ -190,7 +190,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                                 AppLocalizations.of(context)!.filesAndInformation,
                                 style: TextStyle(
                                   fontFamily: AppFonts.sansFont400,
-                                  fontSize: getProportionalFontSize(13),
+                                  fontSize: getProportionalFontSize(16),
                                   color: AppColors.lightTextColor,
                                 ),
                               ),
@@ -253,7 +253,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                                   return Container(
                                     padding: EdgeInsets.symmetric(
                                       vertical: getProportionateScreenHeight(8),
-                                      horizontal: getProportionateScreenWidth(14),
+                                      horizontal: getProportionateScreenWidth(8),
                                     ),
                                     margin: EdgeInsets.symmetric(
                                       vertical: getProportionateScreenHeight(4),
@@ -267,6 +267,14 @@ class SubmitReportScreen extends GetView<ReportController> {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
+                                        Image.asset(
+                                          AppImages.registrationSuccess,
+                                          height: getProportionateScreenHeight(24),
+                                          width: getProportionateScreenWidth(24),
+                                        ),
+                                        SizedBox(
+                                          width: getProportionateScreenWidth(8),
+                                        ),
                                         Expanded(
                                           child: Text(
                                             _fileName(file.path),
@@ -274,16 +282,29 @@ class SubmitReportScreen extends GetView<ReportController> {
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                               fontFamily: AppFonts.sansFont700,
-                                              fontSize: getProportionalFontSize(16),
+                                              fontSize: getProportionalFontSize(14),
                                               color: AppColors.blackColor,
                                             ),
                                           ),
                                         ),
-                                        Image.asset(
-                                          AppImages.registrationSuccess,
-                                          height: getProportionateScreenHeight(36),
-                                          width: getProportionateScreenWidth(36),
-                                        ),
+                                        // Image.asset(
+                                        //   AppImages.registrationSuccess,
+                                        //   height: getProportionateScreenHeight(36),
+                                        //   width: getProportionateScreenWidth(36),
+                                        // ),
+                                        IconButton.outlined(
+                                          padding: EdgeInsets.zero,
+                                          visualDensity: VisualDensity(vertical: -4, horizontal: -4),
+                                          iconSize: 16,
+                                          onPressed: () {
+                                            controller.pickedFiles.removeAt(index);
+                                            controller.update();
+                                          },
+                                          icon: Icon(
+                                            Icons.close,
+                                            color: AppColors.blackColor,
+                                          ),
+                                        )
                                       ],
                                     ),
                                   );
@@ -327,8 +348,8 @@ class SubmitReportScreen extends GetView<ReportController> {
                           },
                           style: TextStyle(
                             fontFamily: AppFonts.sansFont400,
-                            fontSize: getProportionalFontSize(14),
-                            color: AppColors.blackColor,
+                            fontSize: getProportionalFontSize(16),
+                            color: AppColors.lightTextColor,
                           ),
                           decoration: InputDecoration(
                             errorMaxLines: 2,
@@ -379,7 +400,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                             hintText: AppLocalizations.of(context)!.searchLocation,
                             hintStyle: TextStyle(
                               fontFamily: AppFonts.sansFont400,
-                              fontSize: getProportionalFontSize(14),
+                              fontSize: getProportionalFontSize(16),
                               color: AppColors.lightTextColor,
                             ),
                             errorStyle: TextStyle(

@@ -7,7 +7,7 @@ import '../../imports.dart';
 
 class ReportedNonEmgCasesController extends GetxController {
   PageController pageController = PageController();
-  late PodPlayerController videoController;
+  PodPlayerController? videoController;
   List<ReportCaseModel> nonEmergencyReportsList = [];
   void getNonEmergencyReportsList({bool? showLoader = true, required String search}) async {
     if (showLoader == true) {

@@ -6,7 +6,6 @@ import 'package:distress_app/utils/app_colors.dart';
 import 'package:distress_app/utils/app_fonts.dart';
 import 'package:distress_app/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -97,11 +96,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    //
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    // ]);
     return Consumer<ThemeProvider>(builder: (context, themeProvider, _) {
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,

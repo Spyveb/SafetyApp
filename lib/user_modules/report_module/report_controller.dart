@@ -10,6 +10,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
@@ -59,40 +60,51 @@ class ReportController extends GetxController {
   }
 
   Future<void> pickFiles() async {
-    // ImagePicker imagePicker = ImagePicker();
-    // imagePicker.pickMultipleMedia();
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: [
-        //image
-        'jpeg',
-        'jpg',
-        'png',
-        'heic',
+    if (Platform.isIOS) {
+      ImagePicker imagePicker = ImagePicker();
+      List<XFile> result = await imagePicker.pickMultipleMedia();
 
-        //video
-        'avi',
-        'mkv',
-        'mov',
-        'mp4',
-        'mpeg',
-        'webm',
-        'wmv',
-
-        //audio
-        'mp3',
-        'm4a',
-        'aac',
-      ],
-    );
-
-    if (result != null) {
-      List<File> files = result.paths.map((path) => File(path!)).toList();
-      pickedFiles.addAll(files);
+      if (result.isNotEmpty) {
+        List<File> files = result.map((file) => File(file.path)).toList();
+        pickedFiles.addAll(files);
+      } else {
+        // Utils.showToast("message")
+        // User canceled the picker
+      }
     } else {
-      // Utils.showToast("message")
-      // User canceled the picker
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: [
+          //image
+          'jpeg',
+          'jpg',
+          'png',
+          'heic',
+
+          //video
+          'avi',
+          'mkv',
+          'mov',
+          'mp4',
+          'mpeg',
+          'webm',
+          'wmv',
+
+          //audio
+          'mp3',
+          'm4a',
+          'aac',
+        ],
+      );
+
+      if (result != null) {
+        List<File> files = result.paths.map((path) => File(path!)).toList();
+        pickedFiles.addAll(files);
+      } else {
+        // Utils.showToast("message")
+        // User canceled the picker
+      }
     }
     update();
   }
