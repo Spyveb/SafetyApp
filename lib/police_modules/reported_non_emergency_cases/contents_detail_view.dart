@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
         child: GetBuilder<ReportedNonEmgCasesController>(
           initState: (state) {
             controller.pageController = PageController(initialPage: Get.arguments['initialContentIndex']);
+
             // if (Get.arguments['model'] != null && Get.arguments['model'] is ReportCaseContent) {
             //   ReportCaseContent report = Get.arguments['model'];
             //   var videoUrl = report.value;
@@ -66,6 +68,11 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                         } else {
                           playNew(value);
                         }
+                      } else if (controller.reportCaseModel!.nonEmergencyCaseContents![value].docType == 'audio') {
+                        if (controller.reportCaseModel!.nonEmergencyCaseContents![value].value != null) {
+                          controller.audioPlayer
+                              .setSourceUrl(controller.reportCaseModel!.nonEmergencyCaseContents![value].value!);
+                        }
                       }
                     },
                     itemBuilder: (context, index) {
@@ -85,34 +92,47 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                                   frameAspectRatio: controller.videoController!.videoPlayerValue != null
                                       ? controller.videoController!.videoPlayerValue!.aspectRatio
                                       : 16 / 9,
-                                  // videoTitle: Padding(
-                                  //   padding: EdgeInsets.only(
-                                  //     left: getProportionateScreenWidth(12),
-                                  //   ),
-                                  //   child: Text(
-                                  //     "EKANKNFKL",
-                                  //     style: TextStyle(
-                                  //       color: Colors.white,
-                                  //       fontSize: getProportionalFontSize(15),
-                                  //       fontWeight: FontWeight.w600,
-                                  //     ),
-                                  //   ),
-                                  // ),
                                 )
                               : SizedBox()
-                          : PhotoView(
-                              imageProvider: CachedNetworkImageProvider(
-                                report.value ?? '',
-                              ),
-                              minScale: PhotoViewComputedScale.contained,
-                              maxScale: PhotoViewComputedScale.contained * 3,
-                              filterQuality: FilterQuality.high,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Image.asset(
-                                  AppImages.appLogo,
-                                  fit: BoxFit.fill,
+                          : report.docType == 'audio'
+                              ? Column(
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        controller.audioPlayer.play(
+                                          UrlSource(
+                                            report.value!,
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        "Play",
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        controller.audioPlayer.stop();
+                                      },
+                                      child: Text(
+                                        "Stop",
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : PhotoView(
+                                  imageProvider: CachedNetworkImageProvider(
+                                    report.value ?? '',
+                                  ),
+                                  minScale: PhotoViewComputedScale.contained,
+                                  maxScale: PhotoViewComputedScale.contained * 3,
+                                  filterQuality: FilterQuality.high,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                      AppImages.appLogo,
+                                      fit: BoxFit.fill,
+                                    );
+                                  },
                                 );
-                              });
                     },
                   )
                 : Container();
