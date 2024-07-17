@@ -14,7 +14,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: GetBuilder<ReportedNonEmgCasesController>(
           initState: (state) {},
@@ -129,36 +129,34 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                           behavior: HitTestBehavior.opaque,
                                           onTap: () async {
                                             if (report.docType == 'video') {
+                                              SystemChrome.setPreferredOrientations([
+                                                DeviceOrientation.portraitDown,
+                                                DeviceOrientation.portraitUp,
+                                                DeviceOrientation.landscapeLeft,
+                                                DeviceOrientation.landscapeRight
+                                              ]);
                                               report.value =
                                                   "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny3.mp4";
+                                              controller.update();
 
                                               controller.videoController = PodPlayerController(
-                                                playVideoFrom: PlayVideoFrom.network(
-                                                  report.value ?? "",
-                                                ),
-                                                podPlayerConfig: PodPlayerConfig(
-                                                  wakelockEnabled: true,
-                                                  forcedVideoFocus: true,
-                                                ),
-                                              );
-                                              try {
-                                                await controller.videoController!.initialise();
-                                                controller.update();
-                                                SystemChrome.setPreferredOrientations([
-                                                  DeviceOrientation.portraitDown,
-                                                  DeviceOrientation.portraitUp,
-                                                  DeviceOrientation.landscapeLeft,
-                                                  DeviceOrientation.landscapeRight
-                                                ]);
-                                                await Get.toNamed(Routes.CONTENTS_DETAIL_VIEW,
-                                                    arguments: {"initialContentIndex": index, "model": report});
-                                                SystemChrome.setPreferredOrientations(
-                                                    [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
-                                              } catch (e) {
-                                                print(e);
-                                                Utils.showToast("Invalid video url");
-                                                controller.update();
-                                              }
+                                                playVideoFrom: PlayVideoFrom.network(report.value ?? ""),
+                                              )..initialise().then((value) async {
+                                                  controller.videoController!.play();
+                                                  controller.update();
+
+                                                  await Get.toNamed(Routes.CONTENTS_DETAIL_VIEW,
+                                                      arguments: {"initialContentIndex": index, "model": report});
+                                                  SystemChrome.setPreferredOrientations(
+                                                      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+                                                }).catchError((onError) {
+                                                  if (onError is PlatformException) {
+                                                    var e = onError;
+                                                    Utils.showToast(e.message ?? 'Failed to load video');
+                                                  } else {
+                                                    Utils.showToast((onError ?? 'Failed to load video').toString());
+                                                  }
+                                                });
                                             } else {
                                               Get.toNamed(Routes.CONTENTS_DETAIL_VIEW,
                                                   arguments: {"initialContentIndex": index, "model": report});

@@ -18,23 +18,9 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
         child: GetBuilder<ReportedNonEmgCasesController>(
           initState: (state) {
             controller.pageController = PageController(initialPage: Get.arguments['initialContentIndex']);
-
-            // if (Get.arguments['model'] != null && Get.arguments['model'] is ReportCaseContent) {
-            //   ReportCaseContent report = Get.arguments['model'];
-            //   var videoUrl = report.value;
-            //   // var videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4";
-            //   controller.videoController = PodPlayerController(
-            //     playVideoFrom: PlayVideoFrom.network(videoUrl ?? ""),
-            //   )..initialise().then((_) {
-            //       controller.videoController.play();
-            //       controller.update();
-            //     });
-            // }
           },
           dispose: (state) {
             SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
-            // controller.videoController.dispose();
-            // controller.videoController.removeListener(() {});
           },
           builder: (controller) {
             return controller.reportCaseModel!.nonEmergencyCaseContents != null &&
@@ -49,24 +35,32 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                             if (controller.videoController!.videoUrl !=
                                 controller.reportCaseModel!.nonEmergencyCaseContents![value].value) {
                               controller.videoController = PodPlayerController(
-                                podPlayerConfig: PodPlayerConfig(
+                                podPlayerConfig: const PodPlayerConfig(
                                   wakelockEnabled: true,
                                   forcedVideoFocus: true,
                                 ),
                                 playVideoFrom: PlayVideoFrom.network(
                                   controller.reportCaseModel!.nonEmergencyCaseContents![value].value ?? "",
+                                  // "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny3.mp4",
                                 ),
                               )..initialise().then((_) {
                                   controller.videoController!.play();
+                                }).catchError((onError) {
+                                  if (onError is PlatformException) {
+                                    var e = onError;
+                                    Utils.showToast(e.message ?? 'Failed to load video');
+                                  } else {
+                                    Utils.showToast((onError ?? 'Failed to load video').toString());
+                                  }
                                 });
                             } else {
                               controller.videoController!.play();
                             }
                           } else {
-                            playNew(value);
+                            playNewVideo(value);
                           }
                         } else {
-                          playNew(value);
+                          playNewVideo(value);
                         }
                       } else if (controller.reportCaseModel!.nonEmergencyCaseContents![value].docType == 'audio') {
                         if (controller.reportCaseModel!.nonEmergencyCaseContents![value].value != null) {
@@ -100,9 +94,7 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                                     ElevatedButton(
                                       onPressed: () {
                                         controller.audioPlayer.play(
-                                          UrlSource(
-                                            report.value!,
-                                          ),
+                                          UrlSource(report.value!, mimeType: "audio/mpeg"),
                                         );
                                       },
                                       child: Text(
@@ -142,7 +134,7 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
     );
   }
 
-  void playNew(int value) {
+  void playNewVideo(int value) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
@@ -152,11 +144,16 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
 
     controller.videoController = PodPlayerController(
       playVideoFrom: PlayVideoFrom.network(controller.reportCaseModel!.nonEmergencyCaseContents![value].value ?? ""),
-    )..initialise().then((_) {
+    )..initialise().then((value) {
         controller.videoController!.play();
         controller.update();
+      }).catchError((onError) {
+        if (onError is PlatformException) {
+          var e = onError;
+          Utils.showToast(e.message ?? 'Failed to load video');
+        } else {
+          Utils.showToast((onError ?? 'Failed to load video').toString());
+        }
       });
-    // SystemChrome.setPreferredOrientations(
-    //     [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   }
 }
