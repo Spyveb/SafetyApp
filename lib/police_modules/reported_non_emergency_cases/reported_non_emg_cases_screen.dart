@@ -102,14 +102,45 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
                               ReportCaseModel report = controller.nonEmergencyReportsList[index];
                               return GestureDetector(
                                 onTap: () async {
+                                  // try {
+                                  //   Dio dio = Dio();
+                                  //   var dir = await getTemporaryDirectory();
+                                  //   var path = "${dir.path}/${DateTime.timestamp()}.mp3";
+                                  //   var response = await dio.download(
+                                  //     'https://royalblue-mandrill-559334.hostingersite.com/public/audios/78791721292158.mp3',
+                                  //     path,
+                                  //   );
+                                  //   if (response.statusCode == 200) {
+                                  //     final player = AudioPlayer(); // Create a player
+                                  //     print(path);
+                                  //     await player.setFilePath(path);
+                                  //     await player.play();
+                                  //   }
+                                  //   // final player = AudioPlayer(); // Create a player
+                                  //   // final duration = await player.setAudioSource(
+                                  //   //     // Load a URL
+                                  //   //     AudioSource.uri(
+                                  //   //       Uri.parse(
+                                  //   //           'https://royalblue-mandrill-559334.hostingersite.com/public/audios/78791721292158.mp3'),
+                                  //   //     ),
+                                  //   //     preload: true); // Schemes: (https: | file: | asset: )
+                                  //   // await player.play(); // Play without waiting for completion
+                                  //
+                                  //   // controller.goToDetails(report);
+                                  //   // await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
+                                  //   // controller.reportCaseModel=null;
+                                  // } catch (e) {
+                                  //   print(e);
+                                  // }
+
                                   controller.goToDetails(report);
                                   await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
-                                  controller.reportCaseModel=null;
+                                  controller.reportCaseModel = null;
                                 },
                                 behavior: HitTestBehavior.opaque,
                                 child: CustomCasesList(
                                   caseNo: "${report.id}",
-                                  status: "${report.status == 0 ? 'Open' : 'Closed'}",
+                                  status: "${report.status}",
                                   firstName: "${report.firstName ?? '-'}",
                                   lastName: "${report.lastName ?? '-'}",
                                   date: "${Utils.displayDateFormat(

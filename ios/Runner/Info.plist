@@ -65,6 +65,8 @@
     <dict>
         <key>NSAllowsArbitraryLoads</key>
         <true/>
+        <key>NSAllowsArbitraryLoadsForMedia</key>
+        <true/>
     </dict>
 
 </dict>

@@ -20,7 +20,7 @@ class ReportCaseModel {
   int? speakToProfessional;
   String? latitude;
   String? longitude;
-  int? status;
+  String? status;
   String? createdAt;
   String? updatedAt;
   String? firstName;

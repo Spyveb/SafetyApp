@@ -81,7 +81,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                 ),
                                 child: CustomCasesList(
                                   caseNo: "${controller.reportCaseModel!.id}",
-                                  status: "${controller.reportCaseModel!.status == 0 ? 'Open' : 'Closed'}",
+                                  status: "${controller.reportCaseModel!.status}",
                                   firstName: "${controller.reportCaseModel!.firstName ?? '-'}",
                                   lastName: "${controller.reportCaseModel!.lastName ?? '-'}",
                                   date: "${Utils.displayDateFormat(

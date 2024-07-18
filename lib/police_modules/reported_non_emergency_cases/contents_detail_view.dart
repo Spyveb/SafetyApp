@@ -64,14 +64,23 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                         controller: controller.pageController,
                         itemCount: controller.reportCaseModel!.nonEmergencyCaseContents!.length,
                         onPageChanged: (value) async {
+                          // if (controller.playerState == PlayerState.playing) {
+                          //   controller.audioPlayer.pause();
+                          //   controller.durationSubscription?.pause();
+                          //   controller.positionSubscription?.pause();
+                          //   controller.playerCompleteSubscription?.pause();
+                          //   controller.playerStateChangeSubscription?.pause();
+                          // }
+
+                          // if (controller.playerState == PlayerState.playing) {
+                          //   controller.audioPlayer.pause();
+                          //   controller.durationSubscription?.pause();
+                          //   controller.positionSubscription?.pause();
+                          //   controller.playerCompleteSubscription?.pause();
+                          //   controller.playerStateChangeSubscription?.pause();
+                          // }
+
                           if (controller.reportCaseModel!.nonEmergencyCaseContents![value].docType == 'video') {
-                            if (controller.playerState == PlayerState.playing) {
-                              controller.audioPlayer.pause();
-                              controller.durationSubscription?.pause();
-                              controller.positionSubscription?.pause();
-                              controller.playerCompleteSubscription?.pause();
-                              controller.playerStateChangeSubscription?.pause();
-                            }
                             if (controller.videoController != null) {
                               if (controller.videoController!.isInitialised == true) {
                                 if (controller.videoController!.videoUrl !=
@@ -118,15 +127,7 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
 
                               controller.initAudio();
                             }
-                          } else {
-                            if (controller.playerState == PlayerState.playing) {
-                              controller.audioPlayer.pause();
-                              controller.durationSubscription?.pause();
-                              controller.positionSubscription?.pause();
-                              controller.playerCompleteSubscription?.pause();
-                              controller.playerStateChangeSubscription?.pause();
-                            }
-                          }
+                          } else {}
                         },
                         itemBuilder: (context, index) {
                           ReportCaseContent report = controller.reportCaseModel!.nonEmergencyCaseContents![index];
@@ -251,13 +252,13 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                                                       width: 3,
                                                     ),
                                                   ),
-                                                  child: Icon(
-                                                    (audioController.playerState == PlayerState.stopped ||
-                                                            audioController.playerState == PlayerState.paused ||
-                                                            audioController.playerState == PlayerState.completed)
-                                                        ? Icons.play_arrow
-                                                        : Icons.stop,
-                                                  ),
+                                                  // child: Icon(
+                                                  //   (audioController.playerState == PlayerState.stopped ||
+                                                  //           audioController.playerState == PlayerState.paused ||
+                                                  //           audioController.playerState == PlayerState.completed)
+                                                  //       ? Icons.play_arrow
+                                                  //       : Icons.stop,
+                                                  // ),
                                                 ),
                                               ),
                                             ],

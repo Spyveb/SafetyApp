@@ -103,7 +103,7 @@ class ReportedEmgCasesScreen extends GetView<ReportedEmgCasesController> {
                               ReportCaseModel report = controller.sosReportsList[index];
                               return CustomCasesList(
                                 caseNo: "${report.id}",
-                                status: "${report.status == 0 ? 'Open' : 'Closed'}",
+                                status: "${report.status}",
                                 firstName: "${report.firstName ?? '-'}",
                                 lastName: "${report.lastName ?? '-'}",
                                 date: "${Utils.displayDateFormat(
