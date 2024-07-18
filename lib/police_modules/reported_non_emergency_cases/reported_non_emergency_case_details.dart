@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
@@ -156,6 +157,25 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                                     Utils.showToast((onError ?? 'Failed to load video').toString());
                                                   }
                                                 });
+                                            } else if (report.docType == 'audio') {
+                                              if (controller.audioPlayer.state == PlayerState.disposed) {
+                                                controller.audioPlayer = AudioPlayer();
+                                              }
+
+                                              controller.setSourceUrl(report.value!);
+                                              controller.initAudio().then((value) async {
+                                                await Get.toNamed(Routes.CONTENTS_DETAIL_VIEW,
+                                                    arguments: {"initialContentIndex": index, "model": report});
+
+                                                controller.audioPlayer.stop();
+                                                controller.durationSubscription?.cancel();
+                                                controller.positionSubscription?.cancel();
+                                                controller.playerCompleteSubscription?.cancel();
+                                                controller.playerStateChangeSubscription?.cancel();
+                                                controller.audioPlayer.dispose();
+                                              }).catchError((onError) {
+                                                Utils.showToast((onError ?? 'Failed to load audio').toString());
+                                              });
                                             } else {
                                               Get.toNamed(Routes.CONTENTS_DETAIL_VIEW,
                                                   arguments: {"initialContentIndex": index, "model": report});

@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
@@ -22,15 +23,18 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
           initState: (state) async {
             controller.pageController = PageController(initialPage: Get.arguments['initialContentIndex']);
 
-            if (controller.reportCaseModel!.nonEmergencyCaseContents![Get.arguments['initialContentIndex']].docType ==
-                'audio') {
-              if (controller.reportCaseModel!.nonEmergencyCaseContents![Get.arguments['initialContentIndex']].value !=
-                  null) {
-                controller.setSourceUrl(
-                    controller.reportCaseModel!.nonEmergencyCaseContents![Get.arguments['initialContentIndex']].value!);
-                controller.initAudio();
-              }
-            }
+            // if (controller.reportCaseModel!.nonEmergencyCaseContents![Get.arguments['initialContentIndex']].docType ==
+            //     'audio') {
+            //   if (controller.reportCaseModel!.nonEmergencyCaseContents![Get.arguments['initialContentIndex']].value !=
+            //       null) {
+            //     if (controller.audioPlayer.state == PlayerState.disposed) {
+            //       controller.audioPlayer = AudioPlayer();
+            //     }
+            //     controller.setSourceUrl(
+            //         controller.reportCaseModel!.nonEmergencyCaseContents![Get.arguments['initialContentIndex']].value!);
+            //     controller.initAudio();
+            //   }
+            // }
             // if (Get.arguments['model'] != null && Get.arguments['model'] is ReportCaseContent) {
             //   ReportCaseContent report = Get.arguments['model'];
             //   var videoUrl = report.value;
@@ -44,11 +48,8 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
             // }
           },
           dispose: (state) {
-            controller.audioPlayer.stop();
-            // controller.durationSubscription?.cancel();
-            // controller.positionSubscription?.cancel();
-            // controller.playerCompleteSubscription?.cancel();
-            // controller.playerStateChangeSubscription?.cancel();
+            // print(object)
+            // if( controller.reportCaseModel!.nonEmergencyCaseContents[controller.pageController])
             SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
 
             // controller.videoController.dispose();
@@ -64,6 +65,13 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                         itemCount: controller.reportCaseModel!.nonEmergencyCaseContents!.length,
                         onPageChanged: (value) async {
                           if (controller.reportCaseModel!.nonEmergencyCaseContents![value].docType == 'video') {
+                            if (controller.playerState == PlayerState.playing) {
+                              controller.audioPlayer.pause();
+                              controller.durationSubscription?.pause();
+                              controller.positionSubscription?.pause();
+                              controller.playerCompleteSubscription?.pause();
+                              controller.playerStateChangeSubscription?.pause();
+                            }
                             if (controller.videoController != null) {
                               if (controller.videoController!.isInitialised == true) {
                                 if (controller.videoController!.videoUrl !=
@@ -97,11 +105,26 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                               playNewVideo(value);
                             }
                           } else if (controller.reportCaseModel!.nonEmergencyCaseContents![value].docType == 'audio') {
+                            if (controller.playerState == PlayerState.playing) {
+                              controller.audioPlayer.stop();
+                              controller.durationSubscription?.cancel();
+                              controller.positionSubscription?.cancel();
+                              controller.playerCompleteSubscription?.cancel();
+                              controller.playerStateChangeSubscription?.cancel();
+                            }
                             if (controller.reportCaseModel!.nonEmergencyCaseContents![value].value != null) {
                               await controller
                                   .setSourceUrl(controller.reportCaseModel!.nonEmergencyCaseContents![value].value!);
 
                               controller.initAudio();
+                            }
+                          } else {
+                            if (controller.playerState == PlayerState.playing) {
+                              controller.audioPlayer.pause();
+                              controller.durationSubscription?.pause();
+                              controller.positionSubscription?.pause();
+                              controller.playerCompleteSubscription?.pause();
+                              controller.playerStateChangeSubscription?.pause();
                             }
                           }
                         },
@@ -148,82 +171,97 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                                   ? GetBuilder<ReportedNonEmgCasesController>(
                                       id: "audio_controller",
                                       builder: (audioController) {
-                                        return Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                vertical: getProportionateScreenHeight(5),
-                                                horizontal: getProportionateScreenWidth(5),
-                                              ),
-                                              child: Image.asset(
-                                                AppImages.musicLogo,
-                                                height: getProportionateScreenHeight(150),
-                                                width: getProportionateScreenHeight(150),
-                                              ),
-                                            ),
-                                            Text(
-                                              audioController.totalDuration.toString(),
-                                              style: TextStyle(color: Colors.white),
-                                            ),
-                                            Text(
-                                              audioController.position.toString(),
-                                              style: TextStyle(color: Colors.white),
-                                            ),
-                                            Text(
-                                              audioController.audioState,
-                                              style: TextStyle(color: Colors.white),
-                                            ),
-                                            Slider(
-                                              value: 0.2,
-                                              allowedInteraction: SliderInteraction.slideThumb,
-                                              onChanged: (value) {},
-                                            ),
-                                            FloatingActionButton(
-                                              shape: CircleBorder(),
-                                              onPressed: () {},
-                                              child: Container(
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: getProportionateScreenWidth(24),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Container(
                                                 padding: EdgeInsets.symmetric(
-                                                  horizontal: getProportionateScreenWidth(10),
-                                                  vertical: getProportionateScreenHeight(10),
+                                                  vertical: getProportionateScreenHeight(5),
+                                                  horizontal: getProportionateScreenWidth(5),
                                                 ),
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  border: Border.all(
-                                                    color: Colors.red,
-                                                    width: 3,
+                                                child: Image.asset(
+                                                  AppImages.musicLogo,
+                                                  height: getProportionateScreenHeight(150),
+                                                  width: getProportionateScreenHeight(150),
+                                                ),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    audioController.position != null
+                                                        ? audioController.position.toString().split('.').first
+                                                        : "0:00:00",
+                                                    style: TextStyle(
+                                                      fontFamily: AppFonts.sansFont400,
+                                                      fontSize: getProportionalFontSize(12),
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Slider(
+                                                      value: audioController.position != null
+                                                          ? audioController.position!.inMilliseconds.toDouble()
+                                                          : 0,
+                                                      allowedInteraction: SliderInteraction.slideThumb,
+                                                      onChanged: (value) {
+                                                        controller.seekAudio(Duration(milliseconds: value.toInt()));
+                                                      },
+                                                      min: 0,
+                                                      max: audioController.totalDuration != null
+                                                          ? audioController.totalDuration!.inMilliseconds.toDouble()
+                                                          : 100,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    audioController.totalDuration != null
+                                                        ? audioController.totalDuration.toString().split('.').first
+                                                        : "0:00:00",
+                                                    style: TextStyle(
+                                                      fontFamily: AppFonts.sansFont400,
+                                                      fontSize: getProportionalFontSize(12),
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              FloatingActionButton(
+                                                shape: const CircleBorder(),
+                                                onPressed: () {
+                                                  if (audioController.playerState == PlayerState.stopped ||
+                                                      audioController.playerState == PlayerState.paused ||
+                                                      audioController.playerState == PlayerState.completed) {
+                                                    audioController.playAudio(report.value!);
+                                                  } else {
+                                                    audioController.pauseAudio();
+                                                  }
+                                                },
+                                                child: Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: getProportionateScreenWidth(10),
+                                                    vertical: getProportionateScreenHeight(10),
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color: Colors.red,
+                                                      width: 3,
+                                                    ),
+                                                  ),
+                                                  child: Icon(
+                                                    (audioController.playerState == PlayerState.stopped ||
+                                                            audioController.playerState == PlayerState.paused ||
+                                                            audioController.playerState == PlayerState.completed)
+                                                        ? Icons.play_arrow
+                                                        : Icons.stop,
                                                   ),
                                                 ),
-                                                child: Icon(
-                                                  Icons.play_arrow,
-                                                ),
                                               ),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                audioController.playAudio(report.value!);
-                                              },
-                                              child: Text(
-                                                "Play",
-                                              ),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                audioController.pauseAudio();
-                                              },
-                                              child: Text(
-                                                "pause",
-                                              ),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                audioController.stopAudio();
-                                              },
-                                              child: Text(
-                                                "Stop",
-                                              ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         );
                                       })
                                   : PhotoView(

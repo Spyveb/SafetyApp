@@ -20,7 +20,6 @@ class ReportedNonEmgCasesController extends GetxController {
   StreamSubscription? positionSubscription;
   StreamSubscription? playerCompleteSubscription;
   StreamSubscription? playerStateChangeSubscription;
-  String audioState = "Stopped";
   PlayerState? playerState;
 
   List<ReportCaseModel> nonEmergencyReportsList = [];
@@ -75,10 +74,9 @@ class ReportedNonEmgCasesController extends GetxController {
     update();
   }
 
-  initAudio() async {
-    playerState = audioPlayer.state;
-
-    await audioPlayer.getDuration().then((value) {
+  Future<void> initAudio() async {
+    playerState = PlayerState.stopped;
+    audioPlayer.getDuration().then((value) {
       totalDuration = value;
       update(["audio_controller"]);
     });
@@ -89,56 +87,41 @@ class ReportedNonEmgCasesController extends GetxController {
     });
 
     // initAudioStreams();
-    audioPlayer.onDurationChanged.listen((updatedDuration) {
+    durationSubscription = audioPlayer.onDurationChanged.listen((updatedDuration) {
       totalDuration = updatedDuration;
       update(["audio_controller"]);
       print("totalDuration---->  $totalDuration ");
     });
 
-    audioPlayer.onPositionChanged.listen((updatedPosition) {
+    positionSubscription = audioPlayer.onPositionChanged.listen((updatedPosition) {
       position = updatedPosition;
       update(["audio_controller"]);
       print("position---> $position");
     });
 
-    audioPlayer.onPlayerStateChanged.listen((state) {
+    playerStateChangeSubscription = audioPlayer.onPlayerStateChanged.listen((state) {
       playerState = state;
       update(["audio_controller"]);
-      print("audioState----> $audioState");
+      print("audioState----> $playerState");
+    });
+
+    playerCompleteSubscription = audioPlayer.onPlayerComplete.listen((event) {
+      playerState = PlayerState.completed;
+      position = Duration.zero;
+      update(["audio_controller"]);
+      print("completePosition ---->  $position");
+      print("completeState ---->  $playerState");
     });
   }
 
-  // void initAudioStreams() {
-  //   durationSubscription = audioPlayer.onDurationChanged.listen((duration) {
-  //     totalDuration = duration;
-  //     update();
-  //     print("totalDuration ---->  $totalDuration");
-  //   });
-  //
-  //   positionSubscription = audioPlayer.onPositionChanged.listen((p) {
-  //     position = p;
-  //     update();
-  //     print("position ---->  $p");
-  //   });
-  //
-  //   playerCompleteSubscription = audioPlayer.onPlayerComplete.listen((event) {
-  //     playerState = PlayerState.stopped;
-  //     position = Duration.zero;
-  //     update();
-  //     print("completePosition ---->  $position");
-  //     print("completeState ---->  $playerState");
-  //   });
-  //
-  //   playerStateChangeSubscription = audioPlayer.onPlayerStateChanged.listen((state) {
-  //     playerState = state;
-  //     update();
-  //     print("playerState ---->  $playerState");
-  //   });
-  // }
-
   playAudio(String url) async {
-    audioPlayer.play(UrlSource(url));
-    playerState = PlayerState.playing;
+    if (playerState == PlayerState.paused) {
+      audioPlayer.resume();
+      playerState = PlayerState.playing;
+    } else if (playerState == PlayerState.completed || playerState == PlayerState.stopped) {
+      audioPlayer.play(UrlSource(url));
+      playerState = PlayerState.playing;
+    }
     update(["audio_controller"]);
   }
 
