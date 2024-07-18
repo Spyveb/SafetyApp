@@ -8,7 +8,7 @@ import 'package:pod_player/pod_player.dart';
 
 import '../../imports.dart';
 
-class ReportedNonEmgCasesController extends GetxController with GetTickerProviderStateMixin {
+class ReportedNonEmgCasesController extends GetxController {
   bool showOverlay = false;
 
   PageController pageController = PageController();
@@ -24,11 +24,6 @@ class ReportedNonEmgCasesController extends GetxController with GetTickerProvide
   PlayerState? playerState;
 
   List<ReportCaseModel> nonEmergencyReportsList = [];
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   void getNonEmergencyReportsList({bool? showLoader = true, required String search}) async {
     if (showLoader == true) {
