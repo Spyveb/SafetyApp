@@ -500,14 +500,10 @@ class ReportController extends GetxController {
 
       String imagePath = '';
       if ((await directory.exists())) {
-        imagePath = File(
-                "${directory.path}/Rec_${(DateTime.now().millisecondsSinceEpoch / 1000).round()}.${Platform.isIOS ? 'm4a' : 'mp3'}")
-            .path;
+        imagePath = File("${directory.path}/Rec_${(DateTime.now().millisecondsSinceEpoch / 1000).round()}.m4a").path;
       } else {
         await directory.create(recursive: true);
-        imagePath = File(
-                "${directory.path}/Rec_${(DateTime.now().millisecondsSinceEpoch / 1000).round()}.${Platform.isIOS ? 'm4a' : 'mp3'}")
-            .path;
+        imagePath = File("${directory.path}/Rec_${(DateTime.now().millisecondsSinceEpoch / 1000).round()}.m4a").path;
       }
 
       print(imagePath);

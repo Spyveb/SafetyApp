@@ -14,7 +14,7 @@ class ReportedEmgCasesController extends GetxController {
         "search": search,
       });
       var response = await ApiProvider().postAPICall(
-        Endpoints.openSOSEmergencyList,
+        Endpoints.sosEmergencyList,
         formData,
         onSendProgress: (count, total) {},
       );
@@ -48,7 +48,7 @@ class ReportedEmgCasesController extends GetxController {
     }
   }
 
-  void updateSOSEmergencyRequest({bool? showLoader = true, required int caseId, required int status}) async {
+  void updateSOSEmergencyRequest({bool? showLoader = true, required int caseId, required String status}) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
     }
@@ -263,7 +263,7 @@ class ReportedEmgCasesController extends GetxController {
                               Get.back();
                               // showRequestDeclineDialog(context);
                               if (reportCaseModel.id != null) {
-                                updateSOSEmergencyRequest(caseId: reportCaseModel.id!, status: 1);
+                                updateSOSEmergencyRequest(caseId: reportCaseModel.id!, status: 'Accept');
                               }
                             },
                             child: Container(
@@ -299,7 +299,7 @@ class ReportedEmgCasesController extends GetxController {
                               Get.back();
                               // showRequestDeclineDialog(context);
                               if (reportCaseModel.id != null) {
-                                updateSOSEmergencyRequest(caseId: reportCaseModel.id!, status: 2);
+                                updateSOSEmergencyRequest(caseId: reportCaseModel.id!, status: 'Decline');
                               }
                             },
                             child: Container(

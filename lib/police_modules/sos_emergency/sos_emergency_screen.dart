@@ -16,9 +16,9 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
         child: GetBuilder<PoliceSOSEmergencyController>(
           init: PoliceSOSEmergencyController(),
           initState: (state) {
-            // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-            //   controller.getSOSEmergencyList(search: '');
-            // });
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              controller.getSOSEmergencyList(search: '');
+            });
           },
           global: true,
           autoRemove: false,
@@ -92,35 +92,55 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                       //   ),
                       // ),
                       SizedBox(
-                        height: getProportionateScreenHeight(20),
+                        height: getProportionateScreenHeight(12),
                       ),
                     ],
                   ),
                 ),
-                Flexible(
-                  child: GoogleMap(
-                    zoomControlsEnabled: true,
-                    mapType: MapType.normal,
 
-                    buildingsEnabled: true,
+                controller.currentSOSReport != null
+                    ? Expanded(
+                        child: Column(
+                          children: [
+                            CustomCasesList(
+                              caseNo: "${controller.currentSOSReport!.id}",
+                              status: "${controller.currentSOSReport!.status}",
+                              firstName: "${controller.currentSOSReport!.firstName ?? '-'}",
+                              lastName: "${controller.currentSOSReport!.lastName ?? '-'}",
+                              date: "${Utils.displayDateFormat(
+                                controller.currentSOSReport!.updatedAt ?? DateTime.now().toString(),
+                              )}",
+                              location: "${controller.currentSOSReport!.location ?? '-'}",
+                              city: "${controller.currentSOSReport!.city ?? '-'}",
+                            ),
+                            Flexible(
+                              child: GoogleMap(
+                                zoomControlsEnabled: true,
+                                mapType: MapType.normal,
 
-                    onCameraIdle: () {},
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(23.0296, 72.5301),
-                      zoom: 12,
-                    ),
-                    myLocationButtonEnabled: false,
-                    fortyFiveDegreeImageryEnabled: true,
+                                buildingsEnabled: true,
 
-                    // Update location on camera move
-                    onCameraMove: (CameraPosition cameraPosition) async {},
-                    onMapCreated: (GoogleMapController gController) {
-                      // Complete the Google Map controller
-                      controller.googleMapControllerCompleter = Completer();
-                      controller.googleMapControllerCompleter.complete(gController);
-                    },
-                  ),
-                ),
+                                onCameraIdle: () {},
+                                initialCameraPosition: CameraPosition(
+                                  target: LatLng(23.0296, 72.5301),
+                                  zoom: 12,
+                                ),
+                                myLocationButtonEnabled: false,
+                                fortyFiveDegreeImageryEnabled: true,
+
+                                // Update location on camera move
+                                onCameraMove: (CameraPosition cameraPosition) async {},
+                                onMapCreated: (GoogleMapController gController) {
+                                  // Complete the Google Map controller
+                                  controller.googleMapControllerCompleter = Completer();
+                                  controller.googleMapControllerCompleter.complete(gController);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : SizedBox(),
                 // Expanded(
                 //   child: controller.sosReportsList.isNotEmpty
                 //       ? ListView.builder(

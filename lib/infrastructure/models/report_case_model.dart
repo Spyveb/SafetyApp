@@ -21,6 +21,7 @@ class ReportCaseModel {
   String? latitude;
   String? longitude;
   String? status;
+  String? requestStatus;
   String? createdAt;
   String? updatedAt;
   String? firstName;
@@ -40,6 +41,7 @@ class ReportCaseModel {
     this.latitude,
     this.longitude,
     this.status,
+    this.requestStatus,
     this.createdAt,
     this.updatedAt,
     this.firstName,
@@ -60,6 +62,7 @@ class ReportCaseModel {
         latitude: json["latitude"],
         longitude: json["longitude"],
         status: json["status"],
+        requestStatus: json["request_status"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
         firstName: json["first_name"],
@@ -83,6 +86,7 @@ class ReportCaseModel {
         "latitude": latitude,
         "longitude": longitude,
         "status": status,
+        "request_status": requestStatus,
         "created_at": createdAt,
         "updated_at": updatedAt,
         "first_name": firstName,

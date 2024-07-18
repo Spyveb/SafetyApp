@@ -15,7 +15,6 @@ class ReportedEmgCasesScreen extends GetView<ReportedEmgCasesController> {
           initState: (state) {
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
               controller.getSOSEmergencyList(search: '');
-              // controller.showSOSDialog(context, ReportCaseModel());
             });
           },
           global: true,
@@ -101,16 +100,23 @@ class ReportedEmgCasesScreen extends GetView<ReportedEmgCasesController> {
                             itemCount: controller.sosReportsList.length,
                             itemBuilder: (context, index) {
                               ReportCaseModel report = controller.sosReportsList[index];
-                              return CustomCasesList(
-                                caseNo: "${report.id}",
-                                status: "${report.status}",
-                                firstName: "${report.firstName ?? '-'}",
-                                lastName: "${report.lastName ?? '-'}",
-                                date: "${Utils.displayDateFormat(
-                                  report.updatedAt ?? DateTime.now().toString(),
-                                )}",
-                                location: "${report.location ?? '-'}",
-                                city: "${report.city ?? '-'}",
+                              return GestureDetector(
+                                onTap: () {
+                                  // if (report.status == 'Pending') {
+                                  //   controller.showSOSDialog(context, report);
+                                  // }
+                                },
+                                child: CustomCasesList(
+                                  caseNo: "${report.id}",
+                                  status: "${report.status}",
+                                  firstName: "${report.firstName ?? '-'}",
+                                  lastName: "${report.lastName ?? '-'}",
+                                  date: "${Utils.displayDateFormat(
+                                    report.updatedAt ?? DateTime.now().toString(),
+                                  )}",
+                                  location: "${report.location ?? '-'}",
+                                  city: "${report.city ?? '-'}",
+                                ),
                               );
                             },
                           )
