@@ -80,30 +80,30 @@ class ReportedNonEmgCasesController extends GetxController {
 
     await audioPlayer.getDuration().then((value) {
       totalDuration = value;
-      update();
+      update(["audio_controller"]);
     });
 
     audioPlayer.getCurrentPosition().then((value) {
       position = value;
-      update();
+      update(["audio_controller"]);
     });
 
     // initAudioStreams();
     audioPlayer.onDurationChanged.listen((updatedDuration) {
       totalDuration = updatedDuration;
-      update();
+      update(["audio_controller"]);
       print("totalDuration---->  $totalDuration ");
     });
 
     audioPlayer.onPositionChanged.listen((updatedPosition) {
       position = updatedPosition;
-      update();
+      update(["audio_controller"]);
       print("position---> $position");
     });
 
     audioPlayer.onPlayerStateChanged.listen((state) {
       playerState = state;
-      update();
+      update(["audio_controller"]);
       print("audioState----> $audioState");
     });
   }
@@ -139,20 +139,20 @@ class ReportedNonEmgCasesController extends GetxController {
   playAudio(String url) async {
     audioPlayer.play(UrlSource(url));
     playerState = PlayerState.playing;
-    update();
+    update(["audio_controller"]);
   }
 
   pauseAudio() async {
     audioPlayer.pause();
     playerState = PlayerState.paused;
-    update();
+    update(["audio_controller"]);
   }
 
   stopAudio() async {
     audioPlayer.stop();
     playerState = PlayerState.stopped;
     // position = Duration.zero;
-    update();
+    update(["audio_controller"]);
   }
 
   setSourceUrl(String url) {

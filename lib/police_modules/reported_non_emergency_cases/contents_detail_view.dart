@@ -44,6 +44,7 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
             // }
           },
           dispose: (state) {
+            controller.audioPlayer.stop();
             // controller.durationSubscription?.cancel();
             // controller.positionSubscription?.cancel();
             // controller.playerCompleteSubscription?.cancel();
@@ -109,6 +110,26 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                           return report.docType == 'video'
                               ? controller.videoController != null && controller.videoController!.isInitialised
                                   ? PodVideoPlayer(
+                                      podProgressBarConfig: PodProgressBarConfig(
+                                        padding: EdgeInsets.only(
+                                          left: getProportionateScreenWidth(8),
+                                          right: getProportionateScreenWidth(8),
+                                        ),
+                                      ),
+                                      // overlayBuilder: (options) {
+                                      //   return Container(
+                                      //     color: Colors.transparent,
+                                      //     child: Column(
+                                      //       children: [
+                                      //         Container(
+                                      //           color: Colors.red,
+                                      //           height: 50,
+                                      //           width: 50,
+                                      //         ),
+                                      //       ],
+                                      //     ),
+                                      //   );
+                                      // },
                                       onVideoError: () {
                                         return Center(
                                           child: Text("Video play error"),
@@ -118,89 +139,93 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                                       videoAspectRatio: controller.videoController!.videoPlayerValue != null
                                           ? controller.videoController!.videoPlayerValue!.aspectRatio
                                           : 16 / 9,
-                                      frameAspectRatio: controller.videoController!.videoPlayerValue != null
-                                          ? controller.videoController!.videoPlayerValue!.aspectRatio
-                                          : 16 / 9,
+                                      // frameAspectRatio: controller.videoController!.videoPlayerValue != null
+                                      //     ? controller.videoController!.videoPlayerValue!.aspectRatio
+                                      //     : 16 / 9,
                                     )
                                   : SizedBox()
                               : report.docType == 'audio'
-                                  ? Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: getProportionateScreenHeight(5),
-                                            horizontal: getProportionateScreenWidth(5),
-                                          ),
-                                          child: Image.asset(
-                                            AppImages.musicLogo,
-                                            height: getProportionateScreenHeight(150),
-                                            width: getProportionateScreenHeight(150),
-                                          ),
-                                        ),
-                                        Text(
-                                          controller.totalDuration.toString(),
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        Text(
-                                          controller.position.toString(),
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        Text(
-                                          controller.audioState,
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        Slider(
-                                          value: 0.2,
-                                          allowedInteraction: SliderInteraction.slideThumb,
-                                          onChanged: (value) {},
-                                        ),
-                                        FloatingActionButton(
-                                          shape: CircleBorder(),
-                                          onPressed: () {},
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: getProportionateScreenWidth(10),
-                                              vertical: getProportionateScreenHeight(10),
-                                            ),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                color: Colors.red,
-                                                width: 3,
+                                  ? GetBuilder<ReportedNonEmgCasesController>(
+                                      id: "audio_controller",
+                                      builder: (audioController) {
+                                        return Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: getProportionateScreenHeight(5),
+                                                horizontal: getProportionateScreenWidth(5),
+                                              ),
+                                              child: Image.asset(
+                                                AppImages.musicLogo,
+                                                height: getProportionateScreenHeight(150),
+                                                width: getProportionateScreenHeight(150),
                                               ),
                                             ),
-                                            child: Icon(
-                                              Icons.play_arrow,
+                                            Text(
+                                              audioController.totalDuration.toString(),
+                                              style: TextStyle(color: Colors.white),
                                             ),
-                                          ),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            controller.playAudio(report.value!);
-                                          },
-                                          child: Text(
-                                            "Play",
-                                          ),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            controller.pauseAudio();
-                                          },
-                                          child: Text(
-                                            "pause",
-                                          ),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            controller.stopAudio();
-                                          },
-                                          child: Text(
-                                            "Stop",
-                                          ),
-                                        ),
-                                      ],
-                                    )
+                                            Text(
+                                              audioController.position.toString(),
+                                              style: TextStyle(color: Colors.white),
+                                            ),
+                                            Text(
+                                              audioController.audioState,
+                                              style: TextStyle(color: Colors.white),
+                                            ),
+                                            Slider(
+                                              value: 0.2,
+                                              allowedInteraction: SliderInteraction.slideThumb,
+                                              onChanged: (value) {},
+                                            ),
+                                            FloatingActionButton(
+                                              shape: CircleBorder(),
+                                              onPressed: () {},
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: getProportionateScreenWidth(10),
+                                                  vertical: getProportionateScreenHeight(10),
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                    color: Colors.red,
+                                                    width: 3,
+                                                  ),
+                                                ),
+                                                child: Icon(
+                                                  Icons.play_arrow,
+                                                ),
+                                              ),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                audioController.playAudio(report.value!);
+                                              },
+                                              child: Text(
+                                                "Play",
+                                              ),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                audioController.pauseAudio();
+                                              },
+                                              child: Text(
+                                                "pause",
+                                              ),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                audioController.stopAudio();
+                                              },
+                                              child: Text(
+                                                "Stop",
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      })
                                   : PhotoView(
                                       imageProvider: CachedNetworkImageProvider(
                                         report.value ?? '',
@@ -234,7 +259,7 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                                   top: getProportionateScreenHeight(56),
                                   bottom: getProportionateScreenHeight(12),
                                 ),
-                                decoration: BoxDecoration(color: Colors.white70),
+                                decoration: BoxDecoration(color: Colors.white.withOpacity(0.75)),
                                 child: IconButton(
                                   onPressed: () {
                                     Get.back();
