@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -103,11 +102,11 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
                               ReportCaseModel report = controller.nonEmergencyReportsList[index];
                               return GestureDetector(
                                 onTap: () async {
-                                  controller.audioPlayer.play(AssetSource("notification_siren.mp3"));
+                                  // controller.audioPlayer.play(AssetSource("notification_siren.mp3"));
                                   // try {
                                   //   Dio dio = Dio();
                                   //   var dir = await getTemporaryDirectory();
-                                  //   var path = "${dir.path}/${DateTime.timestamp()}.mp3";
+                                  //   var path = "${dir.path}/${DateTime.timestamp()}.m4a";
                                   //   var response = await dio.download(
                                   //     'https://royalblue-mandrill-559334.hostingersite.com/public/audios/78791721292158.mp3',
                                   //     path,
@@ -115,8 +114,10 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
                                   //   if (response.statusCode == 200) {
                                   //     final player = AudioPlayer(); // Create a player
                                   //     print(path);
-                                  //     await player.setFilePath(path);
-                                  //     await player.play();
+                                  //     await player.setSourceDeviceFile(path);
+                                  //     await player.play(
+                                  //       DeviceFileSource(path, mimeType: 'audio/mpeg'),
+                                  //     );
                                   //   }
                                   //   // final player = AudioPlayer(); // Create a player
                                   //   // final duration = await player.setAudioSource(
@@ -135,9 +136,9 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
                                   //   print(e);
                                   // }
 
-                                  // controller.goToDetails(report);
-                                  // await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
-                                  // controller.reportCaseModel = null;
+                                  controller.goToDetails(report);
+                                  await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
+                                  controller.reportCaseModel = null;
                                 },
                                 behavior: HitTestBehavior.opaque,
                                 child: CustomCasesList(

@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pod_player/pod_player.dart';
 
 import '../../imports.dart';
@@ -115,12 +117,15 @@ class ReportedNonEmgCasesController extends GetxController {
   }
 
   playAudio(String url) async {
+    String path = url.split('/').last.split('.').first;
+    Directory directory = await getTemporaryDirectory();
+    String dirPath = "${directory.path}/${path}.m4a";
     if (playerState == PlayerState.paused) {
       audioPlayer.resume();
       playerState = PlayerState.playing;
     } else if (playerState == PlayerState.completed || playerState == PlayerState.stopped) {
       audioPlayer.play(
-        UrlSource(url),
+        DeviceFileSource(dirPath, mimeType: 'audio/mpeg'),
       );
       playerState = PlayerState.playing;
     }
@@ -140,8 +145,22 @@ class ReportedNonEmgCasesController extends GetxController {
     update(["audio_controller"]);
   }
 
-  setSourceUrl(String url) {
-    audioPlayer.setSourceUrl(url);
+  setSourceUrl(String url) async {
+    // audioPlayer.setSourceUrl(url, mimeType: 'audio/mpeg');
+    String path = url.split('/').last.split('.').first;
+    Directory directory = await getTemporaryDirectory();
+    String dirPath = "${directory.path}/${path}.m4a";
+    if (await File(dirPath).exists()) {
+      await audioPlayer.setSourceDeviceFile(dirPath);
+    } else {
+      var response = await Dio.Dio().download(
+        url,
+        dirPath,
+      );
+      if (response.statusCode == 200) {
+        await audioPlayer.setSourceDeviceFile(dirPath);
+      }
+    }
   }
 
   seekAudio(Duration durationToSeek) {
