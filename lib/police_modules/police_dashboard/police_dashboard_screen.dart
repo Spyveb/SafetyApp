@@ -141,11 +141,17 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
                                   SizedBox(
                                     width: getProportionateScreenWidth(8),
                                   ),
-                                  Image.asset(
-                                    AppImages.policeNotification,
-                                    height: getProportionateScreenHeight(24),
-                                    width: getProportionateScreenWidth(24),
-                                  ),
+                                  // GestureDetector(
+                                  //   onTap: () {
+                                  //     Get.toNamed(Routes.NOTIFICATION_SCREEN);
+                                  //   },
+                                  //   behavior: HitTestBehavior.opaque,
+                                  //   child: Image.asset(
+                                  //     AppImages.policeNotification,
+                                  //     height: getProportionateScreenHeight(24),
+                                  //     width: getProportionateScreenWidth(24),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ],

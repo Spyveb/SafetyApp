@@ -14,7 +14,7 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: GestureDetector(
-        onTap: () {
+        onTap: () async {
           controller.showOverlay = !controller.showOverlay;
           controller.update();
         },
@@ -242,37 +242,66 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                                     );
                         },
                       ),
-                      controller.showOverlay
-                          ? Positioned(
-                              // alignment: Alignment.topLeft,
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              child: Container(
-                                width: SizeConfig.deviceWidth,
-                                alignment: Alignment.centerLeft,
-                                // height: getProportionateScreenHeight(100),
-
-                                padding: EdgeInsets.only(
-                                  left: getProportionateScreenWidth(14),
-                                  right: getProportionateScreenWidth(14),
-                                  top: getProportionateScreenHeight(56),
-                                  bottom: getProportionateScreenHeight(12),
-                                ),
-                                decoration: BoxDecoration(color: Colors.white.withOpacity(0.75)),
-                                child: IconButton(
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                  icon: Icon(
-                                    Icons.arrow_back_ios,
-                                    color: Colors.black,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                            )
-                          : SizedBox(),
+                      AnimatedOpacity(
+                        duration: controller.showOverlay ? Duration(milliseconds: 250) : Duration(milliseconds: 50),
+                        opacity: controller.showOverlay ? 1 : 0,
+                        child: Container(
+                          width: SizeConfig.deviceWidth,
+                          height: getProportionateScreenHeight(116),
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(
+                            left: getProportionateScreenWidth(14),
+                            right: getProportionateScreenWidth(14),
+                            top: getProportionateScreenHeight(56),
+                            bottom: getProportionateScreenHeight(12),
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(.92),
+                            boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 4)],
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.black,
+                              size: 22,
+                            ),
+                          ),
+                        ),
+                      )
+                      // Transform.translate(
+                      //   offset: Offset(
+                      //     0,
+                      //     -controller.animationController.value * getProportionateScreenHeight(120),
+                      //   ),
+                      //   child: Container(
+                      //     width: SizeConfig.deviceWidth,
+                      //     height: getProportionateScreenHeight(120),
+                      //     alignment: Alignment.centerLeft,
+                      //     padding: EdgeInsets.only(
+                      //       left: getProportionateScreenWidth(14),
+                      //       right: getProportionateScreenWidth(14),
+                      //       top: getProportionateScreenHeight(56),
+                      //       bottom: getProportionateScreenHeight(12),
+                      //     ),
+                      //     decoration: BoxDecoration(
+                      //       color: Colors.white,
+                      //       boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 4)],
+                      //     ),
+                      //     child: IconButton(
+                      //       onPressed: () {
+                      //         Get.back();
+                      //       },
+                      //       icon: Icon(
+                      //         Icons.arrow_back_ios,
+                      //         color: Colors.black,
+                      //         size: 22,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // )
                     ],
                   )
                 : SizedBox();

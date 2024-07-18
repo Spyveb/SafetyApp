@@ -1,4 +1,5 @@
 import 'package:distress_app/imports.dart';
+import 'package:distress_app/police_modules/police_dashboard/notification_screen.dart';
 import 'package:distress_app/police_modules/reported_non_emergency_cases/contents_detail_view.dart';
 import 'package:distress_app/police_modules/reported_non_emergency_cases/reported_non_emergency_case_details.dart';
 import 'package:distress_app/police_modules/setting/police_edit_profile_screen.dart';
@@ -119,6 +120,11 @@ abstract class AppPages {
       name: Routes.POLICE_DASHBOARD,
       page: () => const PoliceDashBoardScreen(),
       binding: PoliceDashBoardBinding(),
+    ),
+    GetPage(
+      name: Routes.NOTIFICATION_SCREEN,
+      page: () => const NotificationScreen(),
+      // binding: PoliceDashBoardBinding(),
     ),
     GetPage(
       name: Routes.POLICE_SOSEMERGENCY,

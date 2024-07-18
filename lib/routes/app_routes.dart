@@ -33,6 +33,7 @@ abstract class Routes {
   static const POLICE_EDIT_PROFILE = _Paths.POLICE_EDIT_PROFILE;
   static const POLICE_REPORTEDNONEMGCASE_DETAILS = _Paths.POLICE_REPORTEDNONEMGCASE_DETAILS;
   static const CONTENTS_DETAIL_VIEW = _Paths.CONTENTS_DETAIL_VIEW;
+  static const NOTIFICATION_SCREEN = _Paths.NOTIFICATION_SCREEN;
 }
 
 abstract class _Paths {
@@ -60,6 +61,7 @@ abstract class _Paths {
 
   // Police Modules
   static const POLICE_DASHBOARD = '/police_dashboard'; // police_dashboard
+  static const NOTIFICATION_SCREEN = '/police_notification'; // police_notification
   static const POLICE_SOSEMERGENCY = '/police_sos_emergency'; // police_sos_emergency
   static const POLICE_REPORTEDEMGCASES = '/police_reported_cases'; // police_reported_cases
   static const POLICE_REPORTEDNONEMGCASES = '/police_reported_non_cases'; // police_reported_non_cases

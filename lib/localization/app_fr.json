@@ -161,7 +161,6 @@
   "pleaseEnterPasswordAgain": "Please enter password again",
   "confirmPasswordDoesNotMatch": "Password and confirm password does not match",
   "searchSomething": "Search something",
-  "hello": "hello",
   "enterYourEmailToReceiveCode": "Enter your email address to receive a code to reset your password.",
   "verificationCode": "Verification code",
   "pleaseEnterTheCodeSentTo": "Enter the Verification code that was sent to ",
@@ -173,5 +172,7 @@
   "enterNewPasswordAgain": "Enter new password again",
   "home": "Home",
   "otpVerificationSuccessful": "OTP verification successful",
-  "invalidOtp": "Invalid OTP"
+  "invalidOtp": "Invalid OTP",
+  "notification": "Notification",
+  "hello": "hello"
 }

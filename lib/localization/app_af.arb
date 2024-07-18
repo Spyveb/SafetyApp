@@ -177,6 +177,7 @@
   "home": "Home",
   "otpVerificationSuccessful": "OTP verification successful",
   "invalidOtp": "Invalid OTP",
+  "notification": "Notification",
   "hello": "hello",
   "hello": "hello"
 }

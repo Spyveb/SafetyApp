@@ -522,4 +522,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invalidOtp => 'Invalid OTP';
+
+  @override
+  String get notification => 'Notification';
+
+  @override
+  String get hello => 'hello';
 }

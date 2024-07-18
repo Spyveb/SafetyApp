@@ -15,6 +15,7 @@ class ReportedEmgCasesScreen extends GetView<ReportedEmgCasesController> {
           initState: (state) {
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
               controller.getSOSEmergencyList(search: '');
+              // controller.showSOSDialog(context, ReportCaseModel());
             });
           },
           global: true,

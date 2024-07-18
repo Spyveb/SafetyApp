@@ -1132,6 +1132,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid OTP'**
   String get invalidOtp;
+
+  /// No description provided for @notification.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification'**
+  String get notification;
+
+  /// No description provided for @hello.
+  ///
+  /// In en, this message translates to:
+  /// **'hello'**
+  String get hello;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
