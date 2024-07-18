@@ -120,9 +120,7 @@ class ReportedNonEmgCasesController extends GetxController {
       playerState = PlayerState.playing;
     } else if (playerState == PlayerState.completed || playerState == PlayerState.stopped) {
       audioPlayer.play(
-        UrlSource(
-          url,
-        ),
+        UrlSource(url),
       );
       playerState = PlayerState.playing;
     }
@@ -143,7 +141,7 @@ class ReportedNonEmgCasesController extends GetxController {
   }
 
   setSourceUrl(String url) {
-    audioPlayer.setSourceUrl(url, mimeType: "audio/mpeg");
+    audioPlayer.setSourceUrl(url);
   }
 
   seekAudio(Duration durationToSeek) {

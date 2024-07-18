@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -102,6 +103,7 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
                               ReportCaseModel report = controller.nonEmergencyReportsList[index];
                               return GestureDetector(
                                 onTap: () async {
+                                  controller.audioPlayer.play(AssetSource("notification_siren.mp3"));
                                   // try {
                                   //   Dio dio = Dio();
                                   //   var dir = await getTemporaryDirectory();
@@ -133,9 +135,9 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
                                   //   print(e);
                                   // }
 
-                                  controller.goToDetails(report);
-                                  await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
-                                  controller.reportCaseModel = null;
+                                  // controller.goToDetails(report);
+                                  // await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
+                                  // controller.reportCaseModel = null;
                                 },
                                 behavior: HitTestBehavior.opaque,
                                 child: CustomCasesList(
