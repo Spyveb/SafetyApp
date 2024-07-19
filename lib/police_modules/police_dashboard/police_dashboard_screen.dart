@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:distress_app/componants/police_dashboard_container.dart';
 import 'package:distress_app/componants/police_drawer_items.dart';
 import 'package:distress_app/imports.dart';
 import 'package:distress_app/packages/staggered_gridview/flutter_staggered_grid_view.dart';
@@ -310,45 +311,32 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
                           crossAxisCount: 2,
                           mainAxisSpacing: getProportionateScreenHeight(20),
                           crossAxisSpacing: getProportionateScreenWidth(20),
-                          children: List.generate(8, (index) {
-                            return Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(14),
-                                vertical: getProportionateScreenHeight(14),
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  getProportionateScreenWidth(16),
-                                ),
-                                border: Border.all(
-                                  color: AppColors.policeDarkBlueColor,
-                                ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Total Incidents Assigned ",
-                                    style: TextStyle(
-                                      fontSize: getProportionalFontSize(19),
-                                      fontFamily: AppFonts.sansFont600,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: getProportionateScreenHeight(10),
-                                  ),
-                                  Text(
-                                    "80",
-                                    style: TextStyle(
-                                      fontSize: getProportionalFontSize(25),
-                                      fontFamily: AppFonts.sansFont600,
-                                      color: AppColors.policeDarkBlueColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
+                          children: [
+                            PoliceDashboardContainer(
+                              title: AppLocalizations.of(context)!.sosEmergencyCases,
+                              value: controller.policeDashboardModel.totalIncidentsAssigned != null
+                                  ? controller.policeDashboardModel.totalIncidentsAssigned.toString()
+                                  : "0",
+                            ),
+                            PoliceDashboardContainer(
+                              title: AppLocalizations.of(context)!.sosEmergencyCases,
+                              value: controller.policeDashboardModel.totalIncidentsAccepted != null
+                                  ? controller.policeDashboardModel.totalIncidentsAccepted.toString()
+                                  : "0",
+                            ),
+                            PoliceDashboardContainer(
+                              title: AppLocalizations.of(context)!.sosEmergencyCases,
+                              value: controller.policeDashboardModel.totalEmergencyIncidents != null
+                                  ? controller.policeDashboardModel.totalEmergencyIncidents.toString()
+                                  : "0",
+                            ),
+                            PoliceDashboardContainer(
+                              title: AppLocalizations.of(context)!.sosEmergencyCases,
+                              value: controller.policeDashboardModel.totalActiveCases != null
+                                  ? controller.policeDashboardModel.totalActiveCases.toString()
+                                  : "0",
+                            ),
+                          ],
                         ),
                       ),
                     ),

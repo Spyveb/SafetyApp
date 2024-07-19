@@ -13,6 +13,7 @@ abstract class Routes {
   static const TRAINING = _Paths.TRAINING;
   static const TRAINING_TOPIC = _Paths.TRAINING_TOPIC;
   static const REPORT = _Paths.REPORT;
+  static const USERSOSREQUESTDETAIL = _Paths.USERSOSREQUESTDETAIL;
   static const EMERGENCY_CONTACTS = _Paths.EMERGENCY_CONTACTS;
   static const SUBMIT_REPORT = _Paths.SUBMIT_REPORT;
   static const TRAINING_TOPIC_DETAILS = _Paths.TRAINING_TOPIC_DETAILS;
@@ -48,6 +49,7 @@ abstract class _Paths {
   static const TRAINING = '/training'; // training
   static const TRAINING_TOPIC = '/training_topic'; // training_topic
   static const REPORT = '/report'; // report
+  static const USERSOSREQUESTDETAIL = '/userSosRequestDetail'; // report
   static const EMERGENCY_CONTACTS = '/emergency_contacts'; // emergency_contacts
   static const ADD_EMERGENCY_CONTACTS = '/add_emergency_contacts'; // add_emergency_contacts
   static const SUBMIT_REPORT = '/submit_report'; // submit_report

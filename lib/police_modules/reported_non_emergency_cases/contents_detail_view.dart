@@ -105,11 +105,14 @@ class ContentsDetailViewScreen extends GetView<ReportedNonEmgCasesController> {
                               playNewVideo(value);
                             }
                           } else if (controller.reportCaseModel!.nonEmergencyCaseContents![value].docType == 'audio') {
-                            controller.audioPlayer.stop();
-                            controller.durationSubscription?.cancel();
-                            controller.positionSubscription?.cancel();
-                            controller.playerCompleteSubscription?.cancel();
-                            controller.playerStateChangeSubscription?.cancel();
+                            if (controller.playerState == PlayerState.playing) {
+                              controller.audioPlayer.stop();
+                              controller.durationSubscription?.cancel();
+                              controller.positionSubscription?.cancel();
+                              controller.playerCompleteSubscription?.cancel();
+                              controller.playerStateChangeSubscription?.cancel();
+                            }
+
                             if (controller.reportCaseModel!.nonEmergencyCaseContents![value].value != null) {
                               await controller
                                   .setSourceUrl(controller.reportCaseModel!.nonEmergencyCaseContents![value].value!);

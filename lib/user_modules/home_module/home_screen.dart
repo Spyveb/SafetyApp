@@ -39,13 +39,11 @@ class HomeScreen extends GetView<HomeController> {
                     children: [
                       IconButton(
                         onPressed: () {},
+                        padding: EdgeInsets.only(right: getProportionateScreenWidth(22)),
                         icon: Icon(
                           Icons.more_vert,
                           color: themeProvider.textColor,
                         ),
-                      ),
-                      SizedBox(
-                        width: getProportionateScreenWidth(12),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,15 +66,20 @@ class HomeScreen extends GetView<HomeController> {
                           ),
                         ],
                       ),
-                      // Spacer(),
-                      // GestureDetector(
-                      //   onTap: () {},
-                      //   child: Image.asset(
-                      //     AppImages.hotspot,
-                      //     width: getProportionateScreenWidth(50),
-                      //     height: getProportionateScreenHeight(50),
-                      //   ),
-                      // )
+                      Spacer(),
+                      Visibility(
+                        visible: controller.showEmergencyIcon,
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.toNamed(Routes.USERSOSREQUESTDETAIL);
+                          },
+                          child: Image.asset(
+                            AppImages.hotspot,
+                            width: getProportionateScreenWidth(50),
+                            height: getProportionateScreenHeight(50),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(

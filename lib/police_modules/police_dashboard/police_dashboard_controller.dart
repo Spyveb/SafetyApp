@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
+import 'package:distress_app/infrastructure/models/police_dashboard_model.dart';
 import 'package:distress_app/packages/advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -18,6 +19,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
   late AnimationController animationController;
   TextEditingController respondedEventController = TextEditingController();
   bool sosRequestAccept = false;
+  PoliceDashboardModel policeDashboardModel = PoliceDashboardModel();
 
   Completer<GoogleMapController> googleMapControllerCompleter = Completer();
 
@@ -28,14 +30,47 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
 
   @override
   void onInit() {
+    getPoliceDashboard();
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(
         milliseconds: 1000,
       ),
     );
+
     getCurrentLocation();
     super.onInit();
+  }
+
+  void getPoliceDashboard() async {
+    // LoadingDialog.showLoader();
+
+    try {
+      var response = await ApiProvider().getAPICall(
+        Endpoints.getPoliceDashboard,
+        passToken: true,
+      );
+      // LoadingDialog.hideLoader();
+      if (response['success'] != null && response['success'] == true) {
+        if (response['data'] != null) {
+          policeDashboardModel = PoliceDashboardModel.fromJson(response['data']);
+        }
+      }
+      update();
+    } on Dio.DioException catch (e) {
+      // LoadingDialog.hideLoader();
+      Utils.showToast(e.message ?? "Something went wrong");
+      Get.back();
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      // LoadingDialog.hideLoader();
+      Utils.showToast("Something went wrong");
+      Get.back();
+
+      update();
+      debugPrint(e.toString());
+    }
   }
 
   Future<Position> determineCurrentPosition() async {
@@ -568,6 +603,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
 
   String firstName = '';
   String status = 'Unavailable';
+
   Future<void> getUserName() async {
     firstName = await StorageService().readSecureData(Constants.firstName) ?? '';
     status = await StorageService().readSecureData(Constants.availability) ?? 'Unavailable';
