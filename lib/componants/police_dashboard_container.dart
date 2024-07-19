@@ -13,6 +13,7 @@ class PoliceDashboardContainer extends StatelessWidget {
         horizontal: getProportionateScreenWidth(14),
         vertical: getProportionateScreenHeight(14),
       ),
+      height: getProportionateScreenHeight(165),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           getProportionateScreenWidth(16),
@@ -26,6 +27,8 @@ class PoliceDashboardContainer extends StatelessWidget {
         children: [
           Text(
             title ?? "",
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: getProportionalFontSize(19),
               fontFamily: AppFonts.sansFont600,
@@ -34,8 +37,11 @@ class PoliceDashboardContainer extends StatelessWidget {
           SizedBox(
             height: getProportionateScreenHeight(10),
           ),
+          Spacer(),
           Text(
             value ?? "",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: getProportionalFontSize(25),
               fontFamily: AppFonts.sansFont600,

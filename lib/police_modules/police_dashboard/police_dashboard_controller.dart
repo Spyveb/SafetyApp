@@ -602,10 +602,12 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
   }
 
   String firstName = '';
+  String profileImage = '';
   String status = 'Unavailable';
 
   Future<void> getUserName() async {
     firstName = await StorageService().readSecureData(Constants.firstName) ?? '';
+    profileImage = await StorageService().readSecureData(Constants.profileImage) ?? '';
     status = await StorageService().readSecureData(Constants.availability) ?? 'Unavailable';
 
     Get.find<PoliceSettingController>().availability = status == 'Available';

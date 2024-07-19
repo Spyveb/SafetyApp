@@ -179,6 +179,10 @@
   "invalidOtp": "Invalid OTP",
   "notification": "Notification",
   "requestStatus": "Request Status",
+  "totalIncidentsAssigned": "Total Incidents Assigned",
+  "totalIncidentsAccepted": "Total Incidents Accepted",
+  "totalEmergencyIncidents": "Total Emergency Incidents",
+  "totalActiveCases": "Total Active Cases",
   "hello": "hello",
   "hello": "hello"
 }

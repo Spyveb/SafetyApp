@@ -146,7 +146,8 @@ class EditProfileScreen extends GetView<SettingsController> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Colors.transparent,
-                                    image: controller.profileImage == null || controller.profileImage!.isEmpty
+                                    image: (controller.profileImage == null || controller.profileImage!.isEmpty) &&
+                                            controller.selectedImage == null
                                         ? DecorationImage(
                                             image: AssetImage(AppImages.userImage),
                                             fit: BoxFit.cover,

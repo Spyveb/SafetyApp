@@ -144,6 +144,7 @@ class PoliceSettingController extends GetxController {
           if (response['data']['user'] != null) {
             UserModel userModel = UserModel.fromJson(response['data']['user']);
             await assignUserData(userModel);
+            await Get.find<PoliceDashBoardController>().getUserName();
           }
         }
       }

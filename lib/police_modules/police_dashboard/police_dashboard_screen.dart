@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:distress_app/componants/police_dashboard_container.dart';
 import 'package:distress_app/componants/police_drawer_items.dart';
 import 'package:distress_app/imports.dart';
@@ -104,6 +105,9 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
                                       ),
                                     ),
                                   ),
+                                  SizedBox(
+                                    width: getProportionateScreenWidth(4),
+                                  ),
                                   Text(
                                     AppLocalizations.of(context)!.dashboard,
                                     style: TextStyle(
@@ -114,47 +118,47 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
                                   ),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      controller.showSOSDialog(context);
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: getProportionateScreenWidth(10),
-                                        vertical: getProportionateScreenHeight(5),
-                                      ),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(32),
-                                        color: AppColors.policeDarkRedColor,
-                                      ),
-                                      child: Text(
-                                        AppLocalizations.of(context)!.logNewIncident,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: getProportionalFontSize(10),
-                                          fontFamily: AppFonts.sansFont600,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: getProportionateScreenWidth(8),
-                                  ),
-                                  // GestureDetector(
-                                  //   onTap: () {
-                                  //     Get.toNamed(Routes.NOTIFICATION_SCREEN);
-                                  //   },
-                                  //   behavior: HitTestBehavior.opaque,
-                                  //   child: Image.asset(
-                                  //     AppImages.policeNotification,
-                                  //     height: getProportionateScreenHeight(24),
-                                  //     width: getProportionateScreenWidth(24),
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
+                              // Row(
+                              //   children: [
+                              //     GestureDetector(
+                              //       onTap: () {
+                              //         controller.showSOSDialog(context);
+                              //       },
+                              //       child: Container(
+                              //         padding: EdgeInsets.symmetric(
+                              //           horizontal: getProportionateScreenWidth(10),
+                              //           vertical: getProportionateScreenHeight(5),
+                              //         ),
+                              //         decoration: BoxDecoration(
+                              //           borderRadius: BorderRadius.circular(32),
+                              //           color: AppColors.policeDarkRedColor,
+                              //         ),
+                              //         child: Text(
+                              //           AppLocalizations.of(context)!.logNewIncident,
+                              //           style: TextStyle(
+                              //             color: Colors.white,
+                              //             fontSize: getProportionalFontSize(10),
+                              //             fontFamily: AppFonts.sansFont600,
+                              //           ),
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     SizedBox(
+                              //       width: getProportionateScreenWidth(8),
+                              //     ),
+                              //     // GestureDetector(
+                              //     //   onTap: () {
+                              //     //     Get.toNamed(Routes.NOTIFICATION_SCREEN);
+                              //     //   },
+                              //     //   behavior: HitTestBehavior.opaque,
+                              //     //   child: Image.asset(
+                              //     //     AppImages.policeNotification,
+                              //     //     height: getProportionateScreenHeight(24),
+                              //     //     width: getProportionateScreenWidth(24),
+                              //     //   ),
+                              //     // ),
+                              //   ],
+                              // ),
                             ],
                           ),
 
@@ -313,25 +317,25 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
                           crossAxisSpacing: getProportionateScreenWidth(20),
                           children: [
                             PoliceDashboardContainer(
-                              title: AppLocalizations.of(context)!.sosEmergencyCases,
+                              title: AppLocalizations.of(context)!.totalIncidentsAssigned,
                               value: controller.policeDashboardModel.totalIncidentsAssigned != null
                                   ? controller.policeDashboardModel.totalIncidentsAssigned.toString()
                                   : "0",
                             ),
                             PoliceDashboardContainer(
-                              title: AppLocalizations.of(context)!.sosEmergencyCases,
+                              title: AppLocalizations.of(context)!.totalIncidentsAccepted,
                               value: controller.policeDashboardModel.totalIncidentsAccepted != null
                                   ? controller.policeDashboardModel.totalIncidentsAccepted.toString()
                                   : "0",
                             ),
                             PoliceDashboardContainer(
-                              title: AppLocalizations.of(context)!.sosEmergencyCases,
+                              title: AppLocalizations.of(context)!.totalEmergencyIncidents,
                               value: controller.policeDashboardModel.totalEmergencyIncidents != null
                                   ? controller.policeDashboardModel.totalEmergencyIncidents.toString()
                                   : "0",
                             ),
                             PoliceDashboardContainer(
-                              title: AppLocalizations.of(context)!.sosEmergencyCases,
+                              title: AppLocalizations.of(context)!.totalActiveCases,
                               value: controller.policeDashboardModel.totalActiveCases != null
                                   ? controller.policeDashboardModel.totalActiveCases.toString()
                                   : "0",
@@ -393,11 +397,17 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
               width: getProportionateScreenWidth(90),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage(
-                    AppImages.policeUserIcon,
-                  ),
-                ),
+                image: controller.profileImage.isNotEmpty
+                    ? DecorationImage(
+                        image: CachedNetworkImageProvider(controller.profileImage),
+                        fit: BoxFit.cover,
+                      )
+                    : DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          AppImages.policeUserIcon,
+                        ),
+                      ),
               ),
             ),
             SizedBox(
