@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 class ReportedEmgCasesController extends GetxController {
   List<ReportCaseModel> sosReportsList = [];
+  String? userId;
   void getSOSEmergencyList({bool? showLoader = true, required String search}) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
@@ -22,10 +23,12 @@ class ReportedEmgCasesController extends GetxController {
         LoadingDialog.hideLoader();
       }
       sosReportsList.clear();
+      String? userId = await StorageService().readSecureData(Constants.userId);
       if (response['success'] != null && response['success'] == true) {
         if (response['data'] != null && response['data'] is List) {
           List list = response['data'];
           for (var report in list) {
+            report['currentUser'] = userId;
             sosReportsList.add(ReportCaseModel.fromJson(report));
           }
         }

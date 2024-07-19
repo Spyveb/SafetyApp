@@ -178,6 +178,7 @@
   "otpVerificationSuccessful": "OTP verification successful",
   "invalidOtp": "Invalid OTP",
   "notification": "Notification",
+  "requestStatus": "Request Status",
   "hello": "hello",
   "hello": "hello"
 }

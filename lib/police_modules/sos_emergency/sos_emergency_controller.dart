@@ -1,13 +1,16 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PoliceSOSEmergencyController extends GetxController {
   Completer<GoogleMapController> googleMapControllerCompleter = Completer();
+  GoogleMapController? googleMapController;
   List<ReportCaseModel> sosReportsList = [];
   ReportCaseModel? currentSOSReport;
   void getSOSEmergencyList({bool? showLoader = true, required String search}) async {
@@ -27,15 +30,45 @@ class PoliceSOSEmergencyController extends GetxController {
         LoadingDialog.hideLoader();
       }
       sosReportsList.clear();
+      currentSOSReport = null;
       if (response['success'] != null && response['success'] == true) {
         if (response['data'] != null && response['data'] is List) {
           List list = response['data'];
-          for (var report in list) {
-            sosReportsList.add(ReportCaseModel.fromJson(report));
+          if (list.isNotEmpty) {
+            for (var report in list) {
+              sosReportsList.add(ReportCaseModel.fromJson(report));
+            }
+
+            if (sosReportsList.length > 1) {
+              currentSOSReport = sosReportsList.firstWhereOrNull((element) => element.status == 'Open');
+              currentSOSReport ??= sosReportsList.first;
+            } else {
+              currentSOSReport = sosReportsList.first;
+            }
           }
         }
       } else {}
+
+      if (currentSOSReport != null && currentSOSReport!.status == 'Pending') {
+        showSOSDialog(Get.context!, currentSOSReport!);
+      }
+
       update();
+
+      Future.delayed(Duration(seconds: 1)).then((value) {
+        if (currentSOSReport != null && currentSOSReport!.status == 'Open') {
+          if ((currentSOSReport!.latitude != null && currentSOSReport!.longitude != null) &&
+              (currentSOSReport!.policeOfficerLatitude != null && currentSOSReport!.policeOfficerLongitude != null))
+            addMarkers(
+              LatLng(double.parse(currentSOSReport!.latitude!), double.parse(currentSOSReport!.longitude!)),
+              LatLng(
+                double.parse(currentSOSReport!.policeOfficerLatitude!),
+                double.parse(currentSOSReport!.policeOfficerLongitude!),
+              ),
+            );
+          update();
+        }
+      });
     } on Dio.DioException catch (e) {
       if (showLoader == true) {
         LoadingDialog.hideLoader();
@@ -63,7 +96,7 @@ class PoliceSOSEmergencyController extends GetxController {
         "request_status": status,
       });
       var response = await ApiProvider().postAPICall(
-        Endpoints.openSOSEmergencyList,
+        Endpoints.updateSOSEmergencyCaseStatus,
         formData,
         onSendProgress: (count, total) {},
       );
@@ -71,15 +104,20 @@ class PoliceSOSEmergencyController extends GetxController {
         LoadingDialog.hideLoader();
       }
       if (response['success'] != null && response['success'] == true) {
+        Utils.showToast(response['message'] ?? 'Report request status updated successfully.');
       } else {
         Utils.showToast(response['message'] ?? 'Failed to update request status');
       }
+
+      Get.back();
       update();
+      getSOSEmergencyList(search: '');
     } on Dio.DioException catch (e) {
       if (showLoader == true) {
         LoadingDialog.hideLoader();
       }
       Utils.showToast(e.message ?? "Something went wrong");
+      Get.back();
       update();
       debugPrint(e.toString());
     } catch (e) {
@@ -88,6 +126,53 @@ class PoliceSOSEmergencyController extends GetxController {
       }
       Utils.showToast("Something went wrong");
       update();
+      Get.back();
+      debugPrint(e.toString());
+    }
+  }
+
+  void closeSOSEmergencyRequest({
+    bool? showLoader = true,
+    required int caseId,
+  }) async {
+    if (showLoader == true) {
+      LoadingDialog.showLoader();
+    }
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({
+        "id": caseId,
+      });
+      var response = await ApiProvider().postAPICall(
+        Endpoints.closeSOSEmergencyCaseStatus,
+        formData,
+        onSendProgress: (count, total) {},
+      );
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      if (response['success'] != null && response['success'] == true) {
+        Utils.showToast(response['message'] ?? 'SOS closed');
+        Get.back();
+      } else {
+        Utils.showToast(response['message'] ?? 'Failed to end SOS');
+      }
+
+      update();
+    } on Dio.DioException catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast(e.message ?? "Something went wrong");
+
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast("Something went wrong");
+      update();
+
       debugPrint(e.toString());
     }
   }
@@ -95,6 +180,7 @@ class PoliceSOSEmergencyController extends GetxController {
   showSOSDialog(BuildContext context, ReportCaseModel reportCaseModel) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return Dialog(
           insetPadding: EdgeInsets.symmetric(
@@ -179,31 +265,31 @@ class PoliceSOSEmergencyController extends GetxController {
                   SizedBox(
                     height: getProportionateScreenHeight(10),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.mobileNumber,
-                        style: TextStyle(
-                          fontFamily: AppFonts.sansFont600,
-                          fontSize: getProportionalFontSize(16),
-                        ),
-                      ),
-                      Flexible(
-                        child: Text(
-                          "${reportCaseModel.city ?? '-'}",
-                          style: TextStyle(
-                            fontFamily: AppFonts.sansFont400,
-                            fontSize: getProportionalFontSize(16),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(10),
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Text(
+                  //       AppLocalizations.of(context)!.mobileNumber,
+                  //       style: TextStyle(
+                  //         fontFamily: AppFonts.sansFont600,
+                  //         fontSize: getProportionalFontSize(16),
+                  //       ),
+                  //     ),
+                  //     Flexible(
+                  //       child: Text(
+                  //         "${reportCaseModel.city ?? '-'}",
+                  //         style: TextStyle(
+                  //           fontFamily: AppFonts.sansFont400,
+                  //           fontSize: getProportionalFontSize(16),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: getProportionateScreenHeight(10),
+                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,7 +321,8 @@ class PoliceSOSEmergencyController extends GetxController {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.estimatedTimeOfArrival,
+                        // AppLocalizations.of(context)!.estimatedTimeOfArrival,
+                        "Distance: ",
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont600,
                           fontSize: getProportionalFontSize(16),
@@ -243,8 +330,7 @@ class PoliceSOSEmergencyController extends GetxController {
                       ),
                       Flexible(
                         child: Text(
-                          ///Calculate distance
-                          "3 minutes",
+                          "${calculateDistance(double.parse(reportCaseModel.policeOfficerLatitude!), double.parse(reportCaseModel.policeOfficerLongitude!), double.parse(reportCaseModel.latitude!), double.parse(reportCaseModel.longitude!))}",
                           style: TextStyle(
                             fontFamily: AppFonts.sansFont400,
                             fontSize: getProportionalFontSize(16),
@@ -265,8 +351,6 @@ class PoliceSOSEmergencyController extends GetxController {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              Get.back();
-                              // showRequestDeclineDialog(context);
                               if (reportCaseModel.id != null) {
                                 updateSOSEmergencyRequest(caseId: reportCaseModel.id!, status: 'Accept');
                               }
@@ -301,8 +385,6 @@ class PoliceSOSEmergencyController extends GetxController {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              Get.back();
-                              // showRequestDeclineDialog(context);
                               if (reportCaseModel.id != null) {
                                 updateSOSEmergencyRequest(caseId: reportCaseModel.id!, status: 'Decline');
                               }
@@ -427,4 +509,302 @@ class PoliceSOSEmergencyController extends GetxController {
       },
     );
   }
+
+  showEndSosDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(10),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: AppColors.policeDarkBlueColor,
+              ),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            padding: EdgeInsets.symmetric(
+              vertical: getProportionateScreenHeight(10),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(14),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.whatHappenedThisEvent,
+                    style: TextStyle(
+                      fontFamily: AppFonts.sansFont600,
+                      fontSize: getProportionalFontSize(16),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(20),
+                  ),
+                  TextFormField(
+                    maxLines: null,
+                    maxLength: 300,
+                    onTapOutside: (event) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    onChanged: (value) {},
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(8),
+                        vertical: getProportionateScreenHeight(8),
+                      ),
+                      constraints: BoxConstraints(
+                        maxHeight: getProportionateScreenHeight(100),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(25),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.redDefault,
+                        borderRadius: BorderRadius.circular(
+                          getProportionateScreenWidth(30),
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(30),
+                        vertical: getProportionateScreenHeight(15),
+                      ),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.submit,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: getProportionalFontSize(18),
+                            fontFamily: AppFonts.sansFont600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  showBackupRequestDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(10),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: AppColors.policeDarkBlueColor,
+              ),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            padding: EdgeInsets.symmetric(
+              vertical: getProportionateScreenHeight(10),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(14),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.backupRequestSent,
+                    style: TextStyle(
+                      fontFamily: AppFonts.sansFont600,
+                      fontSize: getProportionalFontSize(24),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(15),
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.aBackupSentYourDestination,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: AppFonts.sansFont500,
+                      fontSize: getProportionalFontSize(16),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(25),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.policeDarkBlueColor,
+                        borderRadius: BorderRadius.circular(
+                          getProportionateScreenWidth(30),
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(30),
+                        vertical: getProportionateScreenHeight(15),
+                      ),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.ok,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: getProportionalFontSize(18),
+                            fontFamily: AppFonts.sansFont600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  List<Marker> markers = [];
+
+  addMarkers(LatLng userLatLong, LatLng policeLatLong) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      MarkerId userMarkerId = MarkerId("userMarkerId");
+      final marker = Marker(
+        markerId: userMarkerId, icon: BitmapDescriptor.defaultMarker, position: userLatLong,
+        // onTap: () {}
+      );
+      markers.add(marker);
+      MarkerId policeMarkerId = MarkerId("policeMarkerId");
+      final marker2 = Marker(
+        markerId: policeMarkerId,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+        position: policeLatLong,
+        // onTap: () {}
+      );
+      markers.add(marker2);
+
+      if (policeLatLong.latitude <= userLatLong.latitude) {
+        LatLngBounds bound = LatLngBounds(
+          southwest: policeLatLong,
+          northeast: userLatLong,
+        );
+        CameraUpdate u2 = CameraUpdate.newLatLngBounds(bound, 90);
+        googleMapController!.animateCamera(u2).then((void v) {
+          check(u2, googleMapController!);
+        });
+      } else {
+        googleMapController!.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: userLatLong,
+              zoom: 14,
+              // bearing: currentPositionData.heading
+            ),
+          ),
+        );
+      }
+      update();
+    });
+  }
+
+  void check(CameraUpdate u, GoogleMapController c) async {
+    c.animateCamera(u);
+    googleMapController!.animateCamera(u);
+    LatLngBounds l1 = await c.getVisibleRegion();
+    LatLngBounds l2 = await c.getVisibleRegion();
+    print(l1.toString());
+    print(l2.toString());
+    if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90) check(u, c);
+  }
+
+  // double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+  //   var p = 0.017453292519943295;
+  //   var a = 0.5 - cos((lat2 - lat1) * p) / 2 + cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
+  //   return 12742 * asin(sqrt(a));
+  // }
+
+  double calculateDistance(lat1, lon1, lat2, lon2) {
+    return Geolocator.distanceBetween(lat1, lon1, lat2, lon2) / 1000;
+    var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 - c((lat2 - lat1) * p) / 2 + c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a));
+  }
+
+  // Future<void> addPolyLineForMerchantRoute() async {
+  //   final String polylineIdVal = 'polyline_id_69';
+  //   // polylineIdCounter++;
+  //   final PolylineId polylineId = PolylineId(polylineIdVal);
+  //
+  //   var polylinePoints = PolylinePoints();
+  //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+  //     "AIzaSyAyrWhY3ALKo6NORh9f_gcwGGdWPT3Phdk",
+  //
+  //     PointLatLng(driverLatLong.latitude, driverLatLong.longitude),
+  //     // PointLatLng(22.9642, 72.5903),
+  //     PointLatLng(merchantLatLong.latitude, merchantLatLong.longitude),
+  //     // PointLatLng(23.0686, 72.6536),
+  //     travelMode: TravelMode.driving,
+  //   );
+  //   if (mapPolylines.containsKey(polylineId)) {}
+  //   List<LatLng> polylineCoordinates = [];
+  //
+  //   if (result.points.isNotEmpty) {
+  //     result.points.forEach((PointLatLng point) {
+  //       polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+  //     });
+  //   }
+  //
+  //   final Polyline polyline = Polyline(
+  //     polylineId: polylineId,
+  //     consumeTapEvents: true,
+  //     color: Colors.black,
+  //     geodesic: true,
+  //     endCap: Cap.squareCap,
+  //     jointType: JointType.bevel,
+  //     width: 4,
+  //     points: polylineCoordinates,
+  //   );
+  //
+  //   mapPolylines[polylineId] = polyline;
+  //
+  //   addMarkerForMerchantRoute();
+  // }
 }

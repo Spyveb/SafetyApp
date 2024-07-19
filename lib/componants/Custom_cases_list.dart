@@ -3,9 +3,19 @@ import 'package:flutter/material.dart';
 import '../imports.dart';
 
 class CustomCasesList extends StatelessWidget {
-  final String? caseNo, date, status, firstName, lastName, location, city;
+  final String? caseNo, date, status, firstName, lastName, location, city, requestStatus;
+  final bool? showSOS;
   const CustomCasesList(
-      {super.key, this.caseNo, this.date, this.status, this.firstName, this.lastName, this.location, this.city});
+      {super.key,
+      this.caseNo,
+      this.date,
+      this.status,
+      this.firstName,
+      this.lastName,
+      this.location,
+      this.city,
+      this.requestStatus,
+      this.showSOS});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +29,9 @@ class CustomCasesList extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(
+            getProportionateScreenWidth(16),
+          ),
           border: Border.all(
             color: AppColors.blackColor,
           )
@@ -33,6 +45,7 @@ class CustomCasesList extends StatelessWidget {
           // ],
           ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Column(
@@ -42,7 +55,7 @@ class CustomCasesList extends StatelessWidget {
                   children: [
                     Container(
                       constraints: BoxConstraints(
-                        minWidth: getProportionateScreenWidth(100),
+                        minWidth: getProportionateScreenWidth(125),
                       ),
                       child: Text(
                         AppLocalizations.of(context)!.caseNo,
@@ -67,7 +80,7 @@ class CustomCasesList extends StatelessWidget {
                   children: [
                     Container(
                       constraints: BoxConstraints(
-                        minWidth: getProportionateScreenWidth(100),
+                        minWidth: getProportionateScreenWidth(125),
                       ),
                       child: Text(
                         AppLocalizations.of(context)!.date,
@@ -90,7 +103,7 @@ class CustomCasesList extends StatelessWidget {
                   children: [
                     Container(
                       constraints: BoxConstraints(
-                        minWidth: getProportionateScreenWidth(100),
+                        minWidth: getProportionateScreenWidth(125),
                       ),
                       child: Text(
                         AppLocalizations.of(context)!.status,
@@ -105,7 +118,7 @@ class CustomCasesList extends StatelessWidget {
                       style: TextStyle(
                         fontSize: getProportionalFontSize(14),
                         fontFamily: AppFonts.sansFont600,
-                        color: status == 'Open' ? Colors.green : AppColors.redDefault,
+                        color: _statusColor(status ?? 'Pending'),
                       ),
                     ),
                   ],
@@ -115,7 +128,7 @@ class CustomCasesList extends StatelessWidget {
                   children: [
                     Container(
                       constraints: BoxConstraints(
-                        minWidth: getProportionateScreenWidth(100),
+                        minWidth: getProportionateScreenWidth(125),
                       ),
                       child: Text(
                         AppLocalizations.of(context)!.firstName,
@@ -141,7 +154,7 @@ class CustomCasesList extends StatelessWidget {
                   children: [
                     Container(
                       constraints: BoxConstraints(
-                        minWidth: getProportionateScreenWidth(100),
+                        minWidth: getProportionateScreenWidth(125),
                       ),
                       child: Text(
                         AppLocalizations.of(context)!.lastName,
@@ -167,7 +180,7 @@ class CustomCasesList extends StatelessWidget {
                   children: [
                     Container(
                       constraints: BoxConstraints(
-                        minWidth: getProportionateScreenWidth(100),
+                        minWidth: getProportionateScreenWidth(125),
                       ),
                       child: Text(
                         AppLocalizations.of(context)!.location,
@@ -193,7 +206,7 @@ class CustomCasesList extends StatelessWidget {
                   children: [
                     Container(
                       constraints: BoxConstraints(
-                        minWidth: getProportionateScreenWidth(100),
+                        minWidth: getProportionateScreenWidth(125),
                       ),
                       child: Text(
                         AppLocalizations.of(context)!.city,
@@ -214,11 +227,83 @@ class CustomCasesList extends StatelessWidget {
                     ),
                   ],
                 ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(
+                        minWidth: getProportionateScreenWidth(125),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.requestStatus,
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont600,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: Text(
+                        requestStatus ?? "",
+                        style: TextStyle(
+                          fontSize: getProportionalFontSize(14),
+                          fontFamily: AppFonts.sansFont600,
+                          color: _reqStatusColor(requestStatus ?? 'Pending'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
+          Align(
+            alignment: Alignment.topRight,
+            child: showSOS == true
+                ? Tooltip(
+                    triggerMode: TooltipTriggerMode.tap,
+                    preferBelow: false,
+                    showDuration: Duration(seconds: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.black87,
+                      borderRadius: BorderRadius.circular(
+                        getProportionateScreenWidth(8),
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(8),
+                    ),
+                    textAlign: TextAlign.center,
+                    textStyle: TextStyle(
+                      color: AppColors.whiteColor,
+                      fontSize: getProportionalFontSize(12),
+                      fontFamily: AppFonts.sansFont400,
+                    ),
+                    // exitDuration: Duration(seconds: 3),
+                    message: "You have a SOS emergency case",
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(8),
+                        vertical: getProportionateScreenHeight(8),
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.redDefault,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        'SOS',
+                        style: TextStyle(
+                          color: AppColors.blackColor,
+                          fontFamily: AppFonts.sansFont500,
+                          fontSize: getProportionalFontSize(10),
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox(),
+          )
           // CommonButton(
-          //   width: getProportionateScreenWidth(100),
+          //   width: getProportionateScreenWidth(125),
           //   padding: EdgeInsets.symmetric(
           //     horizontal: getProportionateScreenWidth(4),
           //     vertical: getProportionateScreenHeight(4),
@@ -235,5 +320,31 @@ class CustomCasesList extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _statusColor(String s) {
+    Color color = AppColors.blackColor;
+    if (s == 'Open') {
+      color = Colors.green;
+    } else if (s == 'Close') {
+      color = AppColors.redDefault;
+    } else if (s == 'Pending') {
+      color = AppColors.primaryColor;
+    }
+    return color;
+  }
+
+  _reqStatusColor(String s) {
+    Color color = AppColors.primaryColor;
+    if (s == 'Accept') {
+      color = Colors.green;
+    } else if (s == 'Decline') {
+      color = AppColors.redDefault;
+    } else if (s == 'Pending') {
+      color = AppColors.primaryColor;
+    } else {
+      color = AppColors.blackColor;
+    }
+    return color;
   }
 }

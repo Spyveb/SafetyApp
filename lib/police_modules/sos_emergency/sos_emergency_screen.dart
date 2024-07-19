@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:ui';
 
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
@@ -67,30 +67,6 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                           ),
                         ],
                       ),
-                      // SizedBox(
-                      //   height: getProportionateScreenHeight(15),
-                      // ),
-                      // TextFormField(
-                      //   onChanged: (value) {
-                      //     controller.getSOSEmergencyList(search: value, showLoader: false);
-                      //   },
-                      //   decoration: InputDecoration(
-                      //     enabledBorder: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(getProportionateScreenWidth(30)),
-                      //     ),
-                      //     focusedBorder: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(getProportionateScreenWidth(30)),
-                      //     ),
-                      //     contentPadding: EdgeInsets.symmetric(
-                      //       horizontal: getProportionateScreenWidth(16),
-                      //       vertical: getProportionateScreenHeight(8),
-                      //     ),
-                      //     suffixIcon: const Icon(
-                      //       Icons.search,
-                      //     ),
-                      //     hintText: AppLocalizations.of(context)!.searchCases,
-                      //   ),
-                      // ),
                       SizedBox(
                         height: getProportionateScreenHeight(12),
                       ),
@@ -99,47 +75,276 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                 ),
 
                 controller.currentSOSReport != null
-                    ? Expanded(
-                        child: Column(
-                          children: [
-                            CustomCasesList(
-                              caseNo: "${controller.currentSOSReport!.id}",
-                              status: "${controller.currentSOSReport!.status}",
-                              firstName: "${controller.currentSOSReport!.firstName ?? '-'}",
-                              lastName: "${controller.currentSOSReport!.lastName ?? '-'}",
-                              date: "${Utils.displayDateFormat(
-                                controller.currentSOSReport!.updatedAt ?? DateTime.now().toString(),
-                              )}",
-                              location: "${controller.currentSOSReport!.location ?? '-'}",
-                              city: "${controller.currentSOSReport!.city ?? '-'}",
-                            ),
-                            Flexible(
-                              child: GoogleMap(
-                                zoomControlsEnabled: true,
-                                mapType: MapType.normal,
+                    ? controller.currentSOSReport!.status == 'Open'
+                        ? Expanded(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: getProportionateScreenWidth(14),
+                                    vertical: getProportionateScreenHeight(8),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "You are heading towards ${controller.currentSOSReport!.firstName} ${controller.currentSOSReport!.lastName}’s house",
+                                              style: TextStyle(
+                                                fontSize: getProportionalFontSize(14),
+                                                fontFamily: AppFonts.sansFont600,
+                                              ),
+                                            ),
+                                            Text(
+                                              "You can also use the siren if there is traffic",
+                                              style: TextStyle(
+                                                fontSize: getProportionalFontSize(11),
+                                                fontFamily: AppFonts.sansFont600,
+                                                color: AppColors.redDefault,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              controller.showBackupRequestDialog(context);
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: AppColors.redDefault,
+                                                borderRadius: BorderRadius.circular(
+                                                  getProportionateScreenWidth(
+                                                    getProportionateScreenWidth(50),
+                                                  ),
+                                                ),
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: getProportionateScreenWidth(12),
+                                                vertical: getProportionateScreenHeight(6),
+                                              ),
+                                              child: Text(
+                                                AppLocalizations.of(context)!.requestBackup,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: getProportionalFontSize(12),
+                                                  fontFamily: AppFonts.sansFont600,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: getProportionateScreenHeight(10),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              // controller.showEndSosDialog(context);
 
-                                buildingsEnabled: true,
-
-                                onCameraIdle: () {},
-                                initialCameraPosition: CameraPosition(
-                                  target: LatLng(23.0296, 72.5301),
-                                  zoom: 12,
+                                              Utils.showCustomDialog(
+                                                context: context,
+                                                child: Center(
+                                                  child: Material(
+                                                    color: Colors.white,
+                                                    borderRadius: BorderRadius.circular(
+                                                      getProportionateScreenWidth(32),
+                                                    ),
+                                                    child: BackdropFilter(
+                                                      filter: ImageFilter.blur(
+                                                        sigmaX: 1.5,
+                                                        sigmaY: 1.5,
+                                                      ),
+                                                      child: GetBuilder<PoliceSOSEmergencyController>(
+                                                        builder: (controller) {
+                                                          return Container(
+                                                            width: SizeConfig.deviceWidth! * .85,
+                                                            padding: EdgeInsets.symmetric(
+                                                              horizontal: getProportionateScreenWidth(16),
+                                                              vertical: getProportionateScreenHeight(16),
+                                                            ),
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(
+                                                                getProportionateScreenWidth(32),
+                                                              ),
+                                                              color: Colors.white,
+                                                            ),
+                                                            child: Column(
+                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              mainAxisSize: MainAxisSize.min,
+                                                              children: [
+                                                                Text(
+                                                                  AppLocalizations.of(context)!.confirmationMessage,
+                                                                  style: TextStyle(
+                                                                      fontFamily: AppFonts.sansFont700,
+                                                                      fontSize: getProportionalFontSize(22),
+                                                                      color: AppColors.primaryColor),
+                                                                  textAlign: TextAlign.center,
+                                                                ),
+                                                                SizedBox(
+                                                                  height: getProportionateScreenHeight(10),
+                                                                ),
+                                                                Text(
+                                                                  "Are you sure you want to end the SOS?",
+                                                                  style: TextStyle(
+                                                                      fontFamily: AppFonts.sansFont500,
+                                                                      fontSize: getProportionalFontSize(16),
+                                                                      color: AppColors.blackColor),
+                                                                  textAlign: TextAlign.center,
+                                                                ),
+                                                                SizedBox(
+                                                                  height: getProportionateScreenHeight(24),
+                                                                ),
+                                                                Row(
+                                                                  children: [
+                                                                    Expanded(
+                                                                      child: CommonButton(
+                                                                        padding: EdgeInsets.symmetric(
+                                                                          horizontal: getProportionateScreenWidth(24),
+                                                                          vertical: getProportionateScreenHeight(18),
+                                                                        ),
+                                                                        text: AppLocalizations.of(context)!.yes,
+                                                                        onPressed: () async {
+                                                                          Get.back();
+                                                                          if (controller.currentSOSReport!.id != null) {
+                                                                            controller.closeSOSEmergencyRequest(
+                                                                                caseId:
+                                                                                    controller.currentSOSReport!.id!);
+                                                                          }
+                                                                        },
+                                                                        radius: 50,
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: getProportionateScreenWidth(18),
+                                                                    ),
+                                                                    Expanded(
+                                                                      child: GestureDetector(
+                                                                        onTap: () {
+                                                                          Get.back();
+                                                                        },
+                                                                        behavior: HitTestBehavior.opaque,
+                                                                        child: Container(
+                                                                          padding: EdgeInsets.symmetric(
+                                                                            horizontal: getProportionateScreenWidth(24),
+                                                                            vertical: getProportionateScreenHeight(17),
+                                                                          ),
+                                                                          decoration: BoxDecoration(
+                                                                            borderRadius: BorderRadius.circular(
+                                                                              getProportionateScreenWidth(50),
+                                                                            ),
+                                                                            border: Border.all(
+                                                                                color: AppColors.blackColor, width: 1),
+                                                                          ),
+                                                                          child: Text(
+                                                                            AppLocalizations.of(context)!.no,
+                                                                            textAlign: TextAlign.center,
+                                                                            maxLines: 1,
+                                                                            overflow: TextOverflow.ellipsis,
+                                                                            style: TextStyle(
+                                                                              fontSize: getProportionalFontSize(16),
+                                                                              fontFamily: AppFonts.sansFont600,
+                                                                              color: AppColors.primaryColor,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: AppColors.redDefault,
+                                                borderRadius: BorderRadius.circular(
+                                                  getProportionateScreenWidth(
+                                                    getProportionateScreenWidth(50),
+                                                  ),
+                                                ),
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: getProportionateScreenWidth(16),
+                                                vertical: getProportionateScreenHeight(6),
+                                              ),
+                                              child: Text(
+                                                AppLocalizations.of(context)!.endSos,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: getProportionalFontSize(12),
+                                                  fontFamily: AppFonts.sansFont600,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                myLocationButtonEnabled: false,
-                                fortyFiveDegreeImageryEnabled: true,
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: getProportionateScreenWidth(14),
+                                  ),
+                                  child: CustomCasesList(
+                                    caseNo: "${controller.currentSOSReport!.id}",
+                                    status: "${controller.currentSOSReport!.status}",
+                                    firstName: "${controller.currentSOSReport!.firstName ?? '-'}",
+                                    lastName: "${controller.currentSOSReport!.lastName ?? '-'}",
+                                    date: "${Utils.displayDateFormat(
+                                      controller.currentSOSReport!.updatedAt ?? DateTime.now().toString(),
+                                    )}",
+                                    location: "${controller.currentSOSReport!.location ?? '-'}",
+                                    city: "${controller.currentSOSReport!.city ?? '-'}",
+                                  ),
+                                ),
+                                Flexible(
+                                  child: GoogleMap(
+                                    zoomControlsEnabled: true,
+                                    mapType: MapType.normal,
+                                    markers: controller.markers.toSet(),
+                                    buildingsEnabled: true,
+                                    onCameraIdle: () {},
+                                    initialCameraPosition: CameraPosition(
+                                      target: controller.currentSOSReport!.latitude != null &&
+                                              controller.currentSOSReport!.longitude != null
+                                          ? LatLng(
+                                              double.parse(controller.currentSOSReport!.latitude!),
+                                              double.parse(controller.currentSOSReport!.longitude!),
+                                            )
+                                          : LatLng(23.0296, 72.5301),
+                                      zoom: 12,
+                                    ),
+                                    myLocationButtonEnabled: false,
+                                    fortyFiveDegreeImageryEnabled: true,
 
-                                // Update location on camera move
-                                onCameraMove: (CameraPosition cameraPosition) async {},
-                                onMapCreated: (GoogleMapController gController) {
-                                  // Complete the Google Map controller
-                                  controller.googleMapControllerCompleter = Completer();
-                                  controller.googleMapControllerCompleter.complete(gController);
-                                },
-                              ),
+                                    // Update location on camera move
+                                    onCameraMove: (CameraPosition cameraPosition) async {},
+                                    onMapCreated: (GoogleMapController gController) {
+                                      // Complete the Google Map controller
+                                      // controller.googleMapControllerCompleter = Completer();
+                                      // controller.googleMapControllerCompleter.complete(gController);
+                                      controller.googleMapController = gController;
+                                      controller.update();
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      )
+                          )
+                        : SizedBox()
                     : SizedBox(),
                 // Expanded(
                 //   child: controller.sosReportsList.isNotEmpty

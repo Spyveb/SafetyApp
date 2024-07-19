@@ -26,6 +26,9 @@ class ReportCaseModel {
   String? updatedAt;
   String? firstName;
   String? lastName;
+  String? policeOfficerLatitude;
+  String? policeOfficerLongitude;
+  int? assign_sos_emergency_case_id;
   List<ReportCaseContent>? nonEmergencyCaseContents;
 
   ReportCaseModel({
@@ -46,6 +49,9 @@ class ReportCaseModel {
     this.updatedAt,
     this.firstName,
     this.lastName,
+    this.assign_sos_emergency_case_id,
+    this.policeOfficerLatitude,
+    this.policeOfficerLongitude,
     this.nonEmergencyCaseContents,
   });
 
@@ -67,6 +73,9 @@ class ReportCaseModel {
         updatedAt: json["updated_at"],
         firstName: json["first_name"],
         lastName: json["last_name"],
+        policeOfficerLatitude: json["police_officer_latitude"],
+        policeOfficerLongitude: json["police_officer_longitude"],
+        assign_sos_emergency_case_id: json["assign_sos_emergency_case_id"],
         nonEmergencyCaseContents: json["non_emergency_case_contents"] == null
             ? []
             : List<ReportCaseContent>.from(
@@ -91,6 +100,9 @@ class ReportCaseModel {
         "updated_at": updatedAt,
         "first_name": firstName,
         "last_name": lastName,
+        "police_officer_latitude": policeOfficerLatitude,
+        "police_officer_longitude": policeOfficerLongitude,
+        "assign_sos_emergency_case_id": assign_sos_emergency_case_id,
         "non_emergency_case_contents": nonEmergencyCaseContents == null
             ? []
             : List<dynamic>.from(nonEmergencyCaseContents!.map((x) => x.toJson())),

@@ -102,9 +102,9 @@ class ReportedEmgCasesScreen extends GetView<ReportedEmgCasesController> {
                               ReportCaseModel report = controller.sosReportsList[index];
                               return GestureDetector(
                                 onTap: () {
-                                  // if (report.status == 'Pending') {
-                                  //   controller.showSOSDialog(context, report);
-                                  // }
+                                  if (report.status == 'Open') {
+                                    Get.toNamed(Routes.POLICE_SOSEMERGENCY);
+                                  }
                                 },
                                 child: CustomCasesList(
                                   caseNo: "${report.id}",
@@ -116,6 +116,8 @@ class ReportedEmgCasesScreen extends GetView<ReportedEmgCasesController> {
                                   )}",
                                   location: "${report.location ?? '-'}",
                                   city: "${report.city ?? '-'}",
+                                  showSOS: report.status == 'Open',
+                                  requestStatus: "${report.requestStatus ?? '-'}",
                                 ),
                               );
                             },
