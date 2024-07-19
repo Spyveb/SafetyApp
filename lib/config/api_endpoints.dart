@@ -21,7 +21,13 @@ class Endpoints {
   static const openSOSEmergencyList =
       "${baseUrl}api/open_sos_emergency_case_list"; // Endpoint for open_sos_emergency_case_list
   static const sendNonEmergency = "${baseUrl}api/create_non_emergency_case"; // Endpoint for delete account
-  static const nonEmergencyList = "${baseUrl}api/non_emergency_case_list"; // Endpoint for delete account
+  static const updateNonEmergencyCaseStatus =
+      "${baseUrl}api/update_non_emergency_case_status"; // Endpoint for update_non_emergency_case_status
+  static const nonEmergencyList = "${baseUrl}api/non_emergency_case_list"; // Endpoint for non_emergency_case_list
+  static const closeNonEmergencyCase =
+      "${baseUrl}api/close_non_emergency_case"; // Endpoint for close_non_emergency_case
+  static const openNonEmergencyList =
+      "${baseUrl}api/open_non_emergency_case_list"; // Endpoint for open_non_emergency_case_list
   static const categoryList = "${baseUrl}api/categories_list"; // Endpoint for categories list
   static const categoryDetail = "${baseUrl}api/category_detail"; // Endpoint for category_detail
   static const emergencyContactList = "${baseUrl}api/emergency_contact_list"; // Endpoint for emergencyContactList

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -18,7 +19,17 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
       backgroundColor: Colors.white,
       body: SafeArea(
         child: GetBuilder<ReportedNonEmgCasesController>(
-          initState: (state) {},
+          initState: (state) {
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              if (controller.reportCaseModel != null) {
+                if ((controller.reportCaseModel!.status == 'Pending' || controller.reportCaseModel!.status == 'All') &&
+                    controller.reportCaseModel!.requestStatus == 'Pending') {
+                  controller.showReportRequestDialog(context, controller.reportCaseModel!);
+                }
+                controller.update();
+              }
+            });
+          },
           builder: (controller) {
             return Column(
               children: [
@@ -61,6 +72,156 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                               ),
                             ),
                           ),
+                          Spacer(),
+                          controller.reportCaseModel != null && controller.reportCaseModel!.status == 'Open'
+                              ? GestureDetector(
+                                  onTap: () {
+                                    // controller.showEndSosDialog(context);
+
+                                    Utils.showCustomDialog(
+                                      context: context,
+                                      child: Center(
+                                        child: Material(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(
+                                            getProportionateScreenWidth(32),
+                                          ),
+                                          child: BackdropFilter(
+                                            filter: ImageFilter.blur(
+                                              sigmaX: 1.5,
+                                              sigmaY: 1.5,
+                                            ),
+                                            child: GetBuilder<ReportedNonEmgCasesController>(
+                                              builder: (controller) {
+                                                return Container(
+                                                  width: SizeConfig.deviceWidth! * .85,
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: getProportionateScreenWidth(16),
+                                                    vertical: getProportionateScreenHeight(16),
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(
+                                                      getProportionateScreenWidth(32),
+                                                    ),
+                                                    color: Colors.white,
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
+                                                      Text(
+                                                        AppLocalizations.of(context)!.confirmationMessage,
+                                                        style: TextStyle(
+                                                            fontFamily: AppFonts.sansFont700,
+                                                            fontSize: getProportionalFontSize(22),
+                                                            color: AppColors.primaryColor),
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                                                      SizedBox(
+                                                        height: getProportionateScreenHeight(10),
+                                                      ),
+                                                      Text(
+                                                        "Are you sure you want to close the case?",
+                                                        style: TextStyle(
+                                                            fontFamily: AppFonts.sansFont500,
+                                                            fontSize: getProportionalFontSize(16),
+                                                            color: AppColors.blackColor),
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                                                      SizedBox(
+                                                        height: getProportionateScreenHeight(24),
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child: CommonButton(
+                                                              padding: EdgeInsets.symmetric(
+                                                                horizontal: getProportionateScreenWidth(24),
+                                                                vertical: getProportionateScreenHeight(18),
+                                                              ),
+                                                              text: AppLocalizations.of(context)!.yes,
+                                                              onPressed: () async {
+                                                                Get.back();
+                                                                if (controller.reportCaseModel!.id != null) {
+                                                                  controller.closeNonEmergencyRequest(
+                                                                      caseId: controller.reportCaseModel!.id!);
+                                                                }
+                                                              },
+                                                              radius: 50,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: getProportionateScreenWidth(18),
+                                                          ),
+                                                          Expanded(
+                                                            child: GestureDetector(
+                                                              onTap: () {
+                                                                Get.back();
+                                                              },
+                                                              behavior: HitTestBehavior.opaque,
+                                                              child: Container(
+                                                                padding: EdgeInsets.symmetric(
+                                                                  horizontal: getProportionateScreenWidth(24),
+                                                                  vertical: getProportionateScreenHeight(17),
+                                                                ),
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(
+                                                                    getProportionateScreenWidth(50),
+                                                                  ),
+                                                                  border:
+                                                                      Border.all(color: AppColors.blackColor, width: 1),
+                                                                ),
+                                                                child: Text(
+                                                                  AppLocalizations.of(context)!.no,
+                                                                  textAlign: TextAlign.center,
+                                                                  maxLines: 1,
+                                                                  overflow: TextOverflow.ellipsis,
+                                                                  style: TextStyle(
+                                                                    fontSize: getProportionalFontSize(16),
+                                                                    fontFamily: AppFonts.sansFont600,
+                                                                    color: AppColors.primaryColor,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.redDefault,
+                                      borderRadius: BorderRadius.circular(
+                                        getProportionateScreenWidth(
+                                          getProportionateScreenWidth(50),
+                                        ),
+                                      ),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: getProportionateScreenWidth(14),
+                                      vertical: getProportionateScreenHeight(6),
+                                    ),
+                                    child: Text(
+                                      "Close case",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: getProportionalFontSize(12),
+                                        fontFamily: AppFonts.sansFont600,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : SizedBox(),
                         ],
                       ),
                       SizedBox(
@@ -69,7 +230,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                     ],
                   ),
                 ),
-                controller.reportCaseModel != null
+                controller.reportCaseModel != null && controller.reportCaseModel!.status == 'Open'
                     ? Expanded(
                         child: SingleChildScrollView(
                           child: Column(
@@ -89,6 +250,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                   )}",
                                   location: "${controller.reportCaseModel!.location ?? '-'}",
                                   city: "${controller.reportCaseModel!.city ?? '-'}",
+                                  requestStatus: "${controller.reportCaseModel!.requestStatus}",
                                 ),
                               ),
                               SizedBox(

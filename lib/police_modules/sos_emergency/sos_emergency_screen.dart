@@ -308,6 +308,7 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                                     )}",
                                     location: "${controller.currentSOSReport!.location ?? '-'}",
                                     city: "${controller.currentSOSReport!.city ?? '-'}",
+                                    requestStatus: "${controller.currentSOSReport!.requestStatus}",
                                   ),
                                 ),
                                 Flexible(

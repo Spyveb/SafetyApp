@@ -227,33 +227,35 @@ class CustomCasesList extends StatelessWidget {
                     ),
                   ],
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      constraints: BoxConstraints(
-                        minWidth: getProportionateScreenWidth(125),
-                      ),
-                      child: Text(
-                        AppLocalizations.of(context)!.requestStatus,
-                        style: TextStyle(
-                          fontSize: getProportionalFontSize(14),
-                          fontFamily: AppFonts.sansFont600,
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                      child: Text(
-                        requestStatus ?? "",
-                        style: TextStyle(
-                          fontSize: getProportionalFontSize(14),
-                          fontFamily: AppFonts.sansFont600,
-                          color: _reqStatusColor(requestStatus ?? 'Pending'),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                requestStatus != null
+                    ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            constraints: BoxConstraints(
+                              minWidth: getProportionateScreenWidth(125),
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context)!.requestStatus,
+                              style: TextStyle(
+                                fontSize: getProportionalFontSize(14),
+                                fontFamily: AppFonts.sansFont600,
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            child: Text(
+                              requestStatus ?? "",
+                              style: TextStyle(
+                                fontSize: getProportionalFontSize(14),
+                                fontFamily: AppFonts.sansFont600,
+                                color: _reqStatusColor(requestStatus ?? 'Pending'),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
               ],
             ),
           ),

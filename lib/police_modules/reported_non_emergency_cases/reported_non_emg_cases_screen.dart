@@ -14,7 +14,7 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
           init: ReportedNonEmgCasesController(),
           initState: (state) {
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-              controller.getNonEmergencyReportsList(search: '');
+              controller.getOpenNonEmergencyReportsList(search: '');
             });
           },
           global: true,
@@ -69,7 +69,7 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
                       ),
                       TextFormField(
                         onChanged: (value) {
-                          controller.getNonEmergencyReportsList(search: value, showLoader: false);
+                          controller.getOpenNonEmergencyReportsList(search: value, showLoader: false);
                         },
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -151,6 +151,7 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
                                   )}",
                                   location: "${report.location ?? '-'}",
                                   city: "${report.city ?? '-'}",
+                                  requestStatus: "${report.requestStatus}",
                                 ),
                               );
                             },

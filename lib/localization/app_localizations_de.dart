@@ -527,5 +527,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get notification => 'Notification';
 
   @override
+  String get requestStatus => 'Request Status';
+
+  @override
   String get hello => 'hello';
 }

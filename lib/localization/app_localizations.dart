@@ -1139,6 +1139,12 @@ abstract class AppLocalizations {
   /// **'Notification'**
   String get notification;
 
+  /// No description provided for @requestStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Status'**
+  String get requestStatus;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:

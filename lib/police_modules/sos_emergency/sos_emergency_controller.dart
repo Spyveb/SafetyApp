@@ -49,7 +49,9 @@ class PoliceSOSEmergencyController extends GetxController {
         }
       } else {}
 
-      if (currentSOSReport != null && currentSOSReport!.status == 'Pending') {
+      if (currentSOSReport != null &&
+          (currentSOSReport!.status == 'Pending' || currentSOSReport!.status == 'All') &&
+          currentSOSReport!.requestStatus == 'Pending') {
         showSOSDialog(Get.context!, currentSOSReport!);
       }
 
@@ -86,15 +88,22 @@ class PoliceSOSEmergencyController extends GetxController {
     }
   }
 
-  void updateSOSEmergencyRequest({bool? showLoader = true, required int caseId, required String status}) async {
+  void updateSOSEmergencyRequest(
+      {bool? showLoader = true, required int caseId, required String status, int? assignSOSEmergencyCaseId}) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
     }
     try {
       Dio.FormData formData = Dio.FormData.fromMap({
-        "assign_sos_emergency_case_id": caseId,
+        // "assign_sos_emergency_case_id": caseId,
         "request_status": status,
       });
+      if (assignSOSEmergencyCaseId != null) {
+        formData.fields.add(MapEntry('assign_sos_emergency_case_id', assignSOSEmergencyCaseId.toString()));
+      } else {
+        formData.fields.add(MapEntry('sos_emergency_case_id', caseId.toString()));
+      }
+
       var response = await ApiProvider().postAPICall(
         Endpoints.updateSOSEmergencyCaseStatus,
         formData,
@@ -180,7 +189,7 @@ class PoliceSOSEmergencyController extends GetxController {
   showSOSDialog(BuildContext context, ReportCaseModel reportCaseModel) {
     showDialog(
       context: context,
-      barrierDismissible: false,
+      // barrierDismissible: false,
       builder: (context) {
         return Dialog(
           insetPadding: EdgeInsets.symmetric(
@@ -352,7 +361,10 @@ class PoliceSOSEmergencyController extends GetxController {
                           child: GestureDetector(
                             onTap: () {
                               if (reportCaseModel.id != null) {
-                                updateSOSEmergencyRequest(caseId: reportCaseModel.id!, status: 'Accept');
+                                updateSOSEmergencyRequest(
+                                    caseId: reportCaseModel.id!,
+                                    status: 'Accept',
+                                    assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
                               }
                             },
                             child: Container(
@@ -386,7 +398,10 @@ class PoliceSOSEmergencyController extends GetxController {
                           child: GestureDetector(
                             onTap: () {
                               if (reportCaseModel.id != null) {
-                                updateSOSEmergencyRequest(caseId: reportCaseModel.id!, status: 'Decline');
+                                updateSOSEmergencyRequest(
+                                    caseId: reportCaseModel.id!,
+                                    status: 'Decline',
+                                    assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
                               }
                             },
                             child: Container(
