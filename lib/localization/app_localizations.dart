@@ -1145,6 +1145,30 @@ abstract class AppLocalizations {
   /// **'Request Status'**
   String get requestStatus;
 
+  /// No description provided for @totalIncidentsAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Incidents Assigned'**
+  String get totalIncidentsAssigned;
+
+  /// No description provided for @totalIncidentsAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Incidents Accepted'**
+  String get totalIncidentsAccepted;
+
+  /// No description provided for @totalEmergencyIncidents.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Emergency Incidents'**
+  String get totalEmergencyIncidents;
+
+  /// No description provided for @totalActiveCases.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Active Cases'**
+  String get totalActiveCases;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:

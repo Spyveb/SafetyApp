@@ -530,5 +530,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get requestStatus => 'Request Status';
 
   @override
+  String get totalIncidentsAssigned => 'Total Incidents Assigned';
+
+  @override
+  String get totalIncidentsAccepted => 'Total Incidents Accepted';
+
+  @override
+  String get totalEmergencyIncidents => 'Total Emergency Incidents';
+
+  @override
+  String get totalActiveCases => 'Total Active Cases';
+
+  @override
   String get hello => 'hello';
 }

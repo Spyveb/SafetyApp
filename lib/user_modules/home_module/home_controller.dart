@@ -56,7 +56,7 @@ class HomeController extends GetxController {
           for (var report in list) {
             userSosEmergencyCaseList.add(ReportCaseModel.fromJson(report));
           }
-          showEmergencyIcon = true;
+          showEmergencyIcon = userSosEmergencyCaseList.isNotEmpty;
         }
       } else {}
       update();
@@ -161,7 +161,7 @@ class HomeController extends GetxController {
       if (response['success'] != null && response['success'] == true) {
         sosEmergencyRequestSuccess(context);
         Utils.showToast(response['message'] ?? 'SOS emergency case created successfully.');
-        showEmergencyIcon =true;
+        showEmergencyIcon = true;
       } else {
         Utils.showToast(response['message'] ?? "You can't create new report. Your one emergency report case is open.");
       }

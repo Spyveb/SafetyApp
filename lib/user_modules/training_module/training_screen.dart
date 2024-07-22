@@ -30,17 +30,21 @@ class TrainingScreen extends GetView<TrainingController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.more_vert,
-                          color: themeProvider.textColor,
-                        ),
-                      ),
+                      // // IconButton(
+                      // //   onPressed: () {},
+                      // //   icon: Icon(
+                      // //     Icons.more_vert,
+                      // //     color: themeProvider.textColor,
+                      // //   ),
+                      // // ),
+                      // Icon(
+                      //   Icons.more_vert,
+                      //   color: themeProvider.textColor,
+                      // ),
                       SizedBox(
-                        width: getProportionateScreenWidth(12),
+                        width: getProportionateScreenWidth(8),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

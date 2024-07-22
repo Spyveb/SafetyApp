@@ -37,13 +37,20 @@ class HomeScreen extends GetView<HomeController> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      IconButton(
-                        onPressed: () {},
-                        padding: EdgeInsets.only(right: getProportionateScreenWidth(22)),
-                        icon: Icon(
-                          Icons.more_vert,
-                          color: themeProvider.textColor,
-                        ),
+                      // IconButton(
+                      //   onPressed: () {},
+                      //   padding: EdgeInsets.only(right: getProportionateScreenWidth(22)),
+                      //   icon: Icon(
+                      //     Icons.more_vert,
+                      //     color: themeProvider.textColor,
+                      //   ),
+                      // ),
+                      // Icon(
+                      //   Icons.more_vert,
+                      //   color: themeProvider.textColor,
+                      // ),
+                      SizedBox(
+                        width: getProportionateScreenWidth(8),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
