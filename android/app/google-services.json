@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "270914271583",
+    "project_id": "distress-app-ff499",
+    "storage_bucket": "distress-app-ff499.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270914271583:android:485646de971cadab6cdeea",
+        "android_client_info": {
+          "package_name": "com.app.distress_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsHqqSX8IxK3geaW9Y3WFN4PnxexTonwM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

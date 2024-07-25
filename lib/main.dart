@@ -1,3 +1,4 @@
+import 'package:distress_app/firebase_options.dart';
 import 'package:distress_app/packages/country_code_picker/src/country_localizations.dart';
 import 'package:distress_app/providers/theme_provider.dart';
 import 'package:distress_app/routes/app_pages.dart';
@@ -5,6 +6,7 @@ import 'package:distress_app/user_modules/splash/splash_bindings.dart';
 import 'package:distress_app/utils/app_colors.dart';
 import 'package:distress_app/utils/app_fonts.dart';
 import 'package:distress_app/utils/constants.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -20,7 +22,9 @@ GlobalKey<NavigatorState> navState = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool? savedTheme = prefs.getBool(Constants.isDarkThemeSelected);
   runApp(

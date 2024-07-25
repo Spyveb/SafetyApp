@@ -111,40 +111,82 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              controller.showBackupRequestDialog(context);
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: AppColors.redDefault,
-                                                borderRadius: BorderRadius.circular(
-                                                  getProportionateScreenWidth(
-                                                    getProportionateScreenWidth(50),
+                                          controller.currentSOSReport!.backupRequestStatus == 1
+                                              // ? Container(
+                                              //     decoration: BoxDecoration(
+                                              //       color: Colors.green,
+                                              //       borderRadius: BorderRadius.circular(
+                                              //         getProportionateScreenWidth(
+                                              //           getProportionateScreenWidth(50),
+                                              //         ),
+                                              //       ),
+                                              //     ),
+                                              //     padding: EdgeInsets.symmetric(
+                                              //       horizontal: getProportionateScreenWidth(12),
+                                              //       vertical: getProportionateScreenHeight(6),
+                                              //     ),
+                                              //     child: Row(
+                                              //       children: [
+                                              //         Text(
+                                              //           "Backup request sent",
+                                              //           style: TextStyle(
+                                              //             color: Colors.white,
+                                              //             fontSize: getProportionalFontSize(12),
+                                              //             fontFamily: AppFonts.sansFont600,
+                                              //           ),
+                                              //         ),
+                                              //         Icon(
+                                              //           Icons.check,
+                                              //           color: AppColors.whiteColor,
+                                              //           size: 18,
+                                              //         ),
+                                              //       ],
+                                              //     ),
+                                              //   )
+                                              ? Text(
+                                                  "Backup request sent!!!",
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontSize: getProportionalFontSize(12),
+                                                    fontFamily: AppFonts.sansFont600,
+                                                  ),
+                                                )
+                                              : GestureDetector(
+                                                  onTap: () {
+                                                    // controller.showBackupRequestDialog(context);
+                                                    if (controller.currentSOSReport!.id != null) {
+                                                      controller.backupSOSEmergencyRequest(
+                                                          caseId: controller.currentSOSReport!.id!);
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: AppColors.redDefault,
+                                                      borderRadius: BorderRadius.circular(
+                                                        getProportionateScreenWidth(
+                                                          getProportionateScreenWidth(50),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    padding: EdgeInsets.symmetric(
+                                                      horizontal: getProportionateScreenWidth(12),
+                                                      vertical: getProportionateScreenHeight(6),
+                                                    ),
+                                                    child: Text(
+                                                      AppLocalizations.of(context)!.requestBackup,
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: getProportionalFontSize(12),
+                                                        fontFamily: AppFonts.sansFont600,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: getProportionateScreenWidth(12),
-                                                vertical: getProportionateScreenHeight(6),
-                                              ),
-                                              child: Text(
-                                                AppLocalizations.of(context)!.requestBackup,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: getProportionalFontSize(12),
-                                                  fontFamily: AppFonts.sansFont600,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
                                           SizedBox(
                                             height: getProportionateScreenHeight(10),
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              // controller.showEndSosDialog(context);
-
                                               Utils.showCustomDialog(
                                                 context: context,
                                                 child: Center(
@@ -211,9 +253,12 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                                                                         onPressed: () async {
                                                                           Get.back();
                                                                           if (controller.currentSOSReport!.id != null) {
-                                                                            controller.closeSOSEmergencyRequest(
+                                                                            controller.showEndSosDialog(context,
                                                                                 caseId:
                                                                                     controller.currentSOSReport!.id!);
+                                                                            // controller.closeSOSEmergencyRequest(
+                                                                            //     caseId:
+                                                                            //         controller.currentSOSReport!.id!);
                                                                           }
                                                                         },
                                                                         radius: 50,

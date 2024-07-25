@@ -31,6 +31,8 @@ class ReportCaseModel {
   int? assign_sos_emergency_case_id;
   int? assign_non_emergency_case_id;
   List<ReportCaseContent>? nonEmergencyCaseContents;
+  String? note;
+  int? backupRequestStatus;
 
   ReportCaseModel({
     this.id,
@@ -55,6 +57,8 @@ class ReportCaseModel {
     this.policeOfficerLatitude,
     this.policeOfficerLongitude,
     this.nonEmergencyCaseContents,
+    this.note,
+    this.backupRequestStatus,
   });
 
   factory ReportCaseModel.fromJson(Map<String, dynamic> json) => ReportCaseModel(
@@ -83,6 +87,8 @@ class ReportCaseModel {
             ? []
             : List<ReportCaseContent>.from(
                 json["non_emergency_case_contents"]!.map((x) => ReportCaseContent.fromJson(x))),
+        note: json["note"],
+        backupRequestStatus: json["is_backup_request"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -110,6 +116,8 @@ class ReportCaseModel {
         "non_emergency_case_contents": nonEmergencyCaseContents == null
             ? []
             : List<dynamic>.from(nonEmergencyCaseContents!.map((x) => x.toJson())),
+        "note": note,
+        "is_backup_request": backupRequestStatus,
       };
 }
 

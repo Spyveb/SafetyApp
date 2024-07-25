@@ -17,7 +17,10 @@ class Endpoints {
       "${baseUrl}api/update_sos_emergency_case_status"; // Endpoint for update_sos_emergency_case_status
   static const closeSOSEmergencyCaseStatus =
       "${baseUrl}api/close_sos_emergency_case"; // Endpoint for close_sos_emergency_case
-  static const sosEmergencyList = "${baseUrl}api/sos_emergency_case_list"; // Endpoint for sos_emergency_case_list
+  static const backupSOSEmergencyCaseStatus =
+      "${baseUrl}api/request_backup_sos_emergency_case"; // Endpoint for close_sos_emergency_case
+  static const sosEmergencyList =
+      "${baseUrl}api/request_backup_sos_emergency_case"; // Endpoint for sos_emergency_case_list
   static const openSOSEmergencyList =
       "${baseUrl}api/open_sos_emergency_case_list"; // Endpoint for open_sos_emergency_case_list
   static const sendNonEmergency = "${baseUrl}api/create_non_emergency_case"; // Endpoint for delete account

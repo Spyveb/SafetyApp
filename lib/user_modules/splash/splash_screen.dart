@@ -40,6 +40,8 @@ class SplashScreen extends GetView<SplashController> {
                   Spacer(),
                   TextButton(
                     onPressed: () {
+                      // Get.offAllNamed(Routes.POLICE_SOSEMERGENCY);
+                      // return;
                       // Get.offAllNamed(Routes.SIGN_IN);
                       if (controller.isAuthenticated) {
                         if (controller.role == "police_officer") {

@@ -131,7 +131,7 @@ abstract class AppPages {
     GetPage(
       name: Routes.NOTIFICATION_SCREEN,
       page: () => const NotificationScreen(),
-      // binding: PoliceDashBoardBinding(),
+      binding: PoliceDashBoardBinding(),
     ),
     GetPage(
       name: Routes.POLICE_SOSEMERGENCY,

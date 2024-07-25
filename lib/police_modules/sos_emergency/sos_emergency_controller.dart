@@ -13,6 +13,9 @@ class PoliceSOSEmergencyController extends GetxController {
   GoogleMapController? googleMapController;
   List<ReportCaseModel> sosReportsList = [];
   ReportCaseModel? currentSOSReport;
+
+  TextEditingController endSOSNotesController = TextEditingController();
+
   void getSOSEmergencyList({bool? showLoader = true, required String search}) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
@@ -150,6 +153,7 @@ class PoliceSOSEmergencyController extends GetxController {
     try {
       Dio.FormData formData = Dio.FormData.fromMap({
         "id": caseId,
+        "note": endSOSNotesController.text,
       });
       var response = await ApiProvider().postAPICall(
         Endpoints.closeSOSEmergencyCaseStatus,
@@ -161,6 +165,7 @@ class PoliceSOSEmergencyController extends GetxController {
       }
       if (response['success'] != null && response['success'] == true) {
         Utils.showToast(response['message'] ?? 'SOS closed');
+        Get.back();
         Get.back();
       } else {
         Utils.showToast(response['message'] ?? 'Failed to end SOS');
@@ -525,7 +530,7 @@ class PoliceSOSEmergencyController extends GetxController {
     );
   }
 
-  showEndSosDialog(BuildContext context) {
+  showEndSosDialog(BuildContext context, {required int caseId}) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -534,101 +539,159 @@ class PoliceSOSEmergencyController extends GetxController {
           insetPadding: EdgeInsets.symmetric(
             horizontal: getProportionateScreenWidth(10),
           ),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                color: AppColors.policeDarkBlueColor,
-              ),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            padding: EdgeInsets.symmetric(
-              vertical: getProportionateScreenHeight(10),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(14),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.whatHappenedThisEvent,
-                    style: TextStyle(
-                      fontFamily: AppFonts.sansFont600,
-                      fontSize: getProportionalFontSize(16),
-                    ),
+          child: GetBuilder<PoliceSOSEmergencyController>(
+            id: 'end_sos_dialog',
+            builder: (controller) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    color: AppColors.policeDarkBlueColor,
                   ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(20),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                padding: EdgeInsets.symmetric(
+                  vertical: getProportionateScreenHeight(10),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(14),
                   ),
-                  TextFormField(
-                    maxLines: null,
-                    maxLength: 300,
-                    onTapOutside: (event) {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    },
-                    onChanged: (value) {},
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(8),
-                        vertical: getProportionateScreenHeight(8),
-                      ),
-                      constraints: BoxConstraints(
-                        maxHeight: getProportionateScreenHeight(100),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: const BorderSide(
-                          color: Colors.black,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.whatHappenedThisEvent,
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(16),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: const BorderSide(
-                          color: Colors.black,
-                        ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(20),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(25),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.redDefault,
-                        borderRadius: BorderRadius.circular(
-                          getProportionateScreenWidth(30),
-                        ),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(30),
-                        vertical: getProportionateScreenHeight(15),
-                      ),
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.submit,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: getProportionalFontSize(18),
-                            fontFamily: AppFonts.sansFont600,
+                      TextFormField(
+                        controller: endSOSNotesController,
+                        maxLines: null,
+                        maxLength: 300,
+                        onTapOutside: (event) {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        },
+                        onChanged: (value) {
+                          endSOSNotesController.text = value;
+                          update(['end_sos_dialog']);
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(8),
+                            vertical: getProportionateScreenHeight(8),
+                          ),
+                          constraints: BoxConstraints(
+                            maxHeight: getProportionateScreenHeight(100),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: const BorderSide(
+                              color: Colors.black,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: const BorderSide(
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(25),
+                      ),
+                      SizedBox(
+                        width: SizeConfig.deviceWidth,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.redDefault,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: getProportionateScreenWidth(16),
+                              vertical: getProportionateScreenHeight(12),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(30),
+                              ),
+                            ),
+                          ),
+                          onPressed: endSOSNotesController.text.isNotEmpty
+                              ? () {
+                                  closeSOSEmergencyRequest(caseId: caseId);
+                                }
+                              : null,
+                          child: Text(
+                            AppLocalizations.of(context)!.submit,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: getProportionalFontSize(18),
+                              fontFamily: AppFonts.sansFont600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
         );
       },
     );
+  }
+
+  void backupSOSEmergencyRequest({
+    bool? showLoader = true,
+    required int caseId,
+  }) async {
+    if (showLoader == true) {
+      LoadingDialog.showLoader();
+    }
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({
+        "id": caseId,
+      });
+      var response = await ApiProvider().postAPICall(
+        Endpoints.backupSOSEmergencyCaseStatus,
+        formData,
+        onSendProgress: (count, total) {},
+      );
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      if (response['success'] != null && response['success'] == true) {
+        currentSOSReport!.backupRequestStatus = 1;
+        showBackupRequestDialog(Get.context!);
+      } else {
+        Utils.showToast(response['message'] ?? 'Failed to send backup request, Please try again later.');
+      }
+
+      update();
+    } on Dio.DioException catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast(e.message ?? "Something went wrong");
+
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast("Something went wrong");
+      update();
+
+      debugPrint(e.toString());
+    }
   }
 
   showBackupRequestDialog(BuildContext context) {
