@@ -90,8 +90,7 @@ class ReportScreen extends GetView<ReportController> {
                               controller.searchLocationController.text = result.description ?? '';
 
                               if (controller.searchLocationController.text.isNotEmpty) {
-                                var address =
-                                    await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromQuery(
+                                var address = await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromQuery(
                                   controller.searchLocationController.text,
                                 );
                                 // var initialLatLong = LatLng(
@@ -206,9 +205,7 @@ class ReportScreen extends GetView<ReportController> {
                                           Text(
                                             AppLocalizations.of(context)!.confirmationMessage,
                                             style: TextStyle(
-                                                fontFamily: AppFonts.sansFont700,
-                                                fontSize: getProportionalFontSize(22),
-                                                color: AppColors.primaryColor),
+                                                fontFamily: AppFonts.sansFont700, fontSize: getProportionalFontSize(22), color: AppColors.primaryColor),
                                             textAlign: TextAlign.center,
                                           ),
                                           SizedBox(
@@ -216,10 +213,8 @@ class ReportScreen extends GetView<ReportController> {
                                           ),
                                           Text(
                                             AppLocalizations.of(context)!.sendSOSAlert,
-                                            style: TextStyle(
-                                                fontFamily: AppFonts.sansFont500,
-                                                fontSize: getProportionalFontSize(16),
-                                                color: AppColors.blackColor),
+                                            style:
+                                                TextStyle(fontFamily: AppFonts.sansFont500, fontSize: getProportionalFontSize(16), color: AppColors.blackColor),
                                             textAlign: TextAlign.center,
                                           ),
                                           SizedBox(
@@ -427,7 +422,7 @@ class ReportScreen extends GetView<ReportController> {
                           width: getProportionateScreenWidth(50),
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage(AppImages.policeReport),
+                              image: AssetImage(AppImages.missingPersonIcon),
                             ),
                           ),
                         ),

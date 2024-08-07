@@ -184,6 +184,7 @@
   "totalEmergencyIncidents": "Total Emergency Incidents",
   "totalActiveCases": "Total Active Cases",
   "youAreNotAuthorizedToViewTheReportDetails": "You are not authorized to view the report details.",
+  "reportedRequest": "Reported Request",
   "hello": "hello",
   "hello": "hello"
 }

@@ -34,6 +34,7 @@ class AppImages {
   static const String messageSent = "assets/images/message_sent.png";
   static const String userImage = "assets/images/user.png";
   static const String musicLogo = "assets/images/music_logo.png";
+  static const String missingPersonIcon = "assets/images/missing_person_icon.png";
 
   // User svgs
   static const String userProfile = "assets/svgs/user.svg";

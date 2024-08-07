@@ -1175,6 +1175,12 @@ abstract class AppLocalizations {
   /// **'You are not authorized to view the report details.'**
   String get youAreNotAuthorizedToViewTheReportDetails;
 
+  /// No description provided for @reportedRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported Request'**
+  String get reportedRequest;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:

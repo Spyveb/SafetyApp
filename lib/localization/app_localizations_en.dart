@@ -545,5 +545,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get youAreNotAuthorizedToViewTheReportDetails => 'You are not authorized to view the report details.';
 
   @override
+  String get reportedRequest => 'Reported Request';
+
+  @override
   String get hello => 'hello';
 }

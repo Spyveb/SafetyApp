@@ -101,9 +101,10 @@ class ReportedEmgCasesScreen extends GetView<ReportedEmgCasesController> {
                             itemBuilder: (context, index) {
                               ReportCaseModel report = controller.sosReportsList[index];
                               return GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   if (report.status == 'Open') {
-                                    Get.toNamed(Routes.POLICE_SOSEMERGENCY);
+                                    await Get.toNamed(Routes.POLICE_SOSEMERGENCY);
+                                    controller.getSOSEmergencyList(search: '', showLoader: false);
                                   }
                                 },
                                 child: CustomCasesList(

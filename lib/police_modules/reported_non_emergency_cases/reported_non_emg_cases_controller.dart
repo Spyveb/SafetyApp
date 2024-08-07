@@ -217,7 +217,7 @@ class ReportedNonEmgCasesController extends GetxController {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.sosRequest,
+                    AppLocalizations.of(context)!.reportedRequest,
                     style: TextStyle(
                       fontFamily: AppFonts.sansFont600,
                       fontSize: getProportionalFontSize(30),
@@ -704,6 +704,7 @@ class ReportedNonEmgCasesController extends GetxController {
         LoadingDialog.hideLoader();
       }
       if (response['success'] != null && response['success'] == true) {
+        endReportNotesController.clear();
         Utils.showToast(response['message'] ?? 'Report closed');
         Get.back();
         Get.back();

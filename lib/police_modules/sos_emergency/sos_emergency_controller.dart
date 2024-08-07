@@ -91,8 +91,7 @@ class PoliceSOSEmergencyController extends GetxController {
     }
   }
 
-  void updateSOSEmergencyRequest(
-      {bool? showLoader = true, required int caseId, required String status, int? assignSOSEmergencyCaseId}) async {
+  void updateSOSEmergencyRequest({bool? showLoader = true, required int caseId, required String status, int? assignSOSEmergencyCaseId}) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
     }
@@ -164,6 +163,7 @@ class PoliceSOSEmergencyController extends GetxController {
         LoadingDialog.hideLoader();
       }
       if (response['success'] != null && response['success'] == true) {
+        endSOSNotesController.clear();
         Utils.showToast(response['message'] ?? 'SOS closed');
         Get.back();
         Get.back();
@@ -367,9 +367,7 @@ class PoliceSOSEmergencyController extends GetxController {
                             onTap: () {
                               if (reportCaseModel.id != null) {
                                 updateSOSEmergencyRequest(
-                                    caseId: reportCaseModel.id!,
-                                    status: 'Accept',
-                                    assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
+                                    caseId: reportCaseModel.id!, status: 'Accept', assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
                               }
                             },
                             child: Container(
@@ -404,9 +402,7 @@ class PoliceSOSEmergencyController extends GetxController {
                             onTap: () {
                               if (reportCaseModel.id != null) {
                                 updateSOSEmergencyRequest(
-                                    caseId: reportCaseModel.id!,
-                                    status: 'Decline',
-                                    assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
+                                    caseId: reportCaseModel.id!, status: 'Decline', assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
                               }
                             },
                             child: Container(
