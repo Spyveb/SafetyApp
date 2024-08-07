@@ -144,7 +144,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                                               onPressed: () async {
                                                                 Get.back();
                                                                 if (controller.reportCaseModel!.id != null) {
-                                                                  controller.showEndSosDialog(context, caseId: controller.reportCaseModel!.id!);
+                                                                  controller.showEndReportDialog(context, caseId: controller.reportCaseModel!.id!);
                                                                 }
                                                               },
                                                               radius: 50,

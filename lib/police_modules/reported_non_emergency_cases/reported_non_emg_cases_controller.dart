@@ -538,7 +538,7 @@ class ReportedNonEmgCasesController extends GetxController {
 
   TextEditingController endReportNotesController = TextEditingController();
 
-  showEndSosDialog(BuildContext context, {required int caseId}) {
+  showEndReportDialog(BuildContext context, {required int caseId}) {
     showDialog(
       context: context,
       barrierDismissible: true,
