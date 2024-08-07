@@ -327,8 +327,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                               controller.submitSearchLocationController.text = result.description ?? '';
 
                               if (controller.submitSearchLocationController.text.isNotEmpty) {
-                                var address =
-                                    await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromQuery(
+                                var address = await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromQuery(
                                   controller.submitSearchLocationController.text,
                                 );
                                 // var initialLatLong = LatLng(
@@ -614,8 +613,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                                           behavior: HitTestBehavior.opaque,
                                           onTap: () async {
                                             ImagePicker imagePicker = ImagePicker();
-                                            XFile? xFile = await imagePicker.pickImage(
-                                                source: ImageSource.camera, imageQuality: 50);
+                                            XFile? xFile = await imagePicker.pickImage(source: ImageSource.camera, imageQuality: 50);
                                             if (xFile != null) {
                                               controller.pickedFiles.add(File(xFile.path));
                                               controller.update();
@@ -633,6 +631,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                                         GestureDetector(
                                           behavior: HitTestBehavior.opaque,
                                           onTap: () {
+                                            FocusManager.instance.primaryFocus?.unfocus();
                                             controller.informationText = controller.informationController.text;
                                             controller.update();
                                             controller.informationController.clear();
@@ -672,9 +671,8 @@ class SubmitReportScreen extends GetView<ReportController> {
                                 ),
                                 borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
                               ),
-                              hintText: controller.isRecording == true
-                                  ? controller.getFormattedTime(controller.recordTime)
-                                  : AppLocalizations.of(context)!.enterText,
+                              hintText:
+                                  controller.isRecording == true ? controller.getFormattedTime(controller.recordTime) : AppLocalizations.of(context)!.enterText,
                               hintStyle: TextStyle(
                                 fontFamily: AppFonts.sansFont400,
                                 fontSize: getProportionalFontSize(16),
@@ -751,9 +749,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                                               Text(
                                                 AppLocalizations.of(context)!.confirmationMessage,
                                                 style: TextStyle(
-                                                    fontFamily: AppFonts.sansFont700,
-                                                    fontSize: getProportionalFontSize(22),
-                                                    color: AppColors.primaryColor),
+                                                    fontFamily: AppFonts.sansFont700, fontSize: getProportionalFontSize(22), color: AppColors.primaryColor),
                                                 textAlign: TextAlign.center,
                                               ),
                                               SizedBox(
@@ -762,9 +758,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                                               Text(
                                                 AppLocalizations.of(context)!.sendReportAlert,
                                                 style: TextStyle(
-                                                    fontFamily: AppFonts.sansFont500,
-                                                    fontSize: getProportionalFontSize(16),
-                                                    color: AppColors.blackColor),
+                                                    fontFamily: AppFonts.sansFont500, fontSize: getProportionalFontSize(16), color: AppColors.blackColor),
                                                 textAlign: TextAlign.center,
                                               ),
                                               SizedBox(
@@ -777,9 +771,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                                                 title: Text(
                                                   AppLocalizations.of(context)!.wouldYouLikeToSpeakAProfessional,
                                                   style: TextStyle(
-                                                      fontFamily: AppFonts.sansFont400,
-                                                      fontSize: getProportionalFontSize(12),
-                                                      color: AppColors.lightTextColor),
+                                                      fontFamily: AppFonts.sansFont400, fontSize: getProportionalFontSize(12), color: AppColors.lightTextColor),
                                                 ),
                                                 value: controller.speakToProfessional,
                                                 onChanged: (value) {

@@ -542,5 +542,8 @@ class AppLocalizationsAf extends AppLocalizations {
   String get totalActiveCases => 'Total Active Cases';
 
   @override
+  String get youAreNotAuthorizedToViewTheReportDetails => 'You are not authorized to view the report details.';
+
+  @override
   String get hello => 'hello';
 }

@@ -129,8 +129,7 @@ class ReportController extends GetxController {
       if (pickedFiles.isNotEmpty) {
         for (int i = 0; i < pickedFiles.length; i++) {
           formData.files.add(
-            MapEntry('file[${i}]',
-                await Dio.MultipartFile.fromFile(pickedFiles[i].path, filename: pickedFiles[i].path.split('/').last)),
+            MapEntry('file[${i}]', await Dio.MultipartFile.fromFile(pickedFiles[i].path, filename: pickedFiles[i].path.split('/').last)),
           );
         }
       }
@@ -203,6 +202,7 @@ class ReportController extends GetxController {
       if (response['success'] != null && response['success'] == true) {
         sosEmergencyRequestSuccess(context);
         Utils.showToast(response['message'] ?? 'SOS emergency case created successfully.');
+        Get.find<HomeController>().getUserSosEmergencyCase(showLoader: false, search: '');
       } else {
         Utils.showToast(response['message'] ?? "You can't create new report. Your one emergency report case is open.");
       }

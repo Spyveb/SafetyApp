@@ -24,6 +24,7 @@ class HomeScreen extends GetView<HomeController> {
           initState: (state) {
             controller.getCurrentLocation();
             controller.getUserName();
+            controller.getUserSosEmergencyCase(search: '');
             // controller.saveFCMToken();
           },
           builder: (controller) {
@@ -199,8 +200,7 @@ class HomeScreen extends GetView<HomeController> {
                               controller.searchLocationController.text = result.description ?? '';
 
                               if (controller.searchLocationController.text.isNotEmpty) {
-                                var address =
-                                    await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromQuery(
+                                var address = await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromQuery(
                                   controller.searchLocationController.text,
                                 );
                                 // var initialLatLong = LatLng(
@@ -289,9 +289,7 @@ class HomeScreen extends GetView<HomeController> {
                                           Text(
                                             AppLocalizations.of(context)!.confirmationMessage,
                                             style: TextStyle(
-                                                fontFamily: AppFonts.sansFont700,
-                                                fontSize: getProportionalFontSize(22),
-                                                color: AppColors.primaryColor),
+                                                fontFamily: AppFonts.sansFont700, fontSize: getProportionalFontSize(22), color: AppColors.primaryColor),
                                             textAlign: TextAlign.center,
                                           ),
                                           SizedBox(
@@ -299,10 +297,8 @@ class HomeScreen extends GetView<HomeController> {
                                           ),
                                           Text(
                                             AppLocalizations.of(context)!.sendSOSAlert,
-                                            style: TextStyle(
-                                                fontFamily: AppFonts.sansFont500,
-                                                fontSize: getProportionalFontSize(16),
-                                                color: AppColors.blackColor),
+                                            style:
+                                                TextStyle(fontFamily: AppFonts.sansFont500, fontSize: getProportionalFontSize(16), color: AppColors.blackColor),
                                             textAlign: TextAlign.center,
                                           ),
                                           SizedBox(

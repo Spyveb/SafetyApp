@@ -1169,6 +1169,12 @@ abstract class AppLocalizations {
   /// **'Total Active Cases'**
   String get totalActiveCases;
 
+  /// No description provided for @youAreNotAuthorizedToViewTheReportDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'You are not authorized to view the report details.'**
+  String get youAreNotAuthorizedToViewTheReportDetails;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:

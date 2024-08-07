@@ -62,7 +62,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                               ),
                             ),
                           ),
-                          Flexible(
+                          Expanded(
                             child: Text(
                               "${AppLocalizations.of(context)!.caseNo} ${controller.reportCaseModel?.id}",
                               style: TextStyle(
@@ -72,7 +72,6 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                               ),
                             ),
                           ),
-                          Spacer(),
                           controller.reportCaseModel != null && controller.reportCaseModel!.status == 'Open'
                               ? GestureDetector(
                                   onTap: () {
@@ -228,7 +227,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                     ],
                   ),
                 ),
-                controller.reportCaseModel != null && controller.reportCaseModel!.status == 'Open'
+                controller.reportCaseModel != null && controller.reportCaseModel?.status == 'Open' || controller.reportCaseModel?.status == 'Close'
                     ? Expanded(
                         child: SingleChildScrollView(
                           child: Column(
@@ -392,7 +391,20 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                           ),
                         ),
                       )
-                    : SizedBox(),
+                    : ((controller.reportCaseModel?.status == 'Pending' || controller.reportCaseModel?.status == 'All') &&
+                                controller.reportCaseModel?.requestStatus == 'Pending') ==
+                            false
+                        ? Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.youAreNotAuthorizedToViewTheReportDetails,
+                              style: TextStyle(
+                                fontSize: getProportionalFontSize(14),
+                                fontFamily: AppFonts.sansFont400,
+                                color: Colors.black,
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
               ],
             );
           },

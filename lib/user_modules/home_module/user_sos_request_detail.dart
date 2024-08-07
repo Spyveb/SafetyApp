@@ -11,14 +11,11 @@ class UserSosRequestDetailScreen extends GetView<HomeController> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: GetBuilder<HomeController>(
-          init: HomeController(),
           initState: (state) {
-            // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-            //   controller.getNonEmergencyReportsList(search: '');
-            // });
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              controller.getUserSosEmergencyCase(search: '');
+            });
           },
-          global: true,
-          autoRemove: false,
           builder: (controller) {
             return Padding(
               padding: EdgeInsets.symmetric(

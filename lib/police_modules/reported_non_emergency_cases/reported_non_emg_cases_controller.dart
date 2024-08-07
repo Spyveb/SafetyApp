@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -493,9 +494,19 @@ class ReportedNonEmgCasesController extends GetxController {
       audioPlayer.resume();
       playerState = PlayerState.playing;
     } else if (playerState == PlayerState.completed || playerState == PlayerState.stopped) {
-      audioPlayer.play(
-        DeviceFileSource(dirPath, mimeType: 'audio/mpeg'),
-      );
+      try {
+        audioPlayer.play(
+          DeviceFileSource(
+            dirPath,
+          ),
+        );
+      } on PlatformException catch (e) {
+        if (e.code == 'DarwinAudioError') {
+          audioPlayer.play(
+            DeviceFileSource(dirPath, mimeType: 'audio/mpeg'),
+          );
+        }
+      }
       playerState = PlayerState.playing;
     }
     update(["audio_controller"]);
@@ -515,19 +526,35 @@ class ReportedNonEmgCasesController extends GetxController {
   }
 
   setSourceUrl(String url) async {
-    // audioPlayer.setSourceUrl(url, mimeType: 'audio/mpeg');
     String path = url.split('/').last.split('.').first;
     Directory directory = await getTemporaryDirectory();
     String dirPath = "${directory.path}/${path}.m4a";
     if (await File(dirPath).exists()) {
-      await audioPlayer.setSourceDeviceFile(dirPath, mimeType: 'audio/mpeg');
+      try {
+        await audioPlayer.setSourceDeviceFile(
+          dirPath,
+        );
+      } on PlatformException catch (e) {
+        if (e.code == 'DarwinAudioError') {
+          await audioPlayer.setSourceDeviceFile(dirPath, mimeType: 'audio/mpeg');
+        }
+      }
     } else {
       var response = await Dio.Dio().download(
         url,
         dirPath,
       );
       if (response.statusCode == 200) {
-        await audioPlayer.setSourceDeviceFile(dirPath, mimeType: 'audio/mpeg');
+        // await audioPlayer.setSourceDeviceFile(dirPath, mimeType: 'audio/mpeg');
+        try {
+          await audioPlayer.setSourceDeviceFile(
+            dirPath,
+          );
+        } on PlatformException catch (e) {
+          if (e.code == 'DarwinAudioError') {
+            await audioPlayer.setSourceDeviceFile(dirPath, mimeType: 'audio/mpeg');
+          }
+        }
       }
     }
   }

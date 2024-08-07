@@ -27,7 +27,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    getUserSosEmergencyCase();
+    // getUserSosEmergencyCase();
     super.onInit();
   }
 
@@ -161,7 +161,8 @@ class HomeController extends GetxController {
       if (response['success'] != null && response['success'] == true) {
         sosEmergencyRequestSuccess(context);
         Utils.showToast(response['message'] ?? 'SOS emergency case created successfully.');
-        showEmergencyIcon = true;
+        // showEmergencyIcon = true;
+        getUserSosEmergencyCase(showLoader: false, search: '');
       } else {
         Utils.showToast(response['message'] ?? "You can't create new report. Your one emergency report case is open.");
       }

@@ -183,6 +183,7 @@
   "totalIncidentsAccepted": "Total Incidents Accepted",
   "totalEmergencyIncidents": "Total Emergency Incidents",
   "totalActiveCases": "Total Active Cases",
+  "youAreNotAuthorizedToViewTheReportDetails": "You are not authorized to view the report details.",
   "hello": "hello",
   "hello": "hello"
 }
