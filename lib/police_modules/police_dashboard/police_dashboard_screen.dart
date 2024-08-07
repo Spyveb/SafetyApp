@@ -20,6 +20,7 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
           // controller.showSOSDialog(context);
           controller.getUserName();
+          Get.find<PoliceSettingController>().getUserProfile(showLoader: false);
           // controller.saveFCMToken();
         });
       },
@@ -336,9 +337,8 @@ class PoliceDashBoardScreen extends GetView<PoliceDashBoardController> {
                             ),
                             PoliceDashboardContainer(
                               title: AppLocalizations.of(context)!.totalActiveCases,
-                              value: controller.policeDashboardModel.totalActiveCases != null
-                                  ? controller.policeDashboardModel.totalActiveCases.toString()
-                                  : "0",
+                              value:
+                                  controller.policeDashboardModel.totalActiveCases != null ? controller.policeDashboardModel.totalActiveCases.toString() : "0",
                             ),
                           ],
                         ),

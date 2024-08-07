@@ -19,6 +19,7 @@ class PoliceSettingScreen extends GetView<PoliceSettingController> {
         child: GetBuilder<PoliceSettingController>(
           init: PoliceSettingController(),
           initState: (state) {
+            // controller.getUserAvailability();
             controller.getUserProfile(showLoader: false);
           },
           builder: (controller) {
@@ -193,9 +194,11 @@ class PoliceSettingScreen extends GetView<PoliceSettingController> {
                     onTap: () {},
                     suffix: CommonSwitch(
                       value: controller.availability,
-                      onChanged: (value) {
-                        controller.availabilitySwitch(value);
-                      },
+                      onChanged: controller.switchEnable
+                          ? (value) {
+                              controller.availabilitySwitch(value);
+                            }
+                          : null,
                     ),
                   ),
                   SizedBox(
@@ -239,10 +242,8 @@ class PoliceSettingScreen extends GetView<PoliceSettingController> {
                                       children: [
                                         Text(
                                           AppLocalizations.of(context)!.confirmationMessage,
-                                          style: TextStyle(
-                                              fontFamily: AppFonts.sansFont700,
-                                              fontSize: getProportionalFontSize(22),
-                                              color: AppColors.primaryColor),
+                                          style:
+                                              TextStyle(fontFamily: AppFonts.sansFont700, fontSize: getProportionalFontSize(22), color: AppColors.primaryColor),
                                           textAlign: TextAlign.center,
                                         ),
                                         SizedBox(
@@ -250,10 +251,8 @@ class PoliceSettingScreen extends GetView<PoliceSettingController> {
                                         ),
                                         Text(
                                           AppLocalizations.of(context)!.areYouSureYouWantToLogout,
-                                          style: TextStyle(
-                                              fontFamily: AppFonts.sansFont500,
-                                              fontSize: getProportionalFontSize(16),
-                                              color: AppColors.blackColor),
+                                          style:
+                                              TextStyle(fontFamily: AppFonts.sansFont500, fontSize: getProportionalFontSize(16), color: AppColors.blackColor),
                                           textAlign: TextAlign.center,
                                         ),
                                         SizedBox(

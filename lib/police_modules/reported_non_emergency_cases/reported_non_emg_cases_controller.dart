@@ -81,8 +81,8 @@ class ReportedNonEmgCasesController extends GetxController {
         "search": search,
       });
       var response = await ApiProvider().postAPICall(
-        // Endpoints.openNonEmergencyList,
-        Endpoints.nonEmergencyList,
+        Endpoints.openNonEmergencyList,
+        // Endpoints.nonEmergencyList,
         formData,
         onSendProgress: (count, total) {},
       );

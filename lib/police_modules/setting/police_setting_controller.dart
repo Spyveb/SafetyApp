@@ -16,6 +16,7 @@ class PoliceSettingController extends GetxController {
   Locale? locale;
 
   bool availability = false;
+  bool switchEnable = false;
 
   void availabilitySwitch(bool value) {
     availability = value;
@@ -26,7 +27,7 @@ class PoliceSettingController extends GetxController {
 
   void saveSettings() async {
     // LoadingDialog.showLoader();
-
+    switchEnable = false;
     try {
       Dio.FormData formData = Dio.FormData.fromMap(
         {"availability": availability ? 1 : 0},
@@ -37,26 +38,27 @@ class PoliceSettingController extends GetxController {
       );
       // LoadingDialog.hideLoader();
       if (response['success'] != null && response['success'] == true) {
-        await StorageService()
-            .writeSecureData(Constants.availability, availability == true ? 'Available' : 'Unavailable');
+        // Utils.showToast(response['message'] ?? 'Availability status updated.');
+        await StorageService().writeSecureData(Constants.availability, availability == true ? 'Available' : 'Unavailable');
       } else {
         availability = !availability;
       }
       await Get.find<PoliceDashBoardController>().getUserName();
       // Get.find<PoliceDashBoardController>().update();
+      switchEnable = true;
       update();
     } on Dio.DioException catch (e) {
       // LoadingDialog.hideLoader();
       Utils.showToast(e.message ?? "Something went wrong");
       availability = !availability;
-
+      switchEnable = true;
       update();
       debugPrint(e.toString());
     } catch (e) {
       // LoadingDialog.hideLoader();
       Utils.showToast("Something went wrong");
       availability = !availability;
-
+      switchEnable = true;
       update();
       debugPrint(e.toString());
     }
@@ -96,8 +98,7 @@ class PoliceSettingController extends GetxController {
       context,
       locale ?? Locale(Constants.enLanguage, 'US'),
     );
-    await StorageService()
-        .writeSecureData(Constants.language, locale != null ? locale!.languageCode : Constants.enLanguage);
+    await StorageService().writeSecureData(Constants.language, locale != null ? locale!.languageCode : Constants.enLanguage);
     update();
   }
 
@@ -127,6 +128,7 @@ class PoliceSettingController extends GetxController {
   String? profileImage;
 
   void getUserProfile({bool? showLoader = true}) async {
+    switchEnable = false;
     if (showLoader == true) {
       LoadingDialog.showLoader();
     }
@@ -148,12 +150,14 @@ class PoliceSettingController extends GetxController {
           }
         }
       }
+      switchEnable = true;
       update();
     } on Dio.DioException catch (e) {
       if (showLoader == true) {
         LoadingDialog.hideLoader();
       }
       Utils.showToast(e.message ?? "Something went wrong");
+      switchEnable = true;
       update();
       debugPrint(e.toString());
     } catch (e) {
@@ -161,6 +165,7 @@ class PoliceSettingController extends GetxController {
         LoadingDialog.hideLoader();
       }
       Utils.showToast("Something went wrong");
+      switchEnable = true;
       update();
       debugPrint(e.toString());
     }
@@ -178,7 +183,7 @@ class PoliceSettingController extends GetxController {
     birthDateController.text = Utils.displayDateFormat(userModel.dob ?? '');
     userNameController.text = userModel.username ?? '';
     profileImage = userModel.profileImage;
-    availability = userModel.availability == 1;
+    // availability = userModel.availability == 1;
     update();
   }
 
@@ -189,8 +194,7 @@ class PoliceSettingController extends GetxController {
     await StorageService().writeSecureData(Constants.lastName, userModel.lastName ?? "");
     await StorageService().writeSecureData(Constants.profileImage, userModel.profileImage ?? "");
     await StorageService().writeSecureData(Constants.email, userModel.email ?? "");
-    await StorageService()
-        .writeSecureData(Constants.availability, userModel.availability == 1 ? "Available" : "Unavailable");
+    await StorageService().writeSecureData(Constants.availability, userModel.availability == 1 ? "Available" : "Unavailable");
   }
 
   void updateUserProfile() async {
@@ -271,5 +275,10 @@ class PoliceSettingController extends GetxController {
       update();
       debugPrint(e.toString());
     }
+  }
+
+  Future<void> getUserAvailability() async {
+    String? status = await StorageService().readSecureData(Constants.availability) ?? 'Unavailable';
+    availability = status == 'Available';
   }
 }

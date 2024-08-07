@@ -611,6 +611,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
     status = await StorageService().readSecureData(Constants.availability) ?? 'Unavailable';
 
     Get.find<PoliceSettingController>().availability = status == 'Available';
+    // Get.find<PoliceSettingController>().getUserProfile(showLoader: false);
     update();
   }
 
