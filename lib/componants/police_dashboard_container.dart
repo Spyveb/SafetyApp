@@ -13,7 +13,10 @@ class PoliceDashboardContainer extends StatelessWidget {
         horizontal: getProportionateScreenWidth(14),
         vertical: getProportionateScreenHeight(14),
       ),
-      height: getProportionateScreenHeight(165),
+      // height: getProportionateScreenHeight(165),
+      constraints: BoxConstraints(
+        minHeight: getProportionateScreenHeight(170),
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           getProportionateScreenWidth(16),
@@ -37,7 +40,7 @@ class PoliceDashboardContainer extends StatelessWidget {
           SizedBox(
             height: getProportionateScreenHeight(10),
           ),
-          Spacer(),
+          // Spacer(),
           Text(
             value ?? "",
             maxLines: 1,
