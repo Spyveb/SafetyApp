@@ -144,8 +144,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                                               onPressed: () async {
                                                                 Get.back();
                                                                 if (controller.reportCaseModel!.id != null) {
-                                                                  controller.closeNonEmergencyRequest(
-                                                                      caseId: controller.reportCaseModel!.id!);
+                                                                  controller.showEndSosDialog(context, caseId: controller.reportCaseModel!.id!);
                                                                 }
                                                               },
                                                               radius: 50,
@@ -169,8 +168,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                                                   borderRadius: BorderRadius.circular(
                                                                     getProportionateScreenWidth(50),
                                                                   ),
-                                                                  border:
-                                                                      Border.all(color: AppColors.blackColor, width: 1),
+                                                                  border: Border.all(color: AppColors.blackColor, width: 1),
                                                                 ),
                                                                 child: Text(
                                                                   AppLocalizations.of(context)!.no,
@@ -270,8 +268,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                   ),
                                 ),
                               ),
-                              controller.reportCaseModel!.nonEmergencyCaseContents != null &&
-                                      controller.reportCaseModel!.nonEmergencyCaseContents!.isNotEmpty
+                              controller.reportCaseModel!.nonEmergencyCaseContents != null && controller.reportCaseModel!.nonEmergencyCaseContents!.isNotEmpty
                                   ? GridView.builder(
                                       padding: EdgeInsets.symmetric(
                                         vertical: getProportionateScreenHeight(12),
@@ -286,8 +283,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                         crossAxisSpacing: getProportionateScreenWidth(3),
                                       ),
                                       itemBuilder: (BuildContext context, int index) {
-                                        ReportCaseContent report =
-                                            controller.reportCaseModel!.nonEmergencyCaseContents![index];
+                                        ReportCaseContent report = controller.reportCaseModel!.nonEmergencyCaseContents![index];
                                         return GestureDetector(
                                           behavior: HitTestBehavior.opaque,
                                           onTap: () async {
@@ -307,10 +303,8 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                                   controller.videoController!.play();
                                                   controller.update();
 
-                                                  await Get.toNamed(Routes.CONTENTS_DETAIL_VIEW,
-                                                      arguments: {"initialContentIndex": index, "model": report});
-                                                  SystemChrome.setPreferredOrientations(
-                                                      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+                                                  await Get.toNamed(Routes.CONTENTS_DETAIL_VIEW, arguments: {"initialContentIndex": index, "model": report});
+                                                  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
                                                 }).catchError((onError) {
                                                   if (onError is PlatformException) {
                                                     var e = onError;
@@ -326,8 +320,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
 
                                               controller.setSourceUrl(report.value!);
                                               controller.initAudio().then((value) async {
-                                                await Get.toNamed(Routes.CONTENTS_DETAIL_VIEW,
-                                                    arguments: {"initialContentIndex": index, "model": report});
+                                                await Get.toNamed(Routes.CONTENTS_DETAIL_VIEW, arguments: {"initialContentIndex": index, "model": report});
 
                                                 controller.audioPlayer.stop();
                                                 controller.durationSubscription?.cancel();
@@ -339,8 +332,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                                 Utils.showToast((onError ?? 'Failed to load audio').toString());
                                               });
                                             } else {
-                                              Get.toNamed(Routes.CONTENTS_DETAIL_VIEW,
-                                                  arguments: {"initialContentIndex": index, "model": report});
+                                              Get.toNamed(Routes.CONTENTS_DETAIL_VIEW, arguments: {"initialContentIndex": index, "model": report});
                                             }
                                           },
                                           child: Container(

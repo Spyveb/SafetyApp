@@ -40,9 +40,7 @@ class TrainingTopicScreen extends GetView<TrainingController> {
                 image: DecorationImage(
                   // image: AssetImage(AppImages.violence),
                   image: CachedNetworkImageProvider(
-                    controller.categoryModel != null && controller.categoryModel!.image != null
-                        ? controller.categoryModel!.image!
-                        : '',
+                    controller.categoryModel != null && controller.categoryModel!.image != null ? controller.categoryModel!.image! : '',
                   ),
                 ),
               ),
@@ -75,8 +73,7 @@ class TrainingTopicScreen extends GetView<TrainingController> {
                   TextFormField(
                     onChanged: (value) {
                       if (controller.categoryModel?.id != null) {
-                        controller.getCategoryDetails(
-                            categoryId: controller.categoryModel!.id!, search: value, showLoader: false);
+                        controller.getCategoryDetails(categoryId: controller.categoryModel!.id!, search: value, showLoader: false);
                       }
                     },
                     style: TextStyle(
@@ -144,6 +141,7 @@ class TrainingTopicScreen extends GetView<TrainingController> {
                                     article,
                                   );
                                 },
+                                behavior: HitTestBehavior.opaque,
                                 child: Column(
                                   children: [
                                     Divider(

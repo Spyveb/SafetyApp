@@ -80,7 +80,8 @@ class ReportedNonEmgCasesController extends GetxController {
         "search": search,
       });
       var response = await ApiProvider().postAPICall(
-        Endpoints.openNonEmergencyList,
+        // Endpoints.openNonEmergencyList,
+        Endpoints.nonEmergencyList,
         formData,
         onSendProgress: (count, total) {},
       );
@@ -121,8 +122,7 @@ class ReportedNonEmgCasesController extends GetxController {
     update();
   }
 
-  void updateNonEmergencyRequest(
-      {bool? showLoader = true, required int caseId, required String status, int? assignNonEmergencyCaseId}) async {
+  void updateNonEmergencyRequest({bool? showLoader = true, required int caseId, required String status, int? assignNonEmergencyCaseId}) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
     }
@@ -183,53 +183,6 @@ class ReportedNonEmgCasesController extends GetxController {
       Utils.showToast("Something went wrong");
       update();
       Get.back();
-      debugPrint(e.toString());
-    }
-  }
-
-  void closeNonEmergencyRequest({
-    bool? showLoader = true,
-    required int caseId,
-  }) async {
-    if (showLoader == true) {
-      LoadingDialog.showLoader();
-    }
-    try {
-      Dio.FormData formData = Dio.FormData.fromMap({
-        "id": caseId,
-      });
-      var response = await ApiProvider().postAPICall(
-        Endpoints.closeNonEmergencyCase,
-        formData,
-        onSendProgress: (count, total) {},
-      );
-      if (showLoader == true) {
-        LoadingDialog.hideLoader();
-      }
-      if (response['success'] != null && response['success'] == true) {
-        Utils.showToast(response['message'] ?? 'Report closed');
-        Get.back();
-      } else {
-        Utils.showToast(response['message'] ?? 'Failed to end report');
-      }
-
-      update();
-      getOpenNonEmergencyReportsList(search: '', showLoader: false);
-    } on Dio.DioException catch (e) {
-      if (showLoader == true) {
-        LoadingDialog.hideLoader();
-      }
-      Utils.showToast(e.message ?? "Something went wrong");
-
-      update();
-      debugPrint(e.toString());
-    } catch (e) {
-      if (showLoader == true) {
-        LoadingDialog.hideLoader();
-      }
-      Utils.showToast("Something went wrong");
-      update();
-
       debugPrint(e.toString());
     }
   }
@@ -410,9 +363,7 @@ class ReportedNonEmgCasesController extends GetxController {
                             onTap: () {
                               if (reportCaseModel.id != null) {
                                 updateNonEmergencyRequest(
-                                    caseId: reportCaseModel.id!,
-                                    status: 'Accept',
-                                    assignNonEmergencyCaseId: reportCaseModel.assign_non_emergency_case_id);
+                                    caseId: reportCaseModel.id!, status: 'Accept', assignNonEmergencyCaseId: reportCaseModel.assign_non_emergency_case_id);
                               }
                             },
                             child: Container(
@@ -447,9 +398,7 @@ class ReportedNonEmgCasesController extends GetxController {
                             onTap: () {
                               if (reportCaseModel.id != null) {
                                 updateNonEmergencyRequest(
-                                    caseId: reportCaseModel.id!,
-                                    status: 'Decline',
-                                    assignNonEmergencyCaseId: reportCaseModel.assign_non_emergency_case_id);
+                                    caseId: reportCaseModel.id!, status: 'Decline', assignNonEmergencyCaseId: reportCaseModel.assign_non_emergency_case_id);
                               }
                             },
                             child: Container(
@@ -571,19 +520,188 @@ class ReportedNonEmgCasesController extends GetxController {
     Directory directory = await getTemporaryDirectory();
     String dirPath = "${directory.path}/${path}.m4a";
     if (await File(dirPath).exists()) {
-      await audioPlayer.setSourceDeviceFile(dirPath);
+      await audioPlayer.setSourceDeviceFile(dirPath, mimeType: 'audio/mpeg');
     } else {
       var response = await Dio.Dio().download(
         url,
         dirPath,
       );
       if (response.statusCode == 200) {
-        await audioPlayer.setSourceDeviceFile(dirPath);
+        await audioPlayer.setSourceDeviceFile(dirPath, mimeType: 'audio/mpeg');
       }
     }
   }
 
   seekAudio(Duration durationToSeek) {
     audioPlayer.seek(durationToSeek);
+  }
+
+  TextEditingController endReportNotesController = TextEditingController();
+
+  showEndSosDialog(BuildContext context, {required int caseId}) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(10),
+          ),
+          child: GetBuilder<ReportedNonEmgCasesController>(
+            id: 'end_report_dialog',
+            builder: (controller) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    color: AppColors.policeDarkBlueColor,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                padding: EdgeInsets.symmetric(
+                  vertical: getProportionateScreenHeight(10),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(14),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.whatHappenedThisEvent,
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(16),
+                        ),
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(20),
+                      ),
+                      TextFormField(
+                        controller: endReportNotesController,
+                        maxLines: null,
+                        maxLength: 300,
+                        onTapOutside: (event) {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        },
+                        onChanged: (value) {
+                          endReportNotesController.text = value;
+                          update(['end_report_dialog']);
+                        },
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(8),
+                            vertical: getProportionateScreenHeight(8),
+                          ),
+                          constraints: BoxConstraints(
+                            maxHeight: getProportionateScreenHeight(100),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: const BorderSide(
+                              color: Colors.black,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: const BorderSide(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(25),
+                      ),
+                      SizedBox(
+                        width: SizeConfig.deviceWidth,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.redDefault,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: getProportionateScreenWidth(16),
+                              vertical: getProportionateScreenHeight(12),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(30),
+                              ),
+                            ),
+                          ),
+                          onPressed: endReportNotesController.text.isNotEmpty
+                              ? () {
+                                  closeNonEmergencyCaseRequest(caseId: caseId);
+                                }
+                              : null,
+                          child: Text(
+                            AppLocalizations.of(context)!.submit,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: getProportionalFontSize(18),
+                              fontFamily: AppFonts.sansFont600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  void closeNonEmergencyCaseRequest({
+    bool? showLoader = true,
+    required int caseId,
+  }) async {
+    if (showLoader == true) {
+      LoadingDialog.showLoader();
+    }
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({
+        "id": caseId,
+        "note": endReportNotesController.text,
+      });
+      var response = await ApiProvider().postAPICall(
+        Endpoints.closeNonEmergencyCase,
+        formData,
+        onSendProgress: (count, total) {},
+      );
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      if (response['success'] != null && response['success'] == true) {
+        Utils.showToast(response['message'] ?? 'Report closed');
+        Get.back();
+        Get.back();
+      } else {
+        Utils.showToast(response['message'] ?? 'Failed to end report');
+      }
+
+      update();
+      getOpenNonEmergencyReportsList(search: '', showLoader: false);
+    } on Dio.DioException catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast(e.message ?? "Something went wrong");
+
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast("Something went wrong");
+      update();
+
+      debugPrint(e.toString());
+    }
   }
 }
