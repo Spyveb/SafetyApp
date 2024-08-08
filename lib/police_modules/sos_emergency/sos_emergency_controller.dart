@@ -529,7 +529,7 @@ class PoliceSOSEmergencyController extends GetxController {
   showEndSosDialog(BuildContext context, {required int caseId}) {
     showDialog(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (context) {
         return Dialog(
           insetPadding: EdgeInsets.symmetric(
