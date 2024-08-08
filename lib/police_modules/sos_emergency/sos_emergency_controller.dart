@@ -43,7 +43,7 @@ class PoliceSOSEmergencyController extends GetxController {
             }
 
             if (sosReportsList.length > 1) {
-              currentSOSReport = sosReportsList.firstWhereOrNull((element) => element.status == 'Open');
+              currentSOSReport = sosReportsList.firstWhereOrNull((element) => element.status == 'Open' && element.requestStatus == 'Accept');
               currentSOSReport ??= sosReportsList.first;
             } else {
               currentSOSReport = sosReportsList.first;
@@ -61,7 +61,7 @@ class PoliceSOSEmergencyController extends GetxController {
       update();
 
       Future.delayed(Duration(seconds: 1)).then((value) {
-        if (currentSOSReport != null && currentSOSReport!.status == 'Open') {
+        if (currentSOSReport != null && currentSOSReport!.status == 'Open' && currentSOSReport!.requestStatus == 'Accept') {
           if ((currentSOSReport!.latitude != null && currentSOSReport!.longitude != null) &&
               (currentSOSReport!.policeOfficerLatitude != null && currentSOSReport!.policeOfficerLongitude != null))
             addMarkers(

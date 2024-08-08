@@ -102,7 +102,7 @@ class ReportedEmgCasesScreen extends GetView<ReportedEmgCasesController> {
                               ReportCaseModel report = controller.sosReportsList[index];
                               return GestureDetector(
                                 onTap: () async {
-                                  if (report.status == 'Open') {
+                                  if (report.status == 'Open' && report.requestStatus == 'Accept') {
                                     await Get.toNamed(Routes.POLICE_SOSEMERGENCY);
                                     controller.getSOSEmergencyList(search: '', showLoader: false);
                                   }
@@ -117,7 +117,7 @@ class ReportedEmgCasesScreen extends GetView<ReportedEmgCasesController> {
                                   )}",
                                   location: "${report.location ?? '-'}",
                                   city: "${report.city ?? '-'}",
-                                  showSOS: report.status == 'Open',
+                                  showSOS: report.status == 'Open' && report.requestStatus == 'Accept',
                                   requestStatus: "${report.requestStatus ?? '-'}",
                                 ),
                               );

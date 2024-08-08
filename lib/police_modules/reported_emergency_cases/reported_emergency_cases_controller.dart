@@ -16,6 +16,7 @@ class ReportedEmgCasesController extends GetxController {
       });
       var response = await ApiProvider().postAPICall(
         Endpoints.sosEmergencyList,
+        // Endpoints.openSOSEmergencyList,
         formData,
         onSendProgress: (count, total) {},
       );
