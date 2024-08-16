@@ -72,81 +72,81 @@ class TrainingScreen extends GetView<TrainingController> {
                   SizedBox(
                     height: getProportionateScreenHeight(8),
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: getProportionateScreenHeight(12),
-                      horizontal: getProportionateScreenWidth(8),
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.backgroundColor.withOpacity(.3),
-                      borderRadius: BorderRadius.circular(
-                        getProportionateScreenWidth(16),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset(
-                              AppImages.tip,
-                              height: getProportionateScreenHeight(40),
-                              width: getProportionateScreenWidth(30),
-                            ),
-                            SizedBox(
-                              width: getProportionateScreenWidth(8),
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.tipOfTheDay,
-                              style: TextStyle(
-                                fontSize: getProportionalFontSize(16),
-                                color: themeProvider.textThemeColor,
-                                fontFamily: AppFonts.sansFont700,
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(4),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: getProportionateScreenWidth(6),
-                          ),
-                          child: Text(
-                            Constants.LoremIpsum,
-                            style: TextStyle(
-                              fontSize: getProportionalFontSize(12),
-                              color: themeProvider.textThemeColor,
-                              fontFamily: AppFonts.sansFont700,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: CommonButton(
-                            width: getProportionateScreenWidth(80),
-                            text: AppLocalizations.of(context)!.next,
-                            radius: 30,
-                            padding: EdgeInsets.symmetric(
-                              vertical: getProportionateScreenHeight(4),
-                              horizontal: getProportionateScreenWidth(16),
-                            ),
-                            onPressed: () {
-                              // var _isDarkThemeSelected = true;
-                              // final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-                              // themeProvider.setTheme(ThemeData.light(), notify: true);
-                              // controller.update();
-                            },
-                            textStyle: TextStyle(
-                              fontSize: getProportionalFontSize(12),
-                              fontFamily: AppFonts.sansFont700,
-                              color: AppColors.whiteColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   padding: EdgeInsets.symmetric(
+                  //     vertical: getProportionateScreenHeight(12),
+                  //     horizontal: getProportionateScreenWidth(8),
+                  //   ),
+                  //   decoration: BoxDecoration(
+                  //     color: AppColors.backgroundColor.withOpacity(.3),
+                  //     borderRadius: BorderRadius.circular(
+                  //       getProportionateScreenWidth(16),
+                  //     ),
+                  //   ),
+                  //   child: Column(
+                  //     children: [
+                  //       Row(
+                  //         children: [
+                  //           Image.asset(
+                  //             AppImages.tip,
+                  //             height: getProportionateScreenHeight(40),
+                  //             width: getProportionateScreenWidth(30),
+                  //           ),
+                  //           SizedBox(
+                  //             width: getProportionateScreenWidth(8),
+                  //           ),
+                  //           Text(
+                  //             AppLocalizations.of(context)!.tipOfTheDay,
+                  //             style: TextStyle(
+                  //               fontSize: getProportionalFontSize(16),
+                  //               color: themeProvider.textThemeColor,
+                  //               fontFamily: AppFonts.sansFont700,
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //       SizedBox(
+                  //         height: getProportionateScreenHeight(4),
+                  //       ),
+                  //       Padding(
+                  //         padding: EdgeInsets.only(
+                  //           left: getProportionateScreenWidth(6),
+                  //         ),
+                  //         child: Text(
+                  //           Constants.LoremIpsum,
+                  //           style: TextStyle(
+                  //             fontSize: getProportionalFontSize(12),
+                  //             color: themeProvider.textThemeColor,
+                  //             fontFamily: AppFonts.sansFont700,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       Align(
+                  //         alignment: Alignment.bottomRight,
+                  //         child: CommonButton(
+                  //           width: getProportionateScreenWidth(80),
+                  //           text: AppLocalizations.of(context)!.next,
+                  //           radius: 30,
+                  //           padding: EdgeInsets.symmetric(
+                  //             vertical: getProportionateScreenHeight(4),
+                  //             horizontal: getProportionateScreenWidth(16),
+                  //           ),
+                  //           onPressed: () {
+                  //             // var _isDarkThemeSelected = true;
+                  //             // final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+                  //             // themeProvider.setTheme(ThemeData.light(), notify: true);
+                  //             // controller.update();
+                  //           },
+                  //           textStyle: TextStyle(
+                  //             fontSize: getProportionalFontSize(12),
+                  //             fontFamily: AppFonts.sansFont700,
+                  //             color: AppColors.whiteColor,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   SizedBox(
                     height: getProportionateScreenHeight(12),
                   ),

@@ -176,8 +176,8 @@ class SignUpScreen extends GetView<SignUpController> {
                       textEditingController: controller.emailController,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
-                      validation: (value) => Validation.emailValidation(
-                          controller.emailController.text, AppLocalizations.of(context)!.email.capitalize, context),
+                      validation: (value) =>
+                          Validation.emailValidation(controller.emailController.text, AppLocalizations.of(context)!.email.capitalize, context),
                       onChanged: (value) {
                         controller.emailController.text = value;
                         controller.update();
@@ -224,8 +224,7 @@ class SignUpScreen extends GetView<SignUpController> {
                           // widget.initialSelection ?? '+965',
                         ],
                         searchStyle: TextStyle(fontSize: getProportionalFontSize(12), fontFamily: AppFonts.sansFont500),
-                        dialogTextStyle:
-                            TextStyle(fontSize: getProportionalFontSize(12.5), fontFamily: AppFonts.sansFont500),
+                        dialogTextStyle: TextStyle(fontSize: getProportionalFontSize(12.5), fontFamily: AppFonts.sansFont500),
                         builder: (CountryCode? countryCode) {
                           return Container(
                             padding: EdgeInsets.only(
@@ -326,107 +325,107 @@ class SignUpScreen extends GetView<SignUpController> {
                       //   color: AppColors.textFieldGreyColor,
                       // ),
                     ),
-                    SizedBox(
-                      height: getProportionateScreenHeight(14),
-                    ),
-                    ButtonTheme(
-                      alignedDropdown: true,
-                      child: DropdownButtonFormField<String>(
-                        value: controller.role,
-                        iconSize: 24,
-                        iconEnabledColor: AppColors.blackColor,
-                        isDense: true,
-                        isExpanded: true,
-                        decoration: InputDecoration(
-                          // suffixIcon: IconButton(
-                          //   onPressed: () {},
-                          //   icon: Icon(
-                          //     Icons.arrow_drop_down_outlined,
-                          //     size: 36,
-                          //     color: AppColors.blackColor,
-                          //   ),
-                          // ),
-                          errorMaxLines: 2,
-                          isDense: true,
-
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              getProportionateScreenWidth(10),
-                            ),
-                            borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              getProportionateScreenWidth(10),
-                            ),
-                            borderSide: BorderSide(color: Colors.black87, width: 1.5),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              getProportionateScreenWidth(10),
-                            ),
-                            borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              getProportionateScreenWidth(10),
-                            ),
-                            borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
-                          ),
-                          // labelText: widget.lableText,
-                          hintText: "",
-                          hintStyle: TextStyle(
-                            fontFamily: AppFonts.sansFont400,
-                            fontSize: getProportionalFontSize(14),
-                            color: AppColors.textFieldGreyColor,
-                          ),
-                          errorStyle: TextStyle(
-                            fontSize: getProportionalFontSize(12),
-                            fontFamily: AppFonts.sansFont400,
-                            color: AppColors.redDefault,
-                          ),
-
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(16),
-                            vertical: getProportionateScreenHeight(20),
-                          ),
-                          prefixIcon: Container(
-                            padding: EdgeInsets.only(
-                              left: getProportionateScreenWidth(8),
-                              top: getProportionateScreenHeight(8),
-                              bottom: getProportionateScreenHeight(8),
-                            ),
-                            child: SvgPicture.asset(
-                              AppImages.userProfile,
-                              height: getProportionateScreenHeight(24),
-                              width: getProportionateScreenWidth(24),
-                            ),
-                          ),
-                        ),
-                        items: controller.roleList.map<DropdownMenuItem<String>>((value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: TextStyle(
-                                fontFamily: AppFonts.sansFont400,
-                                fontSize: getProportionalFontSize(14),
-                                color: AppColors.lightTextColor,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          controller.role = value ?? controller.roleList.first;
-                          controller.update();
-                        },
-                        validator: (value) => Validation.emptyValidation(
-                          value,
-                          context,
-                          AppLocalizations.of(context)!.role.capitalize,
-                        ),
-                      ),
-                    ),
+                    // SizedBox(
+                    //   height: getProportionateScreenHeight(14),
+                    // ),
+                    // ButtonTheme(
+                    //   alignedDropdown: true,
+                    //   child: DropdownButtonFormField<String>(
+                    //     value: controller.role,
+                    //     iconSize: 24,
+                    //     iconEnabledColor: AppColors.blackColor,
+                    //     isDense: true,
+                    //     isExpanded: true,
+                    //     decoration: InputDecoration(
+                    //       // suffixIcon: IconButton(
+                    //       //   onPressed: () {},
+                    //       //   icon: Icon(
+                    //       //     Icons.arrow_drop_down_outlined,
+                    //       //     size: 36,
+                    //       //     color: AppColors.blackColor,
+                    //       //   ),
+                    //       // ),
+                    //       errorMaxLines: 2,
+                    //       isDense: true,
+                    //
+                    //       border: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(
+                    //           getProportionateScreenWidth(10),
+                    //         ),
+                    //         borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
+                    //       ),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(
+                    //           getProportionateScreenWidth(10),
+                    //         ),
+                    //         borderSide: BorderSide(color: Colors.black87, width: 1.5),
+                    //       ),
+                    //       disabledBorder: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(
+                    //           getProportionateScreenWidth(10),
+                    //         ),
+                    //         borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
+                    //       ),
+                    //       enabledBorder: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(
+                    //           getProportionateScreenWidth(10),
+                    //         ),
+                    //         borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
+                    //       ),
+                    //       // labelText: widget.lableText,
+                    //       hintText: "",
+                    //       hintStyle: TextStyle(
+                    //         fontFamily: AppFonts.sansFont400,
+                    //         fontSize: getProportionalFontSize(14),
+                    //         color: AppColors.textFieldGreyColor,
+                    //       ),
+                    //       errorStyle: TextStyle(
+                    //         fontSize: getProportionalFontSize(12),
+                    //         fontFamily: AppFonts.sansFont400,
+                    //         color: AppColors.redDefault,
+                    //       ),
+                    //
+                    //       contentPadding: EdgeInsets.symmetric(
+                    //         horizontal: getProportionateScreenWidth(16),
+                    //         vertical: getProportionateScreenHeight(20),
+                    //       ),
+                    //       prefixIcon: Container(
+                    //         padding: EdgeInsets.only(
+                    //           left: getProportionateScreenWidth(8),
+                    //           top: getProportionateScreenHeight(8),
+                    //           bottom: getProportionateScreenHeight(8),
+                    //         ),
+                    //         child: SvgPicture.asset(
+                    //           AppImages.userProfile,
+                    //           height: getProportionateScreenHeight(24),
+                    //           width: getProportionateScreenWidth(24),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     items: controller.roleList.map<DropdownMenuItem<String>>((value) {
+                    //       return DropdownMenuItem<String>(
+                    //         value: value,
+                    //         child: Text(
+                    //           value,
+                    //           style: TextStyle(
+                    //             fontFamily: AppFonts.sansFont400,
+                    //             fontSize: getProportionalFontSize(14),
+                    //             color: AppColors.lightTextColor,
+                    //           ),
+                    //         ),
+                    //       );
+                    //     }).toList(),
+                    //     onChanged: (value) {
+                    //       controller.role = value ?? controller.roleList.first;
+                    //       controller.update();
+                    //     },
+                    //     validator: (value) => Validation.emptyValidation(
+                    //       value,
+                    //       context,
+                    //       AppLocalizations.of(context)!.role.capitalize,
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(
                       height: getProportionateScreenHeight(14),
                     ),
@@ -618,9 +617,7 @@ class SignUpScreen extends GetView<SignUpController> {
                       padding: EdgeInsets.symmetric(
                         vertical: getProportionateScreenHeight(22),
                       ),
-                      onPressed: controller.formKey.currentState != null &&
-                              controller.formKey.currentState!.validate() &&
-                              controller.termValue == true
+                      onPressed: controller.formKey.currentState != null && controller.formKey.currentState!.validate() && controller.termValue == true
                           ? () {
                               controller.signUpMethod();
                             }

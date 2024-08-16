@@ -614,7 +614,7 @@ abstract class AppLocalizations {
   /// No description provided for @enterYourUsername.
   ///
   /// In en, this message translates to:
-  /// **'Enter your Username'**
+  /// **'Enter your Username or Email'**
   String get enterYourUsername;
 
   /// No description provided for @iAgreeTo.
@@ -728,7 +728,7 @@ abstract class AppLocalizations {
   /// No description provided for @pleaseEnterYourUserName.
   ///
   /// In en, this message translates to:
-  /// **'Please enter your username'**
+  /// **'Please enter your username or email'**
   String get pleaseEnterYourUserName;
 
   /// No description provided for @youEnteredAnInvalidUserName.
@@ -1186,6 +1186,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change Password'**
   String get changePassword;
+
+  /// No description provided for @currentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password '**
+  String get currentPassword;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get newPassword;
+
+  /// No description provided for @confirmNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm new password'**
+  String get confirmNewPassword;
 
   /// No description provided for @hello.
   ///

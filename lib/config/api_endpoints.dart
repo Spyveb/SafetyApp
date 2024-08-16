@@ -10,6 +10,7 @@ class Endpoints {
   static const getProfile = "${baseUrl}api/get_profile"; // Endpoint for get profile
   static const forgotPassword = "${baseUrl}api/forget_password"; // Endpoint for forgot password
   static const resetPassword = "${baseUrl}api/reset_password"; // Endpoint for reset password
+  static const changePassword = "${baseUrl}api/change_password"; // Endpoint for reset password
   static const updateProfile = "${baseUrl}api/update_profile"; // Endpoint for get profile
   static const deleteAccount = "${baseUrl}api/delete_account"; // Endpoint for delete account
   static const saveSetting = "${baseUrl}api/save_setting"; // Endpoint for save setting

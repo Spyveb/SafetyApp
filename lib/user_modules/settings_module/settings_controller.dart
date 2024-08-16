@@ -17,6 +17,16 @@ class SettingsController extends GetxController {
     saveSettings();
   }
 
+  GlobalKey<FormState> changePasswordKey = GlobalKey<FormState>();
+
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController currentPasswordController = TextEditingController();
+  TextEditingController changeConfirmPasswordController = TextEditingController();
+
+  bool newPasswordObscure = true;
+  bool confirmPasswordObscure = true;
+  bool currentPasswordObscure = true;
+
   List<LanguageModel> languages = [
     LanguageModel(languageName: "English", languageCode: "en", imageUrl: AppImages.usLanguage),
     LanguageModel(languageName: "Dutch", languageCode: "de", imageUrl: AppImages.germanyLanguage),
@@ -69,8 +79,7 @@ class SettingsController extends GetxController {
       context,
       locale ?? Locale(Constants.enLanguage, 'US'),
     );
-    await StorageService()
-        .writeSecureData(Constants.language, locale != null ? locale!.languageCode : Constants.enLanguage);
+    await StorageService().writeSecureData(Constants.language, locale != null ? locale!.languageCode : Constants.enLanguage);
     update();
   }
 
@@ -236,6 +245,45 @@ class SettingsController extends GetxController {
       if (response['success'] != null && response['success'] == true) {
         Utils.showToast(response['message'] ?? "Account deleted successfully.");
         Get.offAllNamed(Routes.SIGN_IN);
+      }
+    } on Dio.DioException catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast(e.message ?? "Something went wrong");
+      update();
+      debugPrint(e.toString());
+    } catch (e) {
+      LoadingDialog.hideLoader();
+      Utils.showToast("Something went wrong");
+      update();
+      debugPrint(e.toString());
+    }
+  }
+
+  changePassword() async {
+    LoadingDialog.showLoader();
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({
+        "old_password": currentPasswordController.text,
+        "password": newPasswordController.text,
+      });
+      var response = await ApiProvider().postAPICall(
+        Endpoints.changePassword,
+        formData,
+        passToken: true,
+        onSendProgress: (count, total) {},
+      );
+
+      if (response['success'] != null && response['success'] == true) {
+        LoadingDialog.hideLoader();
+
+        Utils.showToast(response['message'] ?? "Password change successfully");
+        Get.back();
+        currentPasswordController.clear();
+        changeConfirmPasswordController.clear();
+        newPasswordController.clear();
+      } else {
+        LoadingDialog.hideLoader();
+        Utils.showToast(response['message'] ?? "Change Password Failed");
       }
     } on Dio.DioException catch (e) {
       LoadingDialog.hideLoader();

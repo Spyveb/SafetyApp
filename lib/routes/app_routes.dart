@@ -24,6 +24,7 @@ abstract class Routes {
   static const VIDEO_SCREEN = _Paths.VIDEO_SCREEN;
   static const OTP_SCREEN = _Paths.OTP_SCREEN;
   static const RESET_PASSWORD_SCREEN = _Paths.RESET_PASSWORD_SCREEN;
+  static const CHANGE_PASSWORD_SCREEN = _Paths.CHANGE_PASSWORD_SCREEN;
 
   // Police Modules
   static const POLICE_DASHBOARD = _Paths.POLICE_DASHBOARD;
@@ -60,6 +61,7 @@ abstract class _Paths {
   static const VIDEO_SCREEN = '/video_screen'; // video_screen
   static const OTP_SCREEN = '/otp_screen'; // otp_screen
   static const RESET_PASSWORD_SCREEN = '/reset_password_screen'; // reset_password_screen
+  static const CHANGE_PASSWORD_SCREEN = '/change_password_screen'; // change_password_screen
 
   // Police Modules
   static const POLICE_DASHBOARD = '/police_dashboard'; // police_dashboard
@@ -70,6 +72,5 @@ abstract class _Paths {
   static const POLICE_SETTING = '/police_setting'; // police_setting
   static const POLICE_EDIT_PROFILE = '/police_edit_profile'; // police_edit_profile
   static const CONTENTS_DETAIL_VIEW = '/contents_detail_view'; // contents_detail_view
-  static const POLICE_REPORTEDNONEMGCASE_DETAILS =
-      '/police_non_emergency_case_details'; // police_non_emergency_case_details
+  static const POLICE_REPORTEDNONEMGCASE_DETAILS = '/police_non_emergency_case_details'; // police_non_emergency_case_details
 }

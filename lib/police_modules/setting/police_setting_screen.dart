@@ -190,9 +190,9 @@ class PoliceSettingScreen extends GetView<PoliceSettingController> {
                   ),
                   SettingsTile(
                     themeProvider: themeProvider,
-                    text: AppLocalizations.of(context)!.editProfile,
+                    text: AppLocalizations.of(context)!.changePassword,
                     onTap: () {
-                      Get.toNamed(Routes.POLICE_EDIT_PROFILE);
+                      Get.toNamed(Routes.CHANGE_PASSWORD_SCREEN);
                     },
                   ),
                   SizedBox(

@@ -263,7 +263,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addEmergencyContacts => 'Add Emergency Contacts';
 
   @override
-  String get enterYourUsername => 'Enter your Username';
+  String get enterYourUsername => 'Enter your Username or Email';
 
   @override
   String get iAgreeTo => 'I agree to';
@@ -320,7 +320,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shouldNotBeGreaterThan => 'Should not be greater than 50';
 
   @override
-  String get pleaseEnterYourUserName => 'Please enter your username';
+  String get pleaseEnterYourUserName => 'Please enter your username or email';
 
   @override
   String get youEnteredAnInvalidUserName => 'You’ve entered an invalid username';
@@ -549,6 +549,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get changePassword => 'Change Password';
+
+  @override
+  String get currentPassword => 'Current password ';
+
+  @override
+  String get newPassword => 'New password';
+
+  @override
+  String get confirmNewPassword => 'Confirm new password';
 
   @override
   String get hello => 'hello';

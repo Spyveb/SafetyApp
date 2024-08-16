@@ -213,7 +213,7 @@ class SettingsScreen extends GetView<SettingsController> {
                     themeProvider: themeProvider,
                     text: AppLocalizations.of(context)!.changePassword,
                     onTap: () {
-                      Get.toNamed(Routes.EDIT_PROFILE);
+                      Get.toNamed(Routes.CHANGE_PASSWORD_SCREEN);
                     },
                   ),
                   SizedBox(

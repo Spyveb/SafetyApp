@@ -79,10 +79,10 @@ class Validation {
     if (value!.isEmpty) {
       return AppLocalizations.of(context)!.pleaseEnterYourUserName;
     }
-    RegExp regExp = RegExp(r'^[a-zA-Z0-9_\-=@]+$');
-    if (!regExp.hasMatch(value)) {
-      return AppLocalizations.of(context)!.youEnteredAnInvalidUserName;
-    }
+    // RegExp regExp = RegExp(r'^[a-zA-Z0-9_\-=@]+$');
+    // if (!regExp.hasMatch(value)) {
+    //   return AppLocalizations.of(context)!.youEnteredAnInvalidUserName;
+    // }
     return null;
   }
 
