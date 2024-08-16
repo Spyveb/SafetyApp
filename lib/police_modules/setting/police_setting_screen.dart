@@ -190,6 +190,16 @@ class PoliceSettingScreen extends GetView<PoliceSettingController> {
                   ),
                   SettingsTile(
                     themeProvider: themeProvider,
+                    text: AppLocalizations.of(context)!.editProfile,
+                    onTap: () {
+                      Get.toNamed(Routes.POLICE_EDIT_PROFILE);
+                    },
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(8),
+                  ),
+                  SettingsTile(
+                    themeProvider: themeProvider,
                     text: AppLocalizations.of(context)!.availability,
                     onTap: () {},
                     suffix: CommonSwitch(

@@ -1181,6 +1181,12 @@ abstract class AppLocalizations {
   /// **'Reported Request'**
   String get reportedRequest;
 
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:

@@ -186,6 +186,7 @@
   "totalActiveCases": "Total Active Cases",
   "youAreNotAuthorizedToViewTheReportDetails": "You are not authorized to view the report details.",
   "reportedRequest": "Reported Request",
+  "changePassword": "Change Password",
   "hello": "hello"
 
 }

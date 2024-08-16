@@ -548,5 +548,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportedRequest => 'Reported Request';
 
   @override
+  String get changePassword => 'Change Password';
+
+  @override
   String get hello => 'hello';
 }
