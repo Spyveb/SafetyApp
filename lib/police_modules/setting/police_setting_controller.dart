@@ -125,6 +125,7 @@ class PoliceSettingController extends GetxController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   File? selectedImage;
+  UserModel? userModel;
   String? profileImage;
 
   void getUserProfile({bool? showLoader = true}) async {
@@ -144,8 +145,10 @@ class PoliceSettingController extends GetxController {
       if (response['success'] != null && response['success'] == true) {
         if (response['data'] != null) {
           if (response['data']['user'] != null) {
-            UserModel userModel = UserModel.fromJson(response['data']['user']);
-            await assignUserData(userModel);
+            userModel = UserModel.fromJson(response['data']['user']);
+            if (userModel != null) {
+              await assignUserData(userModel!);
+            }
             await Get.find<PoliceDashBoardController>().getUserName();
           }
         }
@@ -180,7 +183,7 @@ class PoliceSettingController extends GetxController {
 
     phoneNumberController.text = userModel.mobileNumber ?? '';
     selectedCountryCode = CountryCode(dialCode: userModel.mobileCode ?? '+93');
-    birthDateController.text = Utils.displayDateFormat(userModel.dob ?? '');
+    birthDateController.text = userModel.dob != null ? Utils.displayDateFormat(userModel.dob ?? '') : "";
     userNameController.text = userModel.username ?? '';
     profileImage = userModel.profileImage;
     // availability = userModel.availability == 1;
@@ -206,7 +209,7 @@ class PoliceSettingController extends GetxController {
       "email": emailController.text,
       "mobile_code": selectedCountryCode.dialCode,
       "mobile_number": phoneNumberController.text,
-      "dob": Utils.sendDateFormat(birthDateController.text),
+      "dob": birthDateController.text.trim().isNotEmpty ? Utils.sendDateFormat(birthDateController.text) : "",
       "username": userNameController.text,
     });
 
@@ -224,18 +227,20 @@ class PoliceSettingController extends GetxController {
         formData,
         onSendProgress: (count, total) {},
       );
-
+      LoadingDialog.hideLoader();
       if (response['success'] != null && response['success'] == true) {
         if (response['data'] != null) {
           if (response['data']['user'] != null) {
             UserModel userModel = UserModel.fromJson(response['data']['user']);
             await saveUserData(userModel);
-            LoadingDialog.hideLoader();
+
             Utils.showToast(response['message'] ?? "User profile updated successfully.");
             Get.back();
             getUserProfile(showLoader: false);
           }
         }
+      } else {
+        Utils.showToast(response['message'] ?? "");
       }
       update();
     } on Dio.DioException catch (e) {

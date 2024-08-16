@@ -181,8 +181,9 @@ class PoliceSettingScreen extends GetView<PoliceSettingController> {
                   SettingsTile(
                     themeProvider: themeProvider,
                     text: AppLocalizations.of(context)!.editProfile,
-                    onTap: () {
-                      Get.toNamed(Routes.POLICE_EDIT_PROFILE);
+                    onTap: () async {
+                      await Get.toNamed(Routes.POLICE_EDIT_PROFILE);
+                      controller.getUserProfile(showLoader: false);
                     },
                   ),
                   SizedBox(

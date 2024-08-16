@@ -46,6 +46,14 @@ class Validation {
     return null;
   }
 
+  static String? birthDateEmptyValidation(String? value, BuildContext context, String? fieldName) {
+    if (value!.isEmpty) {
+      return "${AppLocalizations.of(context)!.pleaseSelect} ${fieldName}";
+    }
+
+    return null;
+  }
+
   // // Validate userName.
   // static String? userNameValidation(String? value, BuildContext context, String? fieldName) {
   //   if (value == null || value.isEmpty) {

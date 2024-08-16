@@ -76,8 +76,7 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                             child: GestureDetector(
                               onTap: () async {
                                 ImagePicker imagePicker = ImagePicker();
-                                XFile? xFile =
-                                    await imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+                                XFile? xFile = await imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
                                 if (xFile != null) {
                                   controller.selectedImage = File(xFile.path);
                                   controller.update();
@@ -113,8 +112,7 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Colors.transparent,
-                                    image: (controller.profileImage == null || controller.profileImage!.isEmpty) &&
-                                            controller.selectedImage == null
+                                    image: (controller.profileImage == null || controller.profileImage!.isEmpty) && controller.selectedImage == null
                                         ? DecorationImage(
                                             image: AssetImage(AppImages.userImage),
                                             fit: BoxFit.cover,
@@ -140,9 +138,7 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                                     textInputAction: TextInputAction.next,
                                     keyboardType: TextInputType.name,
                                     validation: (value) => Validation.emptyValidation(
-                                        controller.firstNameController.text,
-                                        context,
-                                        AppLocalizations.of(context)!.firstName.capitalize),
+                                        controller.firstNameController.text, context, AppLocalizations.of(context)!.firstName.capitalize),
                                     onChanged: (value) {
                                       // controller.firstNameController.text = value;
                                       controller.update();
@@ -203,8 +199,8 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                             textInputAction: TextInputAction.next,
                             readOnly: true,
                             keyboardType: TextInputType.emailAddress,
-                            validation: (value) => Validation.emailValidation(controller.emailController.text,
-                                AppLocalizations.of(context)!.email.capitalize, context),
+                            validation: (value) =>
+                                Validation.emailValidation(controller.emailController.text, AppLocalizations.of(context)!.email.capitalize, context),
                             onChanged: (value) {
                               // controller.emailController.text = value;
                               controller.update();
@@ -229,11 +225,11 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                             textEditingController: controller.phoneNumberController,
                             keyboardType: TextInputType.number,
                             textInputAction: TextInputAction.next,
-                            validation: (value) => Validation.mobileValidationWithCode(
-                              controller.phoneNumberController.text,
-                              context,
-                              AppLocalizations.of(context)!.phoneNumber.capitalize,
-                            ),
+                            // validation: (value) => Validation.mobileValidationWithCode(
+                            //   controller.phoneNumberController.text,
+                            //   context,
+                            //   AppLocalizations.of(context)!.phoneNumber.capitalize,
+                            // ),
                             onChanged: (value) {
                               // controller.phoneNumberController.text = value;
                               controller.update();
@@ -251,10 +247,8 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                               favorite: [
                                 controller.selectedCountryCode.dialCode ?? '+93',
                               ],
-                              searchStyle:
-                                  TextStyle(fontSize: getProportionalFontSize(12), fontFamily: AppFonts.sansFont500),
-                              dialogTextStyle:
-                                  TextStyle(fontSize: getProportionalFontSize(12.5), fontFamily: AppFonts.sansFont500),
+                              searchStyle: TextStyle(fontSize: getProportionalFontSize(12), fontFamily: AppFonts.sansFont500),
+                              dialogTextStyle: TextStyle(fontSize: getProportionalFontSize(12.5), fontFamily: AppFonts.sansFont500),
                               builder: (CountryCode? countryCode) {
                                 return Container(
                                   padding: EdgeInsets.only(
@@ -305,11 +299,11 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                             hintText: AppLocalizations.of(context)!.dateOfBirth,
                             textEditingController: controller.birthDateController,
                             readOnly: true,
-                            validation: (value) => Validation.emptyValidation(
-                              controller.birthDateController.text,
-                              context,
-                              AppLocalizations.of(context)!.dateOfBirth.capitalize,
-                            ),
+                            // validation: (value) => Validation.birthDateEmptyValidation(
+                            //   controller.birthDateController.text,
+                            //   context,
+                            //   AppLocalizations.of(context)!.dateOfBirth.capitalize,
+                            // ),
                             onTap: () async {
                               DateTime? initialDate;
                               if (controller.birthDateController.text.isNotEmpty) {
@@ -352,13 +346,21 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                             textEditingController: controller.userNameController,
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.next,
-                            readOnly: true,
-                            validation: (value) => Validation.emptyValidation(controller.userNameController.text,
-                                context, AppLocalizations.of(context)!.userName.capitalize),
-                            // onChanged: (value) {
-                            //   controller.userNameController.text = value;
-                            //   controller.update();
-                            // },
+                            readOnly: controller.userModel != null
+                                ? controller.userModel!.username != null
+                                    ? true
+                                    : false
+                                : false,
+                            validation: (value) => Validation.emptyValidation(
+                              controller.userNameController.text,
+                              context,
+                              AppLocalizations.of(context)!.userName.capitalize,
+                            ),
+                            onChanged: (value) {
+                              controller.userNameController.text = value;
+
+                              controller.update();
+                            },
                             prefixIcon: Container(
                               padding: EdgeInsets.symmetric(
                                 horizontal: getProportionateScreenWidth(12),
@@ -394,12 +396,11 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                           horizontal: getProportionateScreenWidth(12),
                         ),
                         width: SizeConfig.deviceWidth,
-                        onPressed:
-                            controller.formKey.currentState != null && controller.formKey.currentState!.validate()
-                                ? () {
-                                    controller.updateUserProfile();
-                                  }
-                                : null,
+                        onPressed: controller.formKey.currentState != null && controller.formKey.currentState!.validate()
+                            ? () {
+                                controller.updateUserProfile();
+                              }
+                            : null,
                       ),
                       SizedBox(
                         height: getProportionateScreenHeight(8),
@@ -441,9 +442,7 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                                             Text(
                                               AppLocalizations.of(context)!.confirmationMessage,
                                               style: TextStyle(
-                                                  fontFamily: AppFonts.sansFont700,
-                                                  fontSize: getProportionalFontSize(22),
-                                                  color: AppColors.primaryColor),
+                                                  fontFamily: AppFonts.sansFont700, fontSize: getProportionalFontSize(22), color: AppColors.primaryColor),
                                               textAlign: TextAlign.center,
                                             ),
                                             SizedBox(
@@ -452,9 +451,7 @@ class PoliceEditProfileScreen extends GetView<PoliceSettingController> {
                                             Text(
                                               AppLocalizations.of(context)!.sureDeleteAccount,
                                               style: TextStyle(
-                                                  fontFamily: AppFonts.sansFont500,
-                                                  fontSize: getProportionalFontSize(16),
-                                                  color: AppColors.blackColor),
+                                                  fontFamily: AppFonts.sansFont500, fontSize: getProportionalFontSize(16), color: AppColors.blackColor),
                                               textAlign: TextAlign.center,
                                             ),
                                             SizedBox(

@@ -560,5 +560,8 @@ class AppLocalizationsAf extends AppLocalizations {
   String get confirmNewPassword => 'Confirm new password';
 
   @override
+  String get pleaseSelect => 'Please select';
+
+  @override
   String get hello => 'hello';
 }

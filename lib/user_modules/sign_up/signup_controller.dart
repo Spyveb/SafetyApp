@@ -50,7 +50,8 @@ class SignUpController extends GetxController {
         "dob": Utils.sendDateFormat(birthDateController.text),
         "username": userNameController.text,
         "password": passwordController.text,
-        "role": role == 'User' ? 'user' : 'police_officer',
+        // "role": role == 'User' ? 'user' : 'police_officer',
+        "role": 'user',
       });
 
       if (profileImage != null) {
@@ -415,7 +416,6 @@ class SignUpController extends GetxController {
     await StorageService().writeSecureData(Constants.userName, userModel.username ?? "");
     await StorageService().writeSecureData(Constants.profileImage, userModel.profileImage ?? "");
     await StorageService().writeSecureData(Constants.role, userModel.role ?? "user");
-    await StorageService()
-        .writeSecureData(Constants.availability, userModel.availability == 1 ? "Available" : "Unavailable");
+    await StorageService().writeSecureData(Constants.availability, userModel.availability == 1 ? "Available" : "Unavailable");
   }
 }

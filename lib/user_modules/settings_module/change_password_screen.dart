@@ -22,7 +22,6 @@ class ChangePasswordScreen extends GetView<SettingsController> {
               ),
               child: Form(
                 key: controller.changePasswordKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

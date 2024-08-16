@@ -1205,6 +1205,12 @@ abstract class AppLocalizations {
   /// **'Confirm new password'**
   String get confirmNewPassword;
 
+  /// No description provided for @pleaseSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select'**
+  String get pleaseSelect;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:
