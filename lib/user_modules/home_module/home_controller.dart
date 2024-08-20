@@ -27,6 +27,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    saveFCMToken();
     // getUserSosEmergencyCase();
     super.onInit();
   }

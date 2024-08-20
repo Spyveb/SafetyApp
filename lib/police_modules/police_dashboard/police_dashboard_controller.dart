@@ -30,6 +30,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
 
   @override
   void onInit() {
+    saveFCMToken();
     getPoliceDashboard();
     animationController = AnimationController(
       vsync: this,

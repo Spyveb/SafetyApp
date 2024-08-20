@@ -436,6 +436,9 @@ class ReportedNonEmgCasesController extends GetxController {
         );
       },
     );
+    // ).then((value) {
+    //   Get.back();
+    // });
   }
 
   double calculateDistance(lat1, lon1, lat2, lon2) {

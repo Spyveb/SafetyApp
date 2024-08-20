@@ -109,8 +109,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                             child: GestureDetector(
                               onTap: () async {
                                 ImagePicker imagePicker = ImagePicker();
-                                XFile? xFile =
-                                    await imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+                                XFile? xFile = await imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
                                 if (xFile != null) {
                                   controller.selectedImage = File(xFile.path);
                                   controller.update();
@@ -146,8 +145,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Colors.transparent,
-                                    image: (controller.profileImage == null || controller.profileImage!.isEmpty) &&
-                                            controller.selectedImage == null
+                                    image: (controller.profileImage == null || controller.profileImage!.isEmpty) && controller.selectedImage == null
                                         ? DecorationImage(
                                             image: AssetImage(AppImages.userImage),
                                             fit: BoxFit.cover,
@@ -173,9 +171,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                     textInputAction: TextInputAction.next,
                                     keyboardType: TextInputType.name,
                                     validation: (value) => Validation.emptyValidation(
-                                        controller.firstNameController.text,
-                                        context,
-                                        AppLocalizations.of(context)!.firstName.capitalize),
+                                        controller.firstNameController.text, context, AppLocalizations.of(context)!.firstName.capitalize),
                                     onChanged: (value) {
                                       // controller.firstNameController.text = value;
                                       controller.update();
@@ -236,8 +232,8 @@ class EditProfileScreen extends GetView<SettingsController> {
                             textInputAction: TextInputAction.next,
                             readOnly: true,
                             keyboardType: TextInputType.emailAddress,
-                            validation: (value) => Validation.emailValidation(controller.emailController.text,
-                                AppLocalizations.of(context)!.email.capitalize, context),
+                            validation: (value) =>
+                                Validation.emailValidation(controller.emailController.text, AppLocalizations.of(context)!.email.capitalize, context),
                             // onChanged: (value) {
                             // controller.emailController.text = value;
                             // controller.update();
@@ -284,10 +280,8 @@ class EditProfileScreen extends GetView<SettingsController> {
                               favorite: [
                                 controller.selectedCountryCode.dialCode ?? '+93',
                               ],
-                              searchStyle:
-                                  TextStyle(fontSize: getProportionalFontSize(12), fontFamily: AppFonts.sansFont500),
-                              dialogTextStyle:
-                                  TextStyle(fontSize: getProportionalFontSize(12.5), fontFamily: AppFonts.sansFont500),
+                              searchStyle: TextStyle(fontSize: getProportionalFontSize(12), fontFamily: AppFonts.sansFont500),
+                              dialogTextStyle: TextStyle(fontSize: getProportionalFontSize(12.5), fontFamily: AppFonts.sansFont500),
                               builder: (CountryCode? countryCode) {
                                 return Container(
                                   padding: EdgeInsets.only(
@@ -397,8 +391,8 @@ class EditProfileScreen extends GetView<SettingsController> {
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.next,
                             readOnly: true,
-                            validation: (value) => Validation.emptyValidation(controller.userNameController.text,
-                                context, AppLocalizations.of(context)!.userName.capitalize),
+                            // validation: (value) => Validation.emptyValidation(controller.userNameController.text,
+                            //     context, AppLocalizations.of(context)!.userName.capitalize),
                             // onChanged: (value) {
                             // controller.userNameController.text = value;
                             // controller.update();
@@ -438,12 +432,11 @@ class EditProfileScreen extends GetView<SettingsController> {
                           horizontal: getProportionateScreenWidth(12),
                         ),
                         width: SizeConfig.deviceWidth,
-                        onPressed:
-                            controller.formKey.currentState != null && controller.formKey.currentState!.validate()
-                                ? () {
-                                    controller.updateUserProfile();
-                                  }
-                                : null,
+                        onPressed: controller.formKey.currentState != null && controller.formKey.currentState!.validate()
+                            ? () {
+                                controller.updateUserProfile();
+                              }
+                            : null,
                       ),
                       SizedBox(
                         height: getProportionateScreenHeight(8),
@@ -485,9 +478,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                             Text(
                                               AppLocalizations.of(context)!.confirmationMessage,
                                               style: TextStyle(
-                                                  fontFamily: AppFonts.sansFont700,
-                                                  fontSize: getProportionalFontSize(22),
-                                                  color: AppColors.primaryColor),
+                                                  fontFamily: AppFonts.sansFont700, fontSize: getProportionalFontSize(22), color: AppColors.primaryColor),
                                               textAlign: TextAlign.center,
                                             ),
                                             SizedBox(
@@ -496,9 +487,7 @@ class EditProfileScreen extends GetView<SettingsController> {
                                             Text(
                                               AppLocalizations.of(context)!.sureDeleteAccount,
                                               style: TextStyle(
-                                                  fontFamily: AppFonts.sansFont500,
-                                                  fontSize: getProportionalFontSize(16),
-                                                  color: AppColors.blackColor),
+                                                  fontFamily: AppFonts.sansFont500, fontSize: getProportionalFontSize(16), color: AppColors.blackColor),
                                               textAlign: TextAlign.center,
                                             ),
                                             SizedBox(
