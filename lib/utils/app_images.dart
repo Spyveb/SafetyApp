@@ -57,5 +57,7 @@ class AppImages {
   static const String policeCloseDrawerIcon = "assets/images/police_close_drawer_icon.png";
   static const String audioIcon = "assets/images/audio_icon.png";
 
+  // SocialWorker images
+  static const String socialWorkerHistoryIcon = "assets/images/social_worker_history_icon.png";
   // Police Svgs
 }

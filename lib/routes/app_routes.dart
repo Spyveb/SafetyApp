@@ -36,6 +36,12 @@ abstract class Routes {
   static const POLICE_REPORTEDNONEMGCASE_DETAILS = _Paths.POLICE_REPORTEDNONEMGCASE_DETAILS;
   static const CONTENTS_DETAIL_VIEW = _Paths.CONTENTS_DETAIL_VIEW;
   static const NOTIFICATION_SCREEN = _Paths.NOTIFICATION_SCREEN;
+
+  // Police Modules
+  static const SOCIAL_WORKER_DASHBOARD = _Paths.SOCIAL_WORKER_DASHBOARD;
+  static const SOCIAL_WORKER_REQUEST = _Paths.SOCIAL_WORKER_REQUEST;
+  static const SOCIAL_WORKER_SETTINGS = _Paths.SOCIAL_WORKER_SETTINGS;
+  static const SOCIAL_WORKER_EDIT_PROFILE = _Paths.SOCIAL_WORKER_EDIT_PROFILE;
 }
 
 abstract class _Paths {
@@ -73,4 +79,10 @@ abstract class _Paths {
   static const POLICE_EDIT_PROFILE = '/police_edit_profile'; // police_edit_profile
   static const CONTENTS_DETAIL_VIEW = '/contents_detail_view'; // contents_detail_view
   static const POLICE_REPORTEDNONEMGCASE_DETAILS = '/police_non_emergency_case_details'; // police_non_emergency_case_details
+
+  // SocialWorker Modules
+  static const SOCIAL_WORKER_DASHBOARD = '/social_worker_dashboard'; // social_worker_dashboard
+  static const SOCIAL_WORKER_REQUEST = '/social_worker_request'; // social_worker_request
+  static const SOCIAL_WORKER_EDIT_PROFILE = '/social_worker_edit_profile'; // social_worker_edit_profile
+  static const SOCIAL_WORKER_SETTINGS = '/social_worker_settings'; // social_worker_settings
 }

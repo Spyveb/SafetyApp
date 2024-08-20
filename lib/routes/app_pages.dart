@@ -174,5 +174,27 @@ abstract class AppPages {
       page: () => const PoliceEditProfileScreen(),
       binding: PoliceSettingBinding(),
     ),
+
+    // SocialWorker Modules
+    GetPage(
+      name: Routes.SOCIAL_WORKER_DASHBOARD,
+      page: () => const SocialWorkerDashBoardScreen(),
+      binding: SocialWorkerDashBoardBinding(),
+    ),
+    GetPage(
+      name: Routes.SOCIAL_WORKER_REQUEST,
+      page: () => const SocialWorkerRequestScreen(),
+      binding: SocialWorkerRequestdBinding(),
+    ),
+    GetPage(
+      name: Routes.SOCIAL_WORKER_SETTINGS,
+      page: () => const SocialWorkerSettingScreen(),
+      binding: SocialWorkerSettingBinding(),
+    ),
+    GetPage(
+      name: Routes.SOCIAL_WORKER_EDIT_PROFILE,
+      page: () => const SocialWorkerSettingScreen(),
+      binding: SocialWorkerSettingBinding(),
+    ),
   ];
 }
