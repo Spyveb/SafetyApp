@@ -1,12 +1,6 @@
 import 'package:distress_app/firebase_options.dart';
-import 'package:distress_app/packages/country_code_picker/src/country_localizations.dart';
-import 'package:distress_app/providers/theme_provider.dart';
-import 'package:distress_app/routes/app_pages.dart';
-import 'package:distress_app/user_modules/splash/splash_bindings.dart';
-import 'package:distress_app/utils/app_colors.dart';
-import 'package:distress_app/utils/app_fonts.dart';
-import 'package:distress_app/utils/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,9 +8,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'config/size_config.dart';
-import 'helpers/secure_storage.dart';
-import 'localization/app_localizations.dart';
+import 'imports.dart';
 
 GlobalKey<NavigatorState> navState = GlobalKey<NavigatorState>();
 
@@ -25,6 +17,19 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await FirebaseMessages().getFCMToken();
+
+  // FCM in app Terminated State
+  RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+
+  if (initialMessage != null) {
+    // fromMain = true;
+    FirebaseMessages.notificationOperation(message: initialMessage.data, fromTerminate: true);
+    // _firebaseMessagingBackgroundHandler(initialMessage);
+    print("initialMessage -- ${initialMessage.data}");
+  }
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool? savedTheme = prefs.getBool(Constants.isDarkThemeSelected);
   runApp(

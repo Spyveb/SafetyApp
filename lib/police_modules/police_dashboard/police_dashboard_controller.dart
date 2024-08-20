@@ -704,7 +704,7 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
     // LoadingDialog.showLoader();
     try {
       Dio.FormData formData = Dio.FormData.fromMap({
-        "fcm_token": '',
+        "fcm_token": FirebaseMessages().fcmToken,
       });
       var response = await ApiProvider().postAPICall(
         Endpoints.saveFCMToken,

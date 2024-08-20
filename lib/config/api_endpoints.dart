@@ -29,8 +29,8 @@ class Endpoints {
   static const categoryDetail = "${baseUrl}api/category_detail"; // Endpoint for category_detail
   static const emergencyContactList = "${baseUrl}api/emergency_contact_list"; // Endpoint for emergencyContactList
   static const saveAddress = "${baseUrl}api/save_address"; // Endpoint for saveAddress
-  static const saveFCMToken = "${baseUrl}api/save_fcm_token"; // Endpoint for saveAddress
-  static const getPoliceDashboard = "${baseUrl}api/dashboard"; // Endpoint for saveAddress
+  static const saveFCMToken = "${baseUrl}api/save_fcm_token"; // Endpoint for save_fcm_token
+  static const getPoliceDashboard = "${baseUrl}api/dashboard"; // Endpoint for dashboard
   static const userNonEmergencyCaseList = "${baseUrl}api/users_non_emergency_case_list"; // Endpoint for userNonEmergencyCaseList
   static const userSosEmergencyCaseList = "${baseUrl}api/users_sos_emergency_case_list"; // Endpoint for userSosEmergencyCaseList
 
