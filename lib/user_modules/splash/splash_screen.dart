@@ -46,9 +46,11 @@ class SplashScreen extends GetView<SplashController> {
                       if (controller.isAuthenticated) {
                         if (controller.role == "police_officer") {
                           Get.offAllNamed(Routes.POLICE_DASHBOARD);
-                        } else if (controller.role == "social_worker") {
-                          Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
-                        } else {
+                        }
+                        // else if (controller.role == "social_worker") {
+                        //   Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
+                        // }
+                        else {
                           Get.offAllNamed(Routes.DASHBOARD);
                         }
                       } else if (controller.isFirstTime) {
