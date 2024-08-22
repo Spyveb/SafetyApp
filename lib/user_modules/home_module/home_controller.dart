@@ -9,7 +9,7 @@ import 'package:distress_app/user_modules/home_module/place_auto_complete_respon
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:location/location.dart' as Location;
 
 class HomeController extends GetxController {
   bool dialogIsOpen = false;
@@ -390,13 +390,45 @@ class HomeController extends GetxController {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+      Utils.showToast('Location services are disabled. Please enable location service to receive SOS request');
+      bool enabled = await Location.Location().requestService();
+      if (enabled == true) {
+        getCurrentLocation();
+      } else {
+        return Future.error('Location services are disabled.');
+      }
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
+        // Utils.showToast('Location permission is disabled. Please enable location permission to receive SOS request');
+        Utils.showAlertDialog(
+          context: navState.currentContext!,
+          bar: true,
+          title: AppLocalizations.of(Get.context!)!.alert,
+          description: AppLocalizations.of(Get.context!)!.theLocationServiceIsRequired,
+          buttons: [
+            TextButton(
+              onPressed: () async {
+                Get.back();
+              },
+              child: Text(
+                AppLocalizations.of(Get.context!)!.noEmergenciesAtTheMoment,
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                Get.back();
+                getCurrentLocation();
+              },
+              child: Text(
+                AppLocalizations.of(Get.context!)!.retry,
+              ),
+            ),
+          ],
+        );
         return Future.error('Location permissions are denied');
       }
     }
@@ -409,9 +441,18 @@ class HomeController extends GetxController {
         description: AppLocalizations.of(Get.context!)!.locationPermissionRequiredSOS,
         buttons: [
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Get.back();
-              openAppSettings();
+            },
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              Get.back();
+              await Geolocator.openAppSettings();
+              Future.delayed(const Duration(seconds: 1)).then((value) {
+                getCurrentLocation();
+              });
             },
             child: Text(
               AppLocalizations.of(Get.context!)!.openSetting,

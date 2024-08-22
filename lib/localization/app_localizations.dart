@@ -1211,6 +1211,48 @@ abstract class AppLocalizations {
   /// **'Please select'**
   String get pleaseSelect;
 
+  /// No description provided for @alert.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert'**
+  String get alert;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @theLocationServiceIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'The location service is required to send SOS requests.'**
+  String get theLocationServiceIsRequired;
+
+  /// No description provided for @noEmergenciesAtTheMoment.
+  ///
+  /// In en, this message translates to:
+  /// **'No emergencies at the moment'**
+  String get noEmergenciesAtTheMoment;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @theLocationServiceIsRequiredToReceiveSOS.
+  ///
+  /// In en, this message translates to:
+  /// **'The location service is required to receive nearby SOS requests.'**
+  String get theLocationServiceIsRequiredToReceiveSOS;
+
+  /// No description provided for @pauseNewRequestsForNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause new requests for now'**
+  String get pauseNewRequestsForNow;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:

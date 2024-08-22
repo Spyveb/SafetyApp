@@ -563,5 +563,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get pleaseSelect => 'Please select';
 
   @override
+  String get alert => 'Alert';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get theLocationServiceIsRequired => 'The location service is required to send SOS requests.';
+
+  @override
+  String get noEmergenciesAtTheMoment => 'No emergencies at the moment';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get theLocationServiceIsRequiredToReceiveSOS => 'The location service is required to receive nearby SOS requests.';
+
+  @override
+  String get pauseNewRequestsForNow => 'Pause new requests for now';
+
+  @override
   String get hello => 'hello';
 }

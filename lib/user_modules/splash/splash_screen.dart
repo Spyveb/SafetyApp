@@ -10,6 +10,9 @@ class SplashScreen extends GetView<SplashController> {
     return Scaffold(
       body: SafeArea(
         child: GetBuilder<SplashController>(
+          autoRemove: false,
+          global: true,
+          init: SplashController(),
           builder: (controller) {
             return Center(
               child: Column(
@@ -38,39 +41,39 @@ class SplashScreen extends GetView<SplashController> {
                     ),
                   ),
                   Spacer(),
-                  TextButton(
-                    onPressed: () {
-                      // Get.offAllNamed(Routes.POLICE_SOSEMERGENCY);
-                      // return;
-                      // Get.offAllNamed(Routes.SIGN_IN);
-                      if (controller.isAuthenticated) {
-                        if (controller.role == "police_officer") {
-                          Get.offAllNamed(Routes.POLICE_DASHBOARD);
-                        }
-                        // else if (controller.role == "social_worker") {
-                        //   Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
-                        // }
-                        else {
-                          Get.offAllNamed(Routes.DASHBOARD);
-                        }
-                      } else if (controller.isFirstTime) {
-                        Get.offAllNamed(Routes.ONBOARDING);
-                      } else {
-                        Get.offAllNamed(Routes.SIGN_IN);
-                        // Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
-                      }
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.tapToContinue,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: AppFonts.sansFont600,
-                        color: AppColors.primaryColor,
-                        fontSize: getProportionalFontSize(16),
-                      ),
-                    ),
-                  ),
-                  Spacer(),
+                  // TextButton(
+                  //   onPressed: () {
+                  //     // Get.offAllNamed(Routes.POLICE_SOSEMERGENCY);
+                  //     // return;
+                  //     // Get.offAllNamed(Routes.SIGN_IN);
+                  //     if (controller.isAuthenticated) {
+                  //       if (controller.role == "police_officer") {
+                  //         Get.offAllNamed(Routes.POLICE_DASHBOARD);
+                  //       }
+                  //       // else if (controller.role == "social_worker") {
+                  //       //   Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
+                  //       // }
+                  //       else {
+                  //         Get.offAllNamed(Routes.DASHBOARD);
+                  //       }
+                  //     } else if (controller.isFirstTime) {
+                  //       Get.offAllNamed(Routes.ONBOARDING);
+                  //     } else {
+                  //       Get.offAllNamed(Routes.SIGN_IN);
+                  //       // Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
+                  //     }
+                  //   },
+                  //   child: Text(
+                  //     AppLocalizations.of(context)!.tapToContinue,
+                  //     textAlign: TextAlign.center,
+                  //     style: TextStyle(
+                  //       fontFamily: AppFonts.sansFont600,
+                  //       color: AppColors.primaryColor,
+                  //       fontSize: getProportionalFontSize(16),
+                  //     ),
+                  //   ),
+                  // ),
+                  // Spacer(),
                 ],
               ),
             );

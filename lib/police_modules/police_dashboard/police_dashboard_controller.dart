@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:location/location.dart' as Location;
 
 import '../../packages/location_geocoder/location_geocoder.dart';
 
@@ -77,16 +77,47 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
   Future<Position> determineCurrentPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
-
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+      Utils.showToast('Location services are disabled. Please enable location service to receive SOS request');
+      bool enabled = await Location.Location().requestService();
+      if (enabled == true) {
+        getCurrentLocation();
+      } else {
+        return Future.error('Location services are disabled.');
+      }
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
+        // Utils.showToast('Location permission is disabled. Please enable location permission to receive SOS request');
+        Utils.showAlertDialog(
+          context: navState.currentContext!,
+          bar: true,
+          title: AppLocalizations.of(Get.context!)!.alert,
+          description: AppLocalizations.of(Get.context!)!.theLocationServiceIsRequiredToReceiveSOS,
+          buttons: [
+            TextButton(
+              onPressed: () async {
+                Get.back();
+              },
+              child: Text(
+                AppLocalizations.of(Get.context!)!.pauseNewRequestsForNow,
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                Get.back();
+                getCurrentLocation();
+              },
+              child: Text(
+                AppLocalizations.of(Get.context!)!.retry,
+              ),
+            ),
+          ],
+        );
         return Future.error('Location permissions are denied');
       }
     }
@@ -99,15 +130,26 @@ class PoliceDashBoardController extends GetxController with GetSingleTickerProvi
         description: "To access your current location, we require the location permission.",
         buttons: [
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Get.back();
-              openAppSettings();
             },
-            child: Text('Open setting'),
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              Get.back();
+              await Geolocator.openAppSettings();
+              Future.delayed(const Duration(seconds: 1)).then((value) {
+                getCurrentLocation();
+              });
+            },
+            child: Text(
+              AppLocalizations.of(Get.context!)!.openSetting,
+            ),
           ),
         ],
       );
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      // return Future.error('Location permissions are permanently denied, we cannot request permissions.');
     }
 
     return await Geolocator.getCurrentPosition(

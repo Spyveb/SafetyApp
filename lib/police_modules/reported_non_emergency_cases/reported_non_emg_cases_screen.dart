@@ -13,7 +13,14 @@ class ReportedNonEmgCasesScreen extends GetView<ReportedNonEmgCasesController> {
         child: GetBuilder<ReportedNonEmgCasesController>(
           init: ReportedNonEmgCasesController(),
           initState: (state) {
-            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+              // if (Get.find<SplashController>().notificationType == 'non_create') {
+              //   if (Get.find<SplashController>().reportCaseModel != null) {
+              //     controller.goToDetails(Get.find<SplashController>().reportCaseModel!);
+              //     await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
+              //     controller.reportCaseModel = null;
+              //   }
+              // }
               controller.getOpenNonEmergencyReportsList(search: '');
             });
           },

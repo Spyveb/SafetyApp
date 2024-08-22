@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'imports.dart';
 
 GlobalKey<NavigatorState> navState = GlobalKey<NavigatorState>();
-
+bool? fromMain;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -24,7 +24,7 @@ Future<void> main() async {
   RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
 
   if (initialMessage != null) {
-    // fromMain = true;
+    fromMain = true;
     FirebaseMessages.notificationOperation(message: initialMessage.data, fromTerminate: true);
     // _firebaseMessagingBackgroundHandler(initialMessage);
     print("initialMessage -- ${initialMessage.data}");

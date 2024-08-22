@@ -4,7 +4,7 @@ import 'package:distress_app/user_modules/home_module/place_auto_complete_respon
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:location/location.dart' as Location;
 
 import '../../packages/location_geocoder/location_geocoder.dart';
 
@@ -44,17 +44,7 @@ class _PlaceAutoCompleteScreenState extends State<PlaceAutoCompleteScreen> {
             horizontal: getProportionateScreenWidth(26),
           ),
           onTap: () async {
-            LoadingDialog.showLoader();
-            FocusManager.instance.primaryFocus?.unfocus();
-            Position currentPosition = await determineCurrentPosition();
-
-            print("${currentPosition.latitude} ${currentPosition.longitude}");
-            var address = await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromCoordinates(
-              Coordinates(currentPosition.latitude, currentPosition.longitude),
-            );
-            LoadingDialog.hideLoader();
-
-            Navigator.pop(context, address.first);
+            await useCurrentLocation(context);
           },
           title: Text(
             AppLocalizations.of(context)!.useCurrentLocation,
@@ -105,11 +95,24 @@ class _PlaceAutoCompleteScreenState extends State<PlaceAutoCompleteScreen> {
     );
   }
 
+  Future<void> useCurrentLocation(BuildContext context) async {
+    LoadingDialog.showLoader();
+    FocusManager.instance.primaryFocus?.unfocus();
+    Position currentPosition = await determineCurrentPosition();
+
+    print("${currentPosition.latitude} ${currentPosition.longitude}");
+    var address = await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromCoordinates(
+      Coordinates(currentPosition.latitude, currentPosition.longitude),
+    );
+    LoadingDialog.hideLoader();
+
+    Navigator.pop(context, address.first);
+  }
+
   Dio.Dio dio = Dio.Dio();
 
   Future<void> placeAutoComplete(String query) async {
-    Uri uri = Uri.https(
-        "maps.googleapis.com", 'maps/api/place/autocomplete/json', {"input": query, "key": Constants.kGoogleApiKey});
+    Uri uri = Uri.https("maps.googleapis.com", 'maps/api/place/autocomplete/json', {"input": query, "key": Constants.kGoogleApiKey});
 
     Dio.Response response = await dio.getUri(uri);
 
@@ -133,13 +136,45 @@ class _PlaceAutoCompleteScreenState extends State<PlaceAutoCompleteScreen> {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+      Utils.showToast('Location services are disabled. Please enable location service to receive SOS request');
+      bool enabled = await Location.Location().requestService();
+      if (enabled == true) {
+        useCurrentLocation(context);
+      } else {
+        return Future.error('Location services are disabled.');
+      }
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
+        // Utils.showToast('Location permission is disabled. Please enable location permission to receive SOS request');
+        Utils.showAlertDialog(
+          context: navState.currentContext!,
+          bar: true,
+          title: AppLocalizations.of(Get.context!)!.alert,
+          description: AppLocalizations.of(Get.context!)!.theLocationServiceIsRequired,
+          buttons: [
+            TextButton(
+              onPressed: () async {
+                Get.back();
+              },
+              child: Text(
+                AppLocalizations.of(Get.context!)!.noEmergenciesAtTheMoment,
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                Get.back();
+                useCurrentLocation(context);
+              },
+              child: Text(
+                AppLocalizations.of(Get.context!)!.retry,
+              ),
+            ),
+          ],
+        );
         return Future.error('Location permissions are denied');
       }
     }
@@ -148,16 +183,26 @@ class _PlaceAutoCompleteScreenState extends State<PlaceAutoCompleteScreen> {
       Utils.showAlertDialog(
         context: navState.currentContext!,
         bar: true,
-        title: AppLocalizations.of(context)!.permissionRequired,
-        description: AppLocalizations.of(context)!.locationPermissionRequiredSOS,
+        title: AppLocalizations.of(Get.context!)!.permissionRequired,
+        description: AppLocalizations.of(Get.context!)!.locationPermissionRequiredSOS,
         buttons: [
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Get.back();
-              openAppSettings();
+            },
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              Get.back();
+              await Geolocator.openAppSettings();
+              Future.delayed(const Duration(seconds: 1)).then((value) {
+                print("CALLL");
+                useCurrentLocation(context);
+              });
             },
             child: Text(
-              AppLocalizations.of(context)!.openSetting,
+              AppLocalizations.of(Get.context!)!.openSetting,
             ),
           ),
         ],
@@ -176,8 +221,7 @@ class AppBarPlacesAutoCompleteTextField extends StatefulWidget {
   final TextStyle? textStyle;
   final Function(String)? onChanged;
 
-  const AppBarPlacesAutoCompleteTextField({Key? key, this.textDecoration, this.textStyle, this.onChanged})
-      : super(key: key);
+  const AppBarPlacesAutoCompleteTextField({Key? key, this.textDecoration, this.textStyle, this.onChanged}) : super(key: key);
 
   @override
   _AppBarPlacesAutoCompleteTextFieldState createState() => _AppBarPlacesAutoCompleteTextFieldState();
@@ -212,9 +256,7 @@ class _AppBarPlacesAutoCompleteTextFieldState extends State<AppBarPlacesAutoComp
 
   TextStyle _defaultStyle() {
     return TextStyle(
-      color: Theme.of(context).brightness == Brightness.light
-          ? Colors.black.withOpacity(0.9)
-          : Colors.white.withOpacity(0.9),
+      color: Theme.of(context).brightness == Brightness.light ? Colors.black.withOpacity(0.9) : Colors.white.withOpacity(0.9),
       fontSize: 16.0,
     );
   }

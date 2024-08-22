@@ -186,5 +186,12 @@
   "newPassword": "New password",
   "confirmNewPassword": "Confirm new password",
   "pleaseSelect": "Please select",
+  "alert": "Alert",
+  "cancel": "Cancel",
+  "theLocationServiceIsRequired": "The location service is required to send SOS requests.",
+  "noEmergenciesAtTheMoment": "No emergencies at the moment",
+  "retry": "Retry",
+  "theLocationServiceIsRequiredToReceiveSOS": "The location service is required to receive nearby SOS requests.",
+  "pauseNewRequestsForNow": "Pause new requests for now",
   "hello": "hello"
 }

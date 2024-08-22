@@ -244,6 +244,7 @@ class SettingsController extends GetxController {
 
       if (response['success'] != null && response['success'] == true) {
         Utils.showToast(response['message'] ?? "Account deleted successfully.");
+        await StorageService().deleteAllSecureData();
         Get.offAllNamed(Routes.SIGN_IN);
       }
     } on Dio.DioException catch (e) {

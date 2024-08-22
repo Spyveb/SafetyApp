@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:distress_app/imports.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 
 class FirebaseMessages extends Object {
   late Map<String, dynamic> pendingNotification;
@@ -124,79 +126,86 @@ class FirebaseMessages extends Object {
   }
 
   static Future<void> notificationOperation({required Map<String, dynamic> message, bool? fromTerminate = false}) async {
-    // print(message);
-    // String? accessToken = await StorageService().readSecureData(Constants.accessToken);
-    // if (accessToken != null && accessToken.isNotEmpty) {
-    //   if (message['notification_type'] == 'sos_create') {
-    //     Get.lazyPut(() => PoliceSOSEmergencyController());
-    //
-    //     if (fromTerminate == true) {
-    //       Get.offAllNamed(Routes.POLICE_DASHBOARD);
-    //       Get.toNamed(Routes.POLICE_SOSEMERGENCY);
-    //     } else {
-    //       if (Get.currentRoute == Routes.POLICE_SOSEMERGENCY) {
-    //         Get.offAndToNamed(Routes.POLICE_SOSEMERGENCY);
-    //       } else {
-    //         Get.toNamed(Routes.POLICE_SOSEMERGENCY);
-    //       }
-    //     }
-    //     // if (message['data'] != null) {
-    //     //   Map<String, dynamic> caseJson = jsonDecode(message['data'].toString());
-    //     //   ReportCaseModel currentSOSReport = ReportCaseModel.fromJson(caseJson);
-    //     //   // if (
-    //     //   //     (currentSOSReport.status == 'Pending' || currentSOSReport.status == 'All') &&
-    //     //   //     currentSOSReport.requestStatus == 'Pending') {
-    //     //   Get.find<PoliceSOSEmergencyController>().showSOSDialog(Get.context!, currentSOSReport);
-    //     //   // }
-    //     // }
-    //   } else if (message['notification_type'] == 'non_create') {
-    //     if (message['data'] != null) {
-    //       Get.lazyPut(() => ReportedNonEmgCasesController());
-    //       Map<String, dynamic> caseJson = jsonDecode(message['data'].toString());
-    //       ReportCaseModel currentSOSReport = ReportCaseModel.fromJson(caseJson);
-    //
-    //       if (fromTerminate == true) {
-    //         Get.offAllNamed(Routes.POLICE_DASHBOARD);
-    //         Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASES);
-    //       }
-    //       if (Get.currentRoute == Routes.POLICE_REPORTEDNONEMGCASE_DETAILS) {
-    //         Get.find<ReportedNonEmgCasesController>().goToDetails(currentSOSReport);
-    //         await Get.offAndToNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
-    //         Get.find<ReportedNonEmgCasesController>().reportCaseModel = null;
-    //       } else {
-    //         Get.find<ReportedNonEmgCasesController>().goToDetails(currentSOSReport);
-    //         await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
-    //         Get.find<ReportedNonEmgCasesController>().reportCaseModel = null;
-    //       }
-    //     }
-    //   } else if (message['notification_type'] == 'sos_accept' || message['notification_type'] == 'sos_close') {
-    //     Get.lazyPut(() => HomeController());
-    //     if (fromTerminate == true) {
-    //       Get.offAllNamed(Routes.DASHBOARD);
-    //       Get.toNamed(Routes.USERSOSREQUESTDETAIL);
-    //     } else {
-    //       if (Get.currentRoute == Routes.USERSOSREQUESTDETAIL) {
-    //         Get.offAndToNamed(Routes.USERSOSREQUESTDETAIL);
-    //       } else {
-    //         Get.toNamed(Routes.USERSOSREQUESTDETAIL);
-    //       }
-    //     }
-    //   }
-    //   // BlocProvider.of<NotificationBloc>(navState.currentContext!).fromNotification = true;
-    //   // if (fromTerminate == true) {
-    //   //   BlocProvider.of<NotificationBloc>(navState.currentContext!).fromTerminate = true;
-    //   //   fromMain = null;
-    //   // } else {
-    //   //   if (fromTerminate != true && fromMain != true) {
-    //   //     Navigator.pushNamed(
-    //   //       navState.currentContext!,
-    //   //       AppRoute.notificationRoute,
-    //   //     );
-    //   //   }
-    //   // }
-    // } else {
-    //   Get.offAllNamed(Routes.SPLASH);
-    // }
-    // print("message - - ${message}");
+    print(message);
+    String? accessToken = await StorageService().readSecureData(Constants.accessToken);
+    if (accessToken != null && accessToken.isNotEmpty) {
+      if (message['notification_type'] == 'sos_create' || message['notification_type'] == 'sos_decline' || message['notification_type'] == 'sos_backup') {
+        Get.lazyPut(() => PoliceSOSEmergencyController());
+
+        if (fromTerminate == true) {
+          // Get.find<SplashController>().notificationType = message['notification_type'];
+          Get.find<SplashController>().notificationType = 'sos_create';
+          fromMain = null;
+        } else {
+          if (fromTerminate != true && fromMain != true) {
+            if (Get.currentRoute == Routes.POLICE_SOSEMERGENCY) {
+              Get.offAndToNamed(Routes.POLICE_SOSEMERGENCY);
+            } else {
+              Get.toNamed(Routes.POLICE_SOSEMERGENCY);
+            }
+          }
+        }
+        // if (message['data'] != null) {
+        //   Map<String, dynamic> caseJson = jsonDecode(message['data'].toString());
+        //   ReportCaseModel currentSOSReport = ReportCaseModel.fromJson(caseJson);
+        //   // if (
+        //   //     (currentSOSReport.status == 'Pending' || currentSOSReport.status == 'All') &&
+        //   //     currentSOSReport.requestStatus == 'Pending') {
+        //   Get.find<PoliceSOSEmergencyController>().showSOSDialog(Get.context!, currentSOSReport);
+        //   // }
+        // }
+      } else if (message['notification_type'] == 'non_create' || message['notification_type'] == 'non_decline') {
+        if (message['data'] != null) {
+          Get.lazyPut(() => ReportedNonEmgCasesController());
+          Map<String, dynamic> caseJson = jsonDecode(message['data'].toString());
+          ReportCaseModel currentSOSReport = ReportCaseModel.fromJson(caseJson);
+
+          if (fromTerminate == true) {
+            Get.find<SplashController>().notificationType = 'non_create';
+            Get.find<SplashController>().goToDetails(currentSOSReport);
+            fromMain = null;
+          } else {
+            if (fromTerminate != true && fromMain != true) {
+              if (Get.currentRoute == Routes.POLICE_REPORTEDNONEMGCASE_DETAILS) {
+                Get.find<ReportedNonEmgCasesController>().goToDetails(currentSOSReport);
+
+                await Get.offAndToNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
+                Get.find<ReportedNonEmgCasesController>().reportCaseModel = null;
+              } else {
+                Get.find<ReportedNonEmgCasesController>().goToDetails(currentSOSReport);
+                await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
+                Get.find<ReportedNonEmgCasesController>().reportCaseModel = null;
+              }
+            }
+          }
+        }
+      } else if (message['notification_type'] == 'sos_accept' || message['notification_type'] == 'sos_close') {
+        if (fromTerminate == true) {
+          Get.find<SplashController>().notificationType = 'sos_accept';
+          fromMain = null;
+        } else {
+          if (fromTerminate != true && fromMain != true) {
+            Get.lazyPut(() => HomeController());
+
+            if (Get.currentRoute == Routes.USERSOSREQUESTDETAIL) {
+              Get.offAndToNamed(Routes.USERSOSREQUESTDETAIL);
+            } else {
+              Get.toNamed(Routes.USERSOSREQUESTDETAIL);
+            }
+          }
+        }
+      }
+    } else if (message['notification_type'] == 'non_accept' || message['notification_type'] == 'non_close') {
+      if (fromTerminate == true) {
+        Get.find<SplashController>().notificationType = 'non_accept';
+        fromMain = null;
+      } else {
+        if (fromTerminate != true && fromMain != true) {
+          Get.offAndToNamed(Get.currentRoute);
+        }
+      }
+    } else {
+      Get.offAllNamed(Routes.SPLASH);
+    }
   }
 }
