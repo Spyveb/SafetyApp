@@ -75,7 +75,7 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                 ),
 
                 controller.currentSOSReport != null
-                    ? controller.currentSOSReport!.status == 'Open'
+                    ? controller.currentSOSReport!.status == 'Open' && controller.currentSOSReport!.requestStatus == 'Accept'
                         ? Expanded(
                             child: Column(
                               children: [
@@ -155,8 +155,7 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                                                   onTap: () {
                                                     // controller.showBackupRequestDialog(context);
                                                     if (controller.currentSOSReport!.id != null) {
-                                                      controller.backupSOSEmergencyRequest(
-                                                          caseId: controller.currentSOSReport!.id!);
+                                                      controller.backupSOSEmergencyRequest(caseId: controller.currentSOSReport!.id!);
                                                     }
                                                   },
                                                   child: Container(
@@ -253,9 +252,7 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                                                                         onPressed: () async {
                                                                           Get.back();
                                                                           if (controller.currentSOSReport!.id != null) {
-                                                                            controller.showEndSosDialog(context,
-                                                                                caseId:
-                                                                                    controller.currentSOSReport!.id!);
+                                                                            controller.showEndSosDialog(context, caseId: controller.currentSOSReport!.id!);
                                                                             // controller.closeSOSEmergencyRequest(
                                                                             //     caseId:
                                                                             //         controller.currentSOSReport!.id!);
@@ -282,8 +279,7 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                                                                             borderRadius: BorderRadius.circular(
                                                                               getProportionateScreenWidth(50),
                                                                             ),
-                                                                            border: Border.all(
-                                                                                color: AppColors.blackColor, width: 1),
+                                                                            border: Border.all(color: AppColors.blackColor, width: 1),
                                                                           ),
                                                                           child: Text(
                                                                             AppLocalizations.of(context)!.no,
@@ -364,8 +360,7 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                                     buildingsEnabled: true,
                                     onCameraIdle: () {},
                                     initialCameraPosition: CameraPosition(
-                                      target: controller.currentSOSReport!.latitude != null &&
-                                              controller.currentSOSReport!.longitude != null
+                                      target: controller.currentSOSReport!.latitude != null && controller.currentSOSReport!.longitude != null
                                           ? LatLng(
                                               double.parse(controller.currentSOSReport!.latitude!),
                                               double.parse(controller.currentSOSReport!.longitude!),

@@ -22,8 +22,11 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
           initState: (state) {
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
               if (controller.reportCaseModel != null) {
-                if ((controller.reportCaseModel!.status == 'Pending' || controller.reportCaseModel!.status == 'All') &&
-                    controller.reportCaseModel!.requestStatus == 'Pending') {
+                if (
+                    // ((controller.reportCaseModel!.status == 'Pending' || controller.reportCaseModel!.status == 'All') &&
+                    //         controller.reportCaseModel!.requestStatus == 'Pending') ||
+                    (controller.reportCaseModel!.status == 'Pending' && controller.reportCaseModel!.requestStatus == 'Pending') ||
+                        (controller.reportCaseModel!.status == 'All' && controller.reportCaseModel!.requestStatus == 'Pending')) {
                   controller.showReportRequestDialog(context, controller.reportCaseModel!);
                 }
                 controller.update();
@@ -72,7 +75,8 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                               ),
                             ),
                           ),
-                          controller.reportCaseModel != null && controller.reportCaseModel!.status == 'Open'
+                          controller.reportCaseModel != null &&
+                                  (controller.reportCaseModel!.status == 'Open' && controller.reportCaseModel!.requestStatus == 'Accept')
                               ? GestureDetector(
                                   onTap: () {
                                     // controller.showEndSosDialog(context);
@@ -227,7 +231,8 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                     ],
                   ),
                 ),
-                controller.reportCaseModel != null && controller.reportCaseModel?.status == 'Open' || controller.reportCaseModel?.status == 'Close'
+                controller.reportCaseModel != null && (controller.reportCaseModel?.status == 'Open' && controller.reportCaseModel?.requestStatus == 'Accept') ||
+                        controller.reportCaseModel?.status == 'Close'
                     ? Expanded(
                         child: SingleChildScrollView(
                           child: Column(
@@ -391,9 +396,8 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                           ),
                         ),
                       )
-                    : ((controller.reportCaseModel?.status == 'Pending' || controller.reportCaseModel?.status == 'All') &&
-                                controller.reportCaseModel?.requestStatus == 'Pending') ==
-                            false
+                    : ((controller.reportCaseModel?.status == 'Pending' && controller.reportCaseModel?.requestStatus == 'Pending') == false &&
+                            (controller.reportCaseModel?.status == 'All' && controller.reportCaseModel?.requestStatus == 'Pending') == false)
                         ? Center(
                             child: Text(
                               AppLocalizations.of(context)!.youAreNotAuthorizedToViewTheReportDetails,

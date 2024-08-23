@@ -6,16 +6,7 @@ class CustomCasesList extends StatelessWidget {
   final String? caseNo, date, status, firstName, lastName, location, city, requestStatus;
   final bool? showSOS;
   const CustomCasesList(
-      {super.key,
-      this.caseNo,
-      this.date,
-      this.status,
-      this.firstName,
-      this.lastName,
-      this.location,
-      this.city,
-      this.requestStatus,
-      this.showSOS});
+      {super.key, this.caseNo, this.date, this.status, this.firstName, this.lastName, this.location, this.city, this.requestStatus, this.showSOS});
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +105,7 @@ class CustomCasesList extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      status ?? "",
+                      status ?? "-",
                       style: TextStyle(
                         fontSize: getProportionalFontSize(14),
                         fontFamily: AppFonts.sansFont600,

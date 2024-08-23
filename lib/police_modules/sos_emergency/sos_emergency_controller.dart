@@ -44,6 +44,8 @@ class PoliceSOSEmergencyController extends GetxController {
 
             if (sosReportsList.length > 1) {
               currentSOSReport = sosReportsList.firstWhereOrNull((element) => element.status == 'Open' && element.requestStatus == 'Accept');
+              currentSOSReport ??= sosReportsList.firstWhereOrNull((element) => element.status == 'Pending' && element.requestStatus == 'Pending');
+              currentSOSReport ??= sosReportsList.firstWhereOrNull((element) => element.status == 'All' && element.requestStatus == 'Pending');
               currentSOSReport ??= sosReportsList.first;
             } else {
               currentSOSReport = sosReportsList.first;
@@ -53,8 +55,8 @@ class PoliceSOSEmergencyController extends GetxController {
       } else {}
 
       if (currentSOSReport != null &&
-          (currentSOSReport!.status == 'Pending' || currentSOSReport!.status == 'All') &&
-          currentSOSReport!.requestStatus == 'Pending') {
+          ((currentSOSReport!.status == 'Pending' && currentSOSReport!.requestStatus == 'Pending') ||
+              (currentSOSReport!.status == 'All' && currentSOSReport!.requestStatus == 'Pending'))) {
         showSOSDialog(Get.context!, currentSOSReport!);
       }
 
@@ -378,16 +380,19 @@ class PoliceSOSEmergencyController extends GetxController {
                                 ),
                               ),
                               padding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(30),
+                                horizontal: getProportionateScreenWidth(12),
                                 vertical: getProportionateScreenHeight(15),
                               ),
                               child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!.accept,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: getProportionalFontSize(18),
-                                    fontFamily: AppFonts.sansFont600,
+                                child: FittedBox(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.accept,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: getProportionalFontSize(18),
+                                      fontFamily: AppFonts.sansFont600,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -413,16 +418,19 @@ class PoliceSOSEmergencyController extends GetxController {
                                 ),
                               ),
                               padding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(30),
+                                horizontal: getProportionateScreenWidth(12),
                                 vertical: getProportionateScreenHeight(15),
                               ),
                               child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!.decline,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: getProportionalFontSize(18),
-                                    fontFamily: AppFonts.sansFont600,
+                                child: FittedBox(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.decline,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: getProportionalFontSize(18),
+                                      fontFamily: AppFonts.sansFont600,
+                                    ),
                                   ),
                                 ),
                               ),

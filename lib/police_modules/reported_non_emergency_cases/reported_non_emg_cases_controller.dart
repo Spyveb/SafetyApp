@@ -375,16 +375,19 @@ class ReportedNonEmgCasesController extends GetxController {
                                 ),
                               ),
                               padding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(30),
+                                horizontal: getProportionateScreenWidth(12),
                                 vertical: getProportionateScreenHeight(15),
                               ),
                               child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!.accept,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: getProportionalFontSize(18),
-                                    fontFamily: AppFonts.sansFont600,
+                                child: FittedBox(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.accept,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: getProportionalFontSize(18),
+                                      fontFamily: AppFonts.sansFont600,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -410,16 +413,19 @@ class ReportedNonEmgCasesController extends GetxController {
                                 ),
                               ),
                               padding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(30),
+                                horizontal: getProportionateScreenWidth(12),
                                 vertical: getProportionateScreenHeight(15),
                               ),
                               child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!.decline,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: getProportionalFontSize(18),
-                                    fontFamily: AppFonts.sansFont600,
+                                child: FittedBox(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.decline,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: getProportionalFontSize(18),
+                                      fontFamily: AppFonts.sansFont600,
+                                    ),
                                   ),
                                 ),
                               ),
