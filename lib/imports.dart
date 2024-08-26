@@ -15,6 +15,8 @@ export './infrastructure/api_controller.dart';
 export './infrastructure/models/category_model.dart';
 export './infrastructure/models/emergency_contact_model.dart';
 export './infrastructure/models/report_case_model.dart';
+export './infrastructure/models/social_worker_message_model.dart';
+export './infrastructure/models/social_worker_request_model.dart';
 export './infrastructure/models/user_model.dart';
 export './localization/app_localizations.dart';
 export './localization/app_localizations_af.dart';

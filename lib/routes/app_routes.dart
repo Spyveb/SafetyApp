@@ -37,11 +37,12 @@ abstract class Routes {
   static const CONTENTS_DETAIL_VIEW = _Paths.CONTENTS_DETAIL_VIEW;
   static const NOTIFICATION_SCREEN = _Paths.NOTIFICATION_SCREEN;
 
-  // Police Modules
+  // Social Worker Modules
   static const SOCIAL_WORKER_DASHBOARD = _Paths.SOCIAL_WORKER_DASHBOARD;
   static const SOCIAL_WORKER_REQUEST = _Paths.SOCIAL_WORKER_REQUEST;
   static const SOCIAL_WORKER_SETTINGS = _Paths.SOCIAL_WORKER_SETTINGS;
   static const SOCIAL_WORKER_EDIT_PROFILE = _Paths.SOCIAL_WORKER_EDIT_PROFILE;
+  static const SOCIAL_WORKER_CHAT = _Paths.SOCIAL_WORKER_CHAT;
 }
 
 abstract class _Paths {
@@ -85,4 +86,5 @@ abstract class _Paths {
   static const SOCIAL_WORKER_REQUEST = '/social_worker_request'; // social_worker_request
   static const SOCIAL_WORKER_EDIT_PROFILE = '/social_worker_edit_profile'; // social_worker_edit_profile
   static const SOCIAL_WORKER_SETTINGS = '/social_worker_settings'; // social_worker_settings
+  static const SOCIAL_WORKER_CHAT = '/social_worker_chat'; // social_worker_chat
 }

@@ -27,8 +27,10 @@ class SignInController extends GetxController {
   @override
   void onInit() {
     if (kDebugMode) {
-      userNameController.text = "test";
-      passwordController.text = "Test@123";
+      // userNameController.text = "test";
+      userNameController.text = "shivamvankar717@gmail.com";
+      // passwordController.text = "Test@123";
+      passwordController.text = "444373";
     }
     super.onInit();
   }
@@ -55,6 +57,8 @@ class SignInController extends GetxController {
             LoadingDialog.hideLoader();
             if (userModel.role == "police_officer") {
               Get.offAllNamed(Routes.POLICE_DASHBOARD);
+            } else if (userModel.role == "social_worker") {
+              Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
             } else {
               Get.offAllNamed(Routes.DASHBOARD);
             }
@@ -86,8 +90,7 @@ class SignInController extends GetxController {
     await StorageService().writeSecureData(Constants.email, userModel.email ?? "");
     await StorageService().writeSecureData(Constants.accessToken, userModel.token ?? "");
     await StorageService().writeSecureData(Constants.role, userModel.role ?? "user");
-    await StorageService()
-        .writeSecureData(Constants.availability, userModel.availability == 1 ? "Available" : "Unavailable");
+    await StorageService().writeSecureData(Constants.availability, userModel.availability == 1 ? "Available" : "Unavailable");
   }
 
   forgotPassword() async {

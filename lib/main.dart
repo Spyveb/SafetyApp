@@ -20,13 +20,13 @@ Future<void> main() async {
 
   await FirebaseMessages().getFCMToken();
 
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   // FCM in app Terminated State
   RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
 
   if (initialMessage != null) {
     fromMain = true;
     FirebaseMessages.notificationOperation(message: initialMessage.data, fromTerminate: true);
-    // _firebaseMessagingBackgroundHandler(initialMessage);
     print("initialMessage -- ${initialMessage.data}");
   }
 
@@ -43,6 +43,15 @@ Future<void> main() async {
     ),
   );
 }
+
+// @pragma('vm:entry-point')
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   // If you're going to use other Firebase services in the background, such as Firestore,
+//   // make sure you call `initializeApp` before using other Firebase services.
+//
+//   print("Handling a background message: ${message.messageId}");
+//   print(message.data);
+// }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

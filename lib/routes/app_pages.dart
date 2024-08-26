@@ -3,6 +3,7 @@ import 'package:distress_app/police_modules/police_dashboard/notification_screen
 import 'package:distress_app/police_modules/reported_non_emergency_cases/contents_detail_view.dart';
 import 'package:distress_app/police_modules/reported_non_emergency_cases/reported_non_emergency_case_details.dart';
 import 'package:distress_app/police_modules/setting/police_edit_profile_screen.dart';
+import 'package:distress_app/social_worker_module/social_worker_request/social_worker_chat_screen.dart';
 import 'package:distress_app/user_modules/home_module/user_sos_request_detail.dart';
 import 'package:distress_app/user_modules/settings_module/change_password_screen.dart';
 import 'package:distress_app/user_modules/training_module/video_screen.dart';
@@ -193,8 +194,13 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.SOCIAL_WORKER_EDIT_PROFILE,
-      page: () => const SocialWorkerSettingScreen(),
+      page: () => const SocialWorkerEditProfileScreen(),
       binding: SocialWorkerSettingBinding(),
+    ),
+    GetPage(
+      name: Routes.SOCIAL_WORKER_CHAT,
+      page: () => const SocialWorkerChatScreen(),
+      binding: SocialWorkerRequestdBinding(),
     ),
   ];
 }

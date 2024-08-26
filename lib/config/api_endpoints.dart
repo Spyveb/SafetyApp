@@ -37,6 +37,13 @@ class Endpoints {
   static const emergencyContactCreate = "${baseUrl}api/emergency_contact_create"; // Endpoint for emergency_contact_create
   static const emergencyContactUpdate = "${baseUrl}api/emergency_contact_update"; // Endpoint for emergency_contact_update
   static const emergencyContactDelete = "${baseUrl}api/emergency_contact_delete"; // Endpoint for emergency_contact_delete
+
+  //Social Worker
+  static const socialWorkerRequestList = "${baseUrl}api/chat/request_list"; // Endpoint for request_list
+  static const acceptDeclineChatRequest = "${baseUrl}api/chat/accept_decline_chat_request"; // Endpoint for accept_decline_chat_request
+  static const getMessages = "${baseUrl}api/chat/get_messages"; // Endpoint for get_messages
+  static const sendMessage = "${baseUrl}api/chat/send_message"; // Endpoint for send_message
+
   static const termAndCondition =
       "https://royalblue-mandrill-559334.hostingersite.com/public/api/content/term-and-condition"; // Endpoint for term-and-condition
 

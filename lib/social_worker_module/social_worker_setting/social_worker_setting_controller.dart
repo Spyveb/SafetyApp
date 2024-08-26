@@ -149,7 +149,7 @@ class SocialWorkerSettingController extends GetxController {
             if (userModel != null) {
               await assignUserData(userModel!);
             }
-            await Get.find<PoliceDashBoardController>().getUserName();
+            // await Get.find<PoliceDashBoardController>().getUserName();
           }
         }
       }

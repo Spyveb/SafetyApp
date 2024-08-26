@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 class FirebaseMessages extends Object {
@@ -120,16 +123,657 @@ class FirebaseMessages extends Object {
         notificationDetails,
         payload: jsonEncode(payload),
       );
+      showRequestDialog(payload);
     } on Exception catch (e) {
       print(e);
     }
+  }
+
+  static void showRequestDialog(Map<String, dynamic> payload) {
+    if (payload['notification_type'] == 'sos_create' || payload['notification_type'] == 'sos_decline' || payload['notification_type'] == 'sos_backup') {
+      if (payload['data'] != null) {
+        Map<String, dynamic> caseJson = jsonDecode(payload['data'].toString());
+        ReportCaseModel currentSOSReport = ReportCaseModel.fromJson(caseJson);
+        // if ((currentSOSReport.status == 'Pending' || currentSOSReport.status == 'All') && currentSOSReport.requestStatus == 'Pending') {
+        showSOSDialog(Get.context!, currentSOSReport);
+        // }
+      }
+    } else if (payload['notification_type'] == 'non_create' || payload['notification_type'] == 'non_decline') {
+      if (payload['data'] != null) {
+        Map<String, dynamic> caseJson = jsonDecode(payload['data'].toString());
+        ReportCaseModel currentSOSReport = ReportCaseModel.fromJson(caseJson);
+        // if ((currentSOSReport.status == 'Pending' || currentSOSReport.status == 'All') && currentSOSReport.requestStatus == 'Pending') {
+        showReportRequestDialog(Get.context!, currentSOSReport);
+        // }
+      }
+    }
+  }
+
+  static void showSOSDialog(BuildContext context, ReportCaseModel reportCaseModel) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(10),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: AppColors.policeDarkBlueColor,
+              ),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            padding: EdgeInsets.symmetric(
+              vertical: getProportionateScreenHeight(10),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(14),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.sosRequest,
+                    style: TextStyle(
+                      fontFamily: AppFonts.sansFont600,
+                      fontSize: getProportionalFontSize(30),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(20),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.requester,
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(16),
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          "${reportCaseModel.firstName ?? '-'} ${reportCaseModel.lastName ?? '-'}",
+                          style: TextStyle(
+                            fontFamily: AppFonts.sansFont400,
+                            fontSize: getProportionalFontSize(16),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(10),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.location,
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(16),
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          reportCaseModel.location ?? '-',
+                          style: TextStyle(
+                            fontFamily: AppFonts.sansFont400,
+                            fontSize: getProportionalFontSize(16),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(10),
+                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Text(
+                  //       AppLocalizations.of(context)!.mobileNumber,
+                  //       style: TextStyle(
+                  //         fontFamily: AppFonts.sansFont600,
+                  //         fontSize: getProportionalFontSize(16),
+                  //       ),
+                  //     ),
+                  //     Flexible(
+                  //       child: Text(
+                  //         "${reportCaseModel.city ?? '-'}",
+                  //         style: TextStyle(
+                  //           fontFamily: AppFonts.sansFont400,
+                  //           fontSize: getProportionalFontSize(16),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: getProportionateScreenHeight(10),
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.emergencyEvent,
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(16),
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          "Live emergency",
+                          style: TextStyle(
+                            fontFamily: AppFonts.sansFont400,
+                            fontSize: getProportionalFontSize(16),
+                            color: AppColors.redDefault,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(10),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        // AppLocalizations.of(context)!.estimatedTimeOfArrival,
+                        "Distance: ",
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(16),
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          "${calculateDistance(double.parse(reportCaseModel.policeOfficerLatitude!), double.parse(reportCaseModel.policeOfficerLongitude!), double.parse(reportCaseModel.latitude!), double.parse(reportCaseModel.longitude!))}",
+                          style: TextStyle(
+                            fontFamily: AppFonts.sansFont400,
+                            fontSize: getProportionalFontSize(16),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(30),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              if (reportCaseModel.id != null) {
+                                updateSOSEmergencyRequest(
+                                    caseId: reportCaseModel.id!, status: 'Accept', assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.policeDarkBlueColor,
+                                borderRadius: BorderRadius.circular(
+                                  getProportionateScreenWidth(30),
+                                ),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(12),
+                                vertical: getProportionateScreenHeight(15),
+                              ),
+                              child: Center(
+                                child: FittedBox(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.accept,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: getProportionalFontSize(18),
+                                      fontFamily: AppFonts.sansFont600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: getProportionateScreenWidth(30),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              if (reportCaseModel.id != null) {
+                                updateSOSEmergencyRequest(
+                                    caseId: reportCaseModel.id!, status: 'Decline', assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.redDefault,
+                                borderRadius: BorderRadius.circular(
+                                  getProportionateScreenWidth(30),
+                                ),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(12),
+                                vertical: getProportionateScreenHeight(15),
+                              ),
+                              child: Center(
+                                child: FittedBox(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.decline,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: getProportionalFontSize(18),
+                                      fontFamily: AppFonts.sansFont600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static void updateSOSEmergencyRequest({bool? showLoader = true, required int caseId, required String status, int? assignSOSEmergencyCaseId}) async {
+    if (showLoader == true) {
+      LoadingDialog.showLoader();
+    }
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({
+        "request_status": status,
+      });
+      if (assignSOSEmergencyCaseId != null) {
+        formData.fields.add(MapEntry('assign_sos_emergency_case_id', assignSOSEmergencyCaseId.toString()));
+      } else {
+        formData.fields.add(MapEntry('sos_emergency_case_id', caseId.toString()));
+      }
+
+      print(formData.toString());
+      var response = await ApiProvider().postAPICall(
+        Endpoints.updateSOSEmergencyCaseStatus,
+        formData,
+        onSendProgress: (count, total) {},
+      );
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      if (response['success'] != null && response['success'] == true) {
+        Get.back();
+        Utils.showToast(response['message'] ?? 'Report request status updated successfully.');
+        if (status == 'Accept') {
+          if (Get.currentRoute == Routes.POLICE_SOSEMERGENCY) {
+            Get.offAndToNamed(Routes.POLICE_SOSEMERGENCY);
+          } else {
+            Get.toNamed(Routes.POLICE_SOSEMERGENCY);
+          }
+        }
+      } else {
+        Get.back();
+        Utils.showToast(response['message'] ?? 'Failed to update request status');
+      }
+    } on Dio.DioException catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast(e.message ?? "Something went wrong");
+      Get.back();
+      debugPrint(e.toString());
+    } catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast("Something went wrong");
+      Get.back();
+      debugPrint(e.toString());
+    }
+  }
+
+  static void updateNonEmergencyRequest({bool? showLoader = true, required int caseId, required String status, int? assignNonEmergencyCaseId}) async {
+    if (showLoader == true) {
+      LoadingDialog.showLoader();
+    }
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({
+        "request_status": status,
+      });
+
+      if (assignNonEmergencyCaseId != null) {
+        formData.fields.add(MapEntry('assign_non_emergency_case_id', assignNonEmergencyCaseId.toString()));
+      } else {
+        formData.fields.add(MapEntry('non_emergency_case_id', caseId.toString()));
+      }
+
+      var response = await ApiProvider().postAPICall(
+        Endpoints.updateNonEmergencyCaseStatus,
+        formData,
+        onSendProgress: (count, total) {},
+      );
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      if (response['success'] != null && response['success'] == true) {
+        Utils.showToast(response['message'] ?? 'Report request status updated successfully.');
+        if (status == 'Decline') {
+          Get.back();
+        } else {
+          Get.back();
+          if (response['data'] != null) {
+            ReportCaseModel reportCaseModel = ReportCaseModel.fromJson(response['data']);
+
+            if (Get.currentRoute == Routes.POLICE_REPORTEDNONEMGCASE_DETAILS) {
+              Get.find<ReportedNonEmgCasesController>().goToDetails(reportCaseModel);
+
+              await Get.offAndToNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
+              Get.find<ReportedNonEmgCasesController>().reportCaseModel = null;
+            } else {
+              Get.find<ReportedNonEmgCasesController>().goToDetails(reportCaseModel);
+              await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
+              Get.find<ReportedNonEmgCasesController>().reportCaseModel = null;
+            }
+          } else {
+            Utils.showToast(response['message'] ?? 'Report request status updated successfully.');
+            Get.back();
+          }
+        }
+      } else {
+        Utils.showToast(response['message'] ?? 'Failed to update request status');
+      }
+    } on Dio.DioException catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast(e.message ?? "Something went wrong");
+      Get.back();
+      debugPrint(e.toString());
+    } catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast("Something went wrong");
+      Get.back();
+      debugPrint(e.toString());
+    }
+  }
+
+  static void showReportRequestDialog(BuildContext context, ReportCaseModel reportCaseModel) {
+    showDialog(
+      context: context,
+      // barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(10),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: AppColors.policeDarkBlueColor,
+              ),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            padding: EdgeInsets.symmetric(
+              vertical: getProportionateScreenHeight(10),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(16),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.reportedRequest,
+                    style: TextStyle(
+                      fontFamily: AppFonts.sansFont600,
+                      fontSize: getProportionalFontSize(30),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(20),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.requester,
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(16),
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          "${reportCaseModel.firstName ?? '-'} ${reportCaseModel.lastName ?? '-'}",
+                          style: TextStyle(
+                            fontFamily: AppFonts.sansFont400,
+                            fontSize: getProportionalFontSize(16),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(10),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.location,
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(16),
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          reportCaseModel.location ?? '-',
+                          style: TextStyle(
+                            fontFamily: AppFonts.sansFont400,
+                            fontSize: getProportionalFontSize(16),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(10),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.emergencyEvent,
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(16),
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          "Non emergency",
+                          style: TextStyle(
+                            fontFamily: AppFonts.sansFont400,
+                            fontSize: getProportionalFontSize(16),
+                            color: AppColors.redDefault,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(10),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        // AppLocalizations.of(context)!.estimatedTimeOfArrival,
+                        "Distance: ",
+                        style: TextStyle(
+                          fontFamily: AppFonts.sansFont600,
+                          fontSize: getProportionalFontSize(16),
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          "${calculateDistance(double.parse(reportCaseModel.policeOfficerLatitude!), double.parse(reportCaseModel.policeOfficerLongitude!), double.parse(reportCaseModel.latitude!), double.parse(reportCaseModel.longitude!))}",
+                          style: TextStyle(
+                            fontFamily: AppFonts.sansFont400,
+                            fontSize: getProportionalFontSize(16),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(30),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(20),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              if (reportCaseModel.id != null) {
+                                updateNonEmergencyRequest(
+                                    caseId: reportCaseModel.id!, status: 'Accept', assignNonEmergencyCaseId: reportCaseModel.assign_non_emergency_case_id);
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.policeDarkBlueColor,
+                                borderRadius: BorderRadius.circular(
+                                  getProportionateScreenWidth(30),
+                                ),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(12),
+                                vertical: getProportionateScreenHeight(15),
+                              ),
+                              child: Center(
+                                child: FittedBox(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.accept,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: getProportionalFontSize(18),
+                                      fontFamily: AppFonts.sansFont600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: getProportionateScreenWidth(30),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              if (reportCaseModel.id != null) {
+                                updateNonEmergencyRequest(
+                                    caseId: reportCaseModel.id!, status: 'Decline', assignNonEmergencyCaseId: reportCaseModel.assign_non_emergency_case_id);
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.redDefault,
+                                borderRadius: BorderRadius.circular(
+                                  getProportionateScreenWidth(30),
+                                ),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(12),
+                                vertical: getProportionateScreenHeight(15),
+                              ),
+                              child: Center(
+                                child: FittedBox(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.decline,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: getProportionalFontSize(18),
+                                      fontFamily: AppFonts.sansFont600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+    // ).then((value) {
+    //   Get.back();
+    // });
+  }
+
+  static double calculateDistance(lat1, lon1, lat2, lon2) {
+    return Geolocator.distanceBetween(lat1, lon1, lat2, lon2) / 1000;
   }
 
   static Future<void> notificationOperation({required Map<String, dynamic> message, bool? fromTerminate = false}) async {
     print(message);
     String? accessToken = await StorageService().readSecureData(Constants.accessToken);
     if (accessToken != null && accessToken.isNotEmpty) {
-      if (message['notification_type'] == 'sos_create' || message['notification_type'] == 'sos_decline' || message['notification_type'] == 'sos_backup') {
+      if (message['notification_type'] == 'sos_create' ||
+              message['notification_type'] == 'sos_decline' ||
+              message['notification_type'] == 'sos_backup' ||
+              message['notification_type'] == 'sos_backup_accept'
+          // ||  message['notification_type'] == 'sos_backup_decline'
+          ) {
         Get.lazyPut(() => PoliceSOSEmergencyController());
 
         if (fromTerminate == true) {

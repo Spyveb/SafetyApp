@@ -36,22 +36,22 @@ class SocialWorkerSettingScreen extends GetView<SocialWorkerSettingController> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Container(
-                          height: getProportionateScreenHeight(40),
-                          width: getProportionateScreenWidth(40),
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
-                          child: const Icon(
-                            Icons.arrow_back,
-                            size: 22,
-                          ),
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   behavior: HitTestBehavior.opaque,
+                      //   onTap: () {
+                      //     Get.back();
+                      //   },
+                      //   child: Container(
+                      //     height: getProportionateScreenHeight(40),
+                      //     width: getProportionateScreenWidth(40),
+                      //     alignment: Alignment.centerLeft,
+                      //     padding: EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
+                      //     child: const Icon(
+                      //       Icons.arrow_back,
+                      //       size: 22,
+                      //     ),
+                      //   ),
+                      // ),
                       Flexible(
                         child: Text(
                           AppLocalizations.of(context)!.settings,
@@ -184,7 +184,8 @@ class SocialWorkerSettingScreen extends GetView<SocialWorkerSettingController> {
                     themeProvider: themeProvider,
                     text: AppLocalizations.of(context)!.editProfile,
                     onTap: () async {
-                      await Get.toNamed(Routes.POLICE_EDIT_PROFILE);
+                      print("object");
+                      await Get.toNamed(Routes.SOCIAL_WORKER_EDIT_PROFILE);
                       controller.getUserProfile(showLoader: false);
                     },
                   ),
@@ -201,22 +202,22 @@ class SocialWorkerSettingScreen extends GetView<SocialWorkerSettingController> {
                   SizedBox(
                     height: getProportionateScreenHeight(8),
                   ),
-                  SettingsTile(
-                    themeProvider: themeProvider,
-                    text: AppLocalizations.of(context)!.availability,
-                    onTap: () {},
-                    suffix: CommonSwitch(
-                      value: controller.availability,
-                      onChanged: controller.switchEnable
-                          ? (value) {
-                              controller.availabilitySwitch(value);
-                            }
-                          : null,
-                    ),
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(8),
-                  ),
+                  // SettingsTile(
+                  //   themeProvider: themeProvider,
+                  //   text: AppLocalizations.of(context)!.availability,
+                  //   onTap: () {},
+                  //   suffix: CommonSwitch(
+                  //     value: controller.availability,
+                  //     onChanged: controller.switchEnable
+                  //         ? (value) {
+                  //             controller.availabilitySwitch(value);
+                  //           }
+                  //         : null,
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: getProportionateScreenHeight(8),
+                  // ),
                   SettingsTile(
                     themeProvider: themeProvider,
                     text: AppLocalizations.of(context)!.logout,
