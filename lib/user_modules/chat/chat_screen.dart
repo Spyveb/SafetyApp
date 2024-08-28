@@ -588,6 +588,7 @@ class ChatScreen extends GetView<ChatController> {
                     // ),
                     child: ListView.builder(
                       controller: controller.scrollController,
+                      physics: ClampingScrollPhysics(),
                       padding: EdgeInsets.symmetric(
                         vertical: getProportionateScreenHeight(8),
                         horizontal: getProportionateScreenWidth(8),

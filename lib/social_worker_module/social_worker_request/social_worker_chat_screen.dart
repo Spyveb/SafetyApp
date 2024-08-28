@@ -383,6 +383,7 @@ class SocialWorkerChatScreen extends GetView<SocialWorkerRequestController> {
                   // ),
                   child: ListView.builder(
                     controller: controller.scrollController,
+                    physics: ClampingScrollPhysics(),
                     padding: EdgeInsets.symmetric(
                       vertical: getProportionateScreenHeight(8),
                       horizontal: getProportionateScreenWidth(8),
