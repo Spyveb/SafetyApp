@@ -43,6 +43,8 @@ class Endpoints {
   static const acceptDeclineChatRequest = "${baseUrl}api/chat/accept_decline_chat_request"; // Endpoint for accept_decline_chat_request
   static const getMessages = "${baseUrl}api/chat/get_messages"; // Endpoint for get_messages
   static const sendMessage = "${baseUrl}api/chat/send_message"; // Endpoint for send_message
+  static const endSession = "${baseUrl}api/chat/end_session"; // Endpoint for end_session
+  static const sessionHistory = "${baseUrl}api/chat/session_history"; // Endpoint for session_history
 
   static const termAndCondition =
       "https://royalblue-mandrill-559334.hostingersite.com/public/api/content/term-and-condition"; // Endpoint for term-and-condition

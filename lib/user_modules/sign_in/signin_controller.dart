@@ -29,8 +29,7 @@ class SignInController extends GetxController {
     if (kDebugMode) {
       // userNameController.text = "test";
       userNameController.text = "shivamvankar717@gmail.com";
-      // passwordController.text = "Test@123";
-      passwordController.text = "444373";
+      passwordController.text = "Test@123";
     }
     super.onInit();
   }

@@ -43,6 +43,7 @@ abstract class Routes {
   static const SOCIAL_WORKER_SETTINGS = _Paths.SOCIAL_WORKER_SETTINGS;
   static const SOCIAL_WORKER_EDIT_PROFILE = _Paths.SOCIAL_WORKER_EDIT_PROFILE;
   static const SOCIAL_WORKER_CHAT = _Paths.SOCIAL_WORKER_CHAT;
+  static const SOCIAL_WORKER_HISTORY = _Paths.SOCIAL_WORKER_HISTORY;
 }
 
 abstract class _Paths {
@@ -87,4 +88,5 @@ abstract class _Paths {
   static const SOCIAL_WORKER_EDIT_PROFILE = '/social_worker_edit_profile'; // social_worker_edit_profile
   static const SOCIAL_WORKER_SETTINGS = '/social_worker_settings'; // social_worker_settings
   static const SOCIAL_WORKER_CHAT = '/social_worker_chat'; // social_worker_chat
+  static const SOCIAL_WORKER_HISTORY = '/social_worker_history'; // social_worker_chat
 }

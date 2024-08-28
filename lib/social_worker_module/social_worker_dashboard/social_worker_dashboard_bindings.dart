@@ -7,6 +7,7 @@ class SocialWorkerDashBoardBinding implements Bindings {
     Get.lazyPut(() => SocialWorkerDashBoardController());
     Get.lazyPut(() => SocialWorkerRequestController());
     Get.lazyPut(() => SocialWorkerSettingController());
+    Get.lazyPut(() => SocialWorkerHistoryController());
     // Get.lazyPut(() => HomeController());
   }
 }

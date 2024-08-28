@@ -1,6 +1,9 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChatController extends GetxController {
@@ -11,11 +14,12 @@ class ChatController extends GetxController {
   ];
 
   TextEditingController messageController = TextEditingController();
+
   @override
   void onReady() {
-
     super.onReady();
   }
+
   @override
   void onInit() {
     getUserData();
@@ -28,12 +32,18 @@ class ChatController extends GetxController {
     // SocialWorkerMessageModel(userId: 1, message: Constants.LoremIpsum, timestamp: DateTime.now().millisecondsSinceEpoch),
   ];
 
+  String? sessionStatus;
   int? lastMessageId;
+
   void getChatList({
     bool? showLoader = true,
+    bool? showDialog,
   }) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
+    }
+    if (lastMessageId == null) {
+      chatList.clear();
     }
     try {
       print("LAST_ID------$lastMessageId");
@@ -48,11 +58,11 @@ class ChatController extends GetxController {
       if (showLoader == true) {
         LoadingDialog.hideLoader();
       }
-      if (lastMessageId == null) {
-        chatList.clear();
-      }
 
       if (response['success'] != null && response['success'] == true) {
+        if (response['data'] != null) {
+          sessionStatus = response['data']['status'];
+        }
         if (response['data'] != null && response['data']['chats'] != null && response['data']['chats'] is List) {
           List list = response['data']['chats'];
           if (list.isNotEmpty) {
@@ -63,6 +73,99 @@ class ChatController extends GetxController {
         }
         if (chatList.isNotEmpty) {
           lastMessageId = chatList.last.id;
+        }
+        if (sessionStatus == 'Pending' && showDialog == true) {
+          Utils.showCustomDialog(
+            context: Get.context!,
+            barrierDismissible: true,
+            child: Center(
+              child: Material(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(
+                  getProportionateScreenWidth(32),
+                ),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                    sigmaX: 1.5,
+                    sigmaY: 1.5,
+                  ),
+                  child: Container(
+                    width: SizeConfig.deviceWidth! * .85,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(16),
+                      vertical: getProportionateScreenHeight(60),
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        getProportionateScreenWidth(32),
+                      ),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          height: getProportionateScreenHeight(141),
+                          width: getProportionateScreenWidth(141),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(AppImages.messageSent),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "Message Sent!",
+                          style: TextStyle(
+                            fontFamily: AppFonts.sansFont600,
+                            fontSize: getProportionalFontSize(20),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: getProportionateScreenHeight(10),
+                        ),
+                        Text(
+                          "Our social worker will respond to you shortly",
+                          style: TextStyle(
+                            fontFamily: AppFonts.sansFont400,
+                            fontSize: getProportionalFontSize(16),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: getProportionateScreenHeight(28),
+                        ),
+                        // CommonButton(
+                        //   width: getProportionateScreenWidth(196),
+                        //   text: AppLocalizations.of(Get.context!)!.undo,
+                        //   onPressed: () {
+                        //     addMessage = false;
+                        //     Get.back();
+                        //   },
+                        //   radius: 50,
+                        // )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // onPop: () {
+            //   if (addMessage == true) {
+            //     controller.messageList.add(
+            //       MessageModel(
+            //           userId: 0,
+            //           text: controller.messageController.text,
+            //           timeStamp: DateTime.now().millisecondsSinceEpoch),
+            //     );
+            //
+            //     controller.update();
+            //     controller.messageController.clear();
+            //   }
+            // },
+          );
         }
       } else {}
 
@@ -86,6 +189,7 @@ class ChatController extends GetxController {
 
   void sendMessage({
     bool? showLoader = true,
+    bool? showDialog,
   }) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
@@ -105,7 +209,7 @@ class ChatController extends GetxController {
       }
       if (response['success'] != null && response['success'] == true) {
         messageController.clear();
-        getChatList(showLoader: false);
+        getChatList(showLoader: false, showDialog: showDialog);
       } else {}
 
       update();
@@ -127,8 +231,23 @@ class ChatController extends GetxController {
   }
 
   String? userId;
+
   Future<void> getUserData() async {
     userId = await StorageService().readSecureData(Constants.userId);
+  }
+
+  Timer? timer;
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 7), (Timer t) {
+      getChatList(showLoader: false);
+    });
+  }
+
+  void closeTimer() {
+    if (timer != null) {
+      timer!.cancel();
+    }
   }
 }
 

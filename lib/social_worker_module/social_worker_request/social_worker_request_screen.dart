@@ -11,7 +11,7 @@ class SocialWorkerRequestScreen extends GetView<SocialWorkerRequestController> {
       init: SocialWorkerRequestController(),
       initState: (state) {
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          controller.getRequestList(search: '');
+          controller.getRequestList(search: '', showLoader: false);
         });
       },
       global: true,
@@ -19,6 +19,17 @@ class SocialWorkerRequestScreen extends GetView<SocialWorkerRequestController> {
       builder: (controller) {
         return Scaffold(
           // backgroundColor: Color(0xFFD8D8D8),
+          appBar: AppBar(
+            title: Text(
+              "Requests",
+              style: TextStyle(
+                fontSize: getProportionalFontSize(22),
+                fontFamily: AppFonts.sansFont600,
+                color: Colors.black,
+              ),
+            ),
+            centerTitle: false,
+          ),
           body: SafeArea(
             child: Column(
               children: [
@@ -34,7 +45,7 @@ class SocialWorkerRequestScreen extends GetView<SocialWorkerRequestController> {
                                 color: AppColors.whiteColor,
                                 border: Border.all(color: AppColors.blackColor.withOpacity(.5), width: .5),
                                 borderRadius: BorderRadius.circular(
-                                  getProportionateScreenWidth(8),
+                                  getProportionateScreenWidth(4),
                                 ),
                               ),
                               margin: EdgeInsets.symmetric(
@@ -43,18 +54,23 @@ class SocialWorkerRequestScreen extends GetView<SocialWorkerRequestController> {
                               ),
                               child: ListTile(
                                 tileColor: AppColors.whiteColor,
-                                onTap: () {
-                                  controller.receiverName = request.user?.firstName;
-                                  Get.toNamed(Routes.SOCIAL_WORKER_CHAT);
-                                },
+                                // onTap: () async {
+                                //   controller.receiverName = request.user?.firstName;
+                                //   controller.sessionId = request.id;
+                                //   await Get.toNamed(Routes.SOCIAL_WORKER_CHAT);
+                                //   controller.receiverName = null;
+                                //   controller.sessionId = null;
+                                // },
                                 dense: true,
-                                contentPadding: EdgeInsets.symmetric(
-                                  vertical: getProportionateScreenHeight(6),
-                                  horizontal: getProportionateScreenWidth(12),
+                                contentPadding: EdgeInsets.only(
+                                  top: getProportionateScreenHeight(2),
+                                  bottom: getProportionateScreenHeight(2),
+                                  left: getProportionateScreenWidth(12),
+                                  right: getProportionateScreenWidth(2),
                                 ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
-                                    getProportionateScreenWidth(8),
+                                    getProportionateScreenWidth(4),
                                   ),
                                 ),
                                 title: Text(
@@ -63,7 +79,7 @@ class SocialWorkerRequestScreen extends GetView<SocialWorkerRequestController> {
                                   style: TextStyle(
                                     color: AppColors.blackColor,
                                     fontFamily: AppFonts.sansFont500,
-                                    fontSize: getProportionalFontSize(18),
+                                    fontSize: getProportionalFontSize(16),
                                   ),
                                 ),
                                 subtitle: request.status == 'Pending'
@@ -84,7 +100,7 @@ class SocialWorkerRequestScreen extends GetView<SocialWorkerRequestController> {
                                             ),
                                             onPressed: () {
                                               if (request.id != null) {
-                                                controller.updateRequestStatus(id: request.id!, status: 'Accept');
+                                                controller.updateRequestStatus(id: request.id!, status: 'Accept', userName: request.user?.firstName);
                                               }
                                             },
                                             child: Text(
@@ -116,7 +132,7 @@ class SocialWorkerRequestScreen extends GetView<SocialWorkerRequestController> {
                                             ),
                                             onPressed: () {
                                               if (request.id != null) {
-                                                controller.updateRequestStatus(id: request.id!, status: 'Decline');
+                                                controller.updateRequestStatus(id: request.id!, status: 'Decline', userName: request.user?.firstName);
                                               }
                                             },
                                             child: Text(
@@ -131,6 +147,30 @@ class SocialWorkerRequestScreen extends GetView<SocialWorkerRequestController> {
                                             ),
                                           ),
                                         ],
+                                      )
+                                    : null,
+                                trailing: request.status == 'Open'
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColors.whiteColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: IconButton(
+                                          padding: EdgeInsets.zero,
+                                          // visualDensity: VisualDensity(vertical: -3, horizontal: -3),
+                                          onPressed: () async {
+                                            controller.receiverName = request.user?.firstName;
+                                            controller.sessionId = request.id;
+                                            await Get.toNamed(Routes.SOCIAL_WORKER_CHAT);
+                                            controller.receiverName = null;
+                                            controller.sessionId = null;
+                                          },
+                                          icon: Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: Color(0xFF2B2829),
+                                            size: 18,
+                                          ),
+                                        ),
                                       )
                                     : null,
                               ),

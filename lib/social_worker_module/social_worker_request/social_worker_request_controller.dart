@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +16,7 @@ class SocialWorkerRequestController extends GetxController {
     super.onReady();
   }
 
+  bool? fromHistory;
   List<SocialWorkerRequestModel> requestList = [];
   // List<SocialWorkerMessageModel> chatList = [];
 
@@ -25,7 +28,7 @@ class SocialWorkerRequestController extends GetxController {
   ];
 
   TextEditingController messageController = TextEditingController();
-  void getRequestList({bool? showLoader = true, required String search}) async {
+  Future<void> getRequestList({bool? showLoader = true, required String search}) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
     }
@@ -73,7 +76,7 @@ class SocialWorkerRequestController extends GetxController {
     }
   }
 
-  void updateRequestStatus({bool? showLoader = true, required int id, required String status}) async {
+  void updateRequestStatus({bool? showLoader = true, required int id, required String status, String? userName}) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
     }
@@ -96,7 +99,11 @@ class SocialWorkerRequestController extends GetxController {
         if (status == 'Decline') {
           getRequestList(search: '', showLoader: false);
         } else if (status == 'Accept') {
+          receiverName = userName;
+          sessionId = id;
           await Get.toNamed(Routes.SOCIAL_WORKER_CHAT);
+          receiverName = null;
+          sessionId = null;
           getRequestList(search: '', showLoader: false);
         }
       } else {
@@ -122,16 +129,23 @@ class SocialWorkerRequestController extends GetxController {
   }
 
   int? lastMessageId;
+  int? sessionId;
   void getChatList({
     bool? showLoader = true,
   }) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
     }
+    if (lastMessageId == null) {
+      chatList.clear();
+      update();
+    }
+
     try {
       print("LAST_ID------$lastMessageId");
       Dio.FormData formData = Dio.FormData.fromMap({
         "last_id": lastMessageId,
+        "id": sessionId,
       });
       var response = await ApiProvider().postAPICall(
         Endpoints.getMessages,
@@ -140,9 +154,6 @@ class SocialWorkerRequestController extends GetxController {
       );
       if (showLoader == true) {
         LoadingDialog.hideLoader();
-      }
-      if (lastMessageId == null) {
-        chatList.clear();
       }
 
       if (response['success'] != null && response['success'] == true) {
@@ -185,6 +196,7 @@ class SocialWorkerRequestController extends GetxController {
     }
     try {
       Dio.FormData formData = Dio.FormData.fromMap({
+        "id": sessionId,
         "message": messageController.text,
         "timestamp": DateTime.now().millisecondsSinceEpoch,
       });
@@ -222,5 +234,62 @@ class SocialWorkerRequestController extends GetxController {
   String? userId;
   Future<void> getUserData() async {
     userId = await StorageService().readSecureData(Constants.userId);
+  }
+
+  void endSession({
+    bool? showLoader = true,
+    required int id,
+  }) async {
+    if (showLoader == true) {
+      LoadingDialog.showLoader();
+    }
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({
+        "id": id,
+      });
+      var response = await ApiProvider().postAPICall(
+        Endpoints.endSession,
+        formData,
+        onSendProgress: (count, total) {},
+      );
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+
+      if (response['success'] != null && response['success'] == true) {
+        Utils.showToast(response['message'] ?? 'Session closed successfully.');
+
+        await getRequestList(search: '', showLoader: false);
+        Get.back();
+      } else {
+        Utils.showToast(response['message'] ?? 'Failed to close session');
+      }
+    } on Dio.DioException catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast(e.message ?? "Something went wrong");
+      debugPrint(e.toString());
+    } catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast("Something went wrong");
+      debugPrint(e.toString());
+    }
+  }
+
+  Timer? timer;
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 7), (Timer t) {
+      getChatList(showLoader: false);
+    });
+  }
+
+  void closeTimer() {
+    if (timer != null) {
+      timer!.cancel();
+    }
   }
 }

@@ -142,7 +142,7 @@ class SocialWorkerDashBoardScreen extends GetView<SocialWorkerDashBoardControlle
     if (controller.currentIndex == 0) {
       widget = SocialWorkerRequestScreen();
     } else if (controller.currentIndex == 1) {
-      widget = SocialWorkerRequestScreen();
+      widget = SocialWorkerHistoryScreen();
     } else if (controller.currentIndex == 2) {
       widget = SocialWorkerSettingScreen();
     }

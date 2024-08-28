@@ -45,8 +45,13 @@ class ChatScreen extends GetView<ChatController> {
           global: true,
           initState: (state) {
             WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+              controller.lastMessageId = null;
               controller.getChatList(showLoader: false);
+              controller.startTimer();
             });
+          },
+          dispose: (state) {
+            controller.closeTimer();
           },
           builder: (controller) {
             return Container(
@@ -582,77 +587,93 @@ class ChatScreen extends GetView<ChatController> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(8),
-                      vertical: getProportionateScreenHeight(4),
-                    ),
-                    child: TextFormField(
-                      controller: controller.messageController,
-                      style: TextStyle(
-                        fontFamily: AppFonts.sansFont400,
-                        fontSize: getProportionalFontSize(16),
-                        color: AppColors.blackColor,
-                      ),
-                      decoration: InputDecoration(
-                        errorMaxLines: 2,
-                        isDense: true,
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            if (controller.messageController.text.isNotEmpty) {
-                              controller.sendMessage(showLoader: true);
-                            }
-                          },
-                          icon: Icon(
-                            Icons.send,
-                            color: AppColors.blackColor,
-                            size: 24,
+                  controller.chatList.isEmpty || controller.sessionStatus == 'Open'
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(8),
+                            vertical: getProportionateScreenHeight(4),
+                          ),
+                          child: TextFormField(
+                            controller: controller.messageController,
+                            style: TextStyle(
+                              fontFamily: AppFonts.sansFont400,
+                              fontSize: getProportionalFontSize(16),
+                              color: AppColors.blackColor,
+                            ),
+                            decoration: InputDecoration(
+                              errorMaxLines: 2,
+                              isDense: true,
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  if (controller.messageController.text.isNotEmpty) {
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                    controller.sendMessage(showLoader: true, showDialog: controller.chatList.isEmpty);
+                                  }
+                                },
+                                icon: Icon(
+                                  Icons.send,
+                                  color: AppColors.blackColor,
+                                  size: 24,
+                                ),
+                              ),
+                              filled: true,
+                              fillColor: AppColors.whiteColor,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  getProportionateScreenWidth(10),
+                                ),
+                                borderSide: BorderSide(color: AppColors.primaryColor.withOpacity(.8), width: 1),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  getProportionateScreenWidth(10),
+                                ),
+                                borderSide: BorderSide(color: AppColors.primaryColor.withOpacity(.8), width: 1),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  getProportionateScreenWidth(10),
+                                ),
+                                borderSide: BorderSide(color: AppColors.primaryColor.withOpacity(.8), width: 1),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  getProportionateScreenWidth(10),
+                                ),
+                                borderSide: BorderSide(color: AppColors.primaryColor.withOpacity(.5), width: 1),
+                              ),
+                              hintText: AppLocalizations.of(context)!.enterText,
+                              hintStyle: TextStyle(
+                                fontFamily: AppFonts.sansFont400,
+                                fontSize: getProportionalFontSize(16),
+                                color: AppColors.lightTextColor,
+                              ),
+                              errorStyle: TextStyle(
+                                fontSize: getProportionalFontSize(12),
+                                fontFamily: AppFonts.sansFont400,
+                                color: AppColors.redDefault,
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(16),
+                                vertical: getProportionateScreenHeight(14),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(16),
+                            vertical: getProportionateScreenHeight(12),
+                          ),
+                          child: Text(
+                            "Our social worker will respond to you shortly",
+                            style: TextStyle(
+                              fontFamily: AppFonts.sansFont600,
+                              fontSize: getProportionalFontSize(16),
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                        filled: true,
-                        fillColor: AppColors.whiteColor,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            getProportionateScreenWidth(10),
-                          ),
-                          borderSide: BorderSide(color: AppColors.primaryColor.withOpacity(.8), width: 1),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            getProportionateScreenWidth(10),
-                          ),
-                          borderSide: BorderSide(color: AppColors.primaryColor.withOpacity(.8), width: 1),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            getProportionateScreenWidth(10),
-                          ),
-                          borderSide: BorderSide(color: AppColors.primaryColor.withOpacity(.8), width: 1),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            getProportionateScreenWidth(10),
-                          ),
-                          borderSide: BorderSide(color: AppColors.primaryColor.withOpacity(.5), width: 1),
-                        ),
-                        hintText: AppLocalizations.of(context)!.enterText,
-                        hintStyle: TextStyle(
-                          fontFamily: AppFonts.sansFont400,
-                          fontSize: getProportionalFontSize(16),
-                          color: AppColors.lightTextColor,
-                        ),
-                        errorStyle: TextStyle(
-                          fontSize: getProportionalFontSize(12),
-                          fontFamily: AppFonts.sansFont400,
-                          color: AppColors.redDefault,
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(16),
-                          vertical: getProportionateScreenHeight(14),
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             );

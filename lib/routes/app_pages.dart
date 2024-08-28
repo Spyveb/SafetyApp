@@ -202,5 +202,10 @@ abstract class AppPages {
       page: () => const SocialWorkerChatScreen(),
       binding: SocialWorkerRequestdBinding(),
     ),
+    GetPage(
+      name: Routes.SOCIAL_WORKER_HISTORY,
+      page: () => const SocialWorkerHistoryScreen(),
+      binding: SocialWorkerHistoryBinding(),
+    ),
   ];
 }
