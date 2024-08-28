@@ -189,6 +189,198 @@ class SocialWorkerChatScreen extends GetView<SocialWorkerRequestController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
+                  // child: ListView.builder(
+                  //   padding: EdgeInsets.symmetric(
+                  //     vertical: getProportionateScreenHeight(8),
+                  //     horizontal: getProportionateScreenWidth(8),
+                  //   ),
+                  //   shrinkWrap: true,
+                  //   itemCount: controller.chatList.length,
+                  //   itemBuilder: (context, index) {
+                  //     Widget dateTitle = const SizedBox();
+                  //
+                  //     // if (index < controller.chatList.length - 1) {
+                  //     //   DateTime date = DateTime.fromMillisecondsSinceEpoch(controller.chatList[index].timestamp!);
+                  //     //   DateTime dateAfter = DateTime.fromMillisecondsSinceEpoch(controller.chatList[index + 1].timestamp!);
+                  //     //   if (date.day != dateAfter.day) {
+                  //     //     dateTitle = Padding(
+                  //     //       padding: EdgeInsets.symmetric(
+                  //     //         vertical: getProportionateScreenHeight(10),
+                  //     //       ),
+                  //     //       child: Text(
+                  //     //         DateFormat("dd/MM/yyyy").format(date),
+                  //     //         style: TextStyle(
+                  //     //           color: Colors.black,
+                  //     //           fontSize: getProportionalFontSize(12),
+                  //     //         ),
+                  //     //       ),
+                  //     //     );
+                  //     //   }
+                  //     // }
+                  //
+                  //     dynamic timeStamp;
+                  //     dynamic time = controller.chatList[index].timestamp;
+                  //     if (time is double) {
+                  //       time = time.toInt();
+                  //     }
+                  //     if (index + 1 < controller.chatList.length - 1) {
+                  //       timeStamp = controller.chatList[index + 1].timestamp;
+                  //
+                  //       if (timeStamp is double) {
+                  //         timeStamp = timeStamp.toInt();
+                  //       }
+                  //
+                  //       DateTime dateAfter = DateTime.fromMillisecondsSinceEpoch(timeStamp);
+                  //       DateTime date = DateTime.fromMillisecondsSinceEpoch(time);
+                  //
+                  //       if (dateAfter.day != date.day) {
+                  //         dateTitle = Padding(
+                  //           padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(10)),
+                  //           child: Text(
+                  //             DateFormat("dd/MM/yyyy").format(date),
+                  //             style: TextStyle(
+                  //               color: Colors.black,
+                  //               fontSize: getProportionalFontSize(12),
+                  //             ),
+                  //           ),
+                  //         );
+                  //       }
+                  //     } else {
+                  //       dateTitle = Padding(
+                  //         padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(10)),
+                  //         child: Text(
+                  //           DateFormat('dd/MM/yyyy').format(
+                  //             DateTime.fromMillisecondsSinceEpoch(time),
+                  //           ),
+                  //           style: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: getProportionalFontSize(12),
+                  //           ),
+                  //         ),
+                  //       );
+                  //     }
+                  //
+                  //     return Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Center(child: dateTitle),
+                  //         controller.chatList[index].socialWorkerId.toString() == controller.userId
+                  //             ? Padding(
+                  //                 padding: EdgeInsets.only(
+                  //                   top: getProportionateScreenHeight(5),
+                  //                   bottom: getProportionateScreenHeight(5),
+                  //                   left: MediaQuery.of(context).size.width * .2,
+                  //                   right: getProportionateScreenWidth(8),
+                  //                 ),
+                  //                 child: Row(
+                  //                   mainAxisAlignment: MainAxisAlignment.end,
+                  //                   crossAxisAlignment: CrossAxisAlignment.end,
+                  //                   children: [
+                  //                     Container(
+                  //                       padding: EdgeInsets.symmetric(
+                  //                         horizontal: getProportionateScreenWidth(16),
+                  //                         vertical: getProportionateScreenHeight(10),
+                  //                       ),
+                  //                       decoration: BoxDecoration(
+                  //                         color: AppColors.primaryColor.withOpacity(.34),
+                  //                         borderRadius: BorderRadius.only(
+                  //                           topLeft: Radius.circular(16),
+                  //                           topRight: Radius.circular(16),
+                  //                           bottomLeft: Radius.circular(16),
+                  //                           bottomRight: Radius.circular(16),
+                  //                         ),
+                  //                       ),
+                  //                       child: Column(
+                  //                         crossAxisAlignment: CrossAxisAlignment.end,
+                  //                         mainAxisSize: MainAxisSize.min,
+                  //                         children: [
+                  //                           Flexible(
+                  //                             child: Text(
+                  //                               "${controller.chatList[index].message}",
+                  //                               style: TextStyle(
+                  //                                 color: AppColors.blackColor,
+                  //                                 fontFamily: AppFonts.sansFont500,
+                  //                                 fontSize: getProportionalFontSize(14),
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                           Align(
+                  //                             alignment: Alignment.bottomRight,
+                  //                             child: Text(
+                  //                               "${DateFormat("MMM dd, hh:mm a").format(DateTime.fromMillisecondsSinceEpoch(controller.chatList[index].timestamp ?? DateTime.now().millisecondsSinceEpoch))}",
+                  //                               style: TextStyle(
+                  //                                 fontFamily: AppFonts.sansFont400,
+                  //                                 fontSize: getProportionalFontSize(12),
+                  //                                 color: AppColors.blackColor.withOpacity(.7),
+                  //                               ),
+                  //                             ),
+                  //                           )
+                  //                         ],
+                  //                       ),
+                  //                     )
+                  //                   ],
+                  //                 ),
+                  //               )
+                  //             : Padding(
+                  //                 padding: EdgeInsets.only(
+                  //                   top: getProportionateScreenHeight(5),
+                  //                   bottom: getProportionateScreenHeight(5),
+                  //                   right: MediaQuery.of(context).size.width * .2,
+                  //                   left: getProportionateScreenWidth(8),
+                  //                 ),
+                  //                 child: Row(
+                  //                   mainAxisAlignment: MainAxisAlignment.start,
+                  //                   crossAxisAlignment: CrossAxisAlignment.start,
+                  //                   children: [
+                  //                     Container(
+                  //                       padding: EdgeInsets.symmetric(
+                  //                         horizontal: getProportionateScreenWidth(16),
+                  //                         vertical: getProportionateScreenHeight(10),
+                  //                       ),
+                  //                       decoration: BoxDecoration(
+                  //                         color: Color(0xFFF4F4F4),
+                  //                         borderRadius: BorderRadius.only(
+                  //                           topLeft: Radius.circular(16),
+                  //                           topRight: Radius.circular(16),
+                  //                           bottomLeft: Radius.circular(16),
+                  //                           bottomRight: Radius.circular(16),
+                  //                         ),
+                  //                       ),
+                  //                       child: Column(
+                  //                         crossAxisAlignment: CrossAxisAlignment.start,
+                  //                         mainAxisSize: MainAxisSize.min,
+                  //                         children: [
+                  //                           Flexible(
+                  //                             child: Text(
+                  //                               "${controller.chatList[index].message}",
+                  //                               style: TextStyle(
+                  //                                 color: AppColors.blackColor,
+                  //                                 fontFamily: AppFonts.sansFont500,
+                  //                                 fontSize: getProportionalFontSize(14),
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                           Align(
+                  //                             alignment: Alignment.bottomRight,
+                  //                             child: Text(
+                  //                               "${DateFormat("MMM dd, hh:mm a").format(DateTime.fromMillisecondsSinceEpoch(controller.chatList[index].timestamp ?? DateTime.now().millisecondsSinceEpoch))}",
+                  //                               style: TextStyle(
+                  //                                 fontFamily: AppFonts.sansFont400,
+                  //                                 fontSize: getProportionalFontSize(12),
+                  //                                 color: AppColors.blackColor.withOpacity(.7),
+                  //                               ),
+                  //                             ),
+                  //                           ),
+                  //                         ],
+                  //                       ),
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //               ),
+                  //       ],
+                  //     );
+                  //   },
+                  // ),
                   child: ListView.builder(
                     padding: EdgeInsets.symmetric(
                       vertical: getProportionateScreenHeight(8),
@@ -199,59 +391,14 @@ class SocialWorkerChatScreen extends GetView<SocialWorkerRequestController> {
                     itemBuilder: (context, index) {
                       Widget dateTitle = const SizedBox();
 
-                      // if (index < controller.chatList.length - 1) {
-                      //   DateTime date = DateTime.fromMillisecondsSinceEpoch(controller.chatList[index].timestamp!);
-                      //   DateTime dateAfter = DateTime.fromMillisecondsSinceEpoch(controller.chatList[index + 1].timestamp!);
-                      //   if (date.day != dateAfter.day) {
-                      //     dateTitle = Padding(
-                      //       padding: EdgeInsets.symmetric(
-                      //         vertical: getProportionateScreenHeight(10),
-                      //       ),
-                      //       child: Text(
-                      //         DateFormat("dd/MM/yyyy").format(date),
-                      //         style: TextStyle(
-                      //           color: Colors.black,
-                      //           fontSize: getProportionalFontSize(12),
-                      //         ),
-                      //       ),
-                      //     );
-                      //   }
-                      // }
+                      DateTime currentMessageDate = DateTime.fromMillisecondsSinceEpoch(controller.chatList[index].timestamp!);
 
-                      dynamic timeStamp;
-                      dynamic time = controller.chatList[index].timestamp;
-                      if (time is double) {
-                        time = time.toInt();
-                      }
-                      if (index + 1 < controller.chatList.length - 1) {
-                        timeStamp = controller.chatList[index + 1].timestamp;
-
-                        if (timeStamp is double) {
-                          timeStamp = timeStamp.toInt();
-                        }
-
-                        DateTime dateAfter = DateTime.fromMillisecondsSinceEpoch(timeStamp);
-                        DateTime date = DateTime.fromMillisecondsSinceEpoch(time);
-
-                        if (dateAfter.day != date.day) {
-                          dateTitle = Padding(
-                            padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(10)),
-                            child: Text(
-                              DateFormat("dd/MM/yyyy").format(date),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: getProportionalFontSize(12),
-                              ),
-                            ),
-                          );
-                        }
-                      } else {
+                      // Show the date if it's the first message or if the current message is from a different day than the previous one
+                      if (index == 0 || DateTime.fromMillisecondsSinceEpoch(controller.chatList[index - 1].timestamp!).day != currentMessageDate.day) {
                         dateTitle = Padding(
                           padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(10)),
                           child: Text(
-                            DateFormat('dd/MM/yyyy').format(
-                              DateTime.fromMillisecondsSinceEpoch(time),
-                            ),
+                            DateFormat("dd/MM/yyyy").format(currentMessageDate),
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: getProportionalFontSize(12),
@@ -283,12 +430,7 @@ class SocialWorkerChatScreen extends GetView<SocialWorkerRequestController> {
                                         ),
                                         decoration: BoxDecoration(
                                           color: AppColors.primaryColor.withOpacity(.34),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(16),
-                                            topRight: Radius.circular(16),
-                                            bottomLeft: Radius.circular(16),
-                                            bottomRight: Radius.circular(16),
-                                          ),
+                                          borderRadius: BorderRadius.circular(16),
                                         ),
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -307,7 +449,7 @@ class SocialWorkerChatScreen extends GetView<SocialWorkerRequestController> {
                                             Align(
                                               alignment: Alignment.bottomRight,
                                               child: Text(
-                                                "${DateFormat("MMM dd, hh:mm a").format(DateTime.fromMillisecondsSinceEpoch(controller.chatList[index].timestamp ?? DateTime.now().millisecondsSinceEpoch))}",
+                                                "${DateFormat("MMM dd, hh:mm a").format(currentMessageDate)}",
                                                 style: TextStyle(
                                                   fontFamily: AppFonts.sansFont400,
                                                   fontSize: getProportionalFontSize(12),
@@ -339,12 +481,7 @@ class SocialWorkerChatScreen extends GetView<SocialWorkerRequestController> {
                                         ),
                                         decoration: BoxDecoration(
                                           color: Color(0xFFF4F4F4),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(16),
-                                            topRight: Radius.circular(16),
-                                            bottomLeft: Radius.circular(16),
-                                            bottomRight: Radius.circular(16),
-                                          ),
+                                          borderRadius: BorderRadius.circular(16),
                                         ),
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -363,7 +500,7 @@ class SocialWorkerChatScreen extends GetView<SocialWorkerRequestController> {
                                             Align(
                                               alignment: Alignment.bottomRight,
                                               child: Text(
-                                                "${DateFormat("MMM dd, hh:mm a").format(DateTime.fromMillisecondsSinceEpoch(controller.chatList[index].timestamp ?? DateTime.now().millisecondsSinceEpoch))}",
+                                                "${DateFormat("MMM dd, hh:mm a").format(currentMessageDate)}",
                                                 style: TextStyle(
                                                   fontFamily: AppFonts.sansFont400,
                                                   fontSize: getProportionalFontSize(12),
