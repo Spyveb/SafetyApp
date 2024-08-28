@@ -542,6 +542,10 @@ class SubmitReportScreen extends GetView<ReportController> {
                             maxLines: 4,
                             // expands: true,
                             minLines: 1,
+                            onChanged: (value) {
+                              controller.informationText = value;
+                              controller.update();
+                            },
                             decoration: InputDecoration(
                               errorMaxLines: 2,
                               isDense: true,
@@ -626,22 +630,25 @@ class SubmitReportScreen extends GetView<ReportController> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: getProportionateScreenWidth(16),
+                                          width: getProportionateScreenWidth(4),
                                         ),
-                                        GestureDetector(
-                                          behavior: HitTestBehavior.opaque,
-                                          onTap: () {
-                                            FocusManager.instance.primaryFocus?.unfocus();
-                                            controller.informationText = controller.informationController.text;
-                                            controller.update();
-                                            controller.informationController.clear();
-                                          },
-                                          child: const Icon(
-                                            Icons.send,
-                                            size: 24,
-                                            color: AppColors.blackColor,
-                                          ),
-                                        ),
+                                        // SizedBox(
+                                        //   width: getProportionateScreenWidth(16),
+                                        // ),
+                                        // GestureDetector(
+                                        //   behavior: HitTestBehavior.opaque,
+                                        //   onTap: () {
+                                        //     FocusManager.instance.primaryFocus?.unfocus();
+                                        //     controller.informationText = controller.informationController.text;
+                                        //     controller.update();
+                                        //     controller.informationController.clear();
+                                        //   },
+                                        //   child: const Icon(
+                                        //     Icons.send,
+                                        //     size: 24,
+                                        //     color: AppColors.blackColor,
+                                        //   ),
+                                        // ),
                                         SizedBox(
                                           width: getProportionateScreenWidth(8),
                                         ),
@@ -708,7 +715,7 @@ class SubmitReportScreen extends GetView<ReportController> {
                         ),
                         onPressed: () {
                           if (controller.informationText.trim().isEmpty) {
-                            Utils.showToast('Please enter information');
+                            Utils.showToast('Please enter information text');
                           } else if (controller.reportTypeValue.isEmpty) {
                             Utils.showToast('Please select report type');
                           } else if (controller.submitLatitude == null || controller.submitLongitude == null) {

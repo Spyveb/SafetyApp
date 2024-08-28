@@ -300,7 +300,7 @@ class TrainingScreen extends GetView<TrainingController> {
                                           ),
                                         ),
                                         IconButton(
-                                          onPressed: () {},
+                                          onPressed: null,
                                           icon: Icon(
                                             Icons.arrow_forward_ios,
                                             size: 24,

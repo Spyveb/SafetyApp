@@ -73,12 +73,11 @@ class Utils {
       gravity: ToastGravity.BOTTOM,
       backgroundColor: Colors.black87,
       textColor: Colors.white,
-      fontSize: getProportionalFontSize(13),
+      fontSize: getProportionalFontSize(14),
     );
   }
 
-  static showCustomDialog(
-      {required BuildContext context, required Widget child, bool? barrierDismissible, Function()? onPop}) {
+  static showCustomDialog({required BuildContext context, required Widget child, bool? barrierDismissible, Function()? onPop}) {
     showGeneralDialog(
       context: context,
       barrierDismissible: barrierDismissible ?? true,
@@ -144,14 +143,12 @@ class Utils {
   }
 
   // Date picker dialog.
-  static Future<String?> datePicker(BuildContext context,
-      {DateTime? lastDate, firstDate, initialDate, String? format}) async {
+  static Future<String?> datePicker(BuildContext context, {DateTime? lastDate, firstDate, initialDate, String? format}) async {
     String? dateTime;
     DateTime? pickedDate = await showDatePicker(
       builder: (context, child) {
         return Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: getProportionateScreenHeight(90), horizontal: getProportionateScreenWidth(25)),
+          padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(90), horizontal: getProportionateScreenWidth(25)),
           child: Theme(
             data: Theme.of(context).copyWith(
               colorScheme: ColorScheme.light(primary: AppColors.primaryColor),

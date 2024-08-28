@@ -153,39 +153,79 @@ class ReportScreen extends GetView<ReportController> {
                       // )
                     ],
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      AppLocalizations.of(context)!.emergencyServices,
-                      style: TextStyle(
-                        fontSize: getProportionalFontSize(16),
-                        fontFamily: AppFonts.sansFont700,
-                        color: themeProvider.textThemeColor,
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      sosPress(controller, context);
-                    },
-                    child: Container(
-                      width: SizeConfig.deviceWidth,
-                      height: getProportionateScreenHeight(320),
-                      margin: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(8),
-                        vertical: getProportionateScreenHeight(8),
-                      ),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(color: AppColors.redDefault, shape: BoxShape.circle),
-                      child: Text(
-                        AppLocalizations.of(context)!.pressButtonToSendSOS,
+                  // Align(
+                  //   alignment: Alignment.center,
+                  //   child: Text(
+                  //     AppLocalizations.of(context)!.emergencyServices,
+                  //     style: TextStyle(
+                  //       fontSize: getProportionalFontSize(16),
+                  //       fontFamily: AppFonts.sansFont700,
+                  //       color: themeProvider.textThemeColor,
+                  //     ),
+                  //   ),
+                  // ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     sosPress(controller, context);
+                  //   },
+                  //   child: Container(
+                  //     width: SizeConfig.deviceWidth,
+                  //     height: getProportionateScreenHeight(320),
+                  //     margin: EdgeInsets.symmetric(
+                  //       horizontal: getProportionateScreenWidth(8),
+                  //       vertical: getProportionateScreenHeight(8),
+                  //     ),
+                  //     alignment: Alignment.center,
+                  //     decoration: BoxDecoration(color: AppColors.redDefault, shape: BoxShape.circle),
+                  //     child: Text(
+                  //       AppLocalizations.of(context)!.pressButtonToSendSOS,
+                  //       style: TextStyle(
+                  //         fontSize: getProportionalFontSize(16),
+                  //         fontFamily: AppFonts.sansFont400,
+                  //         color: themeProvider.textThemeColor,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.emergencyServices,
                         style: TextStyle(
-                          fontSize: getProportionalFontSize(16),
-                          fontFamily: AppFonts.sansFont400,
+                          fontSize: getProportionalFontSize(24),
+                          fontFamily: AppFonts.sansFont700,
                           color: themeProvider.textThemeColor,
                         ),
                       ),
-                    ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(8),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          sosPress(controller, context);
+                        },
+                        child: Container(
+                          width: SizeConfig.deviceWidth,
+                          height: getProportionateScreenHeight(280),
+                          margin: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenWidth(8),
+                            vertical: getProportionateScreenHeight(8),
+                          ),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(color: AppColors.redDefault, shape: BoxShape.circle),
+                          child: Text(
+                            AppLocalizations.of(context)!.pressButtonToSendSOS,
+                            style: TextStyle(
+                              fontSize: getProportionalFontSize(14),
+                              fontFamily: AppFonts.interFont700,
+                              color: themeProvider.textThemeColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   Align(
                     alignment: Alignment.center,

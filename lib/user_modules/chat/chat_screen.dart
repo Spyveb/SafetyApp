@@ -46,7 +46,7 @@ class ChatScreen extends GetView<ChatController> {
           initState: (state) {
             WidgetsBinding.instance.addPostFrameCallback((timestamp) {
               controller.lastMessageId = null;
-              controller.getChatList(showLoader: false);
+              controller.getChatList(showLoader: false, animateScroll: true);
               controller.startTimer();
             });
           },
@@ -587,6 +587,7 @@ class ChatScreen extends GetView<ChatController> {
                     //   },
                     // ),
                     child: ListView.builder(
+                      controller: controller.scrollController,
                       padding: EdgeInsets.symmetric(
                         vertical: getProportionateScreenHeight(8),
                         horizontal: getProportionateScreenWidth(8),
@@ -732,7 +733,10 @@ class ChatScreen extends GetView<ChatController> {
                                 onPressed: () {
                                   if (controller.messageController.text.isNotEmpty) {
                                     FocusManager.instance.primaryFocus?.unfocus();
-                                    controller.sendMessage(showLoader: true, showDialog: controller.chatList.isEmpty);
+                                    controller.sendMessage(
+                                      showLoader: true,
+                                      showDialog: controller.chatList.isEmpty,
+                                    );
                                   }
                                 },
                                 icon: Icon(

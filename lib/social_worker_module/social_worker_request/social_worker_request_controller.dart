@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SocialWorkerRequestController extends GetxController {
@@ -128,63 +129,77 @@ class SocialWorkerRequestController extends GetxController {
     }
   }
 
+  ScrollController scrollController = ScrollController();
   int? lastMessageId;
   int? sessionId;
   void getChatList({
     bool? showLoader = true,
+    bool? animateScroll,
   }) async {
-    if (showLoader == true) {
-      LoadingDialog.showLoader();
-    }
-    if (lastMessageId == null) {
-      chatList.clear();
-      update();
-    }
-
-    try {
-      print("LAST_ID------$lastMessageId");
-      Dio.FormData formData = Dio.FormData.fromMap({
-        "last_id": lastMessageId,
-        "id": sessionId,
-      });
-      var response = await ApiProvider().postAPICall(
-        Endpoints.getMessages,
-        formData,
-        onSendProgress: (count, total) {},
-      );
+    if (isLoading == false) {
+      isLoading = true;
       if (showLoader == true) {
-        LoadingDialog.hideLoader();
+        LoadingDialog.showLoader();
+      }
+      if (lastMessageId == null) {
+        chatList.clear();
+        update();
       }
 
-      if (response['success'] != null && response['success'] == true) {
-        if (response['data'] != null && response['data']['chats'] != null && response['data']['chats'] is List) {
-          List list = response['data']['chats'];
-          if (list.isNotEmpty) {
-            for (var report in list) {
-              chatList.add(SocialWorkerMessageModel.fromJson(report));
+      try {
+        print("LAST_ID------$lastMessageId");
+        Dio.FormData formData = Dio.FormData.fromMap({
+          "last_id": lastMessageId,
+          "id": sessionId,
+        });
+        var response = await ApiProvider().postAPICall(
+          Endpoints.getMessages,
+          formData,
+          onSendProgress: (count, total) {},
+        );
+        isLoading = false;
+        if (showLoader == true) {
+          LoadingDialog.hideLoader();
+        }
+
+        if (response['success'] != null && response['success'] == true) {
+          if (response['data'] != null && response['data']['chats'] != null && response['data']['chats'] is List) {
+            List list = response['data']['chats'];
+            if (list.isNotEmpty) {
+              for (var report in list) {
+                chatList.add(SocialWorkerMessageModel.fromJson(report));
+              }
             }
           }
-        }
-        if (chatList.isNotEmpty) {
-          lastMessageId = chatList.last.id;
-        }
-      } else {}
+          if (chatList.isNotEmpty) {
+            lastMessageId = chatList.last.id;
+          }
+          if (animateScroll == true) {
+            Future.delayed(Duration(milliseconds: 200)).then((value) {
+              scrollController.animateTo(scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
+              update();
+            });
+          }
+        } else {}
 
-      update();
-    } on Dio.DioException catch (e) {
-      if (showLoader == true) {
-        LoadingDialog.hideLoader();
+        update();
+      } on Dio.DioException catch (e) {
+        isLoading = false;
+        if (showLoader == true) {
+          LoadingDialog.hideLoader();
+        }
+        Utils.showToast(e.message ?? "Something went wrong");
+        update();
+        debugPrint(e.toString());
+      } catch (e) {
+        isLoading = false;
+        if (showLoader == true) {
+          LoadingDialog.hideLoader();
+        }
+        Utils.showToast("Something went wrong");
+        update();
+        debugPrint(e.toString());
       }
-      Utils.showToast(e.message ?? "Something went wrong");
-      update();
-      debugPrint(e.toString());
-    } catch (e) {
-      if (showLoader == true) {
-        LoadingDialog.hideLoader();
-      }
-      Utils.showToast("Something went wrong");
-      update();
-      debugPrint(e.toString());
     }
   }
 
@@ -210,7 +225,7 @@ class SocialWorkerRequestController extends GetxController {
       }
       if (response['success'] != null && response['success'] == true) {
         messageController.clear();
-        getChatList(showLoader: false);
+        getChatList(showLoader: false, animateScroll: true);
       } else {}
 
       update();
@@ -280,6 +295,7 @@ class SocialWorkerRequestController extends GetxController {
   }
 
   Timer? timer;
+  bool isLoading = false;
 
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 7), (Timer t) {

@@ -43,8 +43,7 @@ class SocialWorkerSettingController extends GetxController {
       } else {
         availability = !availability;
       }
-      await Get.find<PoliceDashBoardController>().getUserName();
-      // Get.find<PoliceDashBoardController>().update();
+
       switchEnable = true;
       update();
     } on Dio.DioException catch (e) {
@@ -186,7 +185,7 @@ class SocialWorkerSettingController extends GetxController {
     birthDateController.text = userModel.dob != null ? Utils.displayDateFormat(userModel.dob ?? '') : "";
     userNameController.text = userModel.username ?? '';
     profileImage = userModel.profileImage;
-    // availability = userModel.availability == 1;
+    availability = userModel.availability == 1;
     update();
   }
 

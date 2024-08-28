@@ -15,7 +15,7 @@ class SocialWorkerChatScreen extends GetView<SocialWorkerRequestController> {
       initState: (state) {
         WidgetsBinding.instance.addPostFrameCallback((timestamp) {
           controller.lastMessageId = null;
-          controller.getChatList();
+          controller.getChatList(animateScroll: true);
           controller.startTimer();
         });
       },
@@ -382,6 +382,7 @@ class SocialWorkerChatScreen extends GetView<SocialWorkerRequestController> {
                   //   },
                   // ),
                   child: ListView.builder(
+                    controller: controller.scrollController,
                     padding: EdgeInsets.symmetric(
                       vertical: getProportionateScreenHeight(8),
                       horizontal: getProportionateScreenWidth(8),

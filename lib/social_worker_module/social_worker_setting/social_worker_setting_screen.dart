@@ -184,7 +184,6 @@ class SocialWorkerSettingScreen extends GetView<SocialWorkerSettingController> {
                     themeProvider: themeProvider,
                     text: AppLocalizations.of(context)!.editProfile,
                     onTap: () async {
-                      print("object");
                       await Get.toNamed(Routes.SOCIAL_WORKER_EDIT_PROFILE);
                       controller.getUserProfile(showLoader: false);
                     },
@@ -192,6 +191,7 @@ class SocialWorkerSettingScreen extends GetView<SocialWorkerSettingController> {
                   SizedBox(
                     height: getProportionateScreenHeight(8),
                   ),
+
                   SettingsTile(
                     themeProvider: themeProvider,
                     text: AppLocalizations.of(context)!.changePassword,
@@ -202,22 +202,22 @@ class SocialWorkerSettingScreen extends GetView<SocialWorkerSettingController> {
                   SizedBox(
                     height: getProportionateScreenHeight(8),
                   ),
-                  // SettingsTile(
-                  //   themeProvider: themeProvider,
-                  //   text: AppLocalizations.of(context)!.availability,
-                  //   onTap: () {},
-                  //   suffix: CommonSwitch(
-                  //     value: controller.availability,
-                  //     onChanged: controller.switchEnable
-                  //         ? (value) {
-                  //             controller.availabilitySwitch(value);
-                  //           }
-                  //         : null,
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: getProportionateScreenHeight(8),
-                  // ),
+                  SettingsTile(
+                    themeProvider: themeProvider,
+                    text: AppLocalizations.of(context)!.availability,
+                    onTap: () {},
+                    suffix: CommonSwitch(
+                      value: controller.availability,
+                      onChanged: controller.switchEnable
+                          ? (value) {
+                              controller.availabilitySwitch(value);
+                            }
+                          : null,
+                    ),
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(8),
+                  ),
                   SettingsTile(
                     themeProvider: themeProvider,
                     text: AppLocalizations.of(context)!.logout,
