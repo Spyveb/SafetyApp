@@ -732,7 +732,7 @@ class ChatScreen extends GetView<ChatController> {
                               isDense: true,
                               suffixIcon: IconButton(
                                 onPressed: () {
-                                  if (controller.messageController.text.isNotEmpty) {
+                                  if (controller.messageController.text.trim().isNotEmpty) {
                                     FocusManager.instance.primaryFocus?.unfocus();
                                     controller.sendMessage(
                                       showLoader: true,

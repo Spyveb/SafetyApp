@@ -74,6 +74,8 @@ class ChatController extends GetxController {
                 chatList.add(SocialWorkerMessageModel.fromJson(report));
               }
             }
+          } else {
+            chatList.clear();
           }
           if (chatList.isNotEmpty) {
             lastMessageId = chatList.last.id;
@@ -149,7 +151,7 @@ class ChatController extends GetxController {
                           ),
                           CommonButton(
                             width: getProportionateScreenWidth(196),
-                            text: AppLocalizations.of(Get.context!)!.date,
+                            text: AppLocalizations.of(Get.context!)!.done,
                             onPressed: () {
                               Get.back();
                             },

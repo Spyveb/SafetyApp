@@ -1,4 +1,5 @@
 import 'package:distress_app/imports.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
@@ -13,6 +14,7 @@ class SplashController extends GetxController {
   String role = "user";
 
   String? notificationType;
+  int? socialWorkerChatSessionId;
 
   Future<void> getInitialData() async {
     bool isFirstTime = await StorageService().isFirstTime();
@@ -31,9 +33,7 @@ class SplashController extends GetxController {
         } else if (notificationType == 'non_create') {
           Future.delayed(Duration(milliseconds: 1500)).then((value) async {
             Get.offAllNamed(Routes.POLICE_DASHBOARD);
-            // Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASES);
 
-            print("HEL: ${reportCaseModel?.firstName}");
             if (reportCaseModel != null) {
               Get.find<ReportedNonEmgCasesController>().goToDetails(reportCaseModel!);
               await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
@@ -42,12 +42,7 @@ class SplashController extends GetxController {
             }
           });
         } else if (notificationType == 'sos_accept') {
-          Get.lazyPut(() => DashBoardController());
-          Get.lazyPut(() => HomeController());
-          Get.lazyPut(() => SettingsController());
-          Get.lazyPut(() => TrainingController());
-          Get.lazyPut(() => ReportController());
-          Get.lazyPut(() => ChatController());
+          initUserControllers();
           Future.delayed(Duration(milliseconds: 1500)).then((value) {
             Get.offAllNamed(Routes.DASHBOARD);
             Get.toNamed(Routes.USERSOSREQUESTDETAIL);
@@ -56,6 +51,27 @@ class SplashController extends GetxController {
           Future.delayed(Duration(milliseconds: 1500)).then((value) {
             Get.offAllNamed(Routes.DASHBOARD);
           });
+        } else if (notificationType == 'send_message_social_user') {
+          initUserControllers();
+
+          Future.delayed(Duration(milliseconds: 1500)).then((value) {
+            Get.offAllNamed(Routes.DASHBOARD);
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              Get.find<DashBoardController>().currentIndex = 3;
+              Get.find<DashBoardController>().update();
+            });
+          });
+        } else if (notificationType == 'chat_request') {
+          Future.delayed(Duration(milliseconds: 1500)).then((value) {
+            Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
+          });
+        } else if (notificationType == 'send_message_user') {
+          if (socialWorkerChatSessionId != null) {
+            initSocialWorkerControllers();
+            Get.offAllNamed(Routes.DASHBOARD);
+            Get.find<SocialWorkerRequestController>().sessionId = socialWorkerChatSessionId;
+            Get.toNamed(Routes.SOCIAL_WORKER_CHAT);
+          }
         } else {
           isAuthenticated = true;
           role = await StorageService().readSecureData(Constants.role) ?? "user";
@@ -66,11 +82,7 @@ class SplashController extends GetxController {
             });
           } else if (role == "social_worker") {
             Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
-          }
-          // else if (controller.role == "social_worker") {
-          //   Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
-          // }
-          else {
+          } else {
             Future.delayed(Duration(milliseconds: 2500)).then((value) {
               Get.offAllNamed(Routes.DASHBOARD);
             });
@@ -89,6 +101,22 @@ class SplashController extends GetxController {
       });
     }
     update();
+  }
+
+  void initUserControllers() {
+    Get.lazyPut(() => DashBoardController());
+    Get.lazyPut(() => HomeController());
+    Get.lazyPut(() => SettingsController());
+    Get.lazyPut(() => TrainingController());
+    Get.lazyPut(() => ReportController());
+    Get.lazyPut(() => ChatController());
+  }
+
+  void initSocialWorkerControllers() {
+    Get.lazyPut(() => SocialWorkerDashBoardController());
+    Get.lazyPut(() => SocialWorkerRequestController());
+    Get.lazyPut(() => SocialWorkerSettingController());
+    Get.lazyPut(() => SocialWorkerHistoryController());
   }
 
   ReportCaseModel? reportCaseModel;

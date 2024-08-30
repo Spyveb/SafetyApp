@@ -838,18 +838,83 @@ class FirebaseMessages extends Object {
             }
           }
         }
-      }
-    } else if (message['notification_type'] == 'non_accept' || message['notification_type'] == 'non_close') {
-      if (fromTerminate == true) {
-        Get.find<SplashController>().notificationType = 'non_accept';
-        fromMain = null;
-      } else {
-        if (fromTerminate != true && fromMain != true) {
-          Get.offAndToNamed(Get.currentRoute);
+      } else if (message['notification_type'] == 'non_accept' || message['notification_type'] == 'non_close') {
+        if (fromTerminate == true) {
+          Get.find<SplashController>().notificationType = 'non_accept';
+          fromMain = null;
+        } else {
+          if (fromTerminate != true && fromMain != true) {
+            Get.offAndToNamed(Get.currentRoute);
+          }
         }
+      } else if (message['notification_type'] == 'send_message_social_user' ||
+          message['notification_type'] == 'end_session_social_user' ||
+          message['notification_type'] == 'accept_chat_request') {
+        if (fromTerminate == true) {
+          Get.find<SplashController>().notificationType = 'send_message_social_user';
+          fromMain = null;
+        } else {
+          if (fromTerminate != true && fromMain != true) {
+            if (Get.currentRoute == Routes.DASHBOARD) {
+              Get.find<DashBoardController>().currentIndex = 3;
+              Get.find<DashBoardController>().update();
+            } else {
+              Get.offAllNamed(Routes.DASHBOARD);
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                Get.find<DashBoardController>().currentIndex = 3;
+                Get.find<DashBoardController>().update();
+              });
+            }
+          }
+        }
+      } else if (message['notification_type'] == 'chat_request') {
+        if (fromTerminate == true) {
+          Get.find<SplashController>().notificationType = 'chat_request';
+          fromMain = null;
+        } else {
+          if (fromTerminate != true && fromMain != true) {
+            if (Get.currentRoute == Routes.SOCIAL_WORKER_DASHBOARD) {
+              Get.find<SocialWorkerDashBoardController>().currentIndex = 0;
+              Get.find<SocialWorkerDashBoardController>().update();
+              Get.find<SocialWorkerRequestController>().getRequestList(search: '',showLoader: false);
+            } else {
+              Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
+            }
+          }
+        }
+      } else if (message['notification_type'] == 'send_message_user') {
+        if (fromTerminate == true) {
+          if (message['session_id'] != null && int.tryParse(message['session_id'].toString()) != null) {
+            Get.find<SplashController>().socialWorkerChatSessionId = int.tryParse(message['session_id'].toString());
+            Get.find<SocialWorkerRequestController>().receiverName = message['sender_name'] ?? '-';
+          }
+          Get.find<SplashController>().notificationType = 'send_message_user';
+
+          fromMain = null;
+        } else {
+          if (fromTerminate != true && fromMain != true) {
+            if (Get.currentRoute == Routes.SOCIAL_WORKER_CHAT) {
+              if (message['session_id'] != null && int.tryParse(message['session_id'].toString()) != null) {
+                if (Get.find<SocialWorkerRequestController>().sessionId == int.tryParse(message['session_id'].toString())) {
+                  Get.find<SocialWorkerRequestController>().getChatList(animateScroll: true, showLoader: false);
+                } else {
+                  Get.find<SocialWorkerRequestController>().sessionId = int.tryParse(message['session_id'].toString());
+                  Get.find<SocialWorkerRequestController>().receiverName = message['sender_name'] ?? '-';
+                  Get.offAndToNamed(Routes.SOCIAL_WORKER_CHAT);
+                }
+              }
+            } else {
+              if (message['session_id'] != null && int.tryParse(message['session_id'].toString()) != null) {
+                Get.find<SocialWorkerRequestController>().sessionId = int.tryParse(message['session_id'].toString());
+                Get.find<SocialWorkerRequestController>().receiverName = message['sender_name'] ?? '-';
+                Get.toNamed(Routes.SOCIAL_WORKER_CHAT);
+              }
+            }
+          }
+        }
+      } else {
+        Get.offAllNamed(Routes.SPLASH);
       }
-    } else {
-      Get.offAllNamed(Routes.SPLASH);
     }
   }
 }

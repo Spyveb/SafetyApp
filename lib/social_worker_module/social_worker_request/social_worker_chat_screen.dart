@@ -540,7 +540,7 @@ class SocialWorkerChatScreen extends GetView<SocialWorkerRequestController> {
                             isDense: true,
                             suffixIcon: IconButton(
                               onPressed: () {
-                                if (controller.messageController.text.isNotEmpty) {
+                                if (controller.messageController.text.trim().isNotEmpty) {
                                   FocusManager.instance.primaryFocus?.unfocus();
 
                                   controller.sendMessage(showLoader: true);
