@@ -129,6 +129,8 @@ class FirebaseMessages extends Object {
     }
   }
 
+  static bool sosOpen = false;
+  static bool nonOpen = false;
   static void showRequestDialog(Map<String, dynamic> payload) {
     if (payload['notification_type'] == 'sos_create' || payload['notification_type'] == 'sos_decline' || payload['notification_type'] == 'sos_backup') {
       if (payload['data'] != null) {
@@ -150,6 +152,7 @@ class FirebaseMessages extends Object {
   }
 
   static void showSOSDialog(BuildContext context, ReportCaseModel reportCaseModel) {
+    sosOpen = true;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -402,7 +405,9 @@ class FirebaseMessages extends Object {
           ),
         );
       },
-    );
+    ).then((value) {
+      sosOpen = false;
+    });
   }
 
   static void updateSOSEmergencyRequest({bool? showLoader = true, required int caseId, required String status, int? assignSOSEmergencyCaseId}) async {
@@ -527,6 +532,7 @@ class FirebaseMessages extends Object {
   }
 
   static void showReportRequestDialog(BuildContext context, ReportCaseModel reportCaseModel) {
+    nonOpen = true;
     showDialog(
       context: context,
       // barrierDismissible: false,
@@ -754,7 +760,9 @@ class FirebaseMessages extends Object {
           ),
         );
       },
-    );
+    ).then((value) {
+      nonOpen = false;
+    });
     // ).then((value) {
     //   Get.back();
     // });
@@ -783,8 +791,14 @@ class FirebaseMessages extends Object {
         } else {
           if (fromTerminate != true && fromMain != true) {
             if (Get.currentRoute == Routes.POLICE_SOSEMERGENCY) {
+              // if(sosOpen==true){
+              //   Get.back();
+              // }
               Get.offAndToNamed(Routes.POLICE_SOSEMERGENCY);
             } else {
+              if (sosOpen == true) {
+                Get.back();
+              }
               Get.toNamed(Routes.POLICE_SOSEMERGENCY);
             }
           }
@@ -812,11 +826,16 @@ class FirebaseMessages extends Object {
             if (fromTerminate != true && fromMain != true) {
               if (Get.currentRoute == Routes.POLICE_REPORTEDNONEMGCASE_DETAILS) {
                 Get.find<ReportedNonEmgCasesController>().goToDetails(currentSOSReport);
-
+                // if(nonOpen==true){
+                //   Get.back();
+                // }
                 await Get.offAndToNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
                 Get.find<ReportedNonEmgCasesController>().reportCaseModel = null;
               } else {
                 Get.find<ReportedNonEmgCasesController>().goToDetails(currentSOSReport);
+                if (nonOpen == true) {
+                  Get.back();
+                }
                 await Get.toNamed(Routes.POLICE_REPORTEDNONEMGCASE_DETAILS);
                 Get.find<ReportedNonEmgCasesController>().reportCaseModel = null;
               }
@@ -876,7 +895,7 @@ class FirebaseMessages extends Object {
             if (Get.currentRoute == Routes.SOCIAL_WORKER_DASHBOARD) {
               Get.find<SocialWorkerDashBoardController>().currentIndex = 0;
               Get.find<SocialWorkerDashBoardController>().update();
-              Get.find<SocialWorkerRequestController>().getRequestList(search: '',showLoader: false);
+              Get.find<SocialWorkerRequestController>().getRequestList(search: '', showLoader: false);
             } else {
               Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
             }

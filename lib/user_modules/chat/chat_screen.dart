@@ -615,98 +615,175 @@ class ChatScreen extends GetView<ChatController> {
                         }
 
                         return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment:
+                              controller.chatList[index].userId.toString() == controller.userId ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                           children: [
                             Center(child: dateTitle),
                             controller.chatList[index].userId.toString() == controller.userId
-                                ? Padding(
-                                    padding: EdgeInsets.only(
-                                      top: getProportionateScreenHeight(5),
-                                      bottom: getProportionateScreenHeight(5),
-                                      left: MediaQuery.of(context).size.width * .2,
-                                      right: getProportionateScreenWidth(8),
+                                // ? Padding(
+                                //     padding: EdgeInsets.only(
+                                //       top: getProportionateScreenHeight(5),
+                                //       bottom: getProportionateScreenHeight(5),
+                                //       left: MediaQuery.of(context).size.width * .2,
+                                //       right: getProportionateScreenWidth(8),
+                                //     ),
+                                //     child: Container(
+                                //       padding: EdgeInsets.symmetric(
+                                //         horizontal: getProportionateScreenWidth(16),
+                                //         vertical: getProportionateScreenHeight(10),
+                                //       ),
+                                //       decoration: BoxDecoration(
+                                //         color: AppColors.primaryColor.withOpacity(.34),
+                                //         borderRadius: BorderRadius.circular(16),
+                                //       ),
+                                //       child: Column(
+                                //         crossAxisAlignment: CrossAxisAlignment.end,
+                                //         mainAxisSize: MainAxisSize.min,
+                                //         children: [
+                                //           Flexible(
+                                //             child: Text(
+                                //               "${controller.chatList[index].message}",
+                                //               style: TextStyle(
+                                //                 color: AppColors.blackColor,
+                                //                 fontFamily: AppFonts.sansFont500,
+                                //                 fontSize: getProportionalFontSize(14),
+                                //               ),
+                                //             ),
+                                //           ),
+                                //           Align(
+                                //             alignment: Alignment.bottomRight,
+                                //             child: Text(
+                                //               "${DateFormat("MMM dd, hh:mm a").format(currentMessageDate)}",
+                                //               style: TextStyle(
+                                //                 fontFamily: AppFonts.sansFont400,
+                                //                 fontSize: getProportionalFontSize(12),
+                                //                 color: AppColors.blackColor.withOpacity(.7),
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   )
+
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryColor.withOpacity(.34),
+                                      borderRadius: BorderRadius.circular(16),
                                     ),
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: getProportionateScreenWidth(16),
-                                        vertical: getProportionateScreenHeight(10),
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primaryColor.withOpacity(.34),
-                                        borderRadius: BorderRadius.circular(16),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                              "${controller.chatList[index].message}",
-                                              style: TextStyle(
-                                                color: AppColors.blackColor,
-                                                fontFamily: AppFonts.sansFont500,
-                                                fontSize: getProportionalFontSize(14),
-                                              ),
-                                            ),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: getProportionateScreenWidth(16),
+                                      vertical: getProportionateScreenHeight(10),
+                                    ),
+                                    margin: EdgeInsets.only(
+                                      left: SizeConfig.deviceWidth! * .2,
+                                      bottom: getProportionateScreenHeight(4),
+                                      top: getProportionateScreenHeight(4),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "${controller.chatList[index].message}",
+                                          style: TextStyle(
+                                            color: AppColors.blackColor,
+                                            fontFamily: AppFonts.sansFont500,
+                                            fontSize: getProportionalFontSize(14),
                                           ),
-                                          Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: Text(
-                                              "${DateFormat("MMM dd, hh:mm a").format(currentMessageDate)}",
-                                              style: TextStyle(
-                                                fontFamily: AppFonts.sansFont400,
-                                                fontSize: getProportionalFontSize(12),
-                                                color: AppColors.blackColor.withOpacity(.7),
-                                              ),
-                                            ),
+                                        ),
+                                        Text(
+                                          "${DateFormat("MMM dd, hh:mm a").format(currentMessageDate)}",
+                                          style: TextStyle(
+                                            fontFamily: AppFonts.sansFont400,
+                                            fontSize: getProportionalFontSize(12),
+                                            color: AppColors.blackColor.withOpacity(.7),
                                           ),
-                                        ],
-                                      ),
+                                        )
+                                      ],
                                     ),
                                   )
-                                : Padding(
-                                    padding: EdgeInsets.only(
-                                      top: getProportionateScreenHeight(5),
-                                      bottom: getProportionateScreenHeight(5),
-                                      right: MediaQuery.of(context).size.width * .2,
-                                      left: getProportionateScreenWidth(8),
+                                // : Padding(
+                                //     padding: EdgeInsets.only(
+                                //       top: getProportionateScreenHeight(5),
+                                //       bottom: getProportionateScreenHeight(5),
+                                //       right: MediaQuery.of(context).size.width * .2,
+                                //       left: getProportionateScreenWidth(8),
+                                //     ),
+                                //     child: Container(
+                                //       padding: EdgeInsets.symmetric(
+                                //         horizontal: getProportionateScreenWidth(16),
+                                //         vertical: getProportionateScreenHeight(10),
+                                //       ),
+                                //       decoration: BoxDecoration(
+                                //         color: Color(0xFFF4F4F4),
+                                //         borderRadius: BorderRadius.circular(16),
+                                //       ),
+                                //       child: Column(
+                                //         crossAxisAlignment: CrossAxisAlignment.start,
+                                //         mainAxisSize: MainAxisSize.min,
+                                //         children: [
+                                //           Flexible(
+                                //             child: Text(
+                                //               "${controller.chatList[index].message}",
+                                //               style: TextStyle(
+                                //                 color: AppColors.blackColor,
+                                //                 fontFamily: AppFonts.sansFont500,
+                                //                 fontSize: getProportionalFontSize(14),
+                                //               ),
+                                //             ),
+                                //           ),
+                                //           Align(
+                                //             alignment: Alignment.bottomRight,
+                                //             child: Text(
+                                //               "${DateFormat("MMM dd, hh:mm a").format(currentMessageDate)}",
+                                //               style: TextStyle(
+                                //                 fontFamily: AppFonts.sansFont400,
+                                //                 fontSize: getProportionalFontSize(12),
+                                //                 color: AppColors.blackColor.withOpacity(.7),
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ),
+                                : Container(
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFF4F4F4),
+                                      borderRadius: BorderRadius.circular(16),
                                     ),
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: getProportionateScreenWidth(16),
-                                        vertical: getProportionateScreenHeight(10),
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFF4F4F4),
-                                        borderRadius: BorderRadius.circular(16),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                              "${controller.chatList[index].message}",
-                                              style: TextStyle(
-                                                color: AppColors.blackColor,
-                                                fontFamily: AppFonts.sansFont500,
-                                                fontSize: getProportionalFontSize(14),
-                                              ),
-                                            ),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: getProportionateScreenWidth(16),
+                                      vertical: getProportionateScreenHeight(10),
+                                    ),
+                                    margin: EdgeInsets.only(
+                                      right: SizeConfig.deviceWidth! * .2,
+                                      bottom: getProportionateScreenHeight(4),
+                                      top: getProportionateScreenHeight(4),
+                                      left: getProportionateScreenWidth(4),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "${controller.chatList[index].message}",
+                                          style: TextStyle(
+                                            color: AppColors.blackColor,
+                                            fontFamily: AppFonts.sansFont500,
+                                            fontSize: getProportionalFontSize(14),
                                           ),
-                                          Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: Text(
-                                              "${DateFormat("MMM dd, hh:mm a").format(currentMessageDate)}",
-                                              style: TextStyle(
-                                                fontFamily: AppFonts.sansFont400,
-                                                fontSize: getProportionalFontSize(12),
-                                                color: AppColors.blackColor.withOpacity(.7),
-                                              ),
-                                            ),
+                                        ),
+                                        Text(
+                                          "${DateFormat("MMM dd, hh:mm a").format(currentMessageDate)}",
+                                          style: TextStyle(
+                                            fontFamily: AppFonts.sansFont400,
+                                            fontSize: getProportionalFontSize(12),
+                                            color: AppColors.blackColor.withOpacity(.7),
                                           ),
-                                        ],
-                                      ),
+                                        )
+                                      ],
                                     ),
                                   ),
                           ],
@@ -727,7 +804,12 @@ class ChatScreen extends GetView<ChatController> {
                               fontSize: getProportionalFontSize(16),
                               color: AppColors.blackColor,
                             ),
+                            textInputAction: TextInputAction.newline,
+                            maxLines: null,
                             decoration: InputDecoration(
+                              constraints: BoxConstraints(
+                                maxHeight: getProportionateScreenHeight(150),
+                              ),
                               errorMaxLines: 2,
                               isDense: true,
                               suffixIcon: IconButton(

@@ -81,7 +81,7 @@ class ChatController extends GetxController {
             lastMessageId = chatList.last.id;
           }
           if (animateScroll == true) {
-            Future.delayed(Duration(milliseconds: 200)).then((value) {
+            Future.delayed(Duration(milliseconds: 500)).then((value) {
               scrollController.animateTo(scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
               update();
             });
