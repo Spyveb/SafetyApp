@@ -214,6 +214,8 @@
   "requests": "Requests",
   "messageSent": "Message Sent!",
   "ourSocialWorkerWillRespondToYouShortly": "Our social worker will respond to you shortly",
+  "noHistory": "History not found",
+  "noRequest": "No request found",
 
   "hello": "hello",
   "hello": "hello",

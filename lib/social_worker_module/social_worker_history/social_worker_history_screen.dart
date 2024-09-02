@@ -178,7 +178,17 @@ class SocialWorkerHistoryScreen extends GetView<SocialWorkerHistoryController> {
                             );
                           },
                         )
-                      : SizedBox(),
+                      : Center(
+                          child: Text(
+                            AppLocalizations.of(context)!.noHistory,
+                            maxLines: 2,
+                            style: TextStyle(
+                              color: AppColors.blackColor.withOpacity(.7),
+                              fontFamily: AppFonts.sansFont400,
+                              fontSize: getProportionalFontSize(14),
+                            ),
+                          ),
+                        ),
                 )
               ],
             ),

@@ -632,5 +632,11 @@ class AppLocalizationsAf extends AppLocalizations {
   String get ourSocialWorkerWillRespondToYouShortly => 'Our social worker will respond to you shortly';
 
   @override
+  String get noHistory => 'History not found';
+
+  @override
+  String get noRequest => 'No request found';
+
+  @override
   String get hello => 'hello';
 }

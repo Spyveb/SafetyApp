@@ -179,7 +179,17 @@ class SocialWorkerRequestScreen extends GetView<SocialWorkerRequestController> {
                             );
                           },
                         )
-                      : SizedBox(),
+                      : Center(
+                          child: Text(
+                            AppLocalizations.of(context)!.noRequest,
+                            maxLines: 2,
+                            style: TextStyle(
+                              color: AppColors.blackColor.withOpacity(.7),
+                              fontFamily: AppFonts.sansFont400,
+                              fontSize: getProportionalFontSize(14),
+                            ),
+                          ),
+                        ),
                 )
               ],
             ),

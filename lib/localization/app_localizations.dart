@@ -1349,6 +1349,18 @@ abstract class AppLocalizations {
   /// **'Our social worker will respond to you shortly'**
   String get ourSocialWorkerWillRespondToYouShortly;
 
+  /// No description provided for @noHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History not found'**
+  String get noHistory;
+
+  /// No description provided for @noRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'No request found'**
+  String get noRequest;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:
