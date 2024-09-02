@@ -6,6 +6,7 @@ class Endpoints {
 
   // Authentication Endpoints
   static const signIn = "${baseUrl}api/login"; // Endpoint for user sign in
+  static const logout = "${baseUrl}api/logout"; // Endpoint for user logout
   static const signUp = "${baseUrl}api/signup"; // Endpoint for user sign up
   static const getProfile = "${baseUrl}api/get_profile"; // Endpoint for get profile
   static const forgotPassword = "${baseUrl}api/forget_password"; // Endpoint for forgot password

@@ -287,4 +287,42 @@ class PoliceSettingController extends GetxController {
     String? status = await StorageService().readSecureData(Constants.availability) ?? 'Unavailable';
     availability = status == 'Available';
   }
+
+  void logoutUser({
+    bool? showLoader = true,
+  }) async {
+    if (showLoader == true) {
+      LoadingDialog.showLoader();
+    }
+    try {
+      var response = await ApiProvider().postAPICall(
+        Endpoints.logout,
+        null,
+        onSendProgress: (count, total) {},
+      );
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+
+      if (response['success'] != null && response['success'] == true) {
+        // Utils.showToast(response['message'] ?? 'Logout successfully.');
+        await StorageService().deleteAllSecureData();
+        Get.offAllNamed(Routes.SIGN_IN);
+      } else {
+        Utils.showToast(response['message'] ?? 'Failed to logout');
+      }
+    } on Dio.DioException catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast(e.message ?? "Something went wrong");
+      debugPrint(e.toString());
+    } catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      Utils.showToast("Something went wrong");
+      debugPrint(e.toString());
+    }
+  }
 }

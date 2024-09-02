@@ -256,7 +256,42 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                 ),
                               ),
                               SizedBox(
-                                height: getProportionateScreenHeight(15),
+                                height: getProportionateScreenHeight(8),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: getProportionateScreenWidth(8),
+                                    ),
+                                    child: Text(
+                                      "Information",
+                                      style: TextStyle(
+                                        fontSize: getProportionalFontSize(18),
+                                        fontFamily: AppFonts.sansFont700,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: getProportionateScreenWidth(8),
+                                      right: getProportionateScreenWidth(8),
+                                    ),
+                                    child: Text(
+                                      "${controller.reportCaseModel!.information ?? '-'}",
+                                      style: TextStyle(
+                                        fontSize: getProportionalFontSize(14),
+                                        fontFamily: AppFonts.sansFont400,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(8),
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(

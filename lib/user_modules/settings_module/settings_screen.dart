@@ -298,8 +298,7 @@ class SettingsScreen extends GetView<SettingsController> {
                                                 text: AppLocalizations.of(context)!.yes,
                                                 onPressed: () async {
                                                   Get.back();
-                                                  await StorageService().deleteAllSecureData();
-                                                  Get.offAllNamed(Routes.SIGN_IN);
+                                                  controller.logoutUser(showLoader: true);
                                                 },
                                                 radius: 50,
                                               ),

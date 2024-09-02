@@ -81,7 +81,9 @@ class SplashController extends GetxController {
               Get.offAllNamed(Routes.POLICE_DASHBOARD);
             });
           } else if (role == "social_worker") {
-            Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
+            Future.delayed(Duration(milliseconds: 2500)).then((value) {
+              Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
+            });
           } else {
             Future.delayed(Duration(milliseconds: 2500)).then((value) {
               Get.offAllNamed(Routes.DASHBOARD);
