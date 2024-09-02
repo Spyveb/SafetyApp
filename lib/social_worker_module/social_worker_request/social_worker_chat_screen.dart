@@ -84,7 +84,7 @@ class SocialWorkerChatScreen extends GetView<SocialWorkerRequestController> {
                                             height: getProportionateScreenHeight(10),
                                           ),
                                           Text(
-                                            "Are you sure you want to end the session?",
+                                            AppLocalizations.of(context)!.areYouSureYouWantToEndTheSession,
                                             style:
                                                 TextStyle(fontFamily: AppFonts.sansFont500, fontSize: getProportionalFontSize(16), color: AppColors.blackColor),
                                             textAlign: TextAlign.center,
@@ -173,7 +173,7 @@ class SocialWorkerChatScreen extends GetView<SocialWorkerRequestController> {
                           right: getProportionateScreenWidth(8),
                         ),
                         child: Text(
-                          "End session",
+                          AppLocalizations.of(context)!.endSession,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: getProportionalFontSize(12),

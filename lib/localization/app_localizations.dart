@@ -1253,6 +1253,102 @@ abstract class AppLocalizations {
   /// **'Pause new requests for now'**
   String get pauseNewRequestsForNow;
 
+  /// No description provided for @liveEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'Live emergency'**
+  String get liveEmergency;
+
+  /// No description provided for @distance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance: '**
+  String get distance;
+
+  /// No description provided for @nonEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'Non emergency'**
+  String get nonEmergency;
+
+  /// No description provided for @areYouSureYouWantToCloseTheCase.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to close the case?'**
+  String get areYouSureYouWantToCloseTheCase;
+
+  /// No description provided for @closeCase.
+  ///
+  /// In en, this message translates to:
+  /// **'Close case'**
+  String get closeCase;
+
+  /// No description provided for @information.
+  ///
+  /// In en, this message translates to:
+  /// **'Information'**
+  String get information;
+
+  /// No description provided for @evidence.
+  ///
+  /// In en, this message translates to:
+  /// **'Evidence'**
+  String get evidence;
+
+  /// No description provided for @noEvidence.
+  ///
+  /// In en, this message translates to:
+  /// **'No Evidence'**
+  String get noEvidence;
+
+  /// No description provided for @toAccessYourCurrentLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'To access your current location, we require the location permission.'**
+  String get toAccessYourCurrentLocation;
+
+  /// No description provided for @areYouSureYouWantToEndTheSOS.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to end the SOS?'**
+  String get areYouSureYouWantToEndTheSOS;
+
+  /// No description provided for @history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get history;
+
+  /// No description provided for @areYouSureYouWantToEndTheSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to end the session?'**
+  String get areYouSureYouWantToEndTheSession;
+
+  /// No description provided for @endSession.
+  ///
+  /// In en, this message translates to:
+  /// **'End Session'**
+  String get endSession;
+
+  /// No description provided for @requests.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get requests;
+
+  /// No description provided for @messageSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Message Sent!'**
+  String get messageSent;
+
+  /// No description provided for @ourSocialWorkerWillRespondToYouShortly.
+  ///
+  /// In en, this message translates to:
+  /// **'Our social worker will respond to you shortly'**
+  String get ourSocialWorkerWillRespondToYouShortly;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:

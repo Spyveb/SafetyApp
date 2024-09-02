@@ -230,7 +230,7 @@ class PoliceSOSEmergencyScreen extends GetView<PoliceSOSEmergencyController> {
                                                                   height: getProportionateScreenHeight(10),
                                                                 ),
                                                                 Text(
-                                                                  "Are you sure you want to end the SOS?",
+                                                                  AppLocalizations.of(context)!.areYouSureYouWantToEndTheSOS,
                                                                   style: TextStyle(
                                                                       fontFamily: AppFonts.sansFont500,
                                                                       fontSize: getProportionalFontSize(16),

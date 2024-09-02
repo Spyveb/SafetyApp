@@ -21,7 +21,7 @@ class SocialWorkerHistoryScreen extends GetView<SocialWorkerHistoryController> {
           // backgroundColor: Color(0xFFD8D8D8),
           appBar: AppBar(
             title: Text(
-              "History",
+              AppLocalizations.of(context)!.history,
               style: TextStyle(
                 fontSize: getProportionalFontSize(22),
                 fontFamily: AppFonts.sansFont600,

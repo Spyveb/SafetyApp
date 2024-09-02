@@ -584,5 +584,53 @@ class AppLocalizationsDe extends AppLocalizations {
   String get pauseNewRequestsForNow => 'Pause new requests for now';
 
   @override
+  String get liveEmergency => 'Live emergency';
+
+  @override
+  String get distance => 'Distance: ';
+
+  @override
+  String get nonEmergency => 'Non emergency';
+
+  @override
+  String get areYouSureYouWantToCloseTheCase => 'Are you sure you want to close the case?';
+
+  @override
+  String get closeCase => 'Close case';
+
+  @override
+  String get information => 'Information';
+
+  @override
+  String get evidence => 'Evidence';
+
+  @override
+  String get noEvidence => 'No Evidence';
+
+  @override
+  String get toAccessYourCurrentLocation => 'To access your current location, we require the location permission.';
+
+  @override
+  String get areYouSureYouWantToEndTheSOS => 'Are you sure you want to end the SOS?';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get areYouSureYouWantToEndTheSession => 'Are you sure you want to end the session?';
+
+  @override
+  String get endSession => 'End Session';
+
+  @override
+  String get requests => 'Requests';
+
+  @override
+  String get messageSent => 'Message Sent!';
+
+  @override
+  String get ourSocialWorkerWillRespondToYouShortly => 'Our social worker will respond to you shortly';
+
+  @override
   String get hello => 'hello';
 }

@@ -319,7 +319,7 @@ class PoliceSOSEmergencyController extends GetxController {
                       ),
                       Flexible(
                         child: Text(
-                          "Live emergency",
+                          AppLocalizations.of(context)!.liveEmergency,
                           style: TextStyle(
                             fontFamily: AppFonts.sansFont400,
                             fontSize: getProportionalFontSize(16),
@@ -337,8 +337,7 @@ class PoliceSOSEmergencyController extends GetxController {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        // AppLocalizations.of(context)!.estimatedTimeOfArrival,
-                        "Distance: ",
+                        AppLocalizations.of(context)!.distance,
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont600,
                           fontSize: getProportionalFontSize(16),
@@ -369,7 +368,9 @@ class PoliceSOSEmergencyController extends GetxController {
                             onTap: () {
                               if (reportCaseModel.id != null) {
                                 updateSOSEmergencyRequest(
-                                    caseId: reportCaseModel.id!, status: 'Accept', assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
+                                    caseId: reportCaseModel.id!,
+                                    status: AppLocalizations.of(context)!.accept,
+                                    assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
                               }
                             },
                             child: Container(
@@ -407,7 +408,9 @@ class PoliceSOSEmergencyController extends GetxController {
                             onTap: () {
                               if (reportCaseModel.id != null) {
                                 updateSOSEmergencyRequest(
-                                    caseId: reportCaseModel.id!, status: 'Decline', assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
+                                    caseId: reportCaseModel.id!,
+                                    status: AppLocalizations.of(context)!.decline,
+                                    assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
                               }
                             },
                             child: Container(

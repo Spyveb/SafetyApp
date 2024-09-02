@@ -520,7 +520,7 @@ class SocialWorkerEditProfileScreen extends GetView<SocialWorkerSettingControlle
                           );
                         },
                         child: Text(
-                          "Delete Account",
+                          AppLocalizations.of(context)!.deleteAccount,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: AppFonts.sansFont600,

@@ -21,7 +21,7 @@ class SocialWorkerRequestScreen extends GetView<SocialWorkerRequestController> {
           // backgroundColor: Color(0xFFD8D8D8),
           appBar: AppBar(
             title: Text(
-              "Requests",
+              AppLocalizations.of(context)!.requests,
               style: TextStyle(
                 fontSize: getProportionalFontSize(22),
                 fontFamily: AppFonts.sansFont600,
@@ -100,11 +100,12 @@ class SocialWorkerRequestScreen extends GetView<SocialWorkerRequestController> {
                                             ),
                                             onPressed: () {
                                               if (request.id != null) {
-                                                controller.updateRequestStatus(id: request.id!, status: 'Accept', userName: request.user?.firstName);
+                                                controller.updateRequestStatus(
+                                                    id: request.id!, status: AppLocalizations.of(context)!.accept, userName: request.user?.firstName);
                                               }
                                             },
                                             child: Text(
-                                              "Accept",
+                                              AppLocalizations.of(context)!.accept,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
@@ -132,11 +133,12 @@ class SocialWorkerRequestScreen extends GetView<SocialWorkerRequestController> {
                                             ),
                                             onPressed: () {
                                               if (request.id != null) {
-                                                controller.updateRequestStatus(id: request.id!, status: 'Decline', userName: request.user?.firstName);
+                                                controller.updateRequestStatus(
+                                                    id: request.id!, status: AppLocalizations.of(context)!.decline, userName: request.user?.firstName);
                                               }
                                             },
                                             child: Text(
-                                              "Decline",
+                                              AppLocalizations.of(context)!.decline,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(

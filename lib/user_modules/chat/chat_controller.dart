@@ -128,7 +128,7 @@ class ChatController extends GetxController {
                             ),
                           ),
                           Text(
-                            "Message Sent!",
+                            AppLocalizations.of(Get.context!)!.messageSent,
                             style: TextStyle(
                               fontFamily: AppFonts.sansFont600,
                               fontSize: getProportionalFontSize(20),
@@ -139,7 +139,7 @@ class ChatController extends GetxController {
                             height: getProportionateScreenHeight(10),
                           ),
                           Text(
-                            "Our social worker will respond to you shortly",
+                            AppLocalizations.of(Get.context!)!.ourSocialWorkerWillRespondToYouShortly,
                             style: TextStyle(
                               fontFamily: AppFonts.sansFont400,
                               fontSize: getProportionalFontSize(16),

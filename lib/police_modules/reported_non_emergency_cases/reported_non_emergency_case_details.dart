@@ -125,7 +125,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                                         height: getProportionateScreenHeight(10),
                                                       ),
                                                       Text(
-                                                        "Are you sure you want to close the case?",
+                                                        AppLocalizations.of(context)!.areYouSureYouWantToCloseTheCase,
                                                         style: TextStyle(
                                                             fontFamily: AppFonts.sansFont500,
                                                             fontSize: getProportionalFontSize(16),
@@ -213,7 +213,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                       vertical: getProportionateScreenHeight(6),
                                     ),
                                     child: Text(
-                                      "Close case",
+                                      AppLocalizations.of(context)!.closeCase,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: getProportionalFontSize(12),
@@ -266,7 +266,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                       horizontal: getProportionateScreenWidth(8),
                                     ),
                                     child: Text(
-                                      "Information",
+                                      AppLocalizations.of(context)!.information,
                                       style: TextStyle(
                                         fontSize: getProportionalFontSize(18),
                                         fontFamily: AppFonts.sansFont700,
@@ -299,7 +299,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                 ),
                                 child: Text(
                                   ///TODo : Text change
-                                  "Evidence",
+                                  AppLocalizations.of(context)!.evidence,
                                   style: TextStyle(
                                     fontSize: getProportionalFontSize(18),
                                     fontFamily: AppFonts.sansFont700,
@@ -418,7 +418,7 @@ class ReportedNonEmgCaseDetailsScreen extends GetView<ReportedNonEmgCasesControl
                                           top: getProportionateScreenHeight(100),
                                         ),
                                         child: Text(
-                                          "No Evidence",
+                                          AppLocalizations.of(context)!.noEvidence,
                                           style: TextStyle(
                                             fontSize: getProportionalFontSize(16),
                                             fontFamily: AppFonts.sansFont600,

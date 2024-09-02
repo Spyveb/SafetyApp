@@ -278,7 +278,7 @@ class FirebaseMessages extends Object {
                       ),
                       Flexible(
                         child: Text(
-                          "Live emergency",
+                          AppLocalizations.of(context)!.liveEmergency,
                           style: TextStyle(
                             fontFamily: AppFonts.sansFont400,
                             fontSize: getProportionalFontSize(16),
@@ -296,8 +296,7 @@ class FirebaseMessages extends Object {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        // AppLocalizations.of(context)!.estimatedTimeOfArrival,
-                        "Distance: ",
+                        AppLocalizations.of(context)!.distance,
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont600,
                           fontSize: getProportionalFontSize(16),
@@ -328,7 +327,9 @@ class FirebaseMessages extends Object {
                             onTap: () {
                               if (reportCaseModel.id != null) {
                                 updateSOSEmergencyRequest(
-                                    caseId: reportCaseModel.id!, status: 'Accept', assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
+                                    caseId: reportCaseModel.id!,
+                                    status: AppLocalizations.of(context)!.accept,
+                                    assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
                               }
                             },
                             child: Container(
@@ -366,7 +367,9 @@ class FirebaseMessages extends Object {
                             onTap: () {
                               if (reportCaseModel.id != null) {
                                 updateSOSEmergencyRequest(
-                                    caseId: reportCaseModel.id!, status: 'Decline', assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
+                                    caseId: reportCaseModel.id!,
+                                    status: AppLocalizations.of(context)!.decline,
+                                    assignSOSEmergencyCaseId: reportCaseModel.assign_sos_emergency_case_id);
                               }
                             },
                             child: Container(
@@ -633,7 +636,7 @@ class FirebaseMessages extends Object {
                       ),
                       Flexible(
                         child: Text(
-                          "Non emergency",
+                          AppLocalizations.of(context)!.nonEmergency,
                           style: TextStyle(
                             fontFamily: AppFonts.sansFont400,
                             fontSize: getProportionalFontSize(16),
@@ -651,8 +654,7 @@ class FirebaseMessages extends Object {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        // AppLocalizations.of(context)!.estimatedTimeOfArrival,
-                        "Distance: ",
+                        AppLocalizations.of(context)!.distance,
                         style: TextStyle(
                           fontFamily: AppFonts.sansFont600,
                           fontSize: getProportionalFontSize(16),
@@ -683,7 +685,9 @@ class FirebaseMessages extends Object {
                             onTap: () {
                               if (reportCaseModel.id != null) {
                                 updateNonEmergencyRequest(
-                                    caseId: reportCaseModel.id!, status: 'Accept', assignNonEmergencyCaseId: reportCaseModel.assign_non_emergency_case_id);
+                                    caseId: reportCaseModel.id!,
+                                    status: AppLocalizations.of(context)!.accept,
+                                    assignNonEmergencyCaseId: reportCaseModel.assign_non_emergency_case_id);
                               }
                             },
                             child: Container(
@@ -721,7 +725,9 @@ class FirebaseMessages extends Object {
                             onTap: () {
                               if (reportCaseModel.id != null) {
                                 updateNonEmergencyRequest(
-                                    caseId: reportCaseModel.id!, status: 'Decline', assignNonEmergencyCaseId: reportCaseModel.assign_non_emergency_case_id);
+                                    caseId: reportCaseModel.id!,
+                                    status: AppLocalizations.of(context)!.decline,
+                                    assignNonEmergencyCaseId: reportCaseModel.assign_non_emergency_case_id);
                               }
                             },
                             child: Container(

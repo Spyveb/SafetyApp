@@ -878,7 +878,7 @@ class ChatScreen extends GetView<ChatController> {
                             vertical: getProportionateScreenHeight(12),
                           ),
                           child: Text(
-                            "Our social worker will respond to you shortly",
+                            AppLocalizations.of(Get.context!)!.ourSocialWorkerWillRespondToYouShortly,
                             style: TextStyle(
                               fontFamily: AppFonts.sansFont600,
                               fontSize: getProportionalFontSize(16),
