@@ -1,6 +1,7 @@
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class AddEditEmergencyContactsScreen extends GetView<SettingsController> {
@@ -150,7 +151,8 @@ class AddEditEmergencyContactsScreen extends GetView<SettingsController> {
                             vertical: getProportionateScreenHeight(16),
                             horizontal: getProportionateScreenWidth(16),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
+                            // if (await Permission.sms.isGranted) {
                             if (fromEdit) {
                               if (controller.editContactModel != null && controller.editContactModel!.id != null) {
                                 controller.updateEmergencyContact(editId: controller.editContactModel!.id!);
@@ -158,6 +160,14 @@ class AddEditEmergencyContactsScreen extends GetView<SettingsController> {
                             } else {
                               controller.addEmergencyContact(context);
                             }
+                            // } else {
+                            //   PermissionStatus smsStatus = await Permission.sms.request();
+                            //   if (smsStatus.isDenied) {
+                            //     smsPermissionDeniedDialog(context);
+                            //   } else if (smsStatus.isPermanentlyDenied) {
+                            //     smsPermissionDeniedForeverDialog(context);
+                            //   }
+                            // }
                           },
                         )
                       ],
@@ -169,6 +179,62 @@ class AddEditEmergencyContactsScreen extends GetView<SettingsController> {
           },
         ),
       ),
+    );
+  }
+
+  void smsPermissionDeniedForeverDialog(BuildContext context) {
+    Utils.showAlertDialog(
+      context: context,
+      bar: true,
+      title: AppLocalizations.of(context)!.permissionRequired,
+      description: AppLocalizations.of(context)!.smsPermissionRequiredSOS,
+      buttons: [
+        TextButton(
+          onPressed: () async {
+            Get.back();
+          },
+          child: Text(
+            AppLocalizations.of(context)!.cancel,
+          ),
+        ),
+        TextButton(
+          onPressed: () async {
+            Get.back();
+            await openAppSettings();
+          },
+          child: Text(
+            AppLocalizations.of(Get.context!)!.openSetting,
+          ),
+        ),
+      ],
+    );
+  }
+
+  void smsPermissionDeniedDialog(BuildContext context) {
+    Utils.showAlertDialog(
+      context: context,
+      bar: true,
+      title: AppLocalizations.of(Get.context!)!.alert,
+      description: AppLocalizations.of(context)!.theSMSPermissionIsRequired,
+      buttons: [
+        TextButton(
+          onPressed: () async {
+            Get.back();
+          },
+          child: Text(
+            AppLocalizations.of(context)!.notRightNow,
+          ),
+        ),
+        TextButton(
+          onPressed: () async {
+            Get.back();
+            // getCurrentLocation();
+          },
+          child: Text(
+            AppLocalizations.of(context)!.retry,
+          ),
+        ),
+      ],
     );
   }
 }

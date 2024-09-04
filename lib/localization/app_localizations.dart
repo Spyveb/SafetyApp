@@ -1361,6 +1361,18 @@ abstract class AppLocalizations {
   /// **'No request found'**
   String get noRequest;
 
+  /// No description provided for @theSMSPermissionIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'The SMS service is required to notify your emergency contacts for SOS requests.'**
+  String get theSMSPermissionIsRequired;
+
+  /// No description provided for @smsPermissionRequiredSOS.
+  ///
+  /// In en, this message translates to:
+  /// **'To send SMS to your emergency contacts, we require the SMS permission.'**
+  String get smsPermissionRequiredSOS;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:

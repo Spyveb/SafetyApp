@@ -447,6 +447,7 @@ class SettingsController extends GetxController {
             ),
           ),
         );
+        Get.find<HomeController>().getEmergencyContactList(showLoader: false);
       }
       clearData();
       update();
@@ -483,6 +484,7 @@ class SettingsController extends GetxController {
         Utils.showToast(response['message'] ?? "Emergency contact updated successfully.");
         getEmergencyContactList(showLoader: false);
         Get.back();
+        Get.find<HomeController>().getEmergencyContactList(showLoader: false);
       }
       clearData();
       update();
@@ -516,6 +518,7 @@ class SettingsController extends GetxController {
       if (response['success'] != null && response['success'] == true) {
         Utils.showToast(response['message'] ?? "Emergency contact deleted successfully.");
         getEmergencyContactList(showLoader: false);
+        Get.find<HomeController>().getEmergencyContactList(showLoader: false);
       }
       update();
     } on Dio.DioException catch (e) {

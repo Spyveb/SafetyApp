@@ -204,6 +204,7 @@ class ReportController extends GetxController {
         sosEmergencyRequestSuccess(context);
         Utils.showToast(response['message'] ?? 'SOS emergency case created successfully.');
         Get.find<HomeController>().getUserSosEmergencyCase(showLoader: false, search: '');
+        // Get.find<HomeController>().sendSms(message: 'SOS at ${_address?.featureName}, ${_address?.postalCode}');
       } else {
         Utils.showToast(response['message'] ?? "You can't create new report. Your one emergency report case is open.");
       }
@@ -405,6 +406,8 @@ class ReportController extends GetxController {
     );
   }
 
+  Address? _address;
+
   Future<void> getCurrentLocation() async {
     FocusManager.instance.primaryFocus?.unfocus();
     Position currentPosition = await determineCurrentPosition();
@@ -413,7 +416,7 @@ class ReportController extends GetxController {
     var address = await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromCoordinates(
       Coordinates(currentPosition.latitude, currentPosition.longitude),
     );
-
+    _address = address.first;
     searchLocationController.text = address.first.addressLine ?? '';
     latitude = address.first.coordinates.latitude;
     longitude = address.first.coordinates.longitude;

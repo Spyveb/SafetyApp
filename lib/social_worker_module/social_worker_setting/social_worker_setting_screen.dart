@@ -3,7 +3,10 @@ import 'dart:ui';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:is_wear/is_wear.dart';
 import 'package:provider/provider.dart';
+
+import 'my_app.dart';
 
 class SocialWorkerSettingScreen extends GetView<SocialWorkerSettingController> {
   const SocialWorkerSettingScreen({super.key});
@@ -191,7 +194,31 @@ class SocialWorkerSettingScreen extends GetView<SocialWorkerSettingController> {
                   SizedBox(
                     height: getProportionateScreenHeight(8),
                   ),
-
+                  SettingsTile(
+                    themeProvider: themeProvider,
+                    text: "Check",
+                    onTap: () async {
+                      isWear = (await IsWear().check()) ?? false;
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MyApp2(),
+                          ));
+                      // await sendSms();
+                      // return;
+                      // if (await Permission.sms.isGranted) {
+                      //   await sendSms();
+                      // } else {
+                      //   PermissionStatus smsPermission = await Permission.sms.request();
+                      //   if (smsPermission.isGranted) {
+                      //     await sendSms();
+                      //   }
+                      // }
+                    },
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(8),
+                  ),
                   SettingsTile(
                     themeProvider: themeProvider,
                     text: AppLocalizations.of(context)!.changePassword,

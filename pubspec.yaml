@@ -66,6 +66,10 @@ dependencies:
   firebase_messaging: 15.0.3
   flutter_local_notifications: 17.2.2
   location: 6.0.2
+  watch_connectivity:
+#  wear:
+  is_wear:
+#  background_sms: 0.0.4
 
 dev_dependencies:
   flutter_test:

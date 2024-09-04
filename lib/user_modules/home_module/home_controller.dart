@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+// import 'package:background_sms/background_sms.dart';
 import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
 import 'package:distress_app/packages/location_geocoder/location_geocoder.dart';
@@ -29,6 +30,7 @@ class HomeController extends GetxController {
   void onInit() {
     saveFCMToken();
     // getUserSosEmergencyCase();
+    getEmergencyContactList(showLoader: false);
     super.onInit();
   }
 
@@ -167,6 +169,7 @@ class HomeController extends GetxController {
         Utils.showToast(response['message'] ?? 'SOS emergency case created successfully.');
         // showEmergencyIcon = true;
         getUserSosEmergencyCase(showLoader: false, search: '');
+        // sendSms(message: 'SOS at ${_address?.featureName}, ${_address?.postalCode}');
       } else {
         Utils.showToast(response['message'] ?? "You can't create new report. Your one emergency report case is open.");
       }
@@ -368,15 +371,16 @@ class HomeController extends GetxController {
     );
   }
 
+  Address? _address;
   Future<void> getCurrentLocation() async {
     FocusManager.instance.primaryFocus?.unfocus();
     Position currentPosition = await determineCurrentPosition();
 
     print("${currentPosition.latitude} ${currentPosition.longitude}");
-    var address = await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromCoordinates(
+    List<Address> address = await LocatitonGeocoder(Constants.kGoogleApiKey, lang: 'en').findAddressesFromCoordinates(
       Coordinates(currentPosition.latitude, currentPosition.longitude),
     );
-
+    _address = address.first;
     searchLocationController.text = address.first.addressLine ?? '';
     latitude = address.first.coordinates.latitude;
     longitude = address.first.coordinates.longitude;
@@ -444,7 +448,9 @@ class HomeController extends GetxController {
             onPressed: () async {
               Get.back();
             },
-            child: Text('Cancel'),
+            child: Text(
+              AppLocalizations.of(Get.context!)!.cancel,
+            ),
           ),
           TextButton(
             onPressed: () async {
@@ -499,4 +505,74 @@ class HomeController extends GetxController {
     firstName = await StorageService().readSecureData(Constants.firstName) ?? '';
     update();
   }
+
+  List<EmergencyContactModel> emergencyContactList = [];
+  void getEmergencyContactList({bool? showLoader = true}) async {
+    if (showLoader == true) {
+      LoadingDialog.showLoader();
+    }
+    try {
+      var response = await ApiProvider().postAPICall(
+        Endpoints.emergencyContactList,
+        null,
+        onSendProgress: (count, total) {},
+      );
+
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      if (response['success'] != null && response['success'] == true) {
+        emergencyContactList.clear();
+        if (response['data'] != null) {
+          List list = response['data'];
+          if (list.isNotEmpty) {
+            for (var contact in list) {
+              emergencyContactList.add(
+                EmergencyContactModel.fromJson(contact),
+              );
+            }
+          }
+        }
+      }
+    } on Dio.DioException catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      // Utils.showToast(e.message ?? "Something went wrong");
+      debugPrint(e.toString());
+    } catch (e) {
+      if (showLoader == true) {
+        LoadingDialog.hideLoader();
+      }
+      // Utils.showToast("Something went wrong");
+      debugPrint(e.toString());
+    }
+  }
+
+  // Future<void> sendSms({String? message}) async {
+  //   if (emergencyContactList.isNotEmpty) {
+  //     if (await Permission.sms.isGranted) {
+  //       await sendSmsToContacts(message: message);
+  //     } else {
+  //       // PermissionStatus smsPermission = await Permission.sms.request();
+  //       // if (smsPermission.isGranted) {
+  //       //   await sendSmsToContacts();
+  //       // }
+  //     }
+  //   }
+  // }
+  //
+  // Future<void> sendSmsToContacts({String? message}) async {
+  //   for (var contact in emergencyContactList) {
+  //     print(contact.mobileNumber);
+  //     if (contact.mobileNumber != null && contact.mobileNumber!.isNotEmpty) {
+  //       SmsStatus result = await BackgroundSms.sendMessage(
+  //         phoneNumber: contact.mobileNumber!,
+  //         // message: "Hello sir, Your friend is in trouble ${message != null && message.isNotEmpty ? 'at ${message}' : ''}",
+  //         message: message ?? "Hello sir, Your friend is in trouble",
+  //       );
+  //       print(result);
+  //     }
+  //   }
+  // }
 }

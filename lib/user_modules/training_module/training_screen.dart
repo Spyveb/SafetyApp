@@ -168,9 +168,9 @@ class TrainingScreen extends GetView<TrainingController> {
                   ),
                   Container(
                     margin: EdgeInsets.only(
-                      bottom: getProportionateScreenHeight(22),
+                      bottom: getProportionateScreenHeight(12),
                     ),
-                    width: SizeConfig.deviceWidth! * .65,
+                    width: SizeConfig.deviceWidth! * .35,
                     child: CustomTopBar(
                       onTabSelect: (value) {
                         // controller.changeTabIndex(value);
@@ -178,7 +178,7 @@ class TrainingScreen extends GetView<TrainingController> {
                       currentIndex: controller.tabIndex,
                       items: [
                         AppLocalizations.of(context)!.education,
-                        AppLocalizations.of(context)!.training,
+                        // AppLocalizations.of(context)!.training,
                       ],
                       backgroundColor: AppColors.primaryColor,
                     ),

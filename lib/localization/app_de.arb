@@ -215,5 +215,7 @@
   "ourSocialWorkerWillRespondToYouShortly": "Our social worker will respond to you shortly",
   "noHistory": "History not found",
   "noRequest": "No request found",
+  "theSMSPermissionIsRequired": "The SMS service is required to notify your emergency contacts for SOS requests.",
+  "smsPermissionRequiredSOS": "To send SMS to your emergency contacts, we require the SMS permission.",
   "hello": "hello"
 }

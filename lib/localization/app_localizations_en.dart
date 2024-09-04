@@ -638,5 +638,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noRequest => 'No request found';
 
   @override
+  String get theSMSPermissionIsRequired => 'The SMS service is required to notify your emergency contacts for SOS requests.';
+
+  @override
+  String get smsPermissionRequiredSOS => 'To send SMS to your emergency contacts, we require the SMS permission.';
+
+  @override
   String get hello => 'hello';
 }
