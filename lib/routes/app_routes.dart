@@ -25,6 +25,7 @@ abstract class Routes {
   static const OTP_SCREEN = _Paths.OTP_SCREEN;
   static const RESET_PASSWORD_SCREEN = _Paths.RESET_PASSWORD_SCREEN;
   static const CHANGE_PASSWORD_SCREEN = _Paths.CHANGE_PASSWORD_SCREEN;
+  static const WATCH_PAGE = _Paths.WATCH_PAGE;
 
   // Police Modules
   static const POLICE_DASHBOARD = _Paths.POLICE_DASHBOARD;
@@ -70,6 +71,7 @@ abstract class _Paths {
   static const OTP_SCREEN = '/otp_screen'; // otp_screen
   static const RESET_PASSWORD_SCREEN = '/reset_password_screen'; // reset_password_screen
   static const CHANGE_PASSWORD_SCREEN = '/change_password_screen'; // change_password_screen
+  static const WATCH_PAGE = '/watch_page'; // watch_page
 
   // Police Modules
   static const POLICE_DASHBOARD = '/police_dashboard'; // police_dashboard

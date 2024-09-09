@@ -67,6 +67,7 @@ dependencies:
   flutter_local_notifications: 17.2.2
   location: 6.0.2
   watch_connectivity:
+  qr_mobile_vision: 5.0.1
 #  wear:
   is_wear:
 #  background_sms: 0.0.4

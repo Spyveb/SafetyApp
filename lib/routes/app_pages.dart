@@ -6,6 +6,7 @@ import 'package:distress_app/police_modules/setting/police_edit_profile_screen.d
 import 'package:distress_app/social_worker_module/social_worker_request/social_worker_chat_screen.dart';
 import 'package:distress_app/user_modules/home_module/user_sos_request_detail.dart';
 import 'package:distress_app/user_modules/settings_module/change_password_screen.dart';
+import 'package:distress_app/user_modules/settings_module/watch_page.dart';
 import 'package:distress_app/user_modules/training_module/video_screen.dart';
 import 'package:get/get.dart';
 
@@ -128,7 +129,11 @@ abstract class AppPages {
       page: () => ChangePasswordScreen(),
       binding: SettingsBinding(),
     ),
-
+    GetPage(
+      name: Routes.WATCH_PAGE,
+      page: () => const WatchPage(),
+      binding: SettingsBinding(),
+    ),
     // Police Modules
     GetPage(
       name: Routes.POLICE_DASHBOARD,

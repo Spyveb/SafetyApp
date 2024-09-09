@@ -25,6 +25,7 @@ class Constants {
 
   // Key for accessing the profile image in storage.
   static const profileImage = 'profile_image';
+  static const watchHasData = 'watch_has_data';
 
   // Key for accessing the role in storage.
   static const role = 'role';

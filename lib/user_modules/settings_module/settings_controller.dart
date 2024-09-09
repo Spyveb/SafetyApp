@@ -1,11 +1,14 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
 import 'package:dio/dio.dart' as Dio;
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
+import 'package:watch_connectivity/watch_connectivity.dart';
 
 class SettingsController extends GetxController {
   bool reportAnonymously = false;
@@ -674,6 +677,137 @@ class SettingsController extends GetxController {
       Utils.showToast("Something went wrong");
       debugPrint(e.toString());
     }
+  }
+
+  //Watch Page
+
+  var watch = WatchConnectivity();
+
+  var count = 0;
+
+  var supported = false;
+  var paired = false;
+  var reachable = false;
+  var context = <String, dynamic>{};
+  var receivedContexts = <Map<String, dynamic>>[];
+  final log = <String>[];
+
+  bool watchHasUserData = false;
+
+  Timer? timer;
+
+  String? scannedQrCode;
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  void initPlatformState() async {
+    try {
+      watch = WatchConnectivity();
+      watchListener();
+      supported = await watch.isSupported;
+      paired = await watch.isPaired;
+      reachable = await watch.isReachable;
+      context = await watch.applicationContext;
+      receivedContexts = await watch.receivedApplicationContexts;
+      scannedQrCode = null;
+      // reachable = true;
+      update();
+    } on PlatformException catch (pException) {
+      if (pException.code.contains(
+          '17: API: Wearable.API is not available on this device. Connection failed with: ConnectionResult{statusCode=API_UNAVAILABLE, resolution=null, message=null}')) {
+        Utils.showAlertDialog(
+          context: Get.context!,
+          title: AppLocalizations.of(Get.context!)!.alert,
+          description: "API: Wearable.API is not available on this device.",
+          buttons: [
+            TextButton(
+              onPressed: () {
+                Get.back();
+                Get.back();
+              },
+              child: Text(AppLocalizations.of(Get.context!)!.ok),
+            )
+          ],
+        );
+      }
+    }
+  }
+
+  void sendMessage({required Map<String, dynamic> data}) {
+    final message = data;
+    //final message = {'abcd': 'value'};
+    watch.sendMessage(message);
+    log.add('Sent message: $message');
+    update();
+  }
+
+  void sendContext() {
+    count++;
+    final context = {'data': count};
+    watch.updateApplicationContext(context);
+    log.add('Sent context: $context');
+    update();
+  }
+
+  void toggleBackgroundMessaging() {
+    if (timer == null) {
+      timer = Timer.periodic(const Duration(seconds: 1), (_) => sendMessage(data: {}));
+    } else {
+      timer?.cancel();
+      timer = null;
+    }
+    update();
+  }
+
+  void receivedMessage(Map<String, dynamic> data) {
+    print("Data = ${data.toString()}");
+    if (data['qr_valid'] != null) {
+      if (data['qr_valid'] == true) {
+        Utils.showToast("QR validation successful.");
+        sendUserDataToWatch();
+      } else {
+        Utils.showToast("Invalid Qr Code");
+        initPlatformState();
+      }
+    } else if (data['user_data_saved'] != null) {
+      if (data['user_data_saved'] == true) {
+        saveWatchDataStatus();
+      } else {
+        initPlatformState();
+      }
+    }
+  }
+
+  Future<void> saveWatchDataStatus() async {
+    await StorageService().writeSecureData(Constants.watchHasData, 'Yes');
+    checkWatchData();
+  }
+
+  Future<void> sendUserDataToWatch() async {
+    String? accessToken = await StorageService().readSecureData(Constants.accessToken);
+    String? userName = await StorageService().readSecureData(Constants.userName);
+    String? userId = await StorageService().readSecureData(Constants.userId);
+    sendMessage(data: {
+      'user_data': {
+        'user_name': userName,
+        'user_id': userId,
+        'user_token': accessToken,
+      }
+    });
+  }
+
+  Future<void> checkWatchData() async {
+    watchHasUserData = await StorageService().readSecureData(Constants.watchHasData) == 'Yes';
+    update();
+  }
+
+  watchListener() {
+    watch.messageStream.listen((e) {
+      receivedMessage(e);
+    });
+
+    watch.contextStream.listen((e) {
+      log.add('Received context: $e');
+    });
   }
 }
 

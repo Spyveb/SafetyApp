@@ -201,6 +201,16 @@ class SettingsScreen extends GetView<SettingsController> {
                   ),
                   SettingsTile(
                     themeProvider: themeProvider,
+                    text: "My Watch",
+                    onTap: () {
+                      Get.toNamed(Routes.WATCH_PAGE);
+                    },
+                  ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(8),
+                  ),
+                  SettingsTile(
+                    themeProvider: themeProvider,
                     text: AppLocalizations.of(context)!.editProfile,
                     onTap: () {
                       Get.toNamed(Routes.EDIT_PROFILE);
