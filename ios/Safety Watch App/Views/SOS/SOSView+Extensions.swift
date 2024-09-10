@@ -91,7 +91,7 @@ extension SOSView {
                 UserDefaults.standard.removeObject(forKey: "Saved_User_Data")
                 UserDefaults.standard.set(false, forKey: "Is_Saved_User_Data")
                 viewModel.userData = nil
-            }, title: "Authorization Error", message: "Todo" ) /// Todo
+            }, title: "Authorization Error", message: "You are not authorized to access this application, Please reconnect again." )
             showAlert = true
         }
     }
