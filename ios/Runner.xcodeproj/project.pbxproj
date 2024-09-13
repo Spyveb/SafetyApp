@@ -28,7 +28,7 @@
 		5BD1D8612C85A15600FB62EA /* SafetyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD1D8602C85A15600FB62EA /* SafetyApp.swift */; };
 		5BD1D8632C85A15600FB62EA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD1D8622C85A15600FB62EA /* ContentView.swift */; };
 		5BD1D8682C85A15700FB62EA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BD1D8672C85A15700FB62EA /* Preview Assets.xcassets */; };
-		5BD1D86C2C85A15700FB62EA /* Safety Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5BD1D85E2C85A15600FB62EA /* Safety Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5BD1D86C2C85A15700FB62EA /* Distress App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5BD1D85E2C85A15600FB62EA /* Distress App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5BD1D8722C85A1CE00FB62EA /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD1D8712C85A1CE00FB62EA /* WatchSessionDelegate.swift */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
@@ -60,7 +60,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				5BD1D86C2C85A15700FB62EA /* Safety Watch App.app in Embed Watch Content */,
+				5BD1D86C2C85A15700FB62EA /* Distress App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,7 +98,7 @@
 		5BB5611E2C8EDE2C005A1DE8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5BB5612C2C8EE30E005A1DE8 /* EFQRCode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EFQRCode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB561332C8EEB52005A1DE8 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		5BD1D85E2C85A15600FB62EA /* Safety Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Safety Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BD1D85E2C85A15600FB62EA /* Distress App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Distress App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BD1D8602C85A15600FB62EA /* SafetyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyApp.swift; sourceTree = "<group>"; };
 		5BD1D8622C85A15600FB62EA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5BD1D8642C85A15700FB62EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -311,7 +311,7 @@
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
 				331C8081294A63A400263BE5 /* RunnerTests.xctest */,
-				5BD1D85E2C85A15600FB62EA /* Safety Watch App.app */,
+				5BD1D85E2C85A15600FB62EA /* Distress App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -384,7 +384,7 @@
 				5BB561312C8EEAEB005A1DE8 /* EFQRCode */,
 			);
 			productName = "Safety Watch App";
-			productReference = 5BD1D85E2C85A15600FB62EA /* Safety Watch App.app */;
+			productReference = 5BD1D85E2C85A15600FB62EA /* Distress App.app */;
 			productType = "com.apple.product-type.application";
 		};
 		97C146ED1CF9000F007C117D /* Runner */ = {
@@ -822,7 +822,6 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Safety;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.app.distressApp;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -835,7 +834,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.distressApp.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Distress App";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -866,7 +865,6 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Safety;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.app.distressApp;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -878,7 +876,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.distressApp.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Distress App";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
@@ -908,7 +906,6 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Safety;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.app.distressApp;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -920,7 +917,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.distressApp.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Distress App";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";

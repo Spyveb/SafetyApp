@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5BD1D85D2C85A15600FB62EA"
-               BuildableName = "Safety Watch App.app"
+               BuildableName = "Distress App.app"
                BlueprintName = "Safety Watch App"
                ReferencedContainer = "container:Runner.xcodeproj">
             </BuildableReference>
@@ -59,7 +59,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5BD1D85D2C85A15600FB62EA"
-            BuildableName = "Safety Watch App.app"
+            BuildableName = "Distress App.app"
             BlueprintName = "Safety Watch App"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
@@ -76,7 +76,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5BD1D85D2C85A15600FB62EA"
-            BuildableName = "Safety Watch App.app"
+            BuildableName = "Distress App.app"
             BlueprintName = "Safety Watch App"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>

@@ -231,7 +231,7 @@ class WatchPage extends GetView<SettingsController> {
                                               height: getProportionateScreenHeight(18),
                                             ),
                                             Text(
-                                              "Scan QR code in the 'Safety Watch App'",
+                                              "Scan QR code in the 'Distress Watch App'",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontFamily: AppFonts.sansFont400,
@@ -319,7 +319,7 @@ class WatchPage extends GetView<SettingsController> {
             ),
           ),
           Text(
-            "2. Make sure 'Safety Watch App' is open",
+            "2. Make sure 'Distress Watch App' is open",
             style: TextStyle(
               fontFamily: AppFonts.sansFont400,
               fontSize: getProportionalFontSize(14),
