@@ -70,8 +70,7 @@ class OnBoardingScreen extends GetView<OnBoardingController> {
                             ),
                             child: InkWell(
                               onTap: () {
-                                controller.pageController.animateToPage(index,
-                                    duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
+                                controller.pageController.animateToPage(index, duration: const Duration(milliseconds: 400), curve: Curves.easeIn);
                               },
                               child: Container(
                                 height: getProportionateScreenHeight(12),
@@ -89,8 +88,7 @@ class OnBoardingScreen extends GetView<OnBoardingController> {
                       ElevatedButton(
                         onPressed: () {
                           if (index < controller.onBoardingList.length - 1) {
-                            controller.pageController.animateToPage(index + 1,
-                                duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+                            controller.pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
                           } else {
                             Get.offAllNamed(Routes.SIGN_IN);
                           }
@@ -125,6 +123,7 @@ class OnBoardingScreen extends GetView<OnBoardingController> {
                     alignment: _alignment(index),
                     child: Image.asset(
                       onBoardingModel.cornerImage,
+                      color: AppColors.primaryColor,
                       height: _height(index),
                       width: _width(index),
                       fit: BoxFit.fill,

@@ -25,15 +25,19 @@ class SettingsTile extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       child: Container(
         padding: EdgeInsets.symmetric(
-          vertical: getProportionateScreenHeight(6),
+          vertical: getProportionateScreenHeight(4),
           horizontal: getProportionateScreenWidth(22),
         ),
         decoration: BoxDecoration(
+          // color: Color(0xFF303C66).withOpacity(.3),
           color: AppColors.settingsTileBackColor,
           borderRadius: BorderRadius.circular(
             getProportionateScreenWidth(3),
           ),
           border: Border.all(
+            // color: AppColors.primaryColor,
+            // width: 1,
+
             color: AppColors.settingsTileBorderColor,
             width: 2,
           ),

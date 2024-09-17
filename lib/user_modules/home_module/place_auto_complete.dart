@@ -38,60 +38,62 @@ class _PlaceAutoCompleteScreenState extends State<PlaceAutoCompleteScreen> {
           },
         ),
       ),
-      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        ListTile(
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: getProportionateScreenWidth(26),
-          ),
-          onTap: () async {
-            await useCurrentLocation(context);
-          },
-          title: Text(
-            AppLocalizations.of(context)!.useCurrentLocation,
-            style: TextStyle(
-              fontFamily: AppFonts.sansFont400,
-              fontSize: getProportionalFontSize(16),
-              color: AppColors.blackColor,
+      body: BackgroundWidget(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          ListTile(
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(26),
+            ),
+            onTap: () async {
+              await useCurrentLocation(context);
+            },
+            title: Text(
+              AppLocalizations.of(context)!.useCurrentLocation,
+              style: TextStyle(
+                fontFamily: AppFonts.sansFont400,
+                fontSize: getProportionalFontSize(16),
+                color: AppColors.blackColor,
+              ),
+            ),
+            leading: Icon(
+              Icons.my_location,
+              size: 24,
             ),
           ),
-          leading: Icon(
-            Icons.my_location,
-            size: 24,
+          SizedBox(
+            height: getProportionateScreenHeight(8),
           ),
-        ),
-        SizedBox(
-          height: getProportionateScreenHeight(8),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: result.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              GoogleMapPlaceModel prediction = result[index];
-              return ListTile(
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(26),
-                ),
-                leading: Icon(
-                  Icons.location_on,
-                  size: 24,
-                ),
-                title: Text(
-                  prediction.description!,
-                  style: TextStyle(
-                    fontFamily: AppFonts.sansFont400,
-                    fontSize: getProportionalFontSize(16),
-                    color: AppColors.blackColor,
+          Expanded(
+            child: ListView.builder(
+              itemCount: result.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                GoogleMapPlaceModel prediction = result[index];
+                return ListTile(
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(26),
                   ),
-                ),
-                onTap: () {
-                  Navigator.pop(context, prediction);
-                },
-              );
-            },
-          ),
-        )
-      ]),
+                  leading: Icon(
+                    Icons.location_on,
+                    size: 24,
+                  ),
+                  title: Text(
+                    prediction.description!,
+                    style: TextStyle(
+                      fontFamily: AppFonts.sansFont400,
+                      fontSize: getProportionalFontSize(16),
+                      color: AppColors.blackColor,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context, prediction);
+                  },
+                );
+              },
+            ),
+          )
+        ]),
+      ),
     );
   }
 

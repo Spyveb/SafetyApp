@@ -89,49 +89,50 @@ class TrainingTopicDetailScreen extends GetView<TrainingController> {
             ),
           ),
           body: SafeArea(
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                vertical: getProportionateScreenHeight(12),
-                horizontal: getProportionateScreenWidth(18),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Html(
-                      data: controller.articleDetails.description,
+            child: BackgroundWidget(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: getProportionateScreenHeight(12),
+                  horizontal: getProportionateScreenWidth(18),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Html(
+                        data: controller.articleDetails.description,
+                      ),
                     ),
-                  ),
-                  controller.articleDetails.videoUrl != null
-                      ? Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: CommonButton(
-                                text: AppLocalizations.of(context)!.next,
-                                textStyle: TextStyle(
-                                  fontSize: getProportionalFontSize(12),
-                                  fontFamily: AppFonts.sansFont700,
-                                  color: AppColors.whiteColor,
-                                ),
-                                radius: 20,
-                                onPressed: () {
-                                  Get.toNamed(Routes.VIDEO_SCREEN,
-                                      arguments: {"videoUrl": controller.articleDetails.videoUrl});
-                                },
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: getProportionateScreenWidth(29),
-                                  vertical: getProportionateScreenHeight(7),
+                    controller.articleDetails.videoUrl != null
+                        ? Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: CommonButton(
+                                  text: AppLocalizations.of(context)!.next,
+                                  textStyle: TextStyle(
+                                    fontSize: getProportionalFontSize(12),
+                                    fontFamily: AppFonts.sansFont700,
+                                    color: AppColors.whiteColor,
+                                  ),
+                                  radius: 20,
+                                  onPressed: () {
+                                    Get.toNamed(Routes.VIDEO_SCREEN, arguments: {"videoUrl": controller.articleDetails.videoUrl});
+                                  },
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: getProportionateScreenWidth(29),
+                                    vertical: getProportionateScreenHeight(7),
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: getProportionateScreenHeight(10),
-                            ),
-                          ],
-                        )
-                      : SizedBox(),
-                ],
+                              SizedBox(
+                                height: getProportionateScreenHeight(10),
+                              ),
+                            ],
+                          )
+                        : SizedBox(),
+                  ],
+                ),
               ),
             ),
           ),

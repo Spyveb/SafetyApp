@@ -62,153 +62,155 @@ class TrainingTopicScreen extends GetView<TrainingController> {
       body: SafeArea(
         child: GetBuilder<TrainingController>(
           builder: (controller) {
-            return Container(
-              padding: EdgeInsets.symmetric(
-                vertical: getProportionateScreenHeight(12),
-                horizontal: getProportionateScreenWidth(18),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    onChanged: (value) {
-                      if (controller.categoryModel?.id != null) {
-                        controller.getCategoryDetails(categoryId: controller.categoryModel!.id!, search: value, showLoader: false);
-                      }
-                    },
-                    style: TextStyle(
-                      color: themeProvider.textThemeColor,
-                      fontFamily: AppFonts.interFont700,
-                      fontSize: getProportionalFontSize(13),
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          getProportionateScreenWidth(50),
-                        ),
-                        borderSide: BorderSide.none,
-                      ),
-                      fillColor: Color(0xFFD0D0D0),
-                      filled: true,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          getProportionateScreenWidth(50),
-                        ),
-                        borderSide: BorderSide.none,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          getProportionateScreenWidth(50),
-                        ),
-                        borderSide: BorderSide.none,
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          getProportionateScreenWidth(50),
-                        ),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(24),
-                        vertical: getProportionateScreenHeight(8),
-                      ),
-                      hintText: "${AppLocalizations.of(context)!.searchSomething}.....",
-                      hintStyle: TextStyle(
+            return BackgroundWidget(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: getProportionateScreenHeight(12),
+                  horizontal: getProportionateScreenWidth(18),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      onChanged: (value) {
+                        if (controller.categoryModel?.id != null) {
+                          controller.getCategoryDetails(categoryId: controller.categoryModel!.id!, search: value, showLoader: false);
+                        }
+                      },
+                      style: TextStyle(
                         color: themeProvider.textThemeColor,
                         fontFamily: AppFonts.interFont700,
-                        fontSize: getProportionalFontSize(12),
+                        fontSize: getProportionalFontSize(13),
                       ),
-                      suffixIcon: Icon(
-                        Icons.search,
-                        size: 24,
-                        color: AppColors.blackColor,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            getProportionateScreenWidth(50),
+                          ),
+                          borderSide: BorderSide.none,
+                        ),
+                        fillColor: Color(0xFFD0D0D0),
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            getProportionateScreenWidth(50),
+                          ),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            getProportionateScreenWidth(50),
+                          ),
+                          borderSide: BorderSide.none,
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            getProportionateScreenWidth(50),
+                          ),
+                          borderSide: BorderSide.none,
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(24),
+                          vertical: getProportionateScreenHeight(8),
+                        ),
+                        hintText: "${AppLocalizations.of(context)!.searchSomething}.....",
+                        hintStyle: TextStyle(
+                          color: themeProvider.textThemeColor,
+                          fontFamily: AppFonts.interFont700,
+                          fontSize: getProportionalFontSize(12),
+                        ),
+                        suffixIcon: Icon(
+                          Icons.search,
+                          size: 24,
+                          color: AppColors.blackColor,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(18),
-                  ),
-                  controller.articleList.isNotEmpty
-                      ? Expanded(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: controller.articleList.length,
-                            itemBuilder: (context, index) {
-                              ArticleModel article = controller.articleList[index];
-                              return GestureDetector(
-                                onTap: () {
-                                  controller.goToArticleDetails(
-                                    article,
-                                  );
-                                },
-                                behavior: HitTestBehavior.opaque,
-                                child: Column(
-                                  children: [
-                                    Divider(
-                                      height: index == 0 ? 1 : .4,
-                                      color: AppColors.blackColor,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          width: getProportionateScreenWidth(36),
-                                          height: getProportionateScreenHeight(36),
-                                          margin: EdgeInsets.only(
-                                            right: getProportionateScreenWidth(4),
-                                            left: getProportionateScreenWidth(10),
-                                            top: getProportionateScreenHeight(10),
-                                            bottom: getProportionateScreenHeight(10),
-                                          ),
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              // image: AssetImage(AppImages.violence),
-                                              image: CachedNetworkImageProvider(
-                                                article.image ?? '',
+                    SizedBox(
+                      height: getProportionateScreenHeight(18),
+                    ),
+                    controller.articleList.isNotEmpty
+                        ? Expanded(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: controller.articleList.length,
+                              itemBuilder: (context, index) {
+                                ArticleModel article = controller.articleList[index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    controller.goToArticleDetails(
+                                      article,
+                                    );
+                                  },
+                                  behavior: HitTestBehavior.opaque,
+                                  child: Column(
+                                    children: [
+                                      Divider(
+                                        height: index == 0 ? 1 : .4,
+                                        color: AppColors.blackColor,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: getProportionateScreenWidth(36),
+                                            height: getProportionateScreenHeight(36),
+                                            margin: EdgeInsets.only(
+                                              right: getProportionateScreenWidth(4),
+                                              left: getProportionateScreenWidth(10),
+                                              top: getProportionateScreenHeight(10),
+                                              bottom: getProportionateScreenHeight(10),
+                                            ),
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                // image: AssetImage(AppImages.violence),
+                                                image: CachedNetworkImageProvider(
+                                                  article.image ?? '',
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                article.title ?? '',
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  fontSize: getProportionalFontSize(11),
-                                                  color: themeProvider.textThemeColor,
-                                                  fontFamily: AppFonts.sansFont700,
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  article.title ?? '',
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontSize: getProportionalFontSize(11),
+                                                    color: themeProvider.textThemeColor,
+                                                    fontFamily: AppFonts.sansFont700,
+                                                  ),
                                                 ),
-                                              ),
-                                              Text(
-                                                article.subTitle ?? '',
-                                                maxLines: 3,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  fontSize: getProportionalFontSize(11),
-                                                  color: themeProvider.textThemeColor,
-                                                  fontFamily: AppFonts.sansFont400,
+                                                Text(
+                                                  article.subTitle ?? '',
+                                                  maxLines: 3,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontSize: getProportionalFontSize(11),
+                                                    color: themeProvider.textThemeColor,
+                                                    fontFamily: AppFonts.sansFont400,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Divider(
-                                      height: index == controller.articleList.length ? 1 : .4,
-                                      color: AppColors.blackColor,
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        )
-                      : SizedBox(),
-                ],
+                                        ],
+                                      ),
+                                      Divider(
+                                        height: index == controller.articleList.length ? 1 : .4,
+                                        color: AppColors.blackColor,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
+                ),
               ),
             );
           },

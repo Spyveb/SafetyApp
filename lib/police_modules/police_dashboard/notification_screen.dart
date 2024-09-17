@@ -16,56 +16,58 @@ class NotificationScreen extends GetView<PoliceDashBoardController> {
         return Scaffold(
           backgroundColor: Colors.white,
           body: SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(14),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: getProportionateScreenHeight(15),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Container(
-                              height: getProportionateScreenHeight(40),
-                              width: getProportionateScreenWidth(40),
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
-                              child: Icon(
-                                Icons.arrow_back,
-                                size: 22,
+            child: BackgroundWidget(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(14),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: getProportionateScreenHeight(15),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: Container(
+                                height: getProportionateScreenHeight(40),
+                                width: getProportionateScreenWidth(40),
+                                alignment: Alignment.centerLeft,
+                                padding: EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  size: 22,
+                                ),
                               ),
                             ),
-                          ),
-                          Flexible(
-                            child: Text(
-                              AppLocalizations.of(context)!.notification,
-                              style: TextStyle(
-                                fontSize: getProportionalFontSize(22),
-                                fontFamily: AppFonts.sansFont600,
-                                color: Colors.black,
+                            Flexible(
+                              child: Text(
+                                AppLocalizations.of(context)!.notification,
+                                style: TextStyle(
+                                  fontSize: getProportionalFontSize(22),
+                                  fontFamily: AppFonts.sansFont600,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(15),
-                      ),
-                    ],
+                          ],
+                        ),
+                        SizedBox(
+                          height: getProportionateScreenHeight(15),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

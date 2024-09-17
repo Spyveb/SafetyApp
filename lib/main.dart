@@ -128,10 +128,13 @@ class _MyAppState extends State<MyApp> {
         locale: _locale,
         title: 'Distress App',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor, onBackground: Colors.white),
-          useMaterial3: true,
-          fontFamily: AppFonts.sansFont400,
-        ),
+            colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor, onBackground: Colors.white),
+            useMaterial3: true,
+            fontFamily: AppFonts.sansFont400,
+            scaffoldBackgroundColor: AppColors.whiteColor,
+            appBarTheme: AppBarTheme(
+              backgroundColor: AppColors.whiteColor,
+            )),
         navigatorKey: navState,
         getPages: AppPages.routes,
         initialRoute: Routes.SPLASH,

@@ -22,7 +22,8 @@ class PoliceDashboardContainer extends StatelessWidget {
           getProportionateScreenWidth(16),
         ),
         border: Border.all(
-          color: AppColors.policeDarkBlueColor,
+          // color: AppColors.policeDarkBlueColor,
+          color: AppColors.primaryColor,
         ),
       ),
       child: Column(
@@ -48,7 +49,8 @@ class PoliceDashboardContainer extends StatelessWidget {
             style: TextStyle(
               fontSize: getProportionalFontSize(25),
               fontFamily: AppFonts.sansFont600,
-              color: AppColors.policeDarkBlueColor,
+              // color: AppColors.policeDarkBlueColor,
+              color: AppColors.primaryColor,
             ),
           ),
         ],

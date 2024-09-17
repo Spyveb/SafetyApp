@@ -4,17 +4,20 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._(); // Private constructor to prevent instantiation
 
-  static const Color primaryColor = Color(0xFF0043CE);
+  // static const Color primaryColor = Color(0xFF0043CE);
+  static const Color primaryColor = Color(0xFF303C66);
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color blackColor = Color(0xFF000000);
   static const Color greyColor = Color(0xFFF0F0F0);
   static const Color textFieldGreyColor = Color(0xFFA8A8A8);
   static const Color redDefault = Color(0xFFFF3B30);
-  static Color bottomTabBackgroundColor = const Color(0xFF0043CE).withOpacity(.44);
+  // static Color bottomTabBackgroundColor = const Color(0xFF0043CE).withOpacity(.44);
+  static Color bottomTabBackgroundColor = const Color(0xFF303C66).withOpacity(.4);
   static Color backgroundColor = const Color(0xFF0043CE);
   static Color lightTextColor = const Color(0xFF262626);
   static Color textColor = const Color(0xFF000000);
   static Color settingsTileBackColor = const Color(0xFFA7C9E2);
+  // static Color settingsTileBackColor = const Color(0xFF303C66).withOpacity(.1);
   static Color settingsTileBorderColor = const Color(0xFF195193);
   static Color reportColor = const Color(0xFFF20808);
 
