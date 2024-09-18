@@ -15,6 +15,9 @@ class SignUpScreen extends GetView<SignUpController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<SignUpController>(
+        init: SignUpController(),
+        autoRemove: false,
+        global: true,
         builder: (SignUpController signUpController) {
           return SafeArea(
             child: BackgroundWidget(
@@ -25,7 +28,7 @@ class SignUpScreen extends GetView<SignUpController> {
                 ),
                 child: Form(
                   key: controller.formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autovalidateMode: AutovalidateMode.disabled,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -118,10 +121,10 @@ class SignUpScreen extends GetView<SignUpController> {
                                   context,
                                   AppLocalizations.of(context)!.firstName.capitalize,
                                 ),
-                                onChanged: (value) {
-                                  controller.firstNameController.text = value;
-                                  controller.update();
-                                },
+                                // onChanged: (value) {
+                                //   controller.firstNameController.text = value;
+                                //   controller.update();
+                                // },
                                 prefixIcon: Container(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: getProportionateScreenWidth(8),
@@ -149,10 +152,10 @@ class SignUpScreen extends GetView<SignUpController> {
                                   context,
                                   AppLocalizations.of(context)!.lastName.capitalize,
                                 ),
-                                onChanged: (value) {
-                                  controller.lastNameController.text = value;
-                                  controller.update();
-                                },
+                                // onChanged: (value) {
+                                //   controller.lastNameController.text = value;
+                                //   controller.update();
+                                // },
                                 prefixIcon: Container(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: getProportionateScreenWidth(8),
@@ -172,6 +175,7 @@ class SignUpScreen extends GetView<SignUpController> {
                       SizedBox(
                         height: getProportionateScreenHeight(14),
                       ),
+
                       CommonTextField(
                         hintText: AppLocalizations.of(context)!.email,
                         textEditingController: controller.emailController,
@@ -179,10 +183,10 @@ class SignUpScreen extends GetView<SignUpController> {
                         keyboardType: TextInputType.emailAddress,
                         validation: (value) =>
                             Validation.emailValidation(controller.emailController.text, AppLocalizations.of(context)!.email.capitalize, context),
-                        onChanged: (value) {
-                          controller.emailController.text = value;
-                          controller.update();
-                        },
+                        // onChanged: (value) {
+                        //   controller.emailController.text = value;
+                        //   controller.update();
+                        // },
                         prefixIcon: Container(
                           padding: EdgeInsets.symmetric(
                             horizontal: getProportionateScreenWidth(12),
@@ -203,19 +207,26 @@ class SignUpScreen extends GetView<SignUpController> {
                         textEditingController: controller.phoneNumberController,
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.next,
-                        validation: (value) => Validation.mobileValidationWithCode(
+                        // validation: (value) => Validation.mobileValidationWithCode(
+                        //   controller.phoneNumberController.text,
+                        //   context,
+                        //   AppLocalizations.of(context)!.phoneNumber.capitalize,
+                        // ),
+                        validation: (value) => Validation.mobileValidationWithCountryCode(
                           controller.phoneNumberController.text,
                           context,
                           AppLocalizations.of(context)!.phoneNumber.capitalize,
+                          controller.selectedCountryCode.dialCode ?? '+91',
                         ),
-                        onChanged: (value) {
-                          controller.phoneNumberController.text = value;
-                          controller.update();
-                        },
+                        // onChanged: (value) {
+                        //   controller.phoneNumberController.text = value;
+                        //   controller.update();
+                        // },
                         prefixIcon: CountryCodePicker(
                           hideMainText: true,
                           onChanged: (value) {
                             controller.selectedCountryCode = value;
+                            controller.update();
                           },
                           // enabled: false,
                           // initialSelection: widget.initialSelection,
@@ -440,10 +451,10 @@ class SignUpScreen extends GetView<SignUpController> {
                           context,
                           AppLocalizations.of(context)!.userName.capitalize,
                         ),
-                        onChanged: (value) {
-                          controller.userNameController.text = value;
-                          controller.update();
-                        },
+                        // onChanged: (value) {
+                        //   controller.userNameController.text = value;
+                        //   controller.update();
+                        // },
                         prefixIcon: Container(
                           padding: EdgeInsets.symmetric(
                             horizontal: getProportionateScreenWidth(12),
@@ -470,10 +481,10 @@ class SignUpScreen extends GetView<SignUpController> {
                           context,
                           AppLocalizations.of(context)!.password.capitalize,
                         ),
-                        onChanged: (value) {
-                          controller.passwordController.text = value;
-                          controller.update();
-                        },
+                        // onChanged: (value) {
+                        //   controller.passwordController.text = value;
+                        //   controller.update();
+                        // },
                         prefixIcon: Container(
                           padding: EdgeInsets.symmetric(
                             horizontal: getProportionateScreenWidth(12),
@@ -520,10 +531,10 @@ class SignUpScreen extends GetView<SignUpController> {
                           }
                           return null;
                         },
-                        onChanged: (value) {
-                          controller.confirmPasswordController.text = value;
-                          controller.update();
-                        },
+                        // onChanged: (value) {
+                        //   controller.confirmPasswordController.text = value;
+                        //   controller.update();
+                        // },
                         prefixIcon: Container(
                           padding: EdgeInsets.symmetric(
                             horizontal: getProportionateScreenWidth(12),
@@ -618,11 +629,14 @@ class SignUpScreen extends GetView<SignUpController> {
                         padding: EdgeInsets.symmetric(
                           vertical: getProportionateScreenHeight(22),
                         ),
-                        onPressed: controller.formKey.currentState != null && controller.formKey.currentState!.validate() && controller.termValue == true
-                            ? () {
-                                controller.signUpMethod();
-                              }
-                            : null,
+                        onPressed: () {
+                          FocusManager.instance.primaryFocus?.requestFocus();
+                          if (controller.formKey.currentState!.validate()) {
+                            if (controller.termValue == true) {
+                              controller.signUpMethod();
+                            }
+                          }
+                        },
                       ),
                     ],
                   ),

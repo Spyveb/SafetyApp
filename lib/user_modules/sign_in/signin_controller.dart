@@ -47,25 +47,43 @@ class SignInController extends GetxController {
         passToken: false,
         onSendProgress: (count, total) {},
       );
-
+      LoadingDialog.hideLoader();
       if (response['success'] != null && response['success'] == true) {
         if (response['data'] != null) {
           if (response['data']['user'] != null) {
             UserModel userModel = UserModel.fromJson(response['data']['user']);
-            await saveUserData(userModel);
+
             LoadingDialog.hideLoader();
             if (userModel.role == "police_officer") {
+              await saveUserData(userModel);
               Get.offAllNamed(Routes.POLICE_DASHBOARD);
             } else if (userModel.role == "social_worker") {
+              await saveUserData(userModel);
               Get.offAllNamed(Routes.SOCIAL_WORKER_DASHBOARD);
             } else {
-              Get.offAllNamed(Routes.DASHBOARD);
+              if (userModel.isVerified == 1) {
+                await saveUserData(userModel);
+                Get.offAllNamed(Routes.DASHBOARD);
+              } else {
+                Get.lazyPut(
+                  () => SignUpController(),
+                );
+                Get.find<SignUpController>().tempUserModel = userModel;
+                if (userModel.mobileCode != null && userModel.mobileNumber != null) {
+                  Get.find<SignUpController>().otpPhoneNo = '${userModel.mobileCode} ${userModel.mobileNumber}';
+                  Get.find<SignUpController>().isFromLogin = true;
+                  Get.find<SignUpController>().sendOTP(isResend: false);
+                }
+              }
             }
           }
         }
       } else {
-        LoadingDialog.hideLoader();
-        Utils.showToast(response['message'] ?? "Login Failed");
+        try {
+          Utils.showToast(response['message'] ?? "Login Failed");
+        } catch (e) {
+          print(e);
+        }
       }
     } on Dio.DioException catch (e) {
       LoadingDialog.hideLoader();

@@ -71,6 +71,7 @@ dependencies:
 #  wear:
   is_wear:
 #  background_sms: 0.0.4
+  firebase_auth: 5.1.2
 
 dev_dependencies:
   flutter_test:

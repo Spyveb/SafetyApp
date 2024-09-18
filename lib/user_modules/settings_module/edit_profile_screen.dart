@@ -259,10 +259,16 @@ class EditProfileScreen extends GetView<SettingsController> {
                               textEditingController: controller.phoneNumberController,
                               keyboardType: TextInputType.number,
                               textInputAction: TextInputAction.next,
-                              validation: (value) => Validation.mobileValidationWithCode(
+                              // validation: (value) => Validation.mobileValidationWithCode(
+                              //   controller.phoneNumberController.text,
+                              //   context,
+                              //   AppLocalizations.of(context)!.phoneNumber.capitalize,
+                              // ),
+                              validation: (value) => Validation.mobileValidationWithCountryCode(
                                 controller.phoneNumberController.text,
                                 context,
                                 AppLocalizations.of(context)!.phoneNumber.capitalize,
+                                controller.selectedCountryCode.dialCode ?? '+91',
                               ),
                               onChanged: (value) {
                                 // controller.phoneNumberController.text = value;

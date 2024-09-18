@@ -8,6 +8,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart' as getx;
 
 // API Provider class for making API calls
 class ApiProvider {
@@ -18,10 +19,7 @@ class ApiProvider {
   }
 
   Future<dynamic> postAPICall(String url, FormData? formData,
-      {bool passToken = true,
-      Function(int, int)? onSendProgress,
-      Map<String, String>? headers,
-      bool passLanguage = true}) async {
+      {bool passToken = true, Function(int, int)? onSendProgress, Map<String, String>? headers, bool passLanguage = true}) async {
     ConnectivityResult connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
       String? accessToken = await StorageService().readSecureData(Constants.accessToken);
@@ -106,9 +104,9 @@ class ApiProvider {
           //     ),
           //   ],
           // );
-          // await StorageService().deleteAllSecureData();
-          // Navigator.pushNamed(navState.currentContext!, AppRoute.dashBoardPageRoute);
-          // Navigator.pushNamed(navState.currentContext!, AppRoute.startUpRoute);
+
+          await StorageService().deleteAllSecureData();
+          getx.Get.offAllNamed(Routes.SIGN_IN);
         }
       }
       return responseJson;
@@ -220,9 +218,8 @@ class ApiProvider {
           //     ),
           //   ],
           // );
-          // await StorageService().deleteAllSecureData();
-          // Navigator.pushNamed(navState.currentContext!, AppRoute.dashBoardPageRoute);
-          // Navigator.pushNamed(navState.currentContext!, AppRoute.startUpRoute);
+          await StorageService().deleteAllSecureData();
+          getx.Get.offAllNamed(Routes.SIGN_IN);
         }
       }
       return responseJson;
@@ -233,10 +230,7 @@ class ApiProvider {
   }
 
   Future<dynamic> putAPICall(String url, FormData? formData,
-      {bool passToken = true,
-      Function(int, int)? onSendProgress,
-      Map<String, String>? headers,
-      bool passLanguage = true}) async {
+      {bool passToken = true, Function(int, int)? onSendProgress, Map<String, String>? headers, bool passLanguage = true}) async {
     ConnectivityResult connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
       String? accessToken = await StorageService().readSecureData(Constants.accessToken);
@@ -317,10 +311,8 @@ class ApiProvider {
           //     ),
           //   ],
           // );
-
-          // await StorageService().deleteAllSecureData();
-          // Navigator.pushNamed(navState.currentContext!, AppRoute.dashBoardPageRoute);
-          // Navigator.pushNamed(navState.currentContext!, AppRoute.startUpRoute);
+          await StorageService().deleteAllSecureData();
+          getx.Get.offAllNamed(Routes.SIGN_IN);
         }
       }
       return responseJson;
@@ -365,9 +357,8 @@ class ApiProvider {
         //     ),
         //   ],
         // );
-        // await StorageService().deleteAllSecureData();
-        // Navigator.pushNamed(navState.currentContext!, AppRoute.dashBoardPageRoute);
-        // Navigator.pushNamed(navState.currentContext!, AppRoute.startUpRoute);
+        await StorageService().deleteAllSecureData();
+        getx.Get.offAllNamed(Routes.SIGN_IN);
 
         return responseJson;
       case 422:
@@ -380,8 +371,7 @@ class ApiProvider {
       case 500:
       default:
         LoadingDialog.hideLoader();
-        throw FetchDataException(
-            '${AppLocalizations.of(navState.currentContext!)!.errorOccurredWhileCommunicatingWithServer}: ${response.statusCode}');
+        throw FetchDataException('${AppLocalizations.of(navState.currentContext!)!.errorOccurredWhileCommunicatingWithServer}: ${response.statusCode}');
     }
   }
 }

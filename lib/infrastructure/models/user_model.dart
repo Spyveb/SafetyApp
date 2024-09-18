@@ -31,6 +31,7 @@ class UserModel {
   String? createdAt;
   String? updatedAt;
   String? token;
+  int? isVerified;
 
   UserModel({
     this.id,
@@ -55,6 +56,7 @@ class UserModel {
     this.createdAt,
     this.updatedAt,
     this.token,
+    this.isVerified,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -80,6 +82,7 @@ class UserModel {
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
         token: json["token"],
+        isVerified: json["is_verified_mobile"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -105,5 +108,6 @@ class UserModel {
         "created_at": createdAt,
         "updated_at": updatedAt,
         "token": token,
+        "is_verified_mobile": isVerified,
       };
 }

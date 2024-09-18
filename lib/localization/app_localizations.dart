@@ -1373,6 +1373,36 @@ abstract class AppLocalizations {
   /// **'To send SMS to your emergency contacts, we require the SMS permission.'**
   String get smsPermissionRequiredSOS;
 
+  /// No description provided for @verificationFailedDueToInvalidOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification Failed due to invalid OTP!'**
+  String get verificationFailedDueToInvalidOtp;
+
+  /// No description provided for @verificationFailedDueToSessionTimeExpire.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification Failed due to Session time expired!'**
+  String get verificationFailedDueToSessionTimeExpire;
+
+  /// No description provided for @theProvidedPhoneNumberIsNotValid.
+  ///
+  /// In en, this message translates to:
+  /// **'The provided phone number is not valid.'**
+  String get theProvidedPhoneNumberIsNotValid;
+
+  /// No description provided for @kindlyVerifyYourMobileNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Kindly verify your mobile number to proceed with the app.'**
+  String get kindlyVerifyYourMobileNumber;
+
+  /// No description provided for @verify.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get verify;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:

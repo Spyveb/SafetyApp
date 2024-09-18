@@ -213,5 +213,10 @@
   "noRequest": "No request found",
   "theSMSPermissionIsRequired": "The SMS service is required to notify your emergency contacts for SOS requests.",
   "smsPermissionRequiredSOS": "To send SMS to your emergency contacts, we require the SMS permission.",
+  "verificationFailedDueToInvalidOtp":"Verification Failed due to invalid OTP!",
+  "verificationFailedDueToSessionTimeExpire":"Verification Failed due to Session time expired!",
+  "theProvidedPhoneNumberIsNotValid": "The provided phone number is not valid.",
+  "kindlyVerifyYourMobileNumber": "Kindly verify your mobile number to proceed with the app.",
+  "verify": "Verify",
   "hello": "hello"
 }

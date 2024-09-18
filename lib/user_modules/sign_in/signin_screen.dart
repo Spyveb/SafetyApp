@@ -22,6 +22,7 @@ class SignInScreen extends GetView<SignInController> {
               ),
               child: Form(
                 key: controller.formKey,
+                autovalidateMode: AutovalidateMode.disabled,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -129,9 +130,10 @@ class SignInScreen extends GetView<SignInController> {
                       padding: EdgeInsets.symmetric(
                         vertical: getProportionateScreenHeight(22),
                       ),
-                      onPressed: controller.userNameController.text.trim().isNotEmpty &&
-                              controller.passwordController.text.trim().isNotEmpty
+                      onPressed: controller.userNameController.text.trim().isNotEmpty && controller.passwordController.text.trim().isNotEmpty
                           ? () {
+                              FocusManager.instance.primaryFocus?.requestFocus();
+
                               controller.loginMethod();
                             }
                           : null,
@@ -264,8 +266,8 @@ class SignInScreen extends GetView<SignInController> {
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
                       textEditingController: signInController.forgotPasswordController,
-                      validation: (value) => Validation.emailValidation(signInController.forgotPasswordController.text,
-                          AppLocalizations.of(context)!.email.capitalize, context),
+                      validation: (value) =>
+                          Validation.emailValidation(signInController.forgotPasswordController.text, AppLocalizations.of(context)!.email.capitalize, context),
                       onChanged: (value) {
                         controller.update();
                       },

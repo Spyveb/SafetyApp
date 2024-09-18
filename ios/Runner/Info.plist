@@ -69,5 +69,18 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+
+	<key>CFBundleURLTypes</key>
+    	<array>
+    		<dict>
+    			<key>CFBundleTypeRole</key>
+    			<string>Editor</string>
+    			<key>CFBundleURLSchemes</key>
+    			<array>
+    				<string>app-1-270914271583-ios-b5b9f6c1a8365aa76cdeea</string>
+    			</array>
+    		</dict>
+    	</array>
+
 </dict>
 </plist>

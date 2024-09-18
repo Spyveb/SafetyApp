@@ -48,6 +48,11 @@ abstract class AppPages {
       binding: SignUpBinding(),
     ),
     GetPage(
+      name: Routes.PHONE_OTP_SCREEN,
+      page: () => PhoneOtpScreen(),
+      binding: SignUpBinding(),
+    ),
+    GetPage(
       name: Routes.DASHBOARD,
       page: () => DashBoardScreen(),
       binding: DashBoardBinding(),

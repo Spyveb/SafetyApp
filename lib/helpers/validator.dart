@@ -1,5 +1,8 @@
 import 'package:distress_app/imports.dart';
+import 'package:distress_app/packages/country_phone_validation/country_utils.dart';
 import 'package:flutter/material.dart';
+
+import '../packages/country_phone_validation/country.dart';
 
 // Validation class containing various validation functions.
 class Validation {
@@ -39,6 +42,7 @@ class Validation {
 
   // Validate if field is empty.
   static String? emptyValidation(String? value, BuildContext context, String? fieldName) {
+    print("VALIDATION------------> ${fieldName}");
     if (value!.isEmpty) {
       return "${AppLocalizations.of(context)!.pleaseEnter} ${fieldName}";
     }
@@ -77,6 +81,22 @@ class Validation {
     // RegExp regExp = RegExp(r'^[0-9]+$');
 
     if (!regExp.hasMatch(value)) {
+      return "${AppLocalizations.of(context)!.pleaseEnterAValid} $fieldName";
+    }
+    return null;
+  }
+
+  // Validate if field is empty and mobile number with country code.
+  static String? mobileValidationWithCountryCode(String? value, BuildContext context, String? fieldName, String countryCode) {
+    if (value!.isEmpty) {
+      return "${AppLocalizations.of(context)!.pleaseEnter} ${fieldName}";
+    }
+    RegExp regExp = RegExp(r'^[0-9]+$');
+    // RegExp regExp = RegExp(r'^[0-9]+$');
+
+    Country country = countries.firstWhere((element) => element.dialCode == countryCode);
+    bool isValid = CountryUtils.validatePhoneNumberByCountry(value, country);
+    if ((!regExp.hasMatch(value)) || (!isValid)) {
       return "${AppLocalizations.of(context)!.pleaseEnterAValid} $fieldName";
     }
     return null;

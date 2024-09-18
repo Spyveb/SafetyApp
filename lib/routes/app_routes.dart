@@ -7,6 +7,7 @@ abstract class Routes {
   static const ONBOARDING = _Paths.ONBOARDING;
   static const SIGN_IN = _Paths.SIGN_IN;
   static const SIGN_UP = _Paths.SIGN_UP;
+  static const PHONE_OTP_SCREEN = _Paths.PHONE_OTP_SCREEN;
   static const DASHBOARD = _Paths.DASHBOARD;
   static const HOME = _Paths.HOME;
   static const SETTINGS = _Paths.SETTINGS;
@@ -53,6 +54,7 @@ abstract class _Paths {
   static const ONBOARDING = '/onBoarding'; // onBoarding
   static const SIGN_IN = '/signIn'; // signIn
   static const SIGN_UP = '/signUp'; // signUp
+  static const PHONE_OTP_SCREEN = '/phone_otp_screen'; // phone_otp_screen
   static const DASHBOARD = '/dashboard'; // dashboard
   static const HOME = '/home'; // home
   static const SETTINGS = '/settings'; // home

@@ -244,6 +244,7 @@ class SettingsController extends GetxController {
         null,
         onSendProgress: (count, total) {},
       );
+      LoadingDialog.hideLoader();
 
       if (response['success'] != null && response['success'] == true) {
         Utils.showToast(response['message'] ?? "Account deleted successfully.");
@@ -553,7 +554,7 @@ class SettingsController extends GetxController {
     LoadingDialog.showLoader();
 
     try {
-      var response = await ApiProvider().getAPICall(Endpoints.termAndCondition, passToken: true);
+      var response = await ApiProvider().getAPICall(Endpoints.termAndCondition, passToken: false);
       LoadingDialog.hideLoader();
       if (response['success'] != null && response['success'] == true) {
         if (response['data'] != null) {

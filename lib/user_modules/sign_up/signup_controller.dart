@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
 import 'package:dio/dio.dart' as Dio;
+import 'package:distress_app/helpers/firebase_auth_helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -74,7 +77,8 @@ class SignUpController extends GetxController {
         if (response['data'] != null) {
           if (response['data']['user'] != null) {
             UserModel userModel = UserModel.fromJson(response['data']['user']);
-            await saveUserData(userModel);
+            // await saveUserData(userModel);
+            tempUserModel = userModel;
             LoadingDialog.hideLoader();
             Utils.showCustomDialog(
               context: navState.currentContext!,
@@ -128,7 +132,7 @@ class SignUpController extends GetxController {
                             height: getProportionateScreenHeight(10),
                           ),
                           Text(
-                            AppLocalizations.of(navState.currentContext!)!.youWillBeRedirectedToTheLogInPage,
+                            AppLocalizations.of(navState.currentContext!)!.kindlyVerifyYourMobileNumber,
                             style: TextStyle(
                               fontFamily: AppFonts.sansFont400,
                               fontSize: getProportionalFontSize(16),
@@ -140,10 +144,13 @@ class SignUpController extends GetxController {
                           ),
                           CommonButton(
                             width: getProportionateScreenWidth(196),
-                            text: AppLocalizations.of(navState.currentContext!)!.done,
+                            text: AppLocalizations.of(navState.currentContext!)!.verify,
                             onPressed: () {
                               Get.back();
-                              Get.offAllNamed(Routes.SIGN_IN);
+                              if (userModel.mobileCode != null && userModel.mobileNumber != null) {
+                                otpPhoneNo = '${userModel.mobileCode} ${userModel.mobileNumber}';
+                                sendOTP(isResend: false);
+                              }
                             },
                             radius: 50,
                           )
@@ -417,5 +424,195 @@ class SignUpController extends GetxController {
     await StorageService().writeSecureData(Constants.profileImage, userModel.profileImage ?? "");
     await StorageService().writeSecureData(Constants.role, userModel.role ?? "user");
     await StorageService().writeSecureData(Constants.availability, userModel.availability == 1 ? "Available" : "Unavailable");
+  }
+
+  late Timer timer;
+  int secondsRemaining = 59;
+  bool enableResend = false;
+  TextEditingController otpController = TextEditingController();
+  GlobalKey<FormState> otpFormKey = GlobalKey<FormState>();
+  String otpPhoneNo = '';
+  UserModel tempUserModel = UserModel();
+  bool? isFromLogin;
+
+  void startTimer() {
+    enableResend = false;
+    secondsRemaining = 59;
+    update();
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
+      if (secondsRemaining != 0) {
+        secondsRemaining--;
+        update();
+      } else {
+        enableResend = true;
+        update();
+      }
+    });
+  }
+
+  void sendOTP({
+    bool? isResend = false,
+  }) {
+    if (otpPhoneNo.isNotEmpty) {
+      // if (isResend == false) {
+      //   Get.toNamed(Routes.PHONE_OTP_SCREEN);
+      // }
+      LoadingDialog.showLoader();
+      FirebaseAuthentication().verifyPhoneNumber(
+        phoneNumber: otpPhoneNo,
+        verificationFailed: (FirebaseAuthException e) {
+          LoadingDialog.hideLoader();
+          if (e.code == 'invalid-phone-number') {
+            Utils.showToast(AppLocalizations.of(Get.context!)!.theProvidedPhoneNumberIsNotValid);
+          } else {
+            Utils.showToast(e.message ?? AppLocalizations.of(Get.context!)!.somethingWentWrong);
+          }
+        },
+        codeSent: (verificationId, resendToken) {
+          Utils.showToast("OTP sent successfully.");
+
+          LoadingDialog.hideLoader();
+          otpVerificationId = verificationId;
+          if (isResend == true) {
+            otpController.clear();
+            if (timer.isActive) {
+              timer.cancel();
+            }
+            startTimer();
+          } else {
+            Get.toNamed(Routes.PHONE_OTP_SCREEN);
+          }
+        },
+      );
+    }
+  }
+
+  String? otpVerificationId;
+  void verifyOTP() async {
+    if (otpVerificationId != null) {
+      LoadingDialog.showLoader();
+      UserCredential? userCredential = await FirebaseAuthentication().verifyOPT(
+        smsCode: otpController.text,
+        verificationId: otpVerificationId!,
+      );
+
+      LoadingDialog.hideLoader();
+      if (userCredential != null && userCredential.user != null) {
+        Utils.showToast("OTP verification successful.");
+        await saveUserData(tempUserModel);
+        verifyMobileAPI();
+        // if (isFromLogin == true) {
+        //   Get.offAllNamed(Routes.DASHBOARD);
+        // } else {
+        //   Utils.showCustomDialog(
+        //     context: navState.currentContext!,
+        //     barrierDismissible: false,
+        //     child: Center(
+        //       child: Material(
+        //         color: Colors.white,
+        //         borderRadius: BorderRadius.circular(
+        //           getProportionateScreenWidth(32),
+        //         ),
+        //         child: BackdropFilter(
+        //           filter: ImageFilter.blur(
+        //             sigmaX: 1.5,
+        //             sigmaY: 1.5,
+        //           ),
+        //           child: Container(
+        //             width: SizeConfig.deviceWidth! * .85,
+        //             padding: EdgeInsets.symmetric(
+        //               horizontal: getProportionateScreenWidth(16),
+        //               vertical: getProportionateScreenHeight(60),
+        //             ),
+        //             decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(
+        //                 getProportionateScreenWidth(32),
+        //               ),
+        //               color: Colors.white,
+        //             ),
+        //             child: Column(
+        //               mainAxisAlignment: MainAxisAlignment.center,
+        //               crossAxisAlignment: CrossAxisAlignment.center,
+        //               mainAxisSize: MainAxisSize.min,
+        //               children: [
+        //                 Container(
+        //                   height: getProportionateScreenHeight(141),
+        //                   width: getProportionateScreenWidth(141),
+        //                   decoration: BoxDecoration(
+        //                     image: DecorationImage(
+        //                       image: AssetImage(AppImages.registrationSuccess),
+        //                     ),
+        //                   ),
+        //                 ),
+        //                 Text(
+        //                   AppLocalizations.of(navState.currentContext!)!.registrationSuccessful,
+        //                   style: TextStyle(
+        //                     fontFamily: AppFonts.sansFont600,
+        //                     fontSize: getProportionalFontSize(20),
+        //                   ),
+        //                   textAlign: TextAlign.center,
+        //                 ),
+        //                 SizedBox(
+        //                   height: getProportionateScreenHeight(10),
+        //                 ),
+        //                 Text(
+        //                   AppLocalizations.of(navState.currentContext!)!.youWillBeRedirectedToTheLogInPage,
+        //                   style: TextStyle(
+        //                     fontFamily: AppFonts.sansFont400,
+        //                     fontSize: getProportionalFontSize(16),
+        //                   ),
+        //                   textAlign: TextAlign.center,
+        //                 ),
+        //                 SizedBox(
+        //                   height: getProportionateScreenHeight(28),
+        //                 ),
+        //                 CommonButton(
+        //                   width: getProportionateScreenWidth(196),
+        //                   text: AppLocalizations.of(navState.currentContext!)!.done,
+        //                   onPressed: () {
+        //                     Get.back();
+        //                     Get.offAllNamed(Routes.SIGN_IN);
+        //                   },
+        //                   radius: 50,
+        //                 )
+        //               ],
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   );
+        // }
+
+        Get.offAllNamed(Routes.DASHBOARD);
+      }
+    } else {
+      Utils.showToast("OTP verification failed please try again!");
+    }
+  }
+
+  void verifyMobileAPI() async {
+    // LoadingDialog.showLoader();
+    try {
+      Dio.FormData formData = Dio.FormData.fromMap({});
+
+      var response = await ApiProvider().postAPICall(
+        Endpoints.verifyMobile,
+        formData,
+        passToken: true,
+        onSendProgress: (count, total) {},
+      );
+      // LoadingDialog.hideLoader();
+      // if (response['success'] != null && response['success'] == true) {
+      // } else {}
+    } on Dio.DioException catch (e) {
+      // LoadingDialog.hideLoader();
+      // update();
+      debugPrint(e.toString());
+    } catch (e) {
+      // LoadingDialog.hideLoader();
+      // update();
+      debugPrint(e.toString());
+    }
   }
 }

@@ -15,6 +15,7 @@ class Endpoints {
   static const updateProfile = "${baseUrl}api/update_profile"; // Endpoint for get profile
   static const deleteAccount = "${baseUrl}api/delete_account"; // Endpoint for delete account
   static const saveSetting = "${baseUrl}api/save_setting"; // Endpoint for save setting
+  static const verifyMobile = "${baseUrl}api/verify_mobile"; // Endpoint for verify_mobile
   static const sendSOSEmergency = "${baseUrl}api/create_sos_emergency_case"; // Endpoint for create_sos_emergency_case
   static const updateSOSEmergencyCaseStatus = "${baseUrl}api/update_sos_emergency_case_status"; // Endpoint for update_sos_emergency_case_status
   static const closeSOSEmergencyCaseStatus = "${baseUrl}api/close_sos_emergency_case"; // Endpoint for close_sos_emergency_case
@@ -47,8 +48,7 @@ class Endpoints {
   static const endSession = "${baseUrl}api/chat/end_session"; // Endpoint for end_session
   static const sessionHistory = "${baseUrl}api/chat/session_history"; // Endpoint for session_history
 
-  static const termAndCondition =
-      "https://royalblue-mandrill-559334.hostingersite.com/public/api/content/term-and-condition"; // Endpoint for term-and-condition
+  static const termAndCondition = "${baseUrl}api/content/term-and-condition"; // Endpoint for term-and-condition
 
-  static const privacyPolicy = "https://royalblue-mandrill-559334.hostingersite.com/public/api/content/privacy-policy"; // Endpoint for term-and-condition
+  static const privacyPolicy = "${baseUrl}api/content/privacy-policy"; // Endpoint for privacy-policy
 }

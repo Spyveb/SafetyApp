@@ -644,5 +644,20 @@ class AppLocalizationsAf extends AppLocalizations {
   String get smsPermissionRequiredSOS => 'To send SMS to your emergency contacts, we require the SMS permission.';
 
   @override
+  String get verificationFailedDueToInvalidOtp => 'Verification Failed due to invalid OTP!';
+
+  @override
+  String get verificationFailedDueToSessionTimeExpire => 'Verification Failed due to Session time expired!';
+
+  @override
+  String get theProvidedPhoneNumberIsNotValid => 'The provided phone number is not valid.';
+
+  @override
+  String get kindlyVerifyYourMobileNumber => 'Kindly verify your mobile number to proceed with the app.';
+
+  @override
+  String get verify => 'Verify';
+
+  @override
   String get hello => 'hello';
 }

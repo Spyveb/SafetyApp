@@ -87,6 +87,7 @@ export './user_modules/sign_in/reset_password_screen.dart';
 export './user_modules/sign_in/signin_bindings.dart';
 export './user_modules/sign_in/signin_controller.dart';
 export './user_modules/sign_in/signin_screen.dart';
+export './user_modules/sign_up/phone_otp_screen.dart';
 export './user_modules/sign_up/signup_bindings.dart';
 export './user_modules/sign_up/signup_controller.dart';
 export './user_modules/sign_up/signup_screen.dart';
