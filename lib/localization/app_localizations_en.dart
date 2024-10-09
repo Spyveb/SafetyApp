@@ -659,5 +659,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get verify => 'Verify';
 
   @override
+  String get sendNow => 'Send Now';
+
+  @override
+  String get pleaseAgreeToTermsAndCondition => 'Please agree to Terms and Condition.';
+
+  @override
+  String get sLocation => 'location';
+
+  @override
+  String get informationText => 'information text';
+
+  @override
   String get hello => 'hello';
 }

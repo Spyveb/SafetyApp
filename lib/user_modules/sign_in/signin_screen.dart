@@ -132,7 +132,7 @@ class SignInScreen extends GetView<SignInController> {
                       ),
                       onPressed: controller.userNameController.text.trim().isNotEmpty && controller.passwordController.text.trim().isNotEmpty
                           ? () {
-                              FocusManager.instance.primaryFocus?.requestFocus();
+                              FocusManager.instance.primaryFocus?.unfocus();
 
                               controller.loginMethod();
                             }

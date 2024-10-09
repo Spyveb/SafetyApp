@@ -218,5 +218,9 @@
   "theProvidedPhoneNumberIsNotValid": "The provided phone number is not valid.",
   "kindlyVerifyYourMobileNumber": "Kindly verify your mobile number to proceed with the app.",
   "verify": "Verify",
+  "sendNow": "Send Now",
+  "pleaseAgreeToTermsAndCondition": "Please agree to Terms and Condition.",
+  "sLocation": "location",
+  "informationText": "information text",
   "hello": "hello"
 }

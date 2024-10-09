@@ -260,14 +260,54 @@ class HomeController extends GetxController {
                         SizedBox(
                           height: getProportionateScreenHeight(28),
                         ),
-                        CommonButton(
-                          width: getProportionateScreenWidth(196),
-                          text: AppLocalizations.of(context)!.undo,
-                          onPressed: () {
-                            Get.back();
-                          },
-                          radius: 50,
-                        )
+                        Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                behavior: HitTestBehavior.opaque,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: getProportionateScreenWidth(24),
+                                    vertical: getProportionateScreenHeight(17),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                      50,
+                                    ),
+                                    border: Border.all(color: AppColors.blackColor, width: 1),
+                                  ),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.undo,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: getProportionalFontSize(16),
+                                      fontFamily: AppFonts.sansFont600,
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: getProportionateScreenWidth(18),
+                            ),
+                            Expanded(
+                              child: CommonButton(
+                                text: AppLocalizations.of(context)!.sendNow,
+                                onPressed: () {
+                                  Get.back();
+                                  sendSOSEmergency(context);
+                                },
+                                radius: 50,
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   );

@@ -1403,6 +1403,30 @@ abstract class AppLocalizations {
   /// **'Verify'**
   String get verify;
 
+  /// No description provided for @sendNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Now'**
+  String get sendNow;
+
+  /// No description provided for @pleaseAgreeToTermsAndCondition.
+  ///
+  /// In en, this message translates to:
+  /// **'Please agree to Terms and Condition.'**
+  String get pleaseAgreeToTermsAndCondition;
+
+  /// No description provided for @sLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'location'**
+  String get sLocation;
+
+  /// No description provided for @informationText.
+  ///
+  /// In en, this message translates to:
+  /// **'information text'**
+  String get informationText;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:

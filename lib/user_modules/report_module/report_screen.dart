@@ -366,7 +366,9 @@ class ReportScreen extends GetView<ReportController> {
   }
 
   Future<void> sosPress(ReportController controller, BuildContext context) async {
-    if (controller.searchLocationController.text.isNotEmpty && controller.latitude != null && controller.longitude != null && controller.city != null) {
+    if (controller.searchLocationController.text.isNotEmpty && controller.latitude != null && controller.longitude != null
+        // && controller.city != null
+        ) {
       // Utils.showCustomDialog(
       //   context: context,
       //   child: Center(

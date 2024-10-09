@@ -630,10 +630,14 @@ class SignUpScreen extends GetView<SignUpController> {
                           vertical: getProportionateScreenHeight(22),
                         ),
                         onPressed: () {
-                          FocusManager.instance.primaryFocus?.requestFocus();
+                          FocusManager.instance.primaryFocus?.unfocus();
                           if (controller.formKey.currentState!.validate()) {
                             if (controller.termValue == true) {
                               controller.signUpMethod();
+                            } else {
+                              Utils.showToast(
+                                AppLocalizations.of(context)!.pleaseAgreeToTermsAndCondition,
+                              );
                             }
                           }
                         },

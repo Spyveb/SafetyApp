@@ -275,7 +275,9 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   Future<void> sosPress(HomeController controller, BuildContext context) async {
-    if (controller.searchLocationController.text.isNotEmpty && controller.latitude != null && controller.longitude != null && controller.city != null) {
+    if (controller.searchLocationController.text.isNotEmpty && controller.latitude != null && controller.longitude != null
+        // && controller.city != null
+        ) {
       // Utils.showCustomDialog(
       //   context: context,
       //   child: Center(

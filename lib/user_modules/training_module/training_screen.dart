@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:distress_app/componants/common_background.dart';
 import 'package:distress_app/imports.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,7 +51,7 @@ class TrainingScreen extends GetView<TrainingController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              AppLocalizations.of(context)!.trainings,
+                              AppLocalizations.of(context)!.training,
                               style: TextStyle(
                                 fontSize: getProportionalFontSize(32),
                                 color: themeProvider.textThemeColor,
