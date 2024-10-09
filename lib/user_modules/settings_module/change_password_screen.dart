@@ -13,6 +13,11 @@ class ChangePasswordScreen extends GetView<SettingsController> {
         init: SettingsController(),
         global: true,
         autoRemove: false,
+        dispose: (state) {
+          controller.currentPasswordController.clear();
+          controller.changeConfirmPasswordController.clear();
+          controller.newPasswordController.clear();
+        },
         builder: (SettingsController settingsController) {
           return SafeArea(
             child: BackgroundWidget(
@@ -23,6 +28,7 @@ class ChangePasswordScreen extends GetView<SettingsController> {
                 ),
                 child: Form(
                   key: controller.changePasswordKey,
+                  autovalidateMode: AutovalidateMode.disabled,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -199,7 +205,8 @@ class ChangePasswordScreen extends GetView<SettingsController> {
                         ),
                       ),
                       CommonButton(
-                        onPressed: controller.changePasswordKey.currentState != null && controller.changePasswordKey.currentState!.validate()
+                        // onPressed: controller.changePasswordKey.currentState != null && controller.changePasswordKey.currentState!.validate()
+                        onPressed: controller.changePasswordKey.currentState?.validate() == true
                             ? () {
                                 controller.changePassword();
                               }
