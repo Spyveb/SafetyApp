@@ -36,6 +36,24 @@ class SignUpController extends GetxController {
 
   String role = 'User';
 
+  List<String> regionList = [
+    'Caprivi',
+    'Erongo',
+    'Hardap',
+    'Karas',
+    'Kavango West',
+    'Kavango East',
+    'Khomas',
+    'Kunene',
+    'Ohangwena',
+    'Omaheke',
+    'Omusati',
+    'Oshana',
+    'Oshikoto',
+    'Otjozondjupa',
+  ];
+  String? region;
+
   void termValueChange(value) {
     termValue = value;
     update();
@@ -55,6 +73,7 @@ class SignUpController extends GetxController {
         "password": passwordController.text,
         // "role": role == 'User' ? 'user' : 'police_officer',
         "role": 'user',
+        "region": region,
       });
 
       if (profileImage != null) {

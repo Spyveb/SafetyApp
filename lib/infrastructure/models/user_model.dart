@@ -31,6 +31,7 @@ class UserModel {
   String? createdAt;
   String? updatedAt;
   String? token;
+  String? region;
   int? isVerified;
 
   UserModel({
@@ -56,6 +57,7 @@ class UserModel {
     this.createdAt,
     this.updatedAt,
     this.token,
+    this.region,
     this.isVerified,
   });
 
@@ -82,6 +84,7 @@ class UserModel {
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
         token: json["token"],
+        region: json["region"],
         isVerified: json["is_verified_mobile"],
       );
 
@@ -108,6 +111,7 @@ class UserModel {
         "created_at": createdAt,
         "updated_at": updatedAt,
         "token": token,
+        "region": region,
         "is_verified_mobile": isVerified,
       };
 }

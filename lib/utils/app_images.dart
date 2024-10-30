@@ -45,6 +45,7 @@ class AppImages {
   static const String lockIcon = "assets/svgs/lock.svg";
   static const String watchConnected = "assets/svgs/watch_connected.svg";
   static const String watchDisconnected = "assets/svgs/watch_disconnected.svg";
+  static const String regionIcon = "assets/svgs/region_icon.svg";
 
   // Police images
   static const String policeUserIcon = "assets/images/user_icon.png";

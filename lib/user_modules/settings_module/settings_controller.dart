@@ -118,6 +118,24 @@ class SettingsController extends GetxController {
   File? selectedImage;
   String? profileImage;
 
+  List<String> regionList = [
+    'Caprivi',
+    'Erongo',
+    'Hardap',
+    'Karas',
+    'Kavango West',
+    'Kavango East',
+    'Khomas',
+    'Kunene',
+    'Ohangwena',
+    'Omaheke',
+    'Omusati',
+    'Oshana',
+    'Oshikoto',
+    'Otjozondjupa',
+  ];
+  String? region;
+
   void getUserProfile({bool? showLoader = true}) async {
     if (showLoader == true) {
       LoadingDialog.showLoader();
@@ -170,6 +188,7 @@ class SettingsController extends GetxController {
     userNameController.text = userModel.username ?? '';
     profileImage = userModel.profileImage;
     reportAnonymously = userModel.reportAnnonymously == 1;
+    region = userModel.region;
     update();
   }
 
@@ -193,6 +212,7 @@ class SettingsController extends GetxController {
       "mobile_number": phoneNumberController.text,
       "dob": Utils.sendDateFormat(birthDateController.text),
       "username": userNameController.text,
+      "region": region,
     });
 
     if (selectedImage != null) {

@@ -671,5 +671,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get informationText => 'information text';
 
   @override
+  String get region => 'Region';
+
+  @override
   String get hello => 'hello';
 }

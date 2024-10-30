@@ -32,9 +32,9 @@ class CountryUtils {
   /// Validate a phone number based on the country
   static bool validatePhoneNumberByCountry(String phoneNumber, Country country) {
     int length = phoneNumber.length;
-    print("CURRNET------->>>>>${phoneNumber.length}");
-    print("MINIMUM------->>>>>${country.phoneMinLength}");
-    print("MAXIMUM------->>>>>${country.phoneMaxLength}");
+    // print("CURRNET------->>>>>${phoneNumber.length}");
+    // print("MINIMUM------->>>>>${country.phoneMinLength}");
+    // print("MAXIMUM------->>>>>${country.phoneMaxLength}");
     bool lengthValid = length >= country.phoneMinLength && length <= country.phoneMaxLength;
     bool startingDigitsValid = country.startingDigits.isEmpty || country.startingDigits.any((digits) => phoneNumber.startsWith(digits));
     return lengthValid && startingDigitsValid;

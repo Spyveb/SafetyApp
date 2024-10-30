@@ -1427,6 +1427,12 @@ abstract class AppLocalizations {
   /// **'information text'**
   String get informationText;
 
+  /// No description provided for @region.
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get region;
+
   /// No description provided for @hello.
   ///
   /// In en, this message translates to:

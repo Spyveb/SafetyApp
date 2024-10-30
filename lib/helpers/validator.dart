@@ -42,8 +42,7 @@ class Validation {
 
   // Validate if field is empty.
   static String? emptyValidation(String? value, BuildContext context, String? fieldName) {
-    print("VALIDATION------------> ${fieldName}");
-    if (value!.isEmpty) {
+    if (value == null || value.isEmpty) {
       return "${AppLocalizations.of(context)!.pleaseEnter} ${fieldName}";
     }
 

@@ -470,6 +470,122 @@ class SignUpScreen extends GetView<SignUpController> {
                       SizedBox(
                         height: getProportionateScreenHeight(14),
                       ),
+                      ButtonTheme(
+                        alignedDropdown: true,
+                        child: DropdownButtonFormField<String?>(
+                          value: controller.region,
+                          iconSize: 24,
+                          iconEnabledColor: AppColors.blackColor,
+                          isDense: true,
+                          isExpanded: true,
+                          decoration: InputDecoration(
+                            // suffixIcon: IconButton(
+                            //   onPressed: () {},
+                            //   icon: Icon(
+                            //     Icons.arrow_drop_down_outlined,
+                            //     size: 36,
+                            //     color: AppColors.blackColor,
+                            //   ),
+                            // ),
+                            errorMaxLines: 2,
+                            isDense: true,
+
+                            // border: OutlineInputBorder(
+                            //   borderRadius: BorderRadius.circular(
+                            //     getProportionateScreenWidth(10),
+                            //   ),
+                            //   borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
+                            // ),
+                            // focusedBorder: OutlineInputBorder(
+                            //   borderRadius: BorderRadius.circular(
+                            //     getProportionateScreenWidth(10),
+                            //   ),
+                            //   borderSide: BorderSide(color: Colors.black87, width: 1.5),
+                            // ),
+                            // disabledBorder: OutlineInputBorder(
+                            //   borderRadius: BorderRadius.circular(
+                            //     getProportionateScreenWidth(10),
+                            //   ),
+                            //   borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
+                            // ),
+                            // enabledBorder: OutlineInputBorder(
+                            //   borderRadius: BorderRadius.circular(
+                            //     getProportionateScreenWidth(10),
+                            //   ),
+                            //   borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
+                            // ),
+
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(10),
+                              ),
+                              borderSide: BorderSide(color: AppColors.textFieldGreyColor, width: 2),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                getProportionateScreenWidth(10),
+                              ),
+                              borderSide: BorderSide(color: Colors.black87, width: 1.5),
+                            ),
+                            // labelText: AppLocalizations.of(context)!.region,
+                            hintText: AppLocalizations.of(context)!.region,
+                            hintStyle: TextStyle(
+                              fontFamily: AppFonts.sansFont400,
+                              fontSize: getProportionalFontSize(14),
+                              color: AppColors.textFieldGreyColor,
+                            ),
+                            errorStyle: TextStyle(
+                              fontSize: getProportionalFontSize(12),
+                              fontFamily: AppFonts.sansFont400,
+                              color: AppColors.redDefault,
+                            ),
+
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: getProportionateScreenWidth(8),
+                              vertical: getProportionateScreenHeight(20),
+                            ),
+                            prefixIcon: Container(
+                              padding: EdgeInsets.only(
+                                left: getProportionateScreenWidth(8),
+                                // right: getProportionateScreenWidth(8),
+                                top: getProportionateScreenHeight(10),
+                                bottom: getProportionateScreenHeight(10),
+                              ),
+                              child: SvgPicture.asset(
+                                AppImages.regionIcon,
+                                height: getProportionateScreenHeight(24),
+                                width: getProportionateScreenWidth(24),
+                              ),
+                            ),
+                          ),
+                          items: controller.regionList.map<DropdownMenuItem<String>>((value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: TextStyle(
+                                  fontFamily: AppFonts.sansFont400,
+                                  fontSize: getProportionalFontSize(14),
+                                  color: AppColors.lightTextColor,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            controller.region = value;
+                            // ?? controller.regionList.first;
+                            controller.update();
+                          },
+                          validator: (value) => Validation.emptyValidation(
+                            value,
+                            context,
+                            AppLocalizations.of(context)!.region.capitalize,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(14),
+                      ),
                       CommonTextField(
                         hintText: AppLocalizations.of(context)!.password,
                         textEditingController: controller.passwordController,
